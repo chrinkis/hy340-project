@@ -96,4 +96,33 @@ alpha_token_category alpha_token_getCategory(const alpha_token_t self);
 void alpha_token_setCategory(const alpha_token_t self,
                              alpha_token_category category);
 
+/**
+ * @return 0 if it has not next token, else non zero
+ *
+ * @pre @p self != null
+ */
+int alpha_token_hasNext(const alpha_token_t self);
+
+/**
+ * @pre @p self != null
+ * @pre @p self should have a next token
+ *
+ * @post return != null
+ *
+ * @see alpha_token_hasNext
+ */
+alpha_token_t alpha_token_getNext(const alpha_token_t self);
+
+/**
+ * @return non zero if added successfully, else 0
+ *
+ * @pre @p self != null
+ *
+ * @note @p next can also be null
+ *
+ * @warning Be aware of memory leaks. This function doesn't free the "previous"
+ * `next` of @p self
+ */
+int alpha_token_setNext(const alpha_token_t self, const alpha_token_t next);
+
 #endif
