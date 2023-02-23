@@ -15,9 +15,17 @@ integer		{digit}+
 real		{integer}\.{integer}
 
 %x COMMENT INCLUDE
-
+%s STRING
+%s ESCAPE
 
 %%
+
+<STRING>[^\\\"]*	/* read until escape char or end of string char */
+<STRING>\"			BEGIN(INITIAL); /* end of string */
+<STRING>\\			BEGIN(ESCAPE); /* escape char follows */
+<ESCAPE>[\"nt\\]	BEGIN(STRING); /* which escaped char? */
+<ESCAPE>[.]*		/* Unknown escaped charachter (No mans land) */
+\"					BEGIN(STRING); /* String literal begins */
 
 {whitespaces}		{fprintf(stderr, "ignore\n", yytext);}
 "="					{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
@@ -41,6 +49,31 @@ real		{integer}\.{integer}
 "("					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
 ")"					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
 {real}				{fprintf(stderr, "Recognies real number with content: %s\n", yytext);}
+
+{integer}
+"if"
+"else"
+"while"
+"for"
+"function"
+"return"
+"break"
+"continue"
+"and"
+"not"
+"or"
+"local"
+"true"
+
+";"
+","
+"::"
+":"
+".."
+"."
+
+{identifier}
+
 "//".*				{fprintf(stderr, "Recognized oneline comment with content: %s\n", yytext);}
 "/*"				{fprintf(stderr, "Recognized multiline comment with with line range: %d-", yylineno);
 					 BEGIN(COMMENT);
