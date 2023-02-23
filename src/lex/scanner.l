@@ -64,6 +64,8 @@ real		{integer}\.{integer}
 "or"
 "local"
 "true"
+"false"
+"nil"
 
 ";"
 ","
