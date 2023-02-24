@@ -62,7 +62,7 @@ real		{integer}\.{integer}
 {integer}
 "if"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_IF);
 "else"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_ELSE);
-"while"
+"while"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_WHILE);
 "for"
 "function"
 "return"
