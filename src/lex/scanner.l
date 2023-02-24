@@ -57,7 +57,7 @@ real		{integer}\.{integer}
 "]"					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
 "("					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
 ")"					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
-{real}				{fprintf(stderr, "Recognies real number with content: %s\n", yytext);}
+{real}				yylval = new_token(yylval, yytext, ALPHA_TOKEN_FLOAT);
 
 {integer}
 "if"
