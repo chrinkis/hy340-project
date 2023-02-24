@@ -37,7 +37,7 @@ real		{integer}\.{integer}
 \"					BEGIN(STRING); /* String literal begins */
 
 {whitespaces}		{fprintf(stderr, "ignore\n", yytext);}
-"="					{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
+"="					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_ASSIGN);
 "+"					{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
 "-"					{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
 "*"					{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
