@@ -106,7 +106,7 @@ int main(int argc, char **argv) {
   }
 
   alpha_token_t head = alpha_token_new(0,0,"",0);
-  alpha_yylex(head);
+  alpha_yylex(&head);
 
   alpha_token_t temp = head;
   head = alpha_token_getNext(head);
