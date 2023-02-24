@@ -3,7 +3,7 @@
 #include "../../include/token/alpha_token_t.h"
 #include "../../include/token/alpha_token_category.h"
 
-#define RUNTIME_ERROR(what) assert(what)
+#define RUNTIME_ASSERT(what) assert(what)
 #define YY_DECL int alpha_yylex(void* yylval)
 %}
 
@@ -102,10 +102,10 @@ alpha_token_t add_new_token(alpha_token_t tail, const char* text, alpha_token_ca
 	int next_sequence_number = alpha_token_getSequenceNumber(tail) + 1;
 
 	alpha_token_t new_token = alpha_token_new(yylineno, next_sequence_number, text, category);
-	RUNTIME_ERROR(new_token);
+	RUNTIME_ASSERT(new_token);
 
 	int result = alpha_token_setNext(tail, new_token);
-	RUNTIME_ERROR(result);
+	RUNTIME_ASSERT(result);
 
 	return new_token;
 }
