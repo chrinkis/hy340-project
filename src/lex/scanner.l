@@ -77,7 +77,7 @@ real		{integer}\.{integer}
 "nil"
 
 ";"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_SEMICOLON);
-","
+","					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_COMMA);
 "::"
 ":"
 ".."
