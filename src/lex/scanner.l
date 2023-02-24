@@ -68,7 +68,7 @@ real		{integer}\.{integer}
 "return"			yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_RETURN);
 "break"			yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_BREAK);
 "continue"			yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_CONTINUE);
-"and"
+"and"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_AND);
 "not"
 "or"
 "local"
