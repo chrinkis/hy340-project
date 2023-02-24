@@ -22,32 +22,32 @@ enum alpha_token_category {
   ALPHA_TOKEN_TRUE,
   ALPHA_TOKEN_FALSE,
   ALPHA_TOKEN_NIL,
-  ALPHA_TOKEN_ASSIGN,                    /*| =  |*/
-  ALPHA_TOKEN_PLUS,                      /*| +  |*/
-  ALPHA_TOKEN_MINUS,                     /*| -  |*/
-  ALPHA_TOKEN_STAR,                      /*| *  |*/
-  ALPHA_TOKEN_DIV,                       /*| /  |*/
-  ALPHA_TOKEN_MOD,                       /*| %  |*/
-  ALPHA_TOKEN_EQUALS,                    /*| == |*/
-  ALPHA_TOKEN_NOT_EQUALS,                /*| != |*/
-  ALPHA_TOKEN_PLUS_PLUS,                 /*| ++ |*/
-  ALPHA_TOKEN_MINUS_MINUS,               /*| -- |*/
-  ALPHA_TOKEN_GREATER,                   /*| >  |*/
-  ALPHA_TOKEN_LESS,                      /*| <  |*/
-  ALPHA_TOKEN_GREATER_EQUALS,            /*| >= |*/
-  ALPHA_TOKEN_LESS_EQUALS,               /*| <= |*/
-  ALPHA_TOKEN_LEFT_CURLY_BRACKET,        /*| {  |*/
-  ALPHA_TOKEN_RIGHT_CURLY_BRACKET,       /*| }  |*/
-  ALPHA_TOKEN_LEFT_SQUARE_BRACKET,       /*| [  |*/
-  ALPHA_TOKEN_RIGHT_SQUARE_BRACKET,      /*| ]  |*/
-  ALPHA_TOKEN_LEFT_PARENTHESIS_BRACKET,  /*| (  |*/
-  ALPHA_TOKEN_RIGHT_PARENTHESIS_BRACKET, /*| )  |*/
-  ALPHA_TOKEN_SEMICOLON,                 /*| ;  |*/
-  ALPHA_TOKEN_COMMA,                     /*| ,  |*/
-  ALPHA_TOKEN_COLON,                     /*| :  |*/
-  ALPHA_TOKEN_DOUBLE_COLON,              /*| :: |*/
-  ALPHA_TOKEN_DOT,                       /*| .  |*/
-  ALPHA_TOKEN_DOUBLE_DOT,                /*| .. |*/
+  ALPHA_TOKEN_ASSIGN,               /*| =  |*/
+  ALPHA_TOKEN_PLUS,                 /*| +  |*/
+  ALPHA_TOKEN_MINUS,                /*| -  |*/
+  ALPHA_TOKEN_STAR,                 /*| *  |*/
+  ALPHA_TOKEN_DIV,                  /*| /  |*/
+  ALPHA_TOKEN_MOD,                  /*| %  |*/
+  ALPHA_TOKEN_EQUALS,               /*| == |*/
+  ALPHA_TOKEN_NOT_EQUALS,           /*| != |*/
+  ALPHA_TOKEN_PLUS_PLUS,            /*| ++ |*/
+  ALPHA_TOKEN_MINUS_MINUS,          /*| -- |*/
+  ALPHA_TOKEN_GREATER,              /*| >  |*/
+  ALPHA_TOKEN_LESS,                 /*| <  |*/
+  ALPHA_TOKEN_GREATER_EQUALS,       /*| >= |*/
+  ALPHA_TOKEN_LESS_EQUALS,          /*| <= |*/
+  ALPHA_TOKEN_LEFT_CURLY_BRACKET,   /*| {  |*/
+  ALPHA_TOKEN_RIGHT_CURLY_BRACKET,  /*| }  |*/
+  ALPHA_TOKEN_LEFT_SQUARE_BRACKET,  /*| [  |*/
+  ALPHA_TOKEN_RIGHT_SQUARE_BRACKET, /*| ]  |*/
+  ALPHA_TOKEN_LEFT_PARENTHESIS,     /*| (  |*/
+  ALPHA_TOKEN_RIGHT_PARENTHESIS,    /*| )  |*/
+  ALPHA_TOKEN_SEMICOLON,            /*| ;  |*/
+  ALPHA_TOKEN_COMMA,                /*| ,  |*/
+  ALPHA_TOKEN_COLON,                /*| :  |*/
+  ALPHA_TOKEN_DOUBLE_COLON,         /*| :: |*/
+  ALPHA_TOKEN_DOT,                  /*| .  |*/
+  ALPHA_TOKEN_DOUBLE_DOT,           /*| .. |*/
 };
 
 #endif
