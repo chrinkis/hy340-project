@@ -50,7 +50,7 @@ real		{integer}\.{integer}
 ">"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_GREATER);
 "<"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LESS);
 ">="				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_GREATER_EQUALS);
-"<="				{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
+"<="				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LESS_EQUALS);
 "{"					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
 "}"					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
 "["					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
