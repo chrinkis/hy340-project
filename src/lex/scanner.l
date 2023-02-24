@@ -53,7 +53,7 @@ real		{integer}\.{integer}
 "<="				{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
 "{"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LEFT_CURLY_BRACKET);
 "}"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_RIGHT_CURLY_BRACKET);
-"["					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
+"["					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LEFT_SQUARE_BRACKET);
 "]"					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
 "("					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
 ")"					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
