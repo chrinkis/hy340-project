@@ -65,7 +65,7 @@ real		{integer}\.{integer}
 "while"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_WHILE);
 "for"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_FOR);
 "function"			yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_FUNCTION);
-"return"
+"return"			yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_RETURN);
 "break"
 "continue"
 "and"
