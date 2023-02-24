@@ -59,7 +59,7 @@ real		{integer}\.{integer}
 ")"					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
 {real}				yylval = new_token(yylval, yytext, ALPHA_TOKEN_FLOAT);
 
-{integer}
+{integer} 			yylval = new_token(yylval, yytext, ALPHA_TOKEN_INTEGER);
 "if"
 "else"
 "while"
