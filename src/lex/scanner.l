@@ -1,6 +1,9 @@
 %{
+#include<assert.h>
 #include "../../include/token/alpha_token_t.h"
 #include "../../include/token/alpha_token_category.h"
+
+#define RUNTIME_ASSERT(what) assert(what)
 #define YY_DECL int alpha_yylex(void* yylval)
 %}
 
@@ -94,6 +97,18 @@ real		{integer}\.{integer}
 .					{fprintf(stderr, "Cannot match character '%s' with any rule\n", yytext);}
 
 %%
+
+alpha_token_t add_new_token(alpha_token_t tail, const char* text, alpha_token_category category) {
+	int next_sequence_number = alpha_token_getSequenceNumber(tail) + 1;
+
+	alpha_token_t new_token = alpha_token_new(yylineno, next_sequence_number, text, category);
+	RUNTIME_ASSERT(new_token);
+
+	int result = alpha_token_setNext(tail, new_token);
+	RUNTIME_ASSERT(result);
+
+	return new_token;
+}
 
 int main(int argc, char **argv) {
   if (argc > 1) {
