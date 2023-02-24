@@ -83,7 +83,7 @@ real		{integer}\.{integer}
 ".."
 "."
 
-{identifier}
+{identifier}		yylval = new_token(yylval, yytext, ALPHA_TOKEN_IDENTIFIER)
 
 "//".*				{fprintf(stderr, "Recognized oneline comment with content: %s\n", yytext);}
 "/*"				{fprintf(stderr, "Recognized multiline comment with with line range: %d-", yylineno);
