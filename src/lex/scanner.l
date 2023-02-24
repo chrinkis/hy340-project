@@ -47,7 +47,7 @@ real		{integer}\.{integer}
 "!="				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_NOT_EQUALS);
 "++"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_PLUS_PLUS);
 "--"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_MINUS_MINUS);
-">"					{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
+">"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_GREATER);
 "<"					{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
 ">="				{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
 "<="				{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
