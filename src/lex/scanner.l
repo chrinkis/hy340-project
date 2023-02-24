@@ -102,10 +102,10 @@ alpha_token_t add_new_token(alpha_token_t tail, const char* text, alpha_token_ca
 	int next_sequence_number = alpha_token_getSequenceNumber(tail) + 1;
 
 	alpha_token_t new_token = alpha_token_new(yylineno, next_sequence_number, text, category);
-	assert(new_token);
+	RUNTIME_ERROR(new_token);
 
 	int result = alpha_token_setNext(tail, new_token);
-	assert(result);
+	RUNTIME_ERROR(result);
 
 	return new_token;
 }
