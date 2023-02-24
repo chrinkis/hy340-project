@@ -60,7 +60,7 @@ real		{integer}\.{integer}
 {real}				{fprintf(stderr, "Recognies real number with content: %s\n", yytext);}
 
 {integer}
-"if"
+"if"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_IF);
 "else"
 "while"
 "for"
