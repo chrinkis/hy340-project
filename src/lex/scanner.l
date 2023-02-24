@@ -81,7 +81,7 @@ real		{integer}\.{integer}
 "::"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_DOUBLE_COLON);
 ":"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_COLON);
 ".."				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_DOUBLE_DOT);
-"."
+"."					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_DOT);
 
 {identifier}
 
