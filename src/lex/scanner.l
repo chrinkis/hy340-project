@@ -1,3 +1,9 @@
+%{
+#include "../../include/token/alpha_token_t.h"
+#include "../../include/token/alpha_token_category.h"
+#define YY_DECL int alpha_yylex(void* yylval)
+%}
+
 /* Flex options */
 %option noyywrap
 %option yylineno
@@ -99,6 +105,12 @@ int main(int argc, char **argv) {
     yyin = stdin;
   }
 
-  yylex();
+  alpha_token_t head = alpha_token_new(0,0,"",0);
+  alpha_yylex(&head);
+
+  alpha_token_t temp = head;
+  head = alpha_token_getNext(head);
+  alpha_token_free(temp);
+
   return 0;
 }
