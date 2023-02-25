@@ -10,6 +10,8 @@
 %}
 
 /* Flex options */
+%option outfile="../src/lex/scanner.c"
+%option header-file="../include/lex/scanner.h"
 %option noyywrap
 %option yylineno
 
