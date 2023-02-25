@@ -35,7 +35,18 @@ real		{integer}\.{integer}
 <STRING>\"			BEGIN(INITIAL); /* end of string */
 <STRING>\\			BEGIN(ESCAPE); /* escape char follows */
 <STRING><<EOF>>		return NOT_CLOSED_STRING;
-<ESCAPE>[\"nt\\]	BEGIN(STRING); /* which escaped char? */
+<ESCAPE>"\""		{ concat_content_of_token(yylval, "\"");
+					  BEGIN(STRING); /* which escaped char? */
+					}
+<ESCAPE>"n"			{ concat_content_of_token(yylval, "\n");
+					  BEGIN(STRING); /* which escaped char? */
+					}
+<ESCAPE>"t"			{ concat_content_of_token(yylval, "\t");
+					  BEGIN(STRING); /* which escaped char? */
+					}
+<ESCAPE>"\\"		{ concat_content_of_token(yylval, "\\")
+					  BEGIN(STRING); /* which escaped char? */
+					}
 <ESCAPE>[.]*		{ char* temp_str = strcat_dynamic("/", yytext);
 					  concat_content_of_token(yylval, temp_str);
 					  free(temp_str);
