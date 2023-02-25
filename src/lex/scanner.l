@@ -36,7 +36,7 @@ real		{integer}\.{integer}
 <ESCAPE>[.]*		/* Unknown escaped charachter (No mans land) */
 \"					BEGIN(STRING); /* String literal begins */
 
-{whitespaces}		{fprintf(stderr, "ignore\n", yytext);}
+{whitespaces}		/* ignore whitespaces */
 {real}				yylval = new_token(yylval, yytext, ALPHA_TOKEN_FLOAT);
 "="					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_ASSIGN);
 "+"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_PLUS);
