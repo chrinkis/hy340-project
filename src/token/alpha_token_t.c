@@ -37,6 +37,7 @@ alpha_token_t alpha_token_new(unsigned int line,
 
   if (!self->content) {
     free(self);
+    self = NULL;
     return NULL;
   }
 
@@ -56,7 +57,9 @@ void alpha_token_free(alpha_token_t self) {
   assert(self->content);
 
   free(self->content);
+  self->content = NULL;
   free(self);
+  self = NULL;
 }
 
 unsigned int alpha_token_getLine(const alpha_token_t self) {
