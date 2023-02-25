@@ -124,3 +124,12 @@ enum alpha_token_category alpha_token_getCategory(const alpha_token_t self) {
 
   return self->category;
 }
+
+void alpha_token_setCategory(const alpha_token_t self,
+                             enum alpha_token_category category) {
+  assert(self);
+
+  self->category = category;
+
+  assert(self->category == category);
+}
