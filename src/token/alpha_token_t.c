@@ -76,3 +76,12 @@ unsigned int alpha_token_getSequenceNumber(const alpha_token_t self) {
 
   return self->sequence_number;
 }
+
+void alpha_token_setSequenceNumber(const alpha_token_t self,
+                                   unsigned int sequence_number) {
+  assert(self);
+
+  self->sequence_number = sequence_number;
+
+  assert(self->sequence_number == sequence_number);
+}
