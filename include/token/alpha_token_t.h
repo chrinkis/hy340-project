@@ -29,7 +29,7 @@ typedef struct _alpha_token_t* alpha_token_t;
 alpha_token_t alpha_token_new(unsigned int line,
                               unsigned int sequence_number,
                               const char* const content,
-                              alpha_token_category category);
+                              alpha_token_category_t category);
 
 /**
  * @brief Frees an `alpha_token_t`
@@ -88,13 +88,13 @@ void alpha_token_setContent(const alpha_token_t self,
 /**
  * @pre @p self != null
  */
-alpha_token_category alpha_token_getCategory(const alpha_token_t self);
+alpha_token_category_t alpha_token_getCategory(const alpha_token_t self);
 
 /**
  * @pre @p self != null
  */
 void alpha_token_setCategory(const alpha_token_t self,
-                             alpha_token_category category);
+                             alpha_token_category_t category);
 
 /**
  * @return 0 if it has not next token, else non zero

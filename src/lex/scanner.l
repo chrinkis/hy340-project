@@ -103,7 +103,7 @@ real		{integer}\.{integer}
 
 %%
 
-alpha_token_t add_new_token(alpha_token_t tail, const char* text, alpha_token_category category) {
+alpha_token_t add_new_token(alpha_token_t tail, const char* text, alpha_token_category_t category) {
 	int next_sequence_number = alpha_token_getSequenceNumber(tail) + 1;
 
 	alpha_token_t new_token = alpha_token_new(yylineno, next_sequence_number, text, category);
