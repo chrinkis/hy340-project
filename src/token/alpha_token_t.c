@@ -118,3 +118,9 @@ void alpha_token_setContent(const alpha_token_t self,
   assert(!strcmp(self->content, content));
   assert(self->content != content);
 }
+
+enum alpha_token_category alpha_token_getCategory(const alpha_token_t self) {
+  assert(self);
+
+  return self->category;
+}
