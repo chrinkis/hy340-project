@@ -62,3 +62,11 @@ unsigned int alpha_token_getLine(const alpha_token_t self) {
 
   return self->line;
 }
+
+void alpha_token_setLine(const alpha_token_t self, unsigned int line) {
+  assert(self);
+
+  self->line = line;
+
+  assert(self->line == line);
+}
