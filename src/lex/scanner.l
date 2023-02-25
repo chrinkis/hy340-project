@@ -3,6 +3,8 @@
 #include "../../include/token/alpha_token_t.h"
 #include "../../include/token/alpha_token_category.h"
 
+#define NOT_CLOSED_STRING 	-1
+#define NOT_CLOSED_COMMENT	-2
 #define RUNTIME_ASSERT(what) assert(what)
 #define YY_DECL int alpha_yylex(void* yylval)
 %}
@@ -32,8 +34,10 @@ real		{integer}\.{integer}
 <STRING>[^\\\"]*	/* read until escape char or end of string char */
 <STRING>\"			BEGIN(INITIAL); /* end of string */
 <STRING>\\			BEGIN(ESCAPE); /* escape char follows */
+<STRING><<EOF>>		return NOT_CLOSED_STRING;
 <ESCAPE>[\"nt\\]	BEGIN(STRING); /* which escaped char? */
 <ESCAPE>[.]*		/* Unknown escaped charachter (No mans land) */
+<ESCAPE><<EOF>>		return NOT_CLOSED_STRING;
 \"					BEGIN(STRING); /* String literal begins */
 
 {whitespaces}		/* ignore whitespaces */
@@ -94,6 +98,7 @@ real		{integer}\.{integer}
 <COMMENT>"*"+"/"*	{fprintf(stderr, "%d\n", yylineno);
 					 BEGIN(INITIAL);
 					}
+<COMMENT><<EOF>>	return NOT_CLOSED_COMMENT;
 .					{fprintf(stderr, "Cannot match character '%s' with any rule\n", yytext);}
 
 %%
