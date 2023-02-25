@@ -155,3 +155,14 @@ void print_alpha_token(const alpha_token_t token, FILE* stream) {
   }
   fprintf(stream, "\n");
 }
+
+void print_list_of_alpha_tokens(alpha_token_t head, FILE* stream) {
+  assert(head);
+
+  while (alpha_token_hasNext(head)) {
+    print_alpha_token(head, stream);
+    head = alpha_token_getNext(head);
+  }
+
+  print_alpha_token(head, stream);
+}
