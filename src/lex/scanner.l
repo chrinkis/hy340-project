@@ -98,10 +98,14 @@ RUNTIME_ASSERT(no_of_line_stack);
 {identifier}		yylval = new_token(yylval, yytext, ALPHA_TOKEN_IDENTIFIER);
 
 "//".*				{fprintf(stderr, "Recognized oneline comment with content: %s\n", yytext);}
-"/*"				{fprintf(stderr, "Recognized multiline comment with with line range: %d-", yylineno);
-					 yy_push_state(COMMENT);
+"/*"				{ int result = stack_push(no_of_line_stack, &yylineno);
+					  RUNTIME_ASSERT(result);
+					  yy_push_state(COMMENT);
 					}
-<COMMENT>"/*"		yy_push_state(COMMENT);
+<COMMENT>"/*"		{ int result = stack_push(no_of_line_stack, &yylineno);
+					  RUNTIME_ASSERT(result);
+					  yy_push_state(COMMENT);
+					}
 <COMMENT>"*/"		{fprintf(stderr, "%d\n", yylineno);
 					 yy_pop_state();
 					}
