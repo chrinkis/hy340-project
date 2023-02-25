@@ -116,23 +116,3 @@ alpha_token_t add_new_token(alpha_token_t tail, const char* text, alpha_token_ca
 
 	return new_token;
 }
-
-int main(int argc, char **argv) {
-  if (argc > 1) {
-    if (!(yyin = fopen(argv[1], "r"))) {
-      fprintf(stderr, "Cannot read file: %s\n", argv[1]);
-      return 1;
-    }
-  } else {
-    yyin = stdin;
-  }
-
-  alpha_token_t head = alpha_token_new(0,0,"",0);
-  alpha_yylex(head);
-
-  alpha_token_t temp = head;
-  head = alpha_token_getNext(head);
-  alpha_token_free(temp);
-
-  return 0;
-}
