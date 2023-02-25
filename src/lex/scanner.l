@@ -103,6 +103,23 @@ real		{integer}\.{integer}
 
 %%
 
+/**
+ * @brief Dynamically concatenates 2 strings
+ *
+ * @param destination The left part of the concatenated string
+ * @param source The right part of the concatenated string
+ * @return null if concatenation failed, else the concatenated string
+ *
+ * @pre @p destination != null
+ * @pre @p source != null
+ *
+ * @post @p destination and @p source will be left intact
+ * @post Memory for the concatenated string will be allocated using `malloc`
+ * (user should call `free` to free the memory)
+ *
+ */
+char* strcat_dynamic(const char* destination, const char* source);
+
 alpha_token_t add_new_token(alpha_token_t tail, const char* text, alpha_token_category_t category) {
 	int next_sequence_number = alpha_token_getSequenceNumber(tail) + 1;
 
