@@ -33,7 +33,7 @@ integer		{digit}+
 /* Nick's additions */
 real		{integer}\.{integer}
 
-%x COMMENT INCLUDE
+%x COMMENT
 %s STRING
 %s ESCAPE
 
