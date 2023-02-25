@@ -28,8 +28,8 @@ integer		{digit}+
 real		{integer}\.{integer}
 
 %x COMMENT INCLUDE
-%s STRING
-%s ESCAPE
+%x STRING
+%x ESCAPE
 
 %%
 
