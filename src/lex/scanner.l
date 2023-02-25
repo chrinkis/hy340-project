@@ -14,6 +14,7 @@
 %option header-file="../include/lex/scanner.h"
 %option noyywrap
 %option yylineno
+%option stack
 
 /* Flex macros */
 delimeter	[ \t\n]
@@ -93,13 +94,12 @@ real		{integer}\.{integer}
 
 "//".*				{fprintf(stderr, "Recognized oneline comment with content: %s\n", yytext);}
 "/*"				{fprintf(stderr, "Recognized multiline comment with with line range: %d-", yylineno);
-					 BEGIN(COMMENT);
+					 yy_push_state(COMMENT);
 					}
-<COMMENT>[^*]*		/* eat anything that's not a '*' = do nothing */
-<COMMENT>"*"+[^*/]*	/* eat anything that's not a '*' = do nothing */
-<COMMENT>"*"+"/"*	{fprintf(stderr, "%d\n", yylineno);
-					 BEGIN(INITIAL);
+<COMMENT>"*/"		{fprintf(stderr, "%d\n", yylineno);
+					 yy_pop_state();
 					}
+<COMMENT>.			/* ignore the rest of the characters */
 <COMMENT><<EOF>>	return NOT_CLOSED_COMMENT;
 .					{fprintf(stderr, "Cannot match character '%s' with any rule\n", yytext);}
 
