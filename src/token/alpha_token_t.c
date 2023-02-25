@@ -133,3 +133,9 @@ void alpha_token_setCategory(const alpha_token_t self,
 
   assert(self->category == category);
 }
+
+int alpha_token_hasNext(const alpha_token_t self) {
+  assert(self);
+
+  return !!self->next;
+}
