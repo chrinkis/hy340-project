@@ -59,22 +59,22 @@ real		{integer}\.{integer}
 "("					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LEFT_PARENTHESIS);
 ")"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_RIGHT_PARENTHESIS);
 
+"if"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_IF);
+"else"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_ELSE);
+"while"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_WHILE);
+"for"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_FOR);
+"function"			yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_FUNCTION);
+"return"			yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_RETURN);
+"break"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_BREAK);
+"continue"			yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_CONTINUE);
+"and"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_AND);
+"not"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_NOT);
+"or"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_OR);
+"local"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LOCAL);
+"true"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_TRUE);
+"false"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_FALSE);
+"nil"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_NIL);
 {integer} 			yylval = new_token(yylval, yytext, ALPHA_TOKEN_INTEGER);
-"if"
-"else"
-"while"
-"for"
-"function"
-"return"
-"break"
-"continue"
-"and"
-"not"
-"or"
-"local"
-"true"
-"false"
-"nil"
 
 ";"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_SEMICOLON);
 ","					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_COMMA);
