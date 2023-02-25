@@ -118,7 +118,26 @@ real		{integer}\.{integer}
  * (user should call `free` to free the memory)
  *
  */
-char* strcat_dynamic(const char* destination, const char* source);
+char* strcat_dynamic(const char* destination, const char* source) {
+  assert(destination);
+  assert(source);
+
+  char* concatenated_str =
+      malloc(sizeof(char) * (strlen(destination) + strlen(source) + 1));
+
+  if (!concatenated_str) {
+    return NULL;
+  }
+
+  concatenated_str = strcpy(concatenated_str, destination);
+  concatenated_str = strcat(concatenated_str, source);
+
+  assert(concatenated_str);
+  assert(!strncmp(concatenated_str, destination, strlen(destination)));
+  assert(
+      !strncmp(&concatenated_str[strlen(destination)], source, strlen(source)));
+  return concatenated_str;
+}
 
 alpha_token_t add_new_token(alpha_token_t tail, const char* text, alpha_token_category_t category) {
 	int next_sequence_number = alpha_token_getSequenceNumber(tail) + 1;
