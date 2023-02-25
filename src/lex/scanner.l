@@ -34,8 +34,10 @@ real		{integer}\.{integer}
 <STRING>[^\\\"]*	/* read until escape char or end of string char */
 <STRING>\"			BEGIN(INITIAL); /* end of string */
 <STRING>\\			BEGIN(ESCAPE); /* escape char follows */
+<STRING><<EOF>>		return NOT_CLOSED_STRING;
 <ESCAPE>[\"nt\\]	BEGIN(STRING); /* which escaped char? */
 <ESCAPE>[.]*		/* Unknown escaped charachter (No mans land) */
+<ESCAPE><<EOF>>		return NOT_CLOSED_STRING;
 \"					BEGIN(STRING); /* String literal begins */
 
 {whitespaces}		{fprintf(stderr, "ignore\n", yytext);}
