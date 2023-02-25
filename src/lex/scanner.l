@@ -2,7 +2,9 @@
 #include<assert.h>
 #include <alpha_token.h>
 #include <alpha_token_category.h>
+#include "../../include/collections/stack.h"
 
+#define SUCCESS 0
 #define NOT_CLOSED_STRING 	-1
 #define NOT_CLOSED_COMMENT	-2
 #define RUNTIME_ASSERT(what) assert(what)
@@ -33,14 +35,17 @@ real		{integer}\.{integer}
 %s ESCAPE
 
 %%
+stack_t no_of_line_stack = stack_new(sizeof(int));
+RUNTIME_ASSERT(no_of_line_stack);
+
 
 <STRING>[^\\\"]*	/* read until escape char or end of string char */
 <STRING>\"			BEGIN(INITIAL); /* end of string */
 <STRING>\\			BEGIN(ESCAPE); /* escape char follows */
-<STRING><<EOF>>		return NOT_CLOSED_STRING;
+<STRING><<EOF>>		return return_safely(NOT_CLOSED_STRING, no_of_line_stack);
 <ESCAPE>[\"nt\\]	BEGIN(STRING); /* which escaped char? */
 <ESCAPE>[.]*		/* Unknown escaped charachter (No mans land) */
-<ESCAPE><<EOF>>		return NOT_CLOSED_STRING;
+<ESCAPE><<EOF>>		return return_safely(NOT_CLOSED_STRING, no_of_line_stack);
 \"					BEGIN(STRING); /* String literal begins */
 
 {whitespaces}		/* ignore whitespaces */
@@ -100,10 +105,17 @@ real		{integer}\.{integer}
 					 yy_pop_state();
 					}
 <COMMENT>.			/* ignore the rest of the characters */
-<COMMENT><<EOF>>	return NOT_CLOSED_COMMENT;
+<COMMENT><<EOF>>	return return_safely(NOT_CLOSED_COMMENT, no_of_line_stack);
+
+<<EOF>>				return return_safely(SUCCESS, no_of_line_stack);
 .					{fprintf(stderr, "Cannot match character '%s' with any rule\n", yytext);}
 
 %%
+
+int return_safely(int return_value, stack_t no_of_line_stack) {
+	stack_free(no_of_line_stack);
+	return return_value;
+}
 
 alpha_token_t add_new_token(alpha_token_t tail, const char* text, alpha_token_category_t category) {
 	int next_sequence_number = alpha_token_getSequenceNumber(tail) + 1;
