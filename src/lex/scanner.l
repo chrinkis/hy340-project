@@ -1,6 +1,6 @@
 %{
 #include<assert.h>
-#include "../../include/token/alpha_token_t.h"
+#include "../../include/token/alpha_token.h"
 #include "../../include/token/alpha_token_category.h"
 
 #define NOT_CLOSED_STRING 	-1

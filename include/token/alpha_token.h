@@ -1,5 +1,5 @@
-#ifndef __ALPHA_TOKEN_T__
-#define __ALPHA_TOKEN_T__
+#ifndef __ALPHA_TOKEN__
+#define __ALPHA_TOKEN__
 
 #include "alpha_token_category.h"
 

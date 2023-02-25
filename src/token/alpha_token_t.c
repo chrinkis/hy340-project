@@ -1,4 +1,4 @@
-#include "../../include/token/alpha_token_t.h"
+#include "../../include/token/alpha_token.h"
 
 #include <assert.h>
 #include <stdlib.h>
