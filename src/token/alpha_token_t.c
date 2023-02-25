@@ -150,3 +150,13 @@ alpha_token_t alpha_token_getNext(const alpha_token_t self) {
 
   return result;
 }
+
+int alpha_token_setNext(const alpha_token_t self, const alpha_token_t next) {
+  assert(self);
+
+  self->next = next;
+
+  assert(self->next == next);
+
+  return 1;
+}
