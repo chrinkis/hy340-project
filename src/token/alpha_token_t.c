@@ -139,3 +139,14 @@ int alpha_token_hasNext(const alpha_token_t self) {
 
   return !!self->next;
 }
+
+alpha_token_t alpha_token_getNext(const alpha_token_t self) {
+  assert(self);
+  assert(alpha_token_hasNext(self));
+
+  alpha_token_t result = self->next;
+
+  assert(result);
+
+  return result;
+}
