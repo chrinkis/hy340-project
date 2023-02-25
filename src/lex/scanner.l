@@ -37,20 +37,20 @@ real		{integer}\.{integer}
 \"					BEGIN(STRING); /* String literal begins */
 
 {whitespaces}		{fprintf(stderr, "ignore\n", yytext);}
-"="					{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-"+"					{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-"-"					{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-"*"					{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-"/"					{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-"%"					{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-"=="				{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-"!="				{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-"++"				{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-"--"				{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-">"					{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-"<"					{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-">="				{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-"<="				{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
+"="					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_ASSIGN);
+"+"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_PLUS);
+"-"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_MINUS);
+"*"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_STAR);
+"/"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_DIV);
+"%"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_MOD);
+"=="				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_EQUALS);
+"!="				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_NOT_EQUALS);
+"++"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_PLUS_PLUS);
+"--"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_MINUS_MINUS);
+">"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_GREATER);
+"<"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LESS);
+">="				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_GREATER_EQUALS);
+"<="				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LESS_EQUALS);
 "{"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LEFT_CURLY_BRACKET);
 "}"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_RIGHT_CURLY_BRACKET);
 "["					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LEFT_SQUARE_BRACKET);
