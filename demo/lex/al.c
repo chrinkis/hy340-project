@@ -222,5 +222,7 @@ int main(int argc, char** argv) {
       break;
   }
 
+  free_list_of_alpha_tokens(head);
+
   return 0;
 }
