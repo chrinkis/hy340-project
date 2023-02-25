@@ -122,6 +122,17 @@ int return_safely(int return_value, stack_t no_of_line_stack) {
 	return return_value;
 }
 
+int get_number_of_digits(int x) {
+  int no_of_digits = 0;
+
+  do {
+    x /= 10;
+    no_of_digits++;
+  } while (x != 0);
+
+  return no_of_digits;
+}
+
 alpha_token_t add_new_token(alpha_token_t tail, const char* text, alpha_token_category_t category) {
 	int next_sequence_number = alpha_token_getSequenceNumber(tail) + 1;
 
