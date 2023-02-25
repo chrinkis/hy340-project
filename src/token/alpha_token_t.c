@@ -85,3 +85,13 @@ void alpha_token_setSequenceNumber(const alpha_token_t self,
 
   assert(self->sequence_number == sequence_number);
 }
+
+const char* alpha_token_getContent(const alpha_token_t self) {
+  assert(self);
+
+  const char* const result = self->content;
+
+  assert(result);
+
+  return result;
+}
