@@ -169,6 +169,18 @@ void print_list_of_alpha_tokens(alpha_token_t head, FILE* stream) {
   print_alpha_token(head, stream);
 }
 
+void free_list_of_alpha_tokens(alpha_token_t head) {
+  assert(head);
+
+  while (alpha_token_hasNext(head)) {
+    alpha_token_t token_to_delete = head;
+    head = alpha_token_getNext(head);
+    alpha_token_free(token_to_delete);
+  }
+
+  alpha_token_free(head);
+}
+
 int main(int argc, char** argv) {
   assert((argc >= 0) && (argc <= 3));
 
