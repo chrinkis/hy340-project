@@ -13,7 +13,7 @@
 
 /* Flex macros */
 delimeter	[ \t\n]
-whitespaces	[delimeter]+
+whitespaces	{delimeter}+
 letter		[a-zA-Z]
 digit		[0-9]
 underscore	[_]
