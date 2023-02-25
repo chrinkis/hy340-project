@@ -1,7 +1,7 @@
 %{
 #include<assert.h>
-#include "../../include/token/alpha_token.h"
-#include "../../include/token/alpha_token_category.h"
+#include <alpha_token.h>
+#include <alpha_token_category.h>
 
 #define NOT_CLOSED_STRING 	-1
 #define NOT_CLOSED_COMMENT	-2
@@ -10,6 +10,8 @@
 %}
 
 /* Flex options */
+%option outfile="../src/lex/scanner.c"
+%option header-file="../include/lex/scanner.h"
 %option noyywrap
 %option yylineno
 
