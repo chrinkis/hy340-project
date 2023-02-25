@@ -31,14 +31,19 @@ real		{integer}\.{integer}
 
 %%
 
-<STRING>[^\\\"]*	/* read until escape char or end of string char */
+<STRING>[^\\\"]*	concat_content_of_token(yylval, yytext); /* read until escape char or end of string char */
 <STRING>\"			BEGIN(INITIAL); /* end of string */
 <STRING>\\			BEGIN(ESCAPE); /* escape char follows */
 <STRING><<EOF>>		return NOT_CLOSED_STRING;
 <ESCAPE>[\"nt\\]	BEGIN(STRING); /* which escaped char? */
-<ESCAPE>[.]*		/* Unknown escaped charachter (No mans land) */
+<ESCAPE>[.]*		{ char* temp_str = strcat_dynamic("/", yytext);
+					  concat_content_of_token(yylval, temp_str);
+					  free(temp_str);
+					}
 <ESCAPE><<EOF>>		return NOT_CLOSED_STRING;
-\"					BEGIN(STRING); /* String literal begins */
+\"					{ yylval = new_token(yylval, "", ALPHA_TOKEN_STRING);
+					  BEGIN(STRING); /* String literal begins */
+					}
 
 {whitespaces}		/* ignore whitespaces */
 {real}				yylval = new_token(yylval, yytext, ALPHA_TOKEN_FLOAT);
