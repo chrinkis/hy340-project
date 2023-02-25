@@ -139,7 +139,31 @@ int get_number_of_digits(int x) {
   return no_of_digits;
 }
 
-char* get_range_as_string(int start, int end);
+char* get_range_as_string(int start, int end) {
+  assert(start <= end);
+
+  int digits_of_start = get_number_of_digits(start);
+  int digits_of_end = get_number_of_digits(end);
+
+  char* range = malloc(sizeof(char) * (digits_of_start + digits_of_end + 2));
+  RUNTIME_ASSERT(range);
+  char* start_as_string = malloc(sizeof(char) * (digits_of_start + 1));
+  RUNTIME_ASSERT(start_as_string);
+  char* end_as_string = malloc(sizeof(char) * (digits_of_end + 1));
+  RUNTIME_ASSERT(end_as_string);
+
+  sprintf(start_as_string, "%d", start);
+  sprintf(end_as_string, "%d", end);
+
+  range = strcpy(range, start_as_string);
+  range = strcat(range, "-");
+  range = strcat(range, end_as_string);
+
+  free(start_as_string);
+  free(end_as_string);
+
+  return range;
+}
 
 alpha_token_t add_new_token(alpha_token_t tail, const char* text, alpha_token_category_t category) {
 	int next_sequence_number = alpha_token_getSequenceNumber(tail) + 1;
