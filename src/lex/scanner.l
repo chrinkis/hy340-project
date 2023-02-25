@@ -3,6 +3,8 @@
 #include "../../include/token/alpha_token_t.h"
 #include "../../include/token/alpha_token_category.h"
 
+#define NOT_CLOSED_STRING 	-1
+#define NOT_CLOSED_COMMENT	-2
 #define RUNTIME_ASSERT(what) assert(what)
 #define YY_DECL int alpha_yylex(void* yylval)
 %}
