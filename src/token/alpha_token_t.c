@@ -44,8 +44,9 @@ alpha_token_t alpha_token_new(unsigned int line,
   assert(self);
   assert(self->line == line);
   assert(self->sequence_number == sequence_number);
-  assert(self->content && !strcmp(self->content, content) &&
-         self->content != content);
+  assert(self->content);
+  assert(!strcmp(self->content, content));
+  assert(self->content != content);
   assert(self->category == category);
   assert(!self->next);
 
