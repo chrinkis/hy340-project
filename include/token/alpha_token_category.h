@@ -1,7 +1,7 @@
 #ifndef __ALPHA_TOKEN_CATEGORY__
 #define __ALPHA_TOKEN_CATEGORY__
 
-enum alpha_token_category {
+typedef enum {
   ALPHA_TOKEN_INTEGER,
   ALPHA_TOKEN_FLOAT,
   ALPHA_TOKEN_STRING,
@@ -48,6 +48,6 @@ enum alpha_token_category {
   ALPHA_TOKEN_DOUBLE_COLON,         /*| :: |*/
   ALPHA_TOKEN_DOT,                  /*| .  |*/
   ALPHA_TOKEN_DOUBLE_DOT,           /*| .. |*/
-};
+} alpha_token_category_t;
 
 #endif

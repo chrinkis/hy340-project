@@ -1,4 +1,4 @@
-#include "../../include/token/alpha_token_t.h"
+#include "../../include/token/alpha_token.h"
 
 #include <assert.h>
 #include <stdlib.h>
@@ -11,7 +11,7 @@ struct _alpha_token_t {
   unsigned int sequence_number;
 
   char* content;
-  enum alpha_token_category category;
+  alpha_token_category_t category;
 
   alpha_token_t next;
 };
@@ -19,7 +19,7 @@ struct _alpha_token_t {
 alpha_token_t alpha_token_new(unsigned int line,
                               unsigned int sequence_number,
                               const char* const content,
-                              enum alpha_token_category category) {
+                              alpha_token_category_t category) {
   assert(content);
 
   alpha_token_t self = malloc(sizeof(struct _alpha_token_t));
@@ -127,17 +127,17 @@ void alpha_token_setContent(const alpha_token_t self,
   assert(self->content != content);
 }
 
-enum alpha_token_category alpha_token_getCategory(const alpha_token_t self) {
+alpha_token_category_t alpha_token_getCategory(const alpha_token_t self) {
   assert(self);
 
-  enum alpha_token_category result = self->category;
+  alpha_token_category_t result = self->category;
 
   assert(result == self->category);
   return result;
 }
 
 void alpha_token_setCategory(const alpha_token_t self,
-                             enum alpha_token_category category) {
+                             alpha_token_category_t category) {
   assert(self);
 
   self->category = category;
