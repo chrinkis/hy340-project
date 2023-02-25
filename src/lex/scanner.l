@@ -139,6 +139,19 @@ char* strcat_dynamic(const char* destination, const char* source) {
   return concatenated_str;
 }
 
+void concat_content_of_token(alpha_token_t token, const char* src_content) {
+	RUNTIME_ASSERT(token);
+	RUNTIME_ASSERT(src_content);
+
+	const char* token_content = alpha_token_getContent(token);
+	char* temp_str = strcat_dynamic(token_content, src_content);
+	RUNTIME_ASSERT(temp_str);
+
+	alpha_token_setContent(temp_str);
+
+	free(temp_str);
+}
+
 alpha_token_t add_new_token(alpha_token_t tail, const char* text, alpha_token_category_t category) {
 	int next_sequence_number = alpha_token_getSequenceNumber(tail) + 1;
 
