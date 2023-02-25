@@ -2,6 +2,8 @@
 #include <assert.h>
 #include <stdio.h>
 
+#include "../../include/lex/scanner.h"
+
 void print_alpha_token(const alpha_token_t token, FILE* stream) {
   assert(token);
 
@@ -165,4 +167,48 @@ void print_list_of_alpha_tokens(alpha_token_t head, FILE* stream) {
   }
 
   print_alpha_token(head, stream);
+}
+
+int main(int argc, char** argv) {
+  assert((argc >= 0) && (argc <= 3));
+
+  if (argc > 1) {
+    if (!(yyin = fopen(argv[1], "r"))) {
+      fprintf(stderr, "Cannot read file: %s\n", argv[1]);
+      return 1;
+    }
+  } else {
+    yyin = stdin;
+  }
+
+  FILE* output_stream = stdout;
+  if (argc > 2) {
+    if (!(output_stream = fopen(argv[2], "w"))) {
+      fprintf(stderr, "Cannot write file: %s\n", argv[1]);
+      return 1;
+    }
+  }
+
+  alpha_token_t head = alpha_token_new(0, 0, "", 0);
+  int lex_result = alpha_yylex(head);
+
+  /* Remove invalid head */
+  alpha_token_t temp = head;
+  head = alpha_token_getNext(head);
+  alpha_token_free(temp);
+
+  switch (lex_result) {
+    case NOT_CLOSED_STRING:
+      fprintf(stderr, "ERROR NOT CLOSING STRING\n");
+      break;
+    case NOT_CLOSED_COMMENT:
+      fprintf(stderr, "ERROR NOT CLOSING COMMENT\n");
+      break;
+      /* Add case for unkown character */
+    case default:
+      print_list_of_alpha_tokens(head, output_stream);
+      break;
+  }
+
+  return 0;
 }
