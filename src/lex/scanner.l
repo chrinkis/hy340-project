@@ -74,7 +74,7 @@ real		{integer}\.{integer}
 "local"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LOCAL);
 "true"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_TRUE);
 "false"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_FALSE);
-"nil"
+"nil"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_NIL);
 
 ";"
 ","
