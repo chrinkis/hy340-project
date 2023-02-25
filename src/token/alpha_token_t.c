@@ -13,7 +13,7 @@ struct _alpha_token_t {
   char* content;
   enum alpha_token_category category;
 
-  struct alpha_token_t* next;
+  alpha_token_t next;
 };
 
 alpha_token_t alpha_token_new(unsigned int line,
