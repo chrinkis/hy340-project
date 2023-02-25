@@ -101,6 +101,7 @@ RUNTIME_ASSERT(no_of_line_stack);
 "/*"				{fprintf(stderr, "Recognized multiline comment with with line range: %d-", yylineno);
 					 yy_push_state(COMMENT);
 					}
+<COMMENT>"/*"		yy_push_state(COMMENT);
 <COMMENT>"*/"		{fprintf(stderr, "%d\n", yylineno);
 					 yy_pop_state();
 					}
