@@ -98,6 +98,7 @@ real		{integer}\.{integer}
 <COMMENT>"*"+"/"*	{fprintf(stderr, "%d\n", yylineno);
 					 BEGIN(INITIAL);
 					}
+<COMMENT><<EOF>>	return NOT_CLOSED_COMMENT;
 .					{fprintf(stderr, "Cannot match character '%s' with any rule\n", yytext);}
 
 %%
