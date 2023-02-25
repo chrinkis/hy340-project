@@ -56,3 +56,9 @@ void alpha_token_free(alpha_token_t self) {
   free(self->content);
   free(self);
 }
+
+unsigned int alpha_token_getLine(const alpha_token_t self) {
+  assert(self);
+
+  return self->line;
+}
