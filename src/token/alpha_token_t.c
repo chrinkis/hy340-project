@@ -48,3 +48,11 @@ alpha_token_t alpha_token_new(unsigned int line,
 
   return self;
 }
+
+void alpha_token_free(alpha_token_t self) {
+  assert(self);
+  assert(self->content);
+
+  free(self->content);
+  free(self);
+}
