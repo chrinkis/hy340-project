@@ -97,7 +97,7 @@ RUNTIME_ASSERT(no_of_line_stack);
 
 {identifier}		yylval = new_token(yylval, yytext, ALPHA_TOKEN_IDENTIFIER);
 
-"//".*				{fprintf(stderr, "Recognized oneline comment with content: %s\n", yytext);}
+"//".*				yylval = new_token(yylval, "", ALPHA_TOKEN_ONE_LINE_COMMENT);
 "/*"				{ int result = stack_push(no_of_line_stack, &yylineno);
 					  RUNTIME_ASSERT(result);
 					  yy_push_state(COMMENT);
