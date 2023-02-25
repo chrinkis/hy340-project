@@ -1,5 +1,7 @@
 %{
 #include<assert.h>
+#include<stdlib.h>
+#include<string.h>
 #include "../../include/token/alpha_token.h"
 #include "../../include/token/alpha_token_category.h"
 
