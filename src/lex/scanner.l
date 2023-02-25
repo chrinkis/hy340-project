@@ -51,12 +51,12 @@ real		{integer}\.{integer}
 "<"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LESS);
 ">="				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_GREATER_EQUALS);
 "<="				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LESS_EQUALS);
-"{"					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
-"}"					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
-"["					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
-"]"					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
-"("					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
-")"					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
+"{"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LEFT_CURLY_BRACKET);
+"}"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_RIGHT_CURLY_BRACKET);
+"["					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LEFT_SQUARE_BRACKET);
+"]"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_RIGHT_SQUARE_BRACKET);
+"("					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LEFT_PARENTHESIS);
+")"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_RIGHT_PARENTHESIS);
 {real}				{fprintf(stderr, "Recognies real number with content: %s\n", yytext);}
 
 {integer}
@@ -76,14 +76,14 @@ real		{integer}\.{integer}
 "false"
 "nil"
 
-";"
-","
-"::"
-":"
-".."
-"."
+";"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_SEMICOLON);
+","					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_COMMA);
+"::"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_DOUBLE_COLON);
+":"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_COLON);
+".."				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_DOUBLE_DOT);
+"."					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_DOT);
 
-{identifier}
+{identifier}		yylval = new_token(yylval, yytext, ALPHA_TOKEN_IDENTIFIER);
 
 "//".*				{fprintf(stderr, "Recognized oneline comment with content: %s\n", yytext);}
 "/*"				{fprintf(stderr, "Recognized multiline comment with with line range: %d-", yylineno);
