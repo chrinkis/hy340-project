@@ -66,7 +66,11 @@ void alpha_token_free(alpha_token_t self) {
 unsigned int alpha_token_getLine(const alpha_token_t self) {
   assert(self);
 
-  return self->line;
+  unsigned int result = self->line;
+
+  assert(result == self->line);
+
+  return result;
 }
 
 void alpha_token_setLine(const alpha_token_t self, unsigned int line) {
@@ -80,7 +84,11 @@ void alpha_token_setLine(const alpha_token_t self, unsigned int line) {
 unsigned int alpha_token_getSequenceNumber(const alpha_token_t self) {
   assert(self);
 
-  return self->sequence_number;
+  unsigned int result = self->sequence_number;
+
+  assert(result == self->sequence_number);
+
+  return result;
 }
 
 void alpha_token_setSequenceNumber(const alpha_token_t self,
@@ -126,7 +134,11 @@ void alpha_token_setContent(const alpha_token_t self,
 enum alpha_token_category alpha_token_getCategory(const alpha_token_t self) {
   assert(self);
 
-  return self->category;
+  enum alpha_token_category result = self->category;
+
+  assert(result == self->category);
+
+  return result;
 }
 
 void alpha_token_setCategory(const alpha_token_t self,
