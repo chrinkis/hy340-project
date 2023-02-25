@@ -1,5 +1,8 @@
 %{
 #include<assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <alpha_token.h>
 #include <alpha_token_category.h>
 #include "../../include/collections/stack.h"
