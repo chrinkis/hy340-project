@@ -37,29 +37,28 @@ real		{integer}\.{integer}
 \"					BEGIN(STRING); /* String literal begins */
 
 {whitespaces}		{fprintf(stderr, "ignore\n", yytext);}
-"="					{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-"+"					{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-"-"					{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-"*"					{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-"/"					{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-"%"					{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-"=="				{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-"!="				{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-"++"				{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-"--"				{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-">"					{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-"<"					{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-">="				{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-"<="				{fprintf(stderr, "Recognized operator with content: %s\n", yytext);}
-"{"					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
-"}"					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
-"["					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
-"]"					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
-"("					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
-")"					{fprintf(stderr, "Recognized punctuation with content: %s\n", yytext);}
-{real}				{fprintf(stderr, "Recognies real number with content: %s\n", yytext);}
+{real}				yylval = new_token(yylval, yytext, ALPHA_TOKEN_FLOAT);
+"="					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_ASSIGN);
+"+"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_PLUS);
+"-"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_MINUS);
+"*"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_STAR);
+"/"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_DIV);
+"%"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_MOD);
+"=="				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_EQUALS);
+"!="				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_NOT_EQUALS);
+"++"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_PLUS_PLUS);
+"--"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_MINUS_MINUS);
+">"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_GREATER);
+"<"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LESS);
+">="				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_GREATER_EQUALS);
+"<="				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LESS_EQUALS);
+"{"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LEFT_CURLY_BRACKET);
+"}"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_RIGHT_CURLY_BRACKET);
+"["					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LEFT_SQUARE_BRACKET);
+"]"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_RIGHT_SQUARE_BRACKET);
+"("					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LEFT_PARENTHESIS);
+")"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_RIGHT_PARENTHESIS);
 
-{integer}
 "if"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_IF);
 "else"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_ELSE);
 "while"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_WHILE);
@@ -75,15 +74,16 @@ real		{integer}\.{integer}
 "true"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_TRUE);
 "false"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_FALSE);
 "nil"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_NIL);
+{integer} 			yylval = new_token(yylval, yytext, ALPHA_TOKEN_INTEGER);
 
-";"
-","
-"::"
-":"
-".."
-"."
+";"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_SEMICOLON);
+","					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_COMMA);
+"::"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_DOUBLE_COLON);
+":"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_COLON);
+".."				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_DOUBLE_DOT);
+"."					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_DOT);
 
-{identifier}
+{identifier}		yylval = new_token(yylval, yytext, ALPHA_TOKEN_IDENTIFIER);
 
 "//".*				{fprintf(stderr, "Recognized oneline comment with content: %s\n", yytext);}
 "/*"				{fprintf(stderr, "Recognized multiline comment with with line range: %d-", yylineno);
