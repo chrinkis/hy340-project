@@ -49,7 +49,6 @@ alpha_token_t alpha_token_new(unsigned int line,
   assert(self->content != content);
   assert(self->category == category);
   assert(!self->next);
-
   return self;
 }
 
@@ -69,7 +68,6 @@ unsigned int alpha_token_getLine(const alpha_token_t self) {
   unsigned int result = self->line;
 
   assert(result == self->line);
-
   return result;
 }
 
@@ -87,7 +85,6 @@ unsigned int alpha_token_getSequenceNumber(const alpha_token_t self) {
   unsigned int result = self->sequence_number;
 
   assert(result == self->sequence_number);
-
   return result;
 }
 
@@ -106,7 +103,6 @@ const char* alpha_token_getContent(const alpha_token_t self) {
   const char* const result = self->content;
 
   assert(result);
-
   return result;
 }
 
@@ -137,7 +133,6 @@ enum alpha_token_category alpha_token_getCategory(const alpha_token_t self) {
   enum alpha_token_category result = self->category;
 
   assert(result == self->category);
-
   return result;
 }
 
@@ -163,7 +158,6 @@ alpha_token_t alpha_token_getNext(const alpha_token_t self) {
   alpha_token_t result = self->next;
 
   assert(result);
-
   return result;
 }
 
@@ -173,6 +167,5 @@ int alpha_token_setNext(const alpha_token_t self, const alpha_token_t next) {
   self->next = next;
 
   assert(self->next == next);
-
   return 1;
 }
