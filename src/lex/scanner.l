@@ -37,6 +37,7 @@ real		{integer}\.{integer}
 \"					BEGIN(STRING); /* String literal begins */
 
 {whitespaces}		{fprintf(stderr, "ignore\n", yytext);}
+{real}				yylval = new_token(yylval, yytext, ALPHA_TOKEN_FLOAT);
 "="					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_ASSIGN);
 "+"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_PLUS);
 "-"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_MINUS);
@@ -57,9 +58,8 @@ real		{integer}\.{integer}
 "]"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_RIGHT_SQUARE_BRACKET);
 "("					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LEFT_PARENTHESIS);
 ")"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_RIGHT_PARENTHESIS);
-{real}				{fprintf(stderr, "Recognies real number with content: %s\n", yytext);}
 
-{integer}
+{integer} 			yylval = new_token(yylval, yytext, ALPHA_TOKEN_INTEGER);
 "if"
 "else"
 "while"
