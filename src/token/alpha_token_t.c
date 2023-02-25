@@ -70,3 +70,9 @@ void alpha_token_setLine(const alpha_token_t self, unsigned int line) {
 
   assert(self->line == line);
 }
+
+unsigned int alpha_token_getSequenceNumber(const alpha_token_t self) {
+  assert(self);
+
+  return self->sequence_number;
+}
