@@ -106,8 +106,14 @@ RUNTIME_ASSERT(no_of_line_stack);
 					  RUNTIME_ASSERT(result);
 					  yy_push_state(COMMENT);
 					}
-<COMMENT>"*/"		{fprintf(stderr, "%d\n", yylineno);
-					 yy_pop_state();
+<COMMENT>"*/"		{ int start_of_comment;
+					  stack_pop(no_of_line_stack, &start_of_comment);
+
+					  char* line_range = get_range_as_string(start_of_comment, yylineno);
+					  yylval = add_new_token(yylval, line_range, ALPHA_TOKEN_BLOCK_COMMENT);
+					  free(line_range);
+
+					  yy_pop_state();
 					}
 <COMMENT>.			/* ignore the rest of the characters */
 <COMMENT><<EOF>>	return return_safely(NOT_CLOSED_COMMENT, no_of_line_stack);
@@ -132,6 +138,8 @@ int get_number_of_digits(int x) {
 
   return no_of_digits;
 }
+
+char* get_range_as_string(int start, int end);
 
 alpha_token_t add_new_token(alpha_token_t tail, const char* text, alpha_token_category_t category) {
 	int next_sequence_number = alpha_token_getSequenceNumber(tail) + 1;
