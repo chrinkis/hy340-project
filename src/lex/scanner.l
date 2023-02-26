@@ -50,80 +50,80 @@ real		{integer}\.{integer}
 	assert(sizeof(int) == sizeof(yylineno));
 	stack_t no_of_line_stack = stack_new(sizeof(int));
 	RUNTIME_ASSERT(no_of_line_stack);
+	alpha_token_t node = *((alpha_token_t*)yylval);
 
-
-<STRING>[^\\\"]*	concat_content_of_token(yylval, yytext); /* read until escape char or end of string char */
+<STRING>[^\\\"]*	concat_content_of_token(node, yytext); /* read until escape char or end of string char */
 <STRING>\"			BEGIN(INITIAL); /* end of string */
 <STRING>\\			BEGIN(ESCAPE); /* escape char follows */
 <STRING><<EOF>>		return return_safely(NOT_CLOSED_STRING, no_of_line_stack);
 <ESCAPE><<EOF>>		return return_safely(NOT_CLOSED_STRING, no_of_line_stack);
-<ESCAPE>"\""		{ concat_content_of_token(yylval, "\"");
+<ESCAPE>"\""		{ concat_content_of_token(node, "\"");
 					  BEGIN(STRING); /* which escaped char? */
 					}
-<ESCAPE>"n"			{ concat_content_of_token(yylval, "\n");
+<ESCAPE>"n"			{ concat_content_of_token(node, "\n");
 					  BEGIN(STRING); /* which escaped char? */
 					}
-<ESCAPE>"t"			{ concat_content_of_token(yylval, "\t");
+<ESCAPE>"t"			{ concat_content_of_token(node, "\t");
 					  BEGIN(STRING); /* which escaped char? */
 					}
-<ESCAPE>"\\"		{ concat_content_of_token(yylval, "\\");
+<ESCAPE>"\\"		{ concat_content_of_token(node, "\\");
 					  BEGIN(STRING); /* which escaped char? */
 					}
 <ESCAPE>.|"\n"		return return_safely(UNKNOWN_ESCAPE_CHAR, no_of_line_stack);
-\"					{ yylval = add_new_token(yylval, "", ALPHA_TOKEN_STRING);
+\"					{ node = add_new_token(node, "", ALPHA_TOKEN_STRING);
 					  BEGIN(STRING); /* String literal begins */
 					}
 
 {whitespaces}		/* ignore whitespaces */
-{real}				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_FLOAT);
-"="					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_ASSIGN);
-"+"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_PLUS);
-"-"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_MINUS);
-"*"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_STAR);
-"/"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_DIV);
-"%"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_MOD);
-"=="				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_EQUALS);
-"!="				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_NOT_EQUALS);
-"++"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_PLUS_PLUS);
-"--"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_MINUS_MINUS);
-">"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_GREATER);
-"<"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LESS);
-">="				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_GREATER_EQUALS);
-"<="				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LESS_EQUALS);
-"{"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LEFT_CURLY_BRACKET);
-"}"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_RIGHT_CURLY_BRACKET);
-"["					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LEFT_SQUARE_BRACKET);
-"]"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_RIGHT_SQUARE_BRACKET);
-"("					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LEFT_PARENTHESIS);
-")"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_RIGHT_PARENTHESIS);
+{real}				node = add_new_token(node, yytext, ALPHA_TOKEN_FLOAT);
+"="					node = add_new_token(node, yytext, ALPHA_TOKEN_ASSIGN);
+"+"					node = add_new_token(node, yytext, ALPHA_TOKEN_PLUS);
+"-"					node = add_new_token(node, yytext, ALPHA_TOKEN_MINUS);
+"*"					node = add_new_token(node, yytext, ALPHA_TOKEN_STAR);
+"/"					node = add_new_token(node, yytext, ALPHA_TOKEN_DIV);
+"%"					node = add_new_token(node, yytext, ALPHA_TOKEN_MOD);
+"=="				node = add_new_token(node, yytext, ALPHA_TOKEN_EQUALS);
+"!="				node = add_new_token(node, yytext, ALPHA_TOKEN_NOT_EQUALS);
+"++"				node = add_new_token(node, yytext, ALPHA_TOKEN_PLUS_PLUS);
+"--"				node = add_new_token(node, yytext, ALPHA_TOKEN_MINUS_MINUS);
+">"					node = add_new_token(node, yytext, ALPHA_TOKEN_GREATER);
+"<"					node = add_new_token(node, yytext, ALPHA_TOKEN_LESS);
+">="				node = add_new_token(node, yytext, ALPHA_TOKEN_GREATER_EQUALS);
+"<="				node = add_new_token(node, yytext, ALPHA_TOKEN_LESS_EQUALS);
+"{"					node = add_new_token(node, yytext, ALPHA_TOKEN_LEFT_CURLY_BRACKET);
+"}"					node = add_new_token(node, yytext, ALPHA_TOKEN_RIGHT_CURLY_BRACKET);
+"["					node = add_new_token(node, yytext, ALPHA_TOKEN_LEFT_SQUARE_BRACKET);
+"]"					node = add_new_token(node, yytext, ALPHA_TOKEN_RIGHT_SQUARE_BRACKET);
+"("					node = add_new_token(node, yytext, ALPHA_TOKEN_LEFT_PARENTHESIS);
+")"					node = add_new_token(node, yytext, ALPHA_TOKEN_RIGHT_PARENTHESIS);
 
-"if"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_IF);
-"else"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_ELSE);
-"while"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_WHILE);
-"for"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_FOR);
-"function"			yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_FUNCTION);
-"return"			yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_RETURN);
-"break"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_BREAK);
-"continue"			yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_CONTINUE);
-"and"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_AND);
-"not"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_NOT);
-"or"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_OR);
-"local"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_LOCAL);
-"true"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_TRUE);
-"false"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_FALSE);
-"nil"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_NIL);
-{integer} 			yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_INTEGER);
+"if"				node = add_new_token(node, yytext, ALPHA_TOKEN_IF);
+"else"				node = add_new_token(node, yytext, ALPHA_TOKEN_ELSE);
+"while"				node = add_new_token(node, yytext, ALPHA_TOKEN_WHILE);
+"for"				node = add_new_token(node, yytext, ALPHA_TOKEN_FOR);
+"function"			node = add_new_token(node, yytext, ALPHA_TOKEN_FUNCTION);
+"return"			node = add_new_token(node, yytext, ALPHA_TOKEN_RETURN);
+"break"				node = add_new_token(node, yytext, ALPHA_TOKEN_BREAK);
+"continue"			node = add_new_token(node, yytext, ALPHA_TOKEN_CONTINUE);
+"and"				node = add_new_token(node, yytext, ALPHA_TOKEN_AND);
+"not"				node = add_new_token(node, yytext, ALPHA_TOKEN_NOT);
+"or"				node = add_new_token(node, yytext, ALPHA_TOKEN_OR);
+"local"				node = add_new_token(node, yytext, ALPHA_TOKEN_LOCAL);
+"true"				node = add_new_token(node, yytext, ALPHA_TOKEN_TRUE);
+"false"				node = add_new_token(node, yytext, ALPHA_TOKEN_FALSE);
+"nil"				node = add_new_token(node, yytext, ALPHA_TOKEN_NIL);
+{integer} 			node = add_new_token(node, yytext, ALPHA_TOKEN_INTEGER);
 
-";"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_SEMICOLON);
-","					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_COMMA);
-"::"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_DOUBLE_COLON);
-":"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_COLON);
-".."				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_DOUBLE_DOT);
-"."					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_DOT);
+";"					node = add_new_token(node, yytext, ALPHA_TOKEN_SEMICOLON);
+","					node = add_new_token(node, yytext, ALPHA_TOKEN_COMMA);
+"::"				node = add_new_token(node, yytext, ALPHA_TOKEN_DOUBLE_COLON);
+":"					node = add_new_token(node, yytext, ALPHA_TOKEN_COLON);
+".."				node = add_new_token(node, yytext, ALPHA_TOKEN_DOUBLE_DOT);
+"."					node = add_new_token(node, yytext, ALPHA_TOKEN_DOT);
 
-{identifier}		yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_IDENTIFIER);
+{identifier}		node = add_new_token(node, yytext, ALPHA_TOKEN_IDENTIFIER);
 
-"//".*				yylval = add_new_token(yylval, "", ALPHA_TOKEN_ONE_LINE_COMMENT);
+"//".*				node = add_new_token(node, "", ALPHA_TOKEN_ONE_LINE_COMMENT);
 "/*"				{ int result = stack_push(no_of_line_stack, &yylineno);
 					  RUNTIME_ASSERT(result);
 					  yy_push_state(COMMENT);
@@ -136,13 +136,13 @@ real		{integer}\.{integer}
 					  stack_pop(no_of_line_stack, &start_of_comment);
 
 					  char* line_range = get_range_as_string(start_of_comment, yylineno);
-					  yylval = add_new_token(yylval, line_range, ALPHA_TOKEN_BLOCK_COMMENT);
+					  node = add_new_token(node, line_range, ALPHA_TOKEN_BLOCK_COMMENT);
 					  free(line_range);
 					  line_range = NULL;
 
 					  yy_pop_state();
 					}
-<COMMENT>[.\n]		/* ignore the rest of the characters */
+<COMMENT>.|"\n"		/* ignore the rest of the characters */
 <COMMENT><<EOF>>	return return_safely(NOT_CLOSED_COMMENT, no_of_line_stack);
 
 <<EOF>>				return return_safely(SUCCESS, no_of_line_stack);
@@ -238,7 +238,8 @@ void concat_content_of_token(alpha_token_t token, const char* src_content) {
 	char* temp_str = strcat_dynamic(token_content, src_content);
 	RUNTIME_ASSERT(temp_str);
 
-	alpha_token_setContent(token, temp_str);
+	int ok = alpha_token_setContent(token, temp_str);
+	RUNTIME_ASSERT(ok);
 	token_content = NULL; // token_content is not valid anymore
 
 	free(temp_str);
