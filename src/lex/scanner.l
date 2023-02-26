@@ -115,6 +115,7 @@ RUNTIME_ASSERT(no_of_line_stack);
 					  char* line_range = get_range_as_string(start_of_comment, yylineno);
 					  yylval = add_new_token(yylval, line_range, ALPHA_TOKEN_BLOCK_COMMENT);
 					  free(line_range);
+					  line_range = NULL;
 
 					  yy_pop_state();
 					}
@@ -163,7 +164,9 @@ char* get_range_as_string(int start, int end) {
   range = strcat(range, end_as_string);
 
   free(start_as_string);
+  start_as_string = NULL;
   free(end_as_string);
+  end_as_string = NULL;
 
   return range;
 }
