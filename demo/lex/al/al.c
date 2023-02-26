@@ -229,7 +229,7 @@ int main(int argc, char** argv) {
     case UNKNOWN_TOKEN:
       fprintf(stderr, "ERROR UNKOWN TOKEN\n");
       break;
-    case default:
+    default:
       print_list_of_alpha_tokens(head, output_stream);
       break;
   }
