@@ -15,6 +15,37 @@ struct _stack {
   node_t tail;
 };
 
+#define FOR_EACH_BYTE_DUAL(BYTE_A, ADDRESS_A, BYTE_B, ADDRESS_B, SIZE) \
+  for (char *BYTE_A = ADDRESS_A, *BYTE_B = ADDRESS_B;                  \
+       BYTE_A < (char*)(ADDRESS_A) + SIZE; BYTE_A++, BYTE_B++)
+
+static node_t node_new(const void* data, size_t element_size, node_t previous) {
+  assert(data);
+
+  node_t self = malloc(sizeof(struct _node));
+
+  if (!self) {
+    return NULL;
+  }
+
+  self->data = malloc(element_size);
+
+  if (!self->data) {
+    free(self);
+    self = NULL;
+
+    return NULL;
+  }
+
+  FOR_EACH_BYTE_DUAL(src, data, dest, self->data, element_size) {
+    *dest = *src;
+  }
+
+  self->previous = previous;
+
+  return self;
+}
+
 stack_t stack_new(size_t element_size) {
   stack_t self = malloc(sizeof(struct _stack));
 
@@ -43,4 +74,19 @@ int stack_isEmpty(const stack_t self) {
   assert(self);
 
   return !self->tail;
+}
+
+int stack_push(const stack_t self, const void* const source) {
+  assert(self);
+  assert(source);
+
+  node_t node = node_new(source, self->element_size, self->tail);
+
+  if (!node) {
+    return 0;
+  }
+
+  self->tail = node;
+
+  return 1;
 }
