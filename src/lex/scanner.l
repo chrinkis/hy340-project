@@ -11,6 +11,7 @@
 #define NOT_CLOSED_STRING 	-1
 #define NOT_CLOSED_COMMENT	-2
 #define UNKNOWN_ESCAPE_CHAR	-3
+#define UNKNOWN_TOKEN		-4
 #define RUNTIME_ASSERT(what) assert(what)
 #define YY_DECL int alpha_yylex(void* yylval)
 %}
@@ -138,7 +139,7 @@ RUNTIME_ASSERT(no_of_line_stack);
 <COMMENT><<EOF>>	return return_safely(NOT_CLOSED_COMMENT, no_of_line_stack);
 
 <<EOF>>				return return_safely(SUCCESS, no_of_line_stack);
-.					{fprintf(stderr, "Cannot match character '%s' with any rule\n", yytext);}
+.					return return_safely(UNKNOWN_TOKEN, no_of_line_stack);
 
 %%
 
