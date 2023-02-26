@@ -3,6 +3,13 @@
 - Nikolaos Grigoroudis, csd4619@csd.uoc.gr
 - Alexandros Christinakis, csd4764@csd.uoc.gr
 
+## Notes per phase
+
+### Phase I
+
+- The project was implemented according to the project guidelines
+- Things that were not implemented: None
+
 ## For Developers
 
 ### Git and Gitlab
