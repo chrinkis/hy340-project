@@ -61,7 +61,7 @@ RUNTIME_ASSERT(no_of_line_stack);
 <ESCAPE>"\\"		{ concat_content_of_token(yylval, "\\")
 					  BEGIN(STRING); /* which escaped char? */
 					}
-<ESCAPE>[.]*		return UNKNOWN_ESCAPE_CHAR;
+<ESCAPE>[.]*		return return_safely(UNKNOWN_ESCAPE_CHAR, no_of_line_stack);
 \"					{ yylval = new_token(yylval, "", ALPHA_TOKEN_STRING);
 					  BEGIN(STRING); /* String literal begins */
 					}
