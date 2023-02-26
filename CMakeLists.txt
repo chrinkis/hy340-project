@@ -12,8 +12,8 @@ project(hy340-project)
 # For Flex
 find_package(FLEX 2.5.13)
 
-flex_target(FlexTarget src/lex/scanner.l ../src/lex/scanner.c
-            DEFINES_FILE "include/lex/scanner.h"
+flex_target(FlexTarget src/lex/scanner.l "${CMAKE_SOURCE_DIR}/src/lex/scanner.c"
+            DEFINES_FILE "${CMAKE_SOURCE_DIR}/include/lex/scanner.h"
 )
 
 # Define libraries
