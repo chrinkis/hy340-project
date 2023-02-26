@@ -170,7 +170,9 @@ void print_list_of_alpha_tokens(alpha_token_t head, FILE* stream) {
 }
 
 void free_list_of_alpha_tokens(alpha_token_t head) {
-  assert(head);
+  if (!head) {
+    return;
+  }
 
   while (alpha_token_hasNext(head)) {
     alpha_token_t token_to_delete = head;
