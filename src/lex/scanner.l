@@ -15,6 +15,11 @@
 #define UNKNOWN_TOKEN           ALPHA_LEX_STATUS_UNKNOWN_TOKEN
 #define RUNTIME_ASSERT(what)    assert(what)
 #define YY_DECL                 int alpha_yylex(void* yylval)
+
+int return_safely(int return_value, stack_t no_of_line_stack);
+alpha_token_t add_new_token(alpha_token_t tail, const char* text, alpha_token_category_t category);
+void concat_content_of_token(alpha_token_t token, const char* src_content);
+
 %}
 
 /* Flex options */
