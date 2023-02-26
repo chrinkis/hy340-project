@@ -26,8 +26,11 @@ void print_alpha_token(const alpha_token_t token, FILE* stream) {
     case ALPHA_TOKEN_IDENTIFIER:
       fprintf(stream, "ID\t\"%s\"\t<-char*", alpha_token_getContent(token));
       break;
-    case ALPHA_TOKEN_COMMENT:
-      fprintf(stream, "COMMENT\tALL_COMMENTS\t<-enumerated");
+    case ALPHA_TOKEN_ONE_LINE_COMMENT:
+      fprintf(stream, "COMMENT\tLINE_COMMENT\t<-enumerated");
+      break;
+    case ALPHA_TOKEN_BLOCK_COMMENT:
+      fprintf(stream, "COMMENT\tBLOCK_COMMENT\t<-enumerated");
       break;
     case ALPHA_TOKEN_IF:
       fprintf(stream, "KEYWORD\tIF\t<-enumerated");
