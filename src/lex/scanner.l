@@ -139,7 +139,7 @@ RUNTIME_ASSERT(no_of_line_stack);
 <COMMENT><<EOF>>	return return_safely(NOT_CLOSED_COMMENT, no_of_line_stack);
 
 <<EOF>>				return return_safely(SUCCESS, no_of_line_stack);
-.					{fprintf(stderr, "Cannot match character '%s' with any rule\n", yytext);}
+.					return return_safely(UNKNOWN_TOKEN, no_of_line_stack);
 
 %%
 
