@@ -38,3 +38,9 @@ void stack_free(stack_t self) {
   free(self);
   self = NULL;
 }
+
+int stack_isEmpty(const stack_t self) {
+  assert(self);
+
+  return !self->tail;
+}
