@@ -140,6 +140,8 @@ real		{integer}\.{integer}
 					  free(line_range);
 					  line_range = NULL;
 
+					  alpha_token_setLine(node, start_of_comment);
+
 					  yy_pop_state();
 					}
 <COMMENT>.|"\n"		/* ignore the rest of the characters */
