@@ -67,6 +67,6 @@ int stack_push(const stack_t self, const void* const source);
  *
  * @see stack_isEmpty
  */
-void stack_pop(const stack_t self, const void* const destination);
+void stack_pop(const stack_t self, void* const destination);
 
 #endif
