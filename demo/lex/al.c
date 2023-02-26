@@ -217,6 +217,9 @@ int main(int argc, char** argv) {
     case NOT_CLOSED_STRING:
       fprintf(stderr, "ERROR NOT CLOSING STRING\n");
       break;
+    case UNKNOWN_ESCAPE_CHAR:
+      fprintf(stderr, "ERROR NOT VALID ESCAPED CHARACTER\n");
+      break;
     case NOT_CLOSED_COMMENT:
       fprintf(stderr, "ERROR NOT CLOSING COMMENT\n");
       break;
