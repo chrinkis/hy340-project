@@ -37,9 +37,7 @@ letter		[a-zA-Z]
 digit		[0-9]
 underscore	[_]
 identifier	{letter}({letter}|{digit}|{underscore})*
-/* Changed from "number" to "integer" */
 integer		{digit}+
-/* Nick's additions */
 real		{integer}\.{integer}
 
 %x COMMENT
