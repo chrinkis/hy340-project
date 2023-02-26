@@ -1,3 +1,37 @@
+## Table of contents
+
+- [Developers](#developers)
+- [Notes per phase](#notes-per-phase)
+- [Build](#build)
+- [For developers (TAs can skip this)](#for-developers)
+
+## Developers
+
+- Nikolaos Grigoroudis, csd4619@csd.uoc.gr
+- Alexandros Christinakis, csd4764@csd.uoc.gr
+
+## Notes per phase
+
+### Phase I
+
+- The project was implemented according to the project guidelines
+- Things that were not implemented: None
+
+## Build
+
+Requirements:
+- `CMake` (minimum version 3.18.4)
+- `Flex` (tested on version 2.6.4)
+- `gcc`
+
+### al
+
+Target `al` of cmake
+
+Alternatively, if `bash` is installed:
+- Command: `bash compile.sh`
+- Output: `build/al`
+
 ## For Developers
 
 ### Git and Gitlab
