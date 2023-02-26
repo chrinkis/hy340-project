@@ -16,16 +16,14 @@ flex_target(FlexTarget src/lex/scanner.l "${CMAKE_SOURCE_DIR}/src/lex/scanner.c"
             DEFINES_FILE "${CMAKE_SOURCE_DIR}/include/lex/scanner.h"
 )
 
-# Define libraries
-add_library(LIB_token STATIC "")
-add_library(LIB_collections STATIC "")
-
-# Add CMakeLists from subdirectory
-add_subdirectory(src)
-add_subdirectory(demo)
-
-# add_subdirectory(src)
-add_executable(hy340-project
+add_executable(al
+    demo/lex/al/al.c
+    src/collections/stack.c
+    src/token/alpha_token.c
     ${FLEX_FlexTarget_OUTPUTS}
 )
-target_link_libraries(hy340-project LIB_token)
+
+target_include_directories(al
+    PUBLIC include/token
+    PUBLIC include/collections
+)
