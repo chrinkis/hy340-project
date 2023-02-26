@@ -11,6 +11,7 @@
 #define NOT_CLOSED_STRING 	-1
 #define NOT_CLOSED_COMMENT	-2
 #define UNKNOWN_ESCAPE_CHAR	-3
+#define UNKNOWN_TOKEN		-4
 #define RUNTIME_ASSERT(what) assert(what)
 #define YY_DECL int alpha_yylex(void* yylval)
 %}
