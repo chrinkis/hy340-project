@@ -21,6 +21,7 @@ add_library(LIB_token STATIC "")
 
 # Add CMakeLists from subdirectory
 add_subdirectory(src)
+add_subdirectory(demo)
 
 # add_subdirectory(src)
 add_executable(hy340-project
