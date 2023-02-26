@@ -238,7 +238,8 @@ void concat_content_of_token(alpha_token_t token, const char* src_content) {
 	char* temp_str = strcat_dynamic(token_content, src_content);
 	RUNTIME_ASSERT(temp_str);
 
-	alpha_token_setContent(token, temp_str);
+	int ok = alpha_token_setContent(token, temp_str);
+	RUNTIME_ASSERT(ok);
 	token_content = NULL; // token_content is not valid anymore
 
 	free(temp_str);
