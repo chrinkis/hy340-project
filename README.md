@@ -10,6 +10,21 @@
 - The project was implemented according to the project guidelines
 - Things that were not implemented: None
 
+## Build
+
+Requirements:
+- `CMake` (minimum version 3.18.4)
+- `Flex` (tested on version 2.6.4)
+- `gcc`
+
+### al
+
+Target `al` of cmake
+
+Alternatively, if `bash` is installed:
+- Command: `bash compile.sh`
+- Output: `build/al`
+
 ## For Developers
 
 ### Git and Gitlab
