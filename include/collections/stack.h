@@ -60,13 +60,13 @@ int stack_push(const stack_t self, const void* const source);
  * @pre @p self != null
  * @pre stack should not be empty
  *
- * @post contents of poped destination will be copied to *(@p destination)
- * @post top item in stack will no longer be in stack
+ * @post contents of poped element will be copied to *(@p destination)
+ * @post top element in stack will no longer be in stack
  *
  * @note If @destination is null, then the poped item will not be copied.
  *
  * @see stack_isEmpty
  */
-void stack_pop(const stack_t self, const void* const destination);
+void stack_pop(const stack_t self, void* const destination);
 
 #endif
