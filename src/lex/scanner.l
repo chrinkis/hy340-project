@@ -69,7 +69,7 @@ real		{integer}\.{integer}
 <ESCAPE>"\\"		{ concat_content_of_token(yylval, "\\");
 					  BEGIN(STRING); /* which escaped char? */
 					}
-<ESCAPE>[.]*		return return_safely(UNKNOWN_ESCAPE_CHAR, no_of_line_stack);
+<ESCAPE>.|"\n"		return return_safely(UNKNOWN_ESCAPE_CHAR, no_of_line_stack);
 \"					{ yylval = add_new_token(yylval, "", ALPHA_TOKEN_STRING);
 					  BEGIN(STRING); /* String literal begins */
 					}
