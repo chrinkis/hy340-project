@@ -142,7 +142,7 @@ real		{integer}\.{integer}
 
 					  yy_pop_state();
 					}
-<COMMENT>[.\n]		/* ignore the rest of the characters */
+<COMMENT>.|"\n"		/* ignore the rest of the characters */
 <COMMENT><<EOF>>	return return_safely(NOT_CLOSED_COMMENT, no_of_line_stack);
 
 <<EOF>>				return return_safely(SUCCESS, no_of_line_stack);
