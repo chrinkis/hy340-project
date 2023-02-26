@@ -124,36 +124,36 @@ real		{integer}\.{integer}
 /**
  * @brief Dynamically concatenates 2 strings
  *
- * @param destination The left part of the concatenated string
- * @param source The right part of the concatenated string
+ * @param left The left part of the concatenated string
+ * @param right The right part of the concatenated string
  * @return null if concatenation failed, else the concatenated string
  *
- * @pre @p destination != null
- * @pre @p source != null
+ * @pre @p left != null
+ * @pre @p right != null
  *
- * @post @p destination and @p source will be left intact
+ * @post @p left and @p right will be left intact
  * @post Memory for the concatenated string will be allocated using `malloc`
  * (user should call `free` to free the memory)
  *
  */
-char* strcat_dynamic(const char* destination, const char* source) {
-  assert(destination);
-  assert(source);
+char* strcat_dynamic(const char* left, const char* right) {
+  assert(left);
+  assert(right);
 
   char* concatenated_str =
-      malloc(sizeof(char) * (strlen(destination) + strlen(source) + 1));
+      malloc(sizeof(char) * (strlen(left) + strlen(right) + 1));
 
   if (!concatenated_str) {
     return NULL;
   }
 
-  concatenated_str = strcpy(concatenated_str, destination);
-  concatenated_str = strcat(concatenated_str, source);
+  concatenated_str = strcpy(concatenated_str, left);
+  concatenated_str = strcat(concatenated_str, right);
 
   assert(concatenated_str);
-  assert(!strncmp(concatenated_str, destination, strlen(destination)));
+  assert(!strncmp(concatenated_str, left, strlen(left)));
   assert(
-      !strncmp(&concatenated_str[strlen(destination)], source, strlen(source)));
+      !strncmp(&concatenated_str[strlen(left)], right, strlen(right)));
   return concatenated_str;
 }
 
