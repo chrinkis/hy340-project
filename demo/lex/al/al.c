@@ -1,3 +1,4 @@
+#include <alpha_lex_status.h>
 #include <alpha_token.h>
 #include <assert.h>
 #include <stdio.h>
@@ -217,16 +218,16 @@ int main(int argc, char** argv) {
   alpha_token_free(temp);
 
   switch (lex_result) {
-    case NOT_CLOSED_STRING:
+    case ALPHA_LEX_STATUS_NOT_CLOSED_STRING:
       fprintf(stderr, "ERROR NOT CLOSING STRING\n");
       break;
-    case UNKNOWN_ESCAPE_CHAR:
+    case ALPHA_LEX_STATUS_UNKNOWN_ESCAPE_CHAR:
       fprintf(stderr, "ERROR NOT VALID ESCAPED CHARACTER\n");
       break;
-    case NOT_CLOSED_COMMENT:
+    case ALPHA_LEX_STATUS_NOT_CLOSED_COMMENT:
       fprintf(stderr, "ERROR NOT CLOSING COMMENT\n");
       break;
-    case UNKNOWN_TOKEN:
+    case ALPHA_LEX_STATUS_UNKNOWN_TOKEN:
       fprintf(stderr, "ERROR UNKOWN TOKEN\n");
       break;
     case default:

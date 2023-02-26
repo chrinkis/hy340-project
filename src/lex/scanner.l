@@ -5,15 +5,16 @@
 #include <string.h>
 #include <alpha_token.h>
 #include <alpha_token_category.h>
+#include <alpha_lex_status.h>
 #include "../../include/collections/stack.h"
 
-#define SUCCESS 0
-#define NOT_CLOSED_STRING 	-1
-#define NOT_CLOSED_COMMENT	-2
-#define UNKNOWN_ESCAPE_CHAR	-3
-#define UNKNOWN_TOKEN		-4
-#define RUNTIME_ASSERT(what) assert(what)
-#define YY_DECL int alpha_yylex(void* yylval)
+#define SUCCESS                 ALPHA_LEX_STATUS_SUCCESS
+#define NOT_CLOSED_STRING       ALPHA_LEX_STATUS_NOT_CLOSED_STRING
+#define NOT_CLOSED_COMMENT      ALPHA_LEX_STATUS_NOT_CLOSED_COMMENT
+#define UNKNOWN_ESCAPE_CHAR     ALPHA_LEX_STATUS_UNKNOWN_ESCAPE_CHAR
+#define UNKNOWN_TOKEN           ALPHA_LEX_STATUS_UNKNOWN_TOKEN
+#define RUNTIME_ASSERT(what)    assert(what)
+#define YY_DECL                 int alpha_yylex(void* yylval)
 %}
 
 /* Flex options */
