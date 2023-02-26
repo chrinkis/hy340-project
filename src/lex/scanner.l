@@ -158,8 +158,8 @@ char* strcat_dynamic(const char* destination, const char* source) {
 }
 
 void concat_content_of_token(alpha_token_t token, const char* src_content) {
-	RUNTIME_ASSERT(token);
-	RUNTIME_ASSERT(src_content);
+	assert(token);
+	assert(src_content);
 
 	const char* token_content = alpha_token_getContent(token);
 	char* temp_str = strcat_dynamic(token_content, src_content);
