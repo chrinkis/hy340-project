@@ -4,8 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define FIXME assert(0);
-
 struct _alpha_token_t {
   unsigned int line;
   unsigned int sequence_number;
@@ -106,8 +104,8 @@ const char* alpha_token_getContent(const alpha_token_t self) {
   return result;
 }
 
-void alpha_token_setContent(const alpha_token_t self,
-                            const char* const content) {
+int alpha_token_setContent(const alpha_token_t self,
+                           const char* const content) {
   assert(self);
   assert(content);
 
@@ -119,12 +117,13 @@ void alpha_token_setContent(const alpha_token_t self,
   self->content = strdup(content);
 
   if (!self->content) {
-    FIXME
+    return 0;
   }
 
   assert(self->content);
   assert(!strcmp(self->content, content));
   assert(self->content != content);
+  return 1;
 }
 
 alpha_token_category_t alpha_token_getCategory(const alpha_token_t self) {

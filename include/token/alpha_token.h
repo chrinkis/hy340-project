@@ -76,14 +76,18 @@ void alpha_token_setSequenceNumber(const alpha_token_t self,
 const char* alpha_token_getContent(const alpha_token_t self);
 
 /**
+ * @return 0 if operation failed, else non zero
+ *
  * @pre @p self != null
  * @pre @p content != null
  *
  * @post The contents of the @p content will have been copied into token's
  * memory
+ *
+ * @warning The old contents (if there are any) of @p self will be lost, even if
+ * this operation fail
  */
-void alpha_token_setContent(const alpha_token_t self,
-                            const char* const content);
+int alpha_token_setContent(const alpha_token_t self, const char* const content);
 
 /**
  * @pre @p self != null
