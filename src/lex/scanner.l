@@ -1,10 +1,13 @@
 %{
 #include<assert.h>
-#include<stdlib.h>
-#include<string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <alpha_token.h>
 #include <alpha_token_category.h>
+#include "../../include/collections/stack.h"
 
+#define SUCCESS 0
 #define NOT_CLOSED_STRING 	-1
 #define NOT_CLOSED_COMMENT	-2
 #define UNKNOWN_ESCAPE_CHAR	-3
@@ -17,6 +20,7 @@
 %option header-file="../include/lex/scanner.h"
 %option noyywrap
 %option yylineno
+%option stack
 
 /* Flex macros */
 delimeter	[ \t\n]
@@ -30,16 +34,21 @@ integer		{digit}+
 /* Nick's additions */
 real		{integer}\.{integer}
 
-%x COMMENT INCLUDE
+%x COMMENT
 %x STRING
 %x ESCAPE
 
 %%
+assert(sizeof(int) == sizeof(yylineno));
+stack_t no_of_line_stack = stack_new(sizeof(int));
+RUNTIME_ASSERT(no_of_line_stack);
+
 
 <STRING>[^\\\"]*	concat_content_of_token(yylval, yytext); /* read until escape char or end of string char */
 <STRING>\"			BEGIN(INITIAL); /* end of string */
 <STRING>\\			BEGIN(ESCAPE); /* escape char follows */
-<STRING><<EOF>>		return NOT_CLOSED_STRING;
+<STRING><<EOF>>		return return_safely(NOT_CLOSED_STRING, no_of_line_stack);
+<ESCAPE><<EOF>>		return return_safely(NOT_CLOSED_STRING, no_of_line_stack);
 <ESCAPE>"\""		{ concat_content_of_token(yylval, "\"");
 					  BEGIN(STRING); /* which escaped char? */
 					}
@@ -53,7 +62,6 @@ real		{integer}\.{integer}
 					  BEGIN(STRING); /* which escaped char? */
 					}
 <ESCAPE>[.]*		return UNKNOWN_ESCAPE_CHAR;
-<ESCAPE><<EOF>>		return NOT_CLOSED_STRING;
 \"					{ yylval = new_token(yylval, "", ALPHA_TOKEN_STRING);
 					  BEGIN(STRING); /* String literal begins */
 					}
@@ -107,19 +115,76 @@ real		{integer}\.{integer}
 
 {identifier}		yylval = new_token(yylval, yytext, ALPHA_TOKEN_IDENTIFIER);
 
-"//".*				{fprintf(stderr, "Recognized oneline comment with content: %s\n", yytext);}
-"/*"				{fprintf(stderr, "Recognized multiline comment with with line range: %d-", yylineno);
-					 BEGIN(COMMENT);
+"//".*				yylval = new_token(yylval, "", ALPHA_TOKEN_ONE_LINE_COMMENT);
+"/*"				{ int result = stack_push(no_of_line_stack, &yylineno);
+					  RUNTIME_ASSERT(result);
+					  yy_push_state(COMMENT);
 					}
-<COMMENT>[^*]*		/* eat anything that's not a '*' = do nothing */
-<COMMENT>"*"+[^*/]*	/* eat anything that's not a '*' = do nothing */
-<COMMENT>"*"+"/"*	{fprintf(stderr, "%d\n", yylineno);
-					 BEGIN(INITIAL);
+<COMMENT>"/*"		{ int result = stack_push(no_of_line_stack, &yylineno);
+					  RUNTIME_ASSERT(result);
+					  yy_push_state(COMMENT);
 					}
-<COMMENT><<EOF>>	return NOT_CLOSED_COMMENT;
+<COMMENT>"*/"		{ int start_of_comment;
+					  stack_pop(no_of_line_stack, &start_of_comment);
+
+					  char* line_range = get_range_as_string(start_of_comment, yylineno);
+					  yylval = add_new_token(yylval, line_range, ALPHA_TOKEN_BLOCK_COMMENT);
+					  free(line_range);
+					  line_range = NULL;
+
+					  yy_pop_state();
+					}
+<COMMENT>.			/* ignore the rest of the characters */
+<COMMENT><<EOF>>	return return_safely(NOT_CLOSED_COMMENT, no_of_line_stack);
+
+<<EOF>>				return return_safely(SUCCESS, no_of_line_stack);
 .					{fprintf(stderr, "Cannot match character '%s' with any rule\n", yytext);}
 
 %%
+
+int return_safely(int return_value, stack_t no_of_line_stack) {
+	stack_free(no_of_line_stack);
+	return return_value;
+}
+
+int get_number_of_digits(int x) {
+  int no_of_digits = 0;
+
+  do {
+    x /= 10;
+    no_of_digits++;
+  } while (x != 0);
+
+  return no_of_digits;
+}
+
+char* get_range_as_string(int start, int end) {
+  assert(start <= end);
+
+  int digits_of_start = get_number_of_digits(start);
+  int digits_of_end = get_number_of_digits(end);
+
+  char* range = malloc(sizeof(char) * (digits_of_start + digits_of_end + 2));
+  RUNTIME_ASSERT(range);
+  char* start_as_string = malloc(sizeof(char) * (digits_of_start + 1));
+  RUNTIME_ASSERT(start_as_string);
+  char* end_as_string = malloc(sizeof(char) * (digits_of_end + 1));
+  RUNTIME_ASSERT(end_as_string);
+
+  sprintf(start_as_string, "%d", start);
+  sprintf(end_as_string, "%d", end);
+
+  range = strcpy(range, start_as_string);
+  range = strcat(range, "-");
+  range = strcat(range, end_as_string);
+
+  free(start_as_string);
+  start_as_string = NULL;
+  free(end_as_string);
+  end_as_string = NULL;
+
+  return range;
+}
 
 /**
  * @brief Dynamically concatenates 2 strings
