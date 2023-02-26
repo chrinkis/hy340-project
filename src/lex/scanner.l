@@ -69,7 +69,7 @@ real		{integer}\.{integer}
 <ESCAPE>"\\"		{ concat_content_of_token(node, "\\");
 					  BEGIN(STRING); /* which escaped char? */
 					}
-<ESCAPE>[.]*		return return_safely(UNKNOWN_ESCAPE_CHAR, no_of_line_stack);
+<ESCAPE>.|"\n"		return return_safely(UNKNOWN_ESCAPE_CHAR, no_of_line_stack);
 \"					{ node = add_new_token(node, "", ALPHA_TOKEN_STRING);
 					  BEGIN(STRING); /* String literal begins */
 					}
