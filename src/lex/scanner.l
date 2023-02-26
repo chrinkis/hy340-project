@@ -69,12 +69,12 @@ real		{integer}\.{integer}
 					  BEGIN(STRING); /* which escaped char? */
 					}
 <ESCAPE>[.]*		return return_safely(UNKNOWN_ESCAPE_CHAR, no_of_line_stack);
-\"					{ yylval = new_token(yylval, "", ALPHA_TOKEN_STRING);
+\"					{ yylval = add_new_token(yylval, "", ALPHA_TOKEN_STRING);
 					  BEGIN(STRING); /* String literal begins */
 					}
 
 {whitespaces}		/* ignore whitespaces */
-{real}				yylval = new_token(yylval, yytext, ALPHA_TOKEN_FLOAT);
+{real}				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_FLOAT);
 "="					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_ASSIGN);
 "+"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_PLUS);
 "-"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_MINUS);
@@ -111,7 +111,7 @@ real		{integer}\.{integer}
 "true"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_TRUE);
 "false"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_FALSE);
 "nil"				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_NIL);
-{integer} 			yylval = new_token(yylval, yytext, ALPHA_TOKEN_INTEGER);
+{integer} 			yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_INTEGER);
 
 ";"					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_SEMICOLON);
 ","					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_COMMA);
@@ -120,9 +120,9 @@ real		{integer}\.{integer}
 ".."				yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_DOUBLE_DOT);
 "."					yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_DOT);
 
-{identifier}		yylval = new_token(yylval, yytext, ALPHA_TOKEN_IDENTIFIER);
+{identifier}		yylval = add_new_token(yylval, yytext, ALPHA_TOKEN_IDENTIFIER);
 
-"//".*				yylval = new_token(yylval, "", ALPHA_TOKEN_ONE_LINE_COMMENT);
+"//".*				yylval = add_new_token(yylval, "", ALPHA_TOKEN_ONE_LINE_COMMENT);
 "/*"				{ int result = stack_push(no_of_line_stack, &yylineno);
 					  RUNTIME_ASSERT(result);
 					  yy_push_state(COMMENT);
