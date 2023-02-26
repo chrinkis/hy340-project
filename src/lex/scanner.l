@@ -10,6 +10,7 @@
 #define SUCCESS 0
 #define NOT_CLOSED_STRING 	-1
 #define NOT_CLOSED_COMMENT	-2
+#define UNKNOWN_ESCAPE_CHAR	-3
 #define RUNTIME_ASSERT(what) assert(what)
 #define YY_DECL int alpha_yylex(void* yylval)
 %}
@@ -34,22 +35,35 @@ integer		{digit}+
 real		{integer}\.{integer}
 
 %x COMMENT
-%s STRING
-%s ESCAPE
+%x STRING
+%x ESCAPE
 
 %%
 stack_t no_of_line_stack = stack_new(sizeof(int));
 RUNTIME_ASSERT(no_of_line_stack);
 
 
-<STRING>[^\\\"]*	/* read until escape char or end of string char */
+<STRING>[^\\\"]*	concat_content_of_token(yylval, yytext); /* read until escape char or end of string char */
 <STRING>\"			BEGIN(INITIAL); /* end of string */
 <STRING>\\			BEGIN(ESCAPE); /* escape char follows */
 <STRING><<EOF>>		return return_safely(NOT_CLOSED_STRING, no_of_line_stack);
-<ESCAPE>[\"nt\\]	BEGIN(STRING); /* which escaped char? */
-<ESCAPE>[.]*		/* Unknown escaped charachter (No mans land) */
 <ESCAPE><<EOF>>		return return_safely(NOT_CLOSED_STRING, no_of_line_stack);
-\"					BEGIN(STRING); /* String literal begins */
+<ESCAPE>"\""		{ concat_content_of_token(yylval, "\"");
+					  BEGIN(STRING); /* which escaped char? */
+					}
+<ESCAPE>"n"			{ concat_content_of_token(yylval, "\n");
+					  BEGIN(STRING); /* which escaped char? */
+					}
+<ESCAPE>"t"			{ concat_content_of_token(yylval, "\t");
+					  BEGIN(STRING); /* which escaped char? */
+					}
+<ESCAPE>"\\"		{ concat_content_of_token(yylval, "\\")
+					  BEGIN(STRING); /* which escaped char? */
+					}
+<ESCAPE>[.]*		return UNKNOWN_ESCAPE_CHAR;
+\"					{ yylval = new_token(yylval, "", ALPHA_TOKEN_STRING);
+					  BEGIN(STRING); /* String literal begins */
+					}
 
 {whitespaces}		/* ignore whitespaces */
 {real}				yylval = new_token(yylval, yytext, ALPHA_TOKEN_FLOAT);
@@ -169,6 +183,57 @@ char* get_range_as_string(int start, int end) {
   end_as_string = NULL;
 
   return range;
+}
+
+/**
+ * @brief Dynamically concatenates 2 strings
+ *
+ * @param left The left part of the concatenated string
+ * @param right The right part of the concatenated string
+ * @return null if concatenation failed, else the concatenated string
+ *
+ * @pre @p left != null
+ * @pre @p right != null
+ *
+ * @post @p left and @p right will be left intact
+ * @post Memory for the concatenated string will be allocated using `malloc`
+ * (user should call `free` to free the memory)
+ *
+ */
+char* strcat_dynamic(const char* left, const char* right) {
+  assert(left);
+  assert(right);
+
+  char* concatenated_str =
+      malloc(sizeof(char) * (strlen(left) + strlen(right) + 1));
+
+  if (!concatenated_str) {
+    return NULL;
+  }
+
+  concatenated_str = strcpy(concatenated_str, left);
+  concatenated_str = strcat(concatenated_str, right);
+
+  assert(concatenated_str);
+  assert(!strncmp(concatenated_str, left, strlen(left)));
+  assert(
+      !strncmp(&concatenated_str[strlen(left)], right, strlen(right)));
+  return concatenated_str;
+}
+
+void concat_content_of_token(alpha_token_t token, const char* src_content) {
+	assert(token);
+	assert(src_content);
+
+	const char* token_content = alpha_token_getContent(token);
+	char* temp_str = strcat_dynamic(token_content, src_content);
+	RUNTIME_ASSERT(temp_str);
+
+	alpha_token_setContent(temp_str);
+	token_content = NULL; // token_content is not valid anymore
+
+	free(temp_str);
+	temp_str = NULL;
 }
 
 alpha_token_t add_new_token(alpha_token_t tail, const char* text, alpha_token_category_t category) {
