@@ -1,3 +1,10 @@
+## Table of contents
+
+- [Developers](#developers)
+- [Notes per phase](#notes-per-phase)
+- [Build](#build)
+- [For developers (TAs can skip this)](#for-developers)
+
 ## Developers
 
 - Nikolaos Grigoroudis, csd4619@csd.uoc.gr
