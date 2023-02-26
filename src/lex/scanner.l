@@ -65,7 +65,7 @@ real		{integer}\.{integer}
 <ESCAPE>"t"			{ concat_content_of_token(yylval, "\t");
 					  BEGIN(STRING); /* which escaped char? */
 					}
-<ESCAPE>"\\"		{ concat_content_of_token(yylval, "\\")
+<ESCAPE>"\\"		{ concat_content_of_token(yylval, "\\");
 					  BEGIN(STRING); /* which escaped char? */
 					}
 <ESCAPE>[.]*		return return_safely(UNKNOWN_ESCAPE_CHAR, no_of_line_stack);
