@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <stack.h>
 #include <stdlib.h>
 
@@ -25,4 +26,15 @@ stack_t stack_new(size_t element_size) {
   self->tail = NULL;
 
   return self;
+}
+
+void stack_free(stack_t self) {
+  assert(self);
+
+  while (!stack_isEmpty(self)) {
+    stack_pop(self, NULL);
+  }
+
+  free(self);
+  self = NULL;
 }
