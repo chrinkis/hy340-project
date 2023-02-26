@@ -6,6 +6,7 @@
 
 void print_alpha_token(const alpha_token_t token, FILE* stream) {
   assert(token);
+  assert(stream);
 
   fprintf(stream, "%d:\t", alpha_token_getSequenceNumber(token));
   fprintf(stream, "#%d\t", alpha_token_getLine(token));
@@ -160,6 +161,7 @@ void print_alpha_token(const alpha_token_t token, FILE* stream) {
 
 void print_list_of_alpha_tokens(alpha_token_t head, FILE* stream) {
   assert(head);
+  assert(stream);
 
   while (alpha_token_hasNext(head)) {
     print_alpha_token(head, stream);
