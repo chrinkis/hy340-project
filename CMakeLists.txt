@@ -26,4 +26,5 @@ add_executable(al
 target_include_directories(al
     PUBLIC include/token
     PUBLIC include/collections
+    PUBLIC include/lex
 )
