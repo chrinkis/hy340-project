@@ -39,6 +39,7 @@ real		{integer}\.{integer}
 %x ESCAPE
 
 %%
+assert(sizeof(int) == sizeof(yylineno));
 stack_t no_of_line_stack = stack_new(sizeof(int));
 RUNTIME_ASSERT(no_of_line_stack);
 
