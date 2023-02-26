@@ -18,6 +18,7 @@ flex_target(FlexTarget src/lex/scanner.l ../src/lex/scanner.c
 
 # Define libraries
 add_library(LIB_token STATIC "")
+add_library(LIB_collections STATIC "")
 
 # Add CMakeLists from subdirectory
 add_subdirectory(src)
