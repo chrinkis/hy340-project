@@ -1,3 +1,8 @@
+## Developers
+
+- Nikolaos Grigoroudis, csd4619@csd.uoc.gr
+- Alexandros Christinakis, csd4764@csd.uoc.gr
+
 ## For Developers
 
 ### Git and Gitlab
