@@ -212,7 +212,7 @@ int main(int argc, char** argv) {
   }
 
   alpha_token_t head = alpha_token_new(0, 0, "", 0);
-  int lex_result = alpha_yylex(head);
+  int lex_result = alpha_yylex(&head);
 
   /* Remove invalid head */
   alpha_token_t temp = head;
