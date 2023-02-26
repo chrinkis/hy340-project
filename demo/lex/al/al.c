@@ -5,6 +5,8 @@
 
 #include "../../include/lex/scanner.h"
 
+int alpha_yylex(void* yylval);
+
 void print_alpha_token(const alpha_token_t token, FILE* stream) {
   assert(token);
   assert(stream);
