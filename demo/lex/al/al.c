@@ -223,7 +223,7 @@ int main(int argc, char** argv) {
     case NOT_CLOSED_COMMENT:
       fprintf(stderr, "ERROR NOT CLOSING COMMENT\n");
       break;
-    case UNKOWN_TOKEN:
+    case UNKNOWN_TOKEN:
       fprintf(stderr, "ERROR UNKOWN TOKEN\n");
       break;
     case default:
