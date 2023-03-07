@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <stdio.h>
 
-#include "../../include/lex/scanner.h"
+#include <scanner.h>
 
 int alpha_yylex(void* yylval);
 
