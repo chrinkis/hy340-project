@@ -6,7 +6,7 @@
 #include <alpha_token.h>
 #include <alpha_token_category.h>
 #include <alpha_lex_status.h>
-#include "../../include/collections/stack.h"
+#include <stack.h>
 
 #define SUCCESS                 ALPHA_LEX_STATUS_SUCCESS
 #define NOT_CLOSED_STRING       ALPHA_LEX_STATUS_NOT_CLOSED_STRING
