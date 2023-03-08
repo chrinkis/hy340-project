@@ -16,6 +16,7 @@ flex_target(FlexTarget src/lex/scanner.l "${CMAKE_SOURCE_DIR}/src/lex/scanner.c"
             DEFINES_FILE "${CMAKE_SOURCE_DIR}/include/lex/scanner.h"
 )
 
+# For target al
 add_executable(al
     demo/lex/al/al.c
     src/collections/stack.c
