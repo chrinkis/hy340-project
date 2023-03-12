@@ -1,5 +1,8 @@
 cmake_minimum_required (VERSION 3.18.4)
 
+# Add `cmake` dir to path
+set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
 # For debugging
 set(CMAKE_BUILD_TYPE Debug)
 
@@ -10,11 +13,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 project(hy340-project)
 
 # For Flex
-find_package(FLEX 2.5.13)
-
-flex_target(FlexTarget src/alpha/lex/scanner.l "${CMAKE_SOURCE_DIR}/src/alpha/lex/scanner.c"
-            DEFINES_FILE "${CMAKE_SOURCE_DIR}/include/alpha/lex/scanner.h"
-)
+include(flex-scanner)
 
 # For target al
 add_executable(al
