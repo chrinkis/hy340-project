@@ -1,6 +1,6 @@
 find_package(FLEX 2.5.13)
 
-flex_target(FlexTarget
+flex_target(FlexScanner
     # Source file
     ${CMAKE_SOURCE_DIR}/src/alpha/lex/scanner.l
 

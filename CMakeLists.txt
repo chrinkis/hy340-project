@@ -20,7 +20,7 @@ add_executable(al
     demo/lex/al/al.c
     src/collections/stack.c
     src/alpha/token/alpha_token.c
-    ${FLEX_FlexTarget_OUTPUTS}
+    ${FLEX_FlexScanner_OUTPUTS}
 )
 
 target_include_directories(al
