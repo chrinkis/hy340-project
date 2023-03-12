@@ -214,11 +214,6 @@ int main(int argc, char** argv) {
   alpha_token_t head = alpha_token_new(0, 0, "", 0);
   int lex_result = alpha_yylex(&head);
 
-  /* Remove invalid head */
-  alpha_token_t temp = head;
-  head = alpha_token_getNext(head);
-  alpha_token_free(temp);
-
   switch (lex_result) {
     case ALPHA_LEX_STATUS_NOT_CLOSED_STRING:
       fprintf(stderr, "ERROR NOT CLOSING STRING\n");
@@ -233,6 +228,15 @@ int main(int argc, char** argv) {
       fprintf(stderr, "ERROR UNKOWN TOKEN\n");
       break;
     default:
+      if (!alpha_token_hasNext(head)) {
+        break;
+      }
+
+      /* Remove invalid head */
+      alpha_token_t temp = head;
+      head = alpha_token_getNext(head);
+      alpha_token_free(temp);
+
       print_list_of_alpha_tokens(head, output_stream);
       break;
   }
