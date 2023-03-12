@@ -1,5 +1,5 @@
-#ifndef __ALPHA_TOKEN_CATEGORY__
-#define __ALPHA_TOKEN_CATEGORY__
+#ifndef __ALPHA_TOKEN_CATEGORY_H__
+#define __ALPHA_TOKEN_CATEGORY_H__
 
 typedef enum {
   ALPHA_TOKEN_INTEGER,
