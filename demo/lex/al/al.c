@@ -1,9 +1,9 @@
 #include <alpha/lex/alpha_lex_status.h>
+#include <alpha/lex/scanner.h>
 #include <alpha/token/alpha_token.h>
+
 #include <assert.h>
 #include <stdio.h>
-
-#include <alpha/lex/scanner.h>
 
 int alpha_yylex(void* yylval);
 
