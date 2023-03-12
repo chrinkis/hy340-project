@@ -1,7 +1,7 @@
 #ifndef __ALPHA_TOKEN_H__
 #define __ALPHA_TOKEN_H__
 
-#include "alpha/token/alpha_token_category.h"
+#include <alpha/token/alpha_token_category.h>
 
 /**
  * @brief Represents a token
