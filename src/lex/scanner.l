@@ -24,8 +24,6 @@ char* get_range_as_string(int start, int end);
 %}
 
 /* Flex options */
-%option outfile="../src/lex/scanner.c"
-%option header-file="../include/lex/scanner.h"
 %option noyywrap
 %option yylineno
 %option stack
