@@ -25,7 +25,5 @@ add_executable(al
 )
 
 target_include_directories(al
-    PUBLIC include/alpha/token
-    PUBLIC include/collections
-    PUBLIC include/alpha/lex
+    PUBLIC include
 )

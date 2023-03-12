@@ -3,10 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <alpha_token.h>
-#include <alpha_token_category.h>
-#include <alpha_lex_status.h>
-#include <stack.h>
+#include <alpha/token/alpha_token.h>
+#include <alpha/token/alpha_token_category.h>
+#include <alpha/lex/alpha_lex_status.h>
+#include <collections/stack.h>
 
 #define SUCCESS                 ALPHA_LEX_STATUS_SUCCESS
 #define NOT_CLOSED_STRING       ALPHA_LEX_STATUS_NOT_CLOSED_STRING
