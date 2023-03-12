@@ -12,17 +12,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # Define the project
 project(hy340-project)
 
-# For Flex
-include(flex-scanner)
+# Add `include` directory
+include_directories(include)
 
-# For target al
-add_executable(al
-    demo/lex/al/al.c
-    src/collections/stack.c
-    src/alpha/token/alpha_token.c
-    ${FLEX_FlexScanner_OUTPUTS}
-)
-
-target_include_directories(al
-    PUBLIC include
-)
+# Add cmakes from subdirs
+add_subdirectory(src)
+add_subdirectory(demo)
