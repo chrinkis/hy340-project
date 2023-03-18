@@ -1,3 +1,4 @@
+# Flex
 find_package(FLEX 2.5.13)
 
 flex_target(FlexScanner
@@ -5,8 +6,5 @@ flex_target(FlexScanner
     ${CMAKE_SOURCE_DIR}/src/alpha/lex/scanner.l
 
     # Output (c/cpp) source file
-    ${CMAKE_SOURCE_DIR}/src/alpha/lex/scanner.c
-
-    # Output header file
-    DEFINES_FILE ${CMAKE_SOURCE_DIR}/include/alpha/lex/scanner.h
+    ${CMAKE_SOURCE_DIR}/src/alpha/lex/scanner.cpp
 )
