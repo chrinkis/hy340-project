@@ -1,5 +1,6 @@
-#include <assert.h>
 #include <collections/stack.h>
+
+#include <assert.h>
 #include <stdlib.h>
 
 typedef struct _node* node_t;
