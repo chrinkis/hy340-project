@@ -3,10 +3,9 @@ include(flex-scanner)
 
 # For target al
 add_executable(al
-    lex/al/al.c
+    lex/al/al.cpp
 
-    ${CMAKE_SOURCE_DIR}/src/collections/stack.c
-    ${CMAKE_SOURCE_DIR}/src/alpha/token/alpha_token.c
+    ${CMAKE_SOURCE_DIR}/src/alpha/token/token.cpp
 
     ${FLEX_FlexScanner_OUTPUTS}
 )

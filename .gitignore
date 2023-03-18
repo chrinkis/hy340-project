@@ -1,4 +1,3 @@
 /.cache
 /build
-/src/alpha/lex/scanner.c
-/include/alpha/lex/scanner.h
+/src/alpha/lex/scanner.cpp
