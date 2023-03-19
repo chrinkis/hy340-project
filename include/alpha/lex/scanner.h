@@ -7,7 +7,9 @@
 #include <alpha/lex/status.h>
 #include <alpha/token/token.h>
 
+#include <istream>
 #include <stack>
+#include <string>
 
 namespace alpha {
 namespace lex {
@@ -21,6 +23,10 @@ class Scanner : public yyFlexLexer {
   std::stack<int> comment_stack;
   Token token;
   Status status;
+
+ public:
+  Scanner(std::istream& in) : yyFlexLexer(&in){};
+  virtual ~Scanner(){};
 
  public:
   virtual int yylex();  // implemented by Flex

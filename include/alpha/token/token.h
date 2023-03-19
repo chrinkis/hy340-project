@@ -13,6 +13,7 @@ class Token {
   category::Category category;
 
  public:
+  Token();
   Token(unsigned int line,
         unsigned int sequence_number,
         const std::string& content,

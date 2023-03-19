@@ -9,7 +9,7 @@
 #include <string>
 
 #undef  YY_DECL
-#define YY_DECL                 int alpha::lex::Scanner::yylex(alpha::token::Token& token)
+#define YY_DECL                 int alpha::lex::Scanner::yylex()
 
 #define SUCCESS                 status::SUCCESS
 #define NOT_CLOSED_STRING       status::NOT_CLOSED_STRING
@@ -20,8 +20,9 @@
 
 #define RUNTIME_ASSERT(what)    assert(what)
 
-#define RETURN_TOKEN(CATEGORY)                          token = Token(yylineno, next_seq_number++, yytext, CATEGORY); return SUCCESS;
-#define RETURN_CUSTOM_TOKEN(LINENO, VALUE, CATEGORY)    token = Token(LINENO, next_seq_number++, VALUE, CATEGORY); return SUCCESS;
+#define RETURN_TOKEN(CATEGORY)                          this->token = Token(yylineno, next_seq_number++, yytext, CATEGORY); RETURN_STATUS(SUCCESS);
+#define RETURN_CUSTOM_TOKEN(LINENO, VALUE, CATEGORY)    this->token = Token(LINENO, next_seq_number++, VALUE, CATEGORY); RETURN_STATUS(SUCCESS);
+#define RETURN_STATUS(STATUS)                           this->status = STATUS; return STATUS;
 
 using namespace alpha::lex;
 using namespace alpha::token;
@@ -59,8 +60,8 @@ real            {integer}\.{integer}
 <STRING_S>[^\\\"]*      custom.contents += yytext;        /* read until escape char or end of string char */
 <STRING_S>\"            RETURN_CUSTOM_TOKEN(custom.lineno, custom.contents, category::STRING);       /* end of string */
 <STRING_S>\\            BEGIN(ESCAPE_S);                  /* escape char follows */
-<STRING_S><<EOF>>       return NOT_CLOSED_STRING;
-<ESCAPE_S><<EOF>>       return NOT_CLOSED_STRING;
+<STRING_S><<EOF>>       RETURN_STATUS(NOT_CLOSED_STRING);
+<ESCAPE_S><<EOF>>       RETURN_STATUS(NOT_CLOSED_STRING);
 <ESCAPE_S>"\""          { custom.contents += "\"";
                           BEGIN(STRING_S);                /* which escaped char? */
                         }
@@ -73,7 +74,7 @@ real            {integer}\.{integer}
 <ESCAPE_S>"\\"          { custom.contents += "\\";
                           BEGIN(STRING_S);                /* which escaped char? */
                         }
-<ESCAPE_S>.|"\n"        return UNKNOWN_ESCAPE_CHAR;
+<ESCAPE_S>.|"\n"        RETURN_STATUS(UNKNOWN_ESCAPE_CHAR);
 \"                      { custom.lineno = yylineno;
                           BEGIN(STRING_S);                /* String literal begins */
                         }
@@ -143,10 +144,10 @@ real            {integer}\.{integer}
                           RETURN_CUSTOM_TOKEN(custom.lineno, custom.contents, category::BLOCK_COMMENT);
                         }
 <COMMENT_S>.|"\n"       /* ignore the rest of the characters */
-<COMMENT_S><<EOF>>      return NOT_CLOSED_COMMENT;
+<COMMENT_S><<EOF>>      RETURN_STATUS(NOT_CLOSED_COMMENT);
 
-<<EOF>>                 return END_OF_FILE;
-.                       return UNKNOWN_TOKEN;
+<<EOF>>                 RETURN_STATUS(END_OF_FILE);
+.                       RETURN_STATUS(UNKNOWN_TOKEN);
 
 %%
 

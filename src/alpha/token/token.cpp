@@ -2,6 +2,8 @@
 
 using namespace alpha::token;
 
+Token::Token() {}
+
 Token::Token(unsigned int line,
              unsigned int sequence_number,
              const std::string& content,
