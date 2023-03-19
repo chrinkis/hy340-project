@@ -2,16 +2,15 @@
 #include <alpha/lex/status.h>
 #include <alpha/token/token.h>
 
+#include <assert.h>
 #include <fstream>
 #include <iostream>
-
-#include <assert.h>
-#include <stdio.h>
 
 using namespace alpha;
 using Scanner = lex::Scanner;
 using Token = token::Token;
 using Category = token::category::Category;
+using Status = lex::status::Status;
 
 void print_alpha_token(const Token& token, std::ostream output_stream) {
   assert(output_stream);
@@ -233,24 +232,25 @@ int main(int argc, char** argv) {
     scanner.yylex();
 
     switch (scanner.get_status()) {
-      case lex::status::NOT_CLOSED_STRING:
-        fprintf(stderr, "ERROR NOT CLOSING STRING\n");
+      case Status::NOT_CLOSED_STRING:
+        std::cerr << "ERROR NOT CLOSING STRING\n";
         break;
-      case lex::status::UNKNOWN_ESCAPE_CHAR:
-        fprintf(stderr, "ERROR NOT VALID ESCAPED CHARACTER\n");
+      case Status::UNKNOWN_ESCAPE_CHAR:
+        std::cerr << "ERROR INVALID ESCAPE CHARACTER\n";
         break;
-      case lex::status::NOT_CLOSED_COMMENT:
-        fprintf(stderr, "ERROR NOT CLOSING COMMENT\n");
+      case Status::NOT_CLOSED_COMMENT:
+        std::cerr << "ERROR NOT CLOSING COMMENT\n";
         break;
-      case lex::status::UNKNOWN_ESCAPE_CHAR:
-        fprintf(stderr, "ERROR UNKOWN TOKEN\n");
+      case Status::UNKNOWN_TOKEN:
+        std::cerr << "ERROR UNKOWN TOKEN\n";
         break;
-      case lex::status::SUCCESS:
-        /* print token here */
+      case Status::SUCCESS:
+        print_alpha_token(scanner.get_token(), &output_stream);
         break;
+      default:;
     }
 
-  } while (scanner.get_status() != lex::status::END_OF_FILE);
+  } while (scanner.get_status() != Status::END_OF_FILE);
 
   /* Close open file streams (if any) */
   if (output_file_stream.is_open()) {
