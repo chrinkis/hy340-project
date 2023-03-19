@@ -12,7 +12,7 @@ using Token = token::Token;
 using Category = token::category::Category;
 using Status = lex::status::Status;
 
-void print_alpha_token(const Token& token, std::ostream output_stream) {
+void print_alpha_token(const Token& token, std::ostream& output_stream) {
   assert(output_stream);
 
   output_stream << "%d:\t" << token.get_sequence_number();
@@ -200,7 +200,7 @@ int main(int argc, char** argv) {
     output_stream = &output_file_stream;
   }
 
-  Scanner scanner(input_stream);
+  Scanner scanner(*input_stream);
 
   do {
     scanner.yylex();
@@ -219,7 +219,7 @@ int main(int argc, char** argv) {
         std::cerr << "ERROR UNKOWN TOKEN\n";
         break;
       case Status::SUCCESS:
-        print_alpha_token(scanner.get_token(), &output_stream);
+        print_alpha_token(scanner.get_token(), *output_stream);
         break;
       default:;
     }
