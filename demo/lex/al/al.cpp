@@ -1,247 +1,239 @@
-#include <alpha/lex/alpha_lex_status.h>
 #include <alpha/lex/scanner.h>
-#include <alpha/token/alpha_token.h>
+#include <alpha/lex/status.h>
+#include <alpha/token/token.h>
 
 #include <assert.h>
-#include <stdio.h>
+#include <fstream>
+#include <iostream>
 
-int alpha_yylex(void* yylval);
+using namespace alpha;
+using Scanner = lex::Scanner;
+using Token = token::Token;
+using Category = token::category::Category;
+using Status = lex::status::Status;
 
-void print_alpha_token(const alpha_token_t token, FILE* stream) {
-  assert(token);
-  assert(stream);
+void print_alpha_token(const Token& token, std::ostream output_stream) {
+  assert(output_stream);
 
-  fprintf(stream, "%d:\t", alpha_token_getSequenceNumber(token));
-  fprintf(stream, "#%d\t", alpha_token_getLine(token));
-  fprintf(stream, "\"%s\"\t", alpha_token_getContent(token));
+  output_stream << "%d:\t" << token.get_sequence_number();
+  output_stream << "#%d:\t" << token.get_line();
+  output_stream << "\"%s\"\t" << token.get_content();
 
-  switch (alpha_token_getCategory(token)) {
-    case ALPHA_TOKEN_INTEGER:
-      fprintf(stream, "CONST_INT\t%s\t<-integer",
-              alpha_token_getContent(token));
+  switch (token.get_category()) {
+    case Category::INTEGER:
+      output_stream << "CONST_INT\t%s\t<-integer" << token.get_content();
       break;
-    case ALPHA_TOKEN_FLOAT:
-      fprintf(stream, "CONST_REAL\t%s\t<-float", alpha_token_getContent(token));
+    case Category::FLOAT:
+      output_stream << "CONST_REAL\t%s\t<-float" << token.get_content();
       break;
-    case ALPHA_TOKEN_STRING:
-      fprintf(stream, "STRING\t\"%s\"\t<-char*", alpha_token_getContent(token));
+    case Category::STRING:
+      output_stream << "STRING\t%s\t<-char*" << token.get_content();
       break;
-    case ALPHA_TOKEN_IDENTIFIER:
-      fprintf(stream, "ID\t\"%s\"\t<-char*", alpha_token_getContent(token));
+    case Category::IDENTIFIER:
+      output_stream << "ID\t%s\t<-char*" << token.get_content();
       break;
-    case ALPHA_TOKEN_ONE_LINE_COMMENT:
-      fprintf(stream, "COMMENT\tLINE_COMMENT\t<-enumerated");
+    case Category::ONE_LINE_COMMENT:
+      output_stream << "COMMENT\tLINE_COMMENT\t<-enumerated";
       break;
-    case ALPHA_TOKEN_BLOCK_COMMENT:
-      fprintf(stream, "COMMENT\tBLOCK_COMMENT\t<-enumerated");
+    case Category::BLOCK_COMMENT:
+      output_stream << "COMMENT\tBLOCK_COMMENT\t<-enumerated";
       break;
-    case ALPHA_TOKEN_IF:
-      fprintf(stream, "KEYWORD\tIF\t<-enumerated");
+    case Category::IF:
+      output_stream << "COMMENT\tIF\t<-enumerated";
       break;
-    case ALPHA_TOKEN_ELSE:
-      fprintf(stream, "KEYWORD\tELSE\t<-enumerated");
+    case Category::ELSE:
+      output_stream << "KEYWORD\tELSE\t<-enumerated";
       break;
-    case ALPHA_TOKEN_WHILE:
-      fprintf(stream, "KEYWORD\tWHILE\t<-enumerated");
+    case Category::WHILE:
+      output_stream << "KEYWORD\tWHILE\t<-enumerated";
       break;
-    case ALPHA_TOKEN_FOR:
-      fprintf(stream, "KEYWORD\tFOR\t<-enumerated");
+    case Category::FOR:
+      output_stream << "KEYWORD\tFOR\t<-enumerated";
       break;
-    case ALPHA_TOKEN_FUNCTION:
-      fprintf(stream, "KEYWORD\tFUNCTION\t<-enumerated");
+    case Category::FUNCTION:
+      output_stream << "KEYWORD\tFUNCTION\t<-enumerated";
       break;
-    case ALPHA_TOKEN_RETURN:
-      fprintf(stream, "KEYWORD\tRETURN\t<-enumerated");
+    case Category::RETURN:
+      output_stream << "KEYWORD\tRETURN\t<-enumerated";
       break;
-    case ALPHA_TOKEN_BREAK:
-      fprintf(stream, "KEYWORD\tBREAK\t<-enumerated");
+    case Category::BREAK:
+      output_stream << "KEYWORD\tBREAK\t<-enumerated";
       break;
-    case ALPHA_TOKEN_CONTINUE:
-      fprintf(stream, "KEYWORD\tCONTINUE\t<-enumerated");
+    case Category::CONTINUE:
+      output_stream << "KEYWORD\tCONTINUE\t<-enumerated";
       break;
-    case ALPHA_TOKEN_AND:
-      fprintf(stream, "KEYWORD\tAND\t<-enumerated");
+    case Category::AND:
+      output_stream << "KEYWORD\tAND\t<-enumerated";
       break;
-    case ALPHA_TOKEN_NOT:
-      fprintf(stream, "KEYWORD\tNOT\t<-enumerated");
+    case Category::NOT:
+      output_stream << "KEYWORD\tNOT\t<-enumerated";
       break;
-    case ALPHA_TOKEN_OR:
-      fprintf(stream, "KEYWORD\tOR\t<-enumerated");
+    case Category::OR:
+      output_stream << "KEYWORD\tOR\t<-enumerated";
       break;
-    case ALPHA_TOKEN_LOCAL:
-      fprintf(stream, "KEYWORD\tLOCAL\t<-enumerated");
+    case Category::LOCAL:
+      output_stream << "KEYWORD\tLOCAL\t<-enumerated";
       break;
-    case ALPHA_TOKEN_TRUE:
-      fprintf(stream, "KEYWORD\tTRUE\t<-enumerated");
+    case Category::TRUE:
+      output_stream << "KEYWORD\tTRUE\t<-enumerated";
       break;
-    case ALPHA_TOKEN_FALSE:
-      fprintf(stream, "KEYWORD\tFALSE\t<-enumerated");
+    case Category::FALSE:
+      output_stream << "KEYWORD\tFALSE\t<-enumerated";
       break;
-    case ALPHA_TOKEN_NIL:
-      fprintf(stream, "KEYWORD\tNIL\t<-enumerated");
+    case Category::NIL:
+      output_stream << "KEYWORD\tNIL\t<-enumerated";
       break;
-    case ALPHA_TOKEN_ASSIGN: /*| =  |*/
-      fprintf(stream, "OPERATOR\tASSIGN\t<-enumerated");
+    case Category::ASSIGN:
+      output_stream << "OPERATOR\tASSIGN\t<-enumerated";
       break;
-    case ALPHA_TOKEN_PLUS: /*| +  |*/
-      fprintf(stream, "OPERATOR\tPLUS\t<-enumerated");
+    case Category::PLUS:
+      output_stream << "OPERATOR\tPLUS\t<-enumerated";
       break;
-    case ALPHA_TOKEN_MINUS: /*| -  |*/
-      fprintf(stream, "OPERATOR\tMINUS\t<-enumerated");
+    case Category::MINUS:
+      output_stream << "OPERATOR\tMINUS\t<-enumerated";
       break;
-    case ALPHA_TOKEN_STAR: /*| *  |*/
-      fprintf(stream, "OPERATOR\tSTAR\t<-enumerated");
+    case Category::STAR:
+      output_stream << "OPERATOR\tSTAR\t<-enumerated";
       break;
-    case ALPHA_TOKEN_DIV: /*| /  |*/
-      fprintf(stream, "OPERATOR\tDIV\t<-enumerated");
+    case Category::DIV:
+      output_stream << "OPERATOR\tDIV\t<-enumerated";
       break;
-    case ALPHA_TOKEN_MOD: /*| %  |*/
-      fprintf(stream, "OPERATOR\tMOD\t<-enumerated");
+    case Category::MOD:
+      output_stream << "OPERATOR\tMOD\t<-enumerated";
       break;
-    case ALPHA_TOKEN_EQUALS: /*| == |*/
-      fprintf(stream, "OPERATOR\tEQUALS\t<-enumerated");
+    case Category::EQUALS:
+      output_stream << "OPERATOR\tEQUALS\t<-enumerated";
       break;
-    case ALPHA_TOKEN_NOT_EQUALS: /*| != |*/
-      fprintf(stream, "OPERATOR\tNOT_EQUALS\t<-enumerated");
+    case Category::NOT_EQUALS:
+      output_stream << "OPERATOR\tNOT_EQUALS\t<-enumerated";
       break;
-    case ALPHA_TOKEN_PLUS_PLUS: /*| ++ |*/
-      fprintf(stream, "OPERATOR\tPLUS_PLUS\t<-enumerated");
+    case Category::PLUS_PLUS:
+      output_stream << "OPERATOR\tPLUS_PLUS\t<-enumerated";
       break;
-    case ALPHA_TOKEN_MINUS_MINUS: /*| -- |*/
-      fprintf(stream, "OPERATOR\tMINUS_MINUS\t<-enumerated");
+    case Category::MINUS_MINUS:
+      output_stream << "OPERATOR\tMINUS_MINUS\t<-enumerated";
       break;
-    case ALPHA_TOKEN_GREATER: /*| >  |*/
-      fprintf(stream, "OPERATOR\tGREATER\t<-enumerated");
+    case Category::GREATER:
+      output_stream << "OPERATOR\tGREATER\t<-enumerated";
       break;
-    case ALPHA_TOKEN_LESS: /*| <  |*/
-      fprintf(stream, "OPERATOR\tLESS\t<-enumerated");
+    case Category::LESS:
+      output_stream << "OPERATOR\tLESS\t<-enumerated";
       break;
-    case ALPHA_TOKEN_GREATER_EQUALS: /*| >= |*/
-      fprintf(stream, "OPERATOR\tGREATER_EQUALS\t<-enumerated");
+    case Category::GREATER_EQUALS:
+      output_stream << "OPERATOR\tGREATER_EQUALS\t<-enumerated";
       break;
-    case ALPHA_TOKEN_LESS_EQUALS: /*| <= |*/
-      fprintf(stream, "OPERATOR\tLESS_EQUALS\t<-enumerated");
+    case Category::LESS_EQUALS:
+      output_stream << "OPERATOR\tLESS_EQUALS\t<-enumerated";
       break;
-    case ALPHA_TOKEN_LEFT_CURLY_BRACKET: /*| {  |*/
-      fprintf(stream, "PUNCTUATION\tLEFT_CURLY_BRACKET\t<-enumerated");
+    case Category::LEFT_CURLY_BRACKET:
+      output_stream << "PUNCTUATION\tLEFT_CURLY_BRACKET\t<-enumerated";
       break;
-    case ALPHA_TOKEN_RIGHT_CURLY_BRACKET: /*| }  |*/
-      fprintf(stream, "PUNCTUATION\tRIGHT_CURLY_BRACKET\t<-enumerated");
+    case Category::RIGHT_CURLY_BRACKET:
+      output_stream << "PUNCTUATION\tRIGHT_CURLY_BRACKET\t<-enumerated";
       break;
-    case ALPHA_TOKEN_LEFT_SQUARE_BRACKET: /*| [  |*/
-      fprintf(stream, "PUNCTUATION\tLEFT_SQUARE_BRACKET\t<-enumerated");
+    case Category::LEFT_SQUARE_BRACKET:
+      output_stream << "PUNCTUATION\tLEFT_SQUARE_BRACKET\t<-enumerated";
       break;
-    case ALPHA_TOKEN_RIGHT_SQUARE_BRACKET: /*| ]  |*/
-      fprintf(stream, "PUNCTUATION\tRIGHT_SQUARE_BRACKET\t<-enumerated");
+    case Category::RIGHT_SQUARE_BRACKET:
+      output_stream << "PUNCTUATION\tRIGHT_SQUARE_BRACKET\t<-enumerated";
       break;
-    case ALPHA_TOKEN_LEFT_PARENTHESIS: /*| (  |*/
-      fprintf(stream, "PUNCTUATION\tLEFT_PARENTHESIS\t<-enumerated");
+    case Category::LEFT_PARENTHESIS:
+      output_stream << "PUNCTUATION\tLEFT_PARENTHESIS\t<-enumerated";
       break;
-    case ALPHA_TOKEN_RIGHT_PARENTHESIS: /*| )  |*/
-      fprintf(stream, "PUNCTUATION\tRIGHT_PARENTHESIS\t<-enumerated");
+    case Category::RIGHT_PARENTHESIS:
+      output_stream << "PUNCTUATION\tRIGHT_PARENTHESIS\t<-enumerated";
       break;
-    case ALPHA_TOKEN_SEMICOLON: /*| ;  |*/
-      fprintf(stream, "PUNCTUATION\tSEMICOLON\t<-enumerated");
+    case Category::SEMICOLON:
+      output_stream << "PUNCTUATION\tSEMICOLON\t<-enumerated";
       break;
-    case ALPHA_TOKEN_COMMA: /*| ,  |*/
-      fprintf(stream, "PUNCTUATION\tCOMMA\t<-enumerated");
+    case Category::COMMA:
+      output_stream << "PUNCTUATION\tCOMMA\t<-enumerated";
       break;
-    case ALPHA_TOKEN_COLON: /*| :  |*/
-      fprintf(stream, "PUNCTUATION\tCOLON\t<-enumerated");
+    case Category::COLON:
+      output_stream << "PUNCTUATION\tCOLON\t<-enumerated";
       break;
-    case ALPHA_TOKEN_DOUBLE_COLON: /*| :: |*/
-      fprintf(stream, "PUNCTUATION\tDOUBLE_COLON\t<-enumerated");
+    case Category::DOUBLE_COLON:
+      output_stream << "PUNCTUATION\tDOUBLE_COLON\t<-enumerated";
       break;
-    case ALPHA_TOKEN_DOT: /*| .  |*/
-      fprintf(stream, "PUNCTUATION\tDOT\t<-enumerated");
+    case Category::DOT:
+      output_stream << "PUNCTUATION\tDOT\t<-enumerated";
       break;
-    case ALPHA_TOKEN_DOUBLE_DOT: /*| .. |*/
-      fprintf(stream, "PUNCTUATION\tDOUBLE_DOT\t<-enumerated");
+    case Category::DOUBLE_DOT:
+      output_stream << "PUNCTUATION\tDOUBLE_DOT\t<-enumerated";
       break;
     default:
       fprintf(stderr, "Unkown token category!");
       break;
   }
-  fprintf(stream, "\n");
-}
 
-void print_list_of_alpha_tokens(alpha_token_t head, FILE* stream) {
-  assert(head);
-  assert(stream);
-
-  while (alpha_token_hasNext(head)) {
-    print_alpha_token(head, stream);
-    head = alpha_token_getNext(head);
-  }
-
-  print_alpha_token(head, stream);
-}
-
-void free_list_of_alpha_tokens(alpha_token_t head) {
-  if (!head) {
-    return;
-  }
-
-  while (alpha_token_hasNext(head)) {
-    alpha_token_t token_to_delete = head;
-    head = alpha_token_getNext(head);
-    alpha_token_free(token_to_delete);
-  }
-
-  alpha_token_free(head);
+  output_stream << "\n";
 }
 
 int main(int argc, char** argv) {
   assert((argc >= 0) && (argc <= 3));
 
+  std::istream* input_stream = &std::cin;
+  std::ifstream input_file_stream;
+
   if (argc > 1) {
-    if (!(yyin = fopen(argv[1], "r"))) {
-      fprintf(stderr, "Cannot read file: %s\n", argv[1]);
+    input_file_stream.open(argv[1]);
+
+    if (!input_file_stream.is_open()) {
+      std::cerr << "Cannot read file: " << argv[1] << "\n";
       return 1;
     }
-  } else {
-    yyin = stdin;
+
+    input_stream = &input_file_stream;
   }
 
-  FILE* output_stream = stdout;
+  std::ostream* output_stream = &std::cout;
+  std::ofstream output_file_stream;
+
   if (argc > 2) {
-    if (!(output_stream = fopen(argv[2], "w"))) {
-      fprintf(stderr, "Cannot write file: %s\n", argv[1]);
+    output_file_stream.open(argv[2]);
+
+    if (!output_file_stream.is_open()) {
+      std::cerr << "Cannot write file: " << argv[2] << "\n";
       return 1;
     }
+
+    output_stream = &output_file_stream;
   }
 
-  alpha_token_t head = alpha_token_new(0, 0, "", 0);
-  int lex_result = alpha_yylex(&head);
+  Scanner scanner(input_stream);
 
-  switch (lex_result) {
-    case ALPHA_LEX_STATUS_NOT_CLOSED_STRING:
-      fprintf(stderr, "ERROR NOT CLOSING STRING\n");
-      break;
-    case ALPHA_LEX_STATUS_UNKNOWN_ESCAPE_CHAR:
-      fprintf(stderr, "ERROR NOT VALID ESCAPED CHARACTER\n");
-      break;
-    case ALPHA_LEX_STATUS_NOT_CLOSED_COMMENT:
-      fprintf(stderr, "ERROR NOT CLOSING COMMENT\n");
-      break;
-    case ALPHA_LEX_STATUS_UNKNOWN_TOKEN:
-      fprintf(stderr, "ERROR UNKOWN TOKEN\n");
-      break;
-    default:
-      if (!alpha_token_hasNext(head)) {
+  do {
+    scanner.yylex();
+
+    switch (scanner.get_status()) {
+      case Status::NOT_CLOSED_STRING:
+        std::cerr << "ERROR NOT CLOSING STRING\n";
         break;
-      }
+      case Status::UNKNOWN_ESCAPE_CHAR:
+        std::cerr << "ERROR INVALID ESCAPE CHARACTER\n";
+        break;
+      case Status::NOT_CLOSED_COMMENT:
+        std::cerr << "ERROR NOT CLOSING COMMENT\n";
+        break;
+      case Status::UNKNOWN_TOKEN:
+        std::cerr << "ERROR UNKOWN TOKEN\n";
+        break;
+      case Status::SUCCESS:
+        print_alpha_token(scanner.get_token(), &output_stream);
+        break;
+      default:;
+    }
 
-      /* Remove invalid head */
-      alpha_token_t temp = head;
-      head = alpha_token_getNext(head);
-      alpha_token_free(temp);
+  } while (scanner.get_status() != Status::END_OF_FILE);
 
-      print_list_of_alpha_tokens(head, output_stream);
-      break;
+  /* Close open file streams (if any) */
+  if (output_file_stream.is_open()) {
+    output_file_stream.close();
   }
 
-  free_list_of_alpha_tokens(head);
+  if (input_file_stream.is_open()) {
+    input_file_stream.close();
+  }
 
   return 0;
 }
