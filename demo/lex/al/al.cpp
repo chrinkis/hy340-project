@@ -12,25 +12,25 @@ using Token = token::Token;
 using Category = token::category::Category;
 using Status = lex::status::Status;
 
-void print_alpha_token(const Token& token, std::ostream output_stream) {
+void print_alpha_token(const Token& token, std::ostream& output_stream) {
   assert(output_stream);
 
-  output_stream << "%d:\t" << token.get_sequence_number();
-  output_stream << "#%d:\t" << token.get_line();
-  output_stream << "\"%s\"\t" << token.get_content();
+  output_stream << token.get_sequence_number() << ":\t";
+  output_stream << "#" << token.get_line() << ":\t";
+  output_stream << "\"" << token.get_content() << "\"\t";
 
   switch (token.get_category()) {
     case Category::INTEGER:
-      output_stream << "CONST_INT\t%s\t<-integer" << token.get_content();
+      output_stream << "CONST_INT\t" << token.get_content() << "\t<-integer";
       break;
     case Category::FLOAT:
-      output_stream << "CONST_REAL\t%s\t<-float" << token.get_content();
+      output_stream << "CONST_REAL\t" << token.get_content() << "\t<-float";
       break;
     case Category::STRING:
-      output_stream << "STRING\t%s\t<-char*" << token.get_content();
+      output_stream << "STRING\t\"" << token.get_content() << "\"\t<-char*";
       break;
     case Category::IDENTIFIER:
-      output_stream << "ID\t%s\t<-char*" << token.get_content();
+      output_stream << "ID\t\"" << token.get_content() << "\"\t<-char*";
       break;
     case Category::ONE_LINE_COMMENT:
       output_stream << "COMMENT\tLINE_COMMENT\t<-enumerated";
@@ -39,7 +39,7 @@ void print_alpha_token(const Token& token, std::ostream output_stream) {
       output_stream << "COMMENT\tBLOCK_COMMENT\t<-enumerated";
       break;
     case Category::IF:
-      output_stream << "COMMENT\tIF\t<-enumerated";
+      output_stream << "KEYWORD\tIF\t<-enumerated";
       break;
     case Category::ELSE:
       output_stream << "KEYWORD\tELSE\t<-enumerated";
@@ -200,7 +200,7 @@ int main(int argc, char** argv) {
     output_stream = &output_file_stream;
   }
 
-  Scanner scanner(input_stream);
+  Scanner scanner(*input_stream);
 
   do {
     scanner.yylex();
@@ -219,12 +219,12 @@ int main(int argc, char** argv) {
         std::cerr << "ERROR UNKOWN TOKEN\n";
         break;
       case Status::SUCCESS:
-        print_alpha_token(scanner.get_token(), &output_stream);
+        print_alpha_token(scanner.get_token(), *output_stream);
         break;
       default:;
     }
 
-  } while (scanner.get_status() != Status::END_OF_FILE);
+  } while (scanner.get_status() == Status::SUCCESS);
 
   /* Close open file streams (if any) */
   if (output_file_stream.is_open()) {
