@@ -2,6 +2,9 @@
 #include <alpha/lex/status.h>
 #include <alpha/token/token.h>
 
+#include <fstream>
+#include <iostream>
+
 #include <assert.h>
 #include <stdio.h>
 
@@ -197,24 +200,35 @@ void free_list_of_alpha_tokens(alpha_token_t head) {
 int main(int argc, char** argv) {
   assert((argc >= 0) && (argc <= 3));
 
+  std::istream* input_stream = &std::cin;
+  std::ifstream input_file_stream;
+
   if (argc > 1) {
-    if (!(yyin = fopen(argv[1], "r"))) {
-      fprintf(stderr, "Cannot read file: %s\n", argv[1]);
+    input_file_stream.open(argv[1]);
+
+    if (!input_file_stream.is_open()) {
+      std::cerr << "Cannot read file: " << argv[1] << "\n";
       return 1;
     }
-  } else {
-    yyin = stdin;
+
+    input_stream = &input_file_stream;
   }
 
-  FILE* output_stream = stdout;
+  std::ostream* output_stream = &std::cout;
+  std::ofstream output_file_stream;
+
   if (argc > 2) {
-    if (!(output_stream = fopen(argv[2], "w"))) {
-      fprintf(stderr, "Cannot write file: %s\n", argv[1]);
+    output_file_stream.open(argv[2]);
+
+    if (!output_file_stream.is_open()) {
+      std::cerr << "Cannot write file: " << argv[2] << "\n";
       return 1;
     }
+
+    output_stream = &output_file_stream;
   }
 
-  Scanner scanner;
+  Scanner scanner(input_stream);
 
   do {
     scanner.yylex();
@@ -238,6 +252,15 @@ int main(int argc, char** argv) {
     }
 
   } while (scanner.get_status() != lex::status::END_OF_FILE);
+
+  /* Close open file streams (if any) */
+  if (output_file_stream.is_open()) {
+    output_file_stream.close();
+  }
+
+  if (input_file_stream.is_open()) {
+    input_file_stream.close();
+  }
 
   return 0;
 }
