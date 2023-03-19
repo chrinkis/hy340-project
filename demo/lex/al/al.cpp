@@ -1,11 +1,14 @@
-#include <alpha/lex/alpha_lex_status.h>
 #include <alpha/lex/scanner.h>
-#include <alpha/token/alpha_token.h>
+#include <alpha/lex/status.h>
+#include <alpha/token/token.h>
 
 #include <assert.h>
 #include <stdio.h>
 
-int alpha_yylex(void* yylval);
+using namespace alpha;
+using Scanner = lex::Scanner;
+using Token = token::Token;
+using Category = token::category::Category;
 
 void print_alpha_token(const alpha_token_t token, FILE* stream) {
   assert(token);
@@ -211,37 +214,30 @@ int main(int argc, char** argv) {
     }
   }
 
-  alpha_token_t head = alpha_token_new(0, 0, "", 0);
-  int lex_result = alpha_yylex(&head);
+  Scanner scanner;
 
-  switch (lex_result) {
-    case ALPHA_LEX_STATUS_NOT_CLOSED_STRING:
-      fprintf(stderr, "ERROR NOT CLOSING STRING\n");
-      break;
-    case ALPHA_LEX_STATUS_UNKNOWN_ESCAPE_CHAR:
-      fprintf(stderr, "ERROR NOT VALID ESCAPED CHARACTER\n");
-      break;
-    case ALPHA_LEX_STATUS_NOT_CLOSED_COMMENT:
-      fprintf(stderr, "ERROR NOT CLOSING COMMENT\n");
-      break;
-    case ALPHA_LEX_STATUS_UNKNOWN_TOKEN:
-      fprintf(stderr, "ERROR UNKOWN TOKEN\n");
-      break;
-    default:
-      if (!alpha_token_hasNext(head)) {
+  do {
+    scanner.yylex();
+
+    switch (scanner.get_status()) {
+      case lex::status::NOT_CLOSED_STRING:
+        fprintf(stderr, "ERROR NOT CLOSING STRING\n");
         break;
-      }
+      case lex::status::UNKNOWN_ESCAPE_CHAR:
+        fprintf(stderr, "ERROR NOT VALID ESCAPED CHARACTER\n");
+        break;
+      case lex::status::NOT_CLOSED_COMMENT:
+        fprintf(stderr, "ERROR NOT CLOSING COMMENT\n");
+        break;
+      case lex::status::UNKNOWN_ESCAPE_CHAR:
+        fprintf(stderr, "ERROR UNKOWN TOKEN\n");
+        break;
+      case lex::status::SUCCESS:
+        /* print token here */
+        break;
+    }
 
-      /* Remove invalid head */
-      alpha_token_t temp = head;
-      head = alpha_token_getNext(head);
-      alpha_token_free(temp);
-
-      print_list_of_alpha_tokens(head, output_stream);
-      break;
-  }
-
-  free_list_of_alpha_tokens(head);
+  } while (scanner.get_status() != lex::status::END_OF_FILE);
 
   return 0;
 }
