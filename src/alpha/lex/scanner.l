@@ -58,7 +58,7 @@ real            {integer}\.{integer}
                         } custom = {"default", 0};
 
 <STRING_S>[^\\\"]*      custom.contents += yytext;        /* read until escape char or end of string char */
-<STRING_S>\"            RETURN_CUSTOM_TOKEN(custom.lineno, custom.contents, category::STRING);       /* end of string */
+<STRING_S>\"            BEGIN(INITIAL); RETURN_CUSTOM_TOKEN(custom.lineno, custom.contents, category::STRING);       /* end of string */
 <STRING_S>\\            BEGIN(ESCAPE_S);                  /* escape char follows */
 <STRING_S><<EOF>>       RETURN_STATUS(NOT_CLOSED_STRING);
 <ESCAPE_S><<EOF>>       RETURN_STATUS(NOT_CLOSED_STRING);
