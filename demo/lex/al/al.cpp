@@ -224,7 +224,7 @@ int main(int argc, char** argv) {
       default:;
     }
 
-  } while (scanner.get_status() != Status::END_OF_FILE);
+  } while (scanner.get_status() == Status::SUCCESS);
 
   /* Close open file streams (if any) */
   if (output_file_stream.is_open()) {
