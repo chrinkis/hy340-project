@@ -76,6 +76,7 @@ real            {integer}\.{integer}
                         }
 <ESCAPE_S>.|"\n"        RETURN_STATUS(UNKNOWN_ESCAPE_CHAR);
 \"                      { custom.lineno = yylineno;
+                          custom.contents = std::string();
                           BEGIN(STRING_S);                /* String literal begins */
                         }
 
