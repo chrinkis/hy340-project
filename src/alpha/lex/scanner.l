@@ -53,10 +53,10 @@ real            {integer}\.{integer}
 %%
                         struct {
                             std::string contents;
-                           unsigned int lineno;
+                            unsigned int lineno;
                         } custom = {"default", 0};
 
-<STRING_S>[^\\\"]*      custom.contents += yytext;      /* read until escape char or end of string char */
+<STRING_S>[^\\\"]*      custom.contents += yytext;        /* read until escape char or end of string char */
 <STRING_S>\"            RETURN_CUSTOM_TOKEN(custom.lineno, custom.contents, category::STRING);       /* end of string */
 <STRING_S>\\            BEGIN(ESCAPE_S);                  /* escape char follows */
 <STRING_S><<EOF>>       return NOT_CLOSED_STRING;
