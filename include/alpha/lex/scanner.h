@@ -5,7 +5,10 @@
 #endif
 
 #include <alpha/lex/status.h>
+#include <alpha/syntax/parser.h>
 #include <alpha/token/token.h>
+
+#include <alpha/syntax/location.h>
 
 #include <istream>
 #include <stack>
@@ -29,7 +32,9 @@ class Scanner : public yyFlexLexer {
   virtual ~Scanner(){};
 
  public:
-  virtual int yylex();  // implemented by Flex
+  virtual int yylex(
+      alpha::syntax::Parser::semantic_type* const lval,
+      alpha::syntax::Parser::location_type* location);  // implemented by Flex
 
   Status get_status() { return this->status; };
 

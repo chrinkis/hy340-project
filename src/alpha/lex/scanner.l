@@ -1,6 +1,8 @@
 %{
 #include <alpha/lex/scanner.h>
 
+#include <alpha/syntax/parser.h>
+
 #include <alpha/token/token.h>
 #include <alpha/token/category.h>
 #include <alpha/lex/status.h>
@@ -9,7 +11,7 @@
 #include <string>
 
 #undef  YY_DECL
-#define YY_DECL                 int alpha::lex::Scanner::yylex()
+#define YY_DECL                 int alpha::lex::Scanner::yylex(alpha::syntax::Parser::semantic_type* const lval, alpha::syntax::Parser::location_type* location)
 
 #define SUCCESS                 status::SUCCESS
 #define NOT_CLOSED_STRING       status::NOT_CLOSED_STRING
