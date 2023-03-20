@@ -8,7 +8,7 @@
 
 %code requires {
     namespace alpha {
-    namespace syntax {
+    namespace lex {
         class Scanner;
     }
     }
