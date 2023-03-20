@@ -14,7 +14,7 @@
     }
 }
 
-%parse-param { Scanner &scanner }
+%parse-param { alpha::lex::Scanner &scanner }
 
 %locations
 %define api.location.file "../../../include/alpha/syntax/location.h"
