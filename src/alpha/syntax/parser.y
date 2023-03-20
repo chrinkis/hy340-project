@@ -23,6 +23,8 @@
 %code {
     #include <iostream>
 
+    #include <alpha/lex/scanner.h>
+
     #undef yylex
     #define yylex scanner.yylex
 }
