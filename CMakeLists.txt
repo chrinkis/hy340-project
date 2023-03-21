@@ -15,6 +15,9 @@ project(hy340-project)
 # Add `include` directory
 include_directories(include)
 
+# Add Flex and Bison
+include(flex_bison)
+
 # Add cmakes from subdirs
 add_subdirectory(src)
 add_subdirectory(demo)
