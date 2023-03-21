@@ -8,8 +8,6 @@
 #include <alpha/syntax/parser.h>
 #include <alpha/token/token.h>
 
-#include <alpha/syntax/location.h>
-
 #include <istream>
 #include <stack>
 #include <string>
