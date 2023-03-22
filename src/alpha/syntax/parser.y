@@ -154,6 +154,10 @@ block_opt   :   /* empty */    {}
             |   stmt block_opt {}
             ;
 
+funcdef     :   FUNCTION LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS block            {}
+            |   FUNCTION IDENTIFIER LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS block {}
+            ;
+
 /* END OF ALEX SECTION */
 
 %%
