@@ -140,8 +140,8 @@ indexed     :   /* empty */             {}
             |   indexedelem indexed_opt {}
             ;
 
-indexed_opt :   /* empty */
-            |   COMMA indexedelem indexed_opt
+indexed_opt :   /* empty */                   {}
+            |   COMMA indexedelem indexed_opt {}
             ;
 
 indexedelem :   LEFT_CURLY_BRACKET expr COLON expr RIGHT_CURLY_BRACKET {}
