@@ -101,9 +101,22 @@ foo     :   INTEGER         { print_derivation("foo", "INTEGER"); }
 
 /* START OF NICK SECTION */
 
-PROGRAM :	/* empty */		{ print_derivation("PROGRAM", "empty"); }
-		|	stmt PROGRAM	{ print_derivation("PROGRAM", "stmt PROGRAM"); }
+PROGRAM :	/* empty */			{ print_derivation("PROGRAM", "empty"); }
+		|	stmt PROGRAM		{ print_derivation("PROGRAM", "stmt PROGRAM"); }
         ;
+
+stmt	:	expr SEMICOLON		{ print_derivation("stmt", "expr SEMICOLON"); }
+	 	|	ifstmt				{ print_derivation("stmt", "ifstmt"); }
+		|	whilestmt			{ print_derivation("stmt", "whilestmt"); }
+		|	forstmt				{ print_derivation("stmt", "forstmt"); }
+		|	returnstmt			{ print_derivation("stmt", "returnstmt"); }
+		|	BREAK SEMICOLON		{ print_derivation("stmt", "BREAK SEMICOLON"); }
+		|	CONTINUE SEMICOLON	{ print_derivation("stmt", "CONTINUE SEMICOLON"); }
+		|	block				{ print_derivation("stmt", "block"); }
+		|	funcdef				{ print_derivation("stmt", "funcdef"); }
+		|	SEMICOLON			{ print_derivation("stmt", "SEMICOLON"); }
+		;
+
 
 /* END OF NICK SECTION */
 
