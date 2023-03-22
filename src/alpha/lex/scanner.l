@@ -161,7 +161,7 @@ real            {integer}\.{integer}
 <COMMENT_S>.|"\n"       /* ignore the rest of the characters */
 <COMMENT_S><<EOF>>      RETURN_STATUS(NOT_CLOSED_COMMENT);
 
-<<EOF>>                 RETURN_TOKEN(END_OF_FILE);
+<<EOF>>                 RETURN_TOKEN(category::END_OF_FILE);
 .                       RETURN_STATUS(UNKNOWN_TOKEN);
 
 %%
