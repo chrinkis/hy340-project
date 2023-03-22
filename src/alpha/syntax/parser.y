@@ -114,6 +114,10 @@ call        :   call LEFT_PARENTHESIS elist RIGHT_PARENTHESIS                   
             |   LEFT_PARENTHESIS funcdef RIGHT_PARENTHESIS LEFT_PARENTHESIS elist RIGHT_PARENTHESIS {}
             ;
 
+callsuffix  :   normcall    {}
+            |   methodcall  {}
+            ;
+
 /* END OF ALEX SECTION */
 
 %%
