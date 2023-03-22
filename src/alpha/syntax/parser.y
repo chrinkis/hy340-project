@@ -114,7 +114,7 @@ stmt        :   expr SEMICOLON     { print_derivation("stmt", "expr ;"); }
             |   whilestmt          { print_derivation("stmt", "whilestmt"); }
             |   forstmt            { print_derivation("stmt", "forstmt"); }
             |   returnstmt         { print_derivation("stmt", "returnstmt"); }
-            |   BREAK SEMICOLO     { print_derivation("stmt", "BREAK ;"); }
+            |   BREAK SEMICOLON    { print_derivation("stmt", "BREAK ;"); }
             |   CONTINUE SEMICOLON { print_derivation("stmt", "CONTINUE ;"); }
             |   block              { print_derivation("stmt", "block"); }
             |   funcdef            { print_derivation("stmt", "funcdef"); }
