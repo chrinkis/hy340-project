@@ -109,16 +109,16 @@ PROGRAM     :    /* empty */ { print_derivation("PROGRAM", "empty"); }
             |   stmt PROGRAM { print_derivation("PROGRAM", "stmt PROGRAM"); }
             ;
 
-stmt        :    expr SEMICOLON     { print_derivation("stmt", "expr;"); }
+stmt        :    expr SEMICOLON     { print_derivation("stmt", "expr ;"); }
             |    ifstmt             { print_derivation("stmt", "ifstmt"); }
             |    whilestmt          { print_derivation("stmt", "whilestmt"); }
             |    forstmt            { print_derivation("stmt", "forstmt"); }
             |    returnstmt         { print_derivation("stmt", "returnstmt"); }
-            |    BREAK SEMICOLO     { print_derivation("stmt", "BREAK;"); }
-            |    CONTINUE SEMICOLON { print_derivation("stmt", "CONTINUE;"); }
+            |    BREAK SEMICOLO     { print_derivation("stmt", "BREAK ;"); }
+            |    CONTINUE SEMICOLON { print_derivation("stmt", "CONTINUE ;"); }
             |    block              { print_derivation("stmt", "block"); }
             |    funcdef            { print_derivation("stmt", "funcdef"); }
-            |    SEMICOLON          { print_derivation("stmt", "SEMICOLON"); }
+            |    SEMICOLON          { print_derivation("stmt", ";"); }
             ;
 
 expr        :    assignexpr   { print_derivation("expr", "assignexpr"); }
@@ -141,13 +141,13 @@ op          :    PLUS           { print_derivation("op", "+"); }
             |    OR             { print_derivation("op", "OR"); }
             ;
 
-term        :    LEFT_PARENTHESIS expr RIGHT_PARENTHESIS { print_derivation("term", "(expr)"); }
-            |    MINUS expr    %prec UMINUS              { print_derivation("term", "-expr"); }
+term        :    LEFT_PARENTHESIS expr RIGHT_PARENTHESIS { print_derivation("term", "( expr )"); }
+            |    MINUS expr    %prec UMINUS              { print_derivation("term", "- expr"); }
             |    NOT expr                                { print_derivation("term", "NOT expr"); }
-            |    PLUS_PLUS lvalue                        { print_derivation("term", "++lvalue"); }
-            |    lvalue PLUS_PLUS                        { print_derivation("term", "lvalue++"); }
-            |    MINUS_MINUS lvalue                      { print_derivation("term", "--lvalue"); }
-            |    lvalue MINUS_MINUS                      { print_derivation("term", "lvalue--"); }
+            |    PLUS_PLUS lvalue                        { print_derivation("term", "++ lvalue"); }
+            |    lvalue PLUS_PLUS                        { print_derivation("term", "lvalue ++"); }
+            |    MINUS_MINUS lvalue                      { print_derivation("term", "-- lvalue"); }
+            |    lvalue MINUS_MINUS                      { print_derivation("term", "lvalue --"); }
             |    primary                                 { print_derivation("term", "primary"); }
             ;
 
@@ -157,20 +157,20 @@ assignexpr  :   lvalue ASSIGN expr { print_derivation("assignexpr", "lvalue = ex
 primary     :   lvalue                                      { print_derivation("primary", "lvalue"); }
             |    call                                       { print_derivation("primary", "call"); }
             |    objectdef                                  { print_derivation("primary", "objectdef"); }
-            |    LEFT_PARENTHESIS funcdef RIGHT_PARENTHESIS { print_derivation("primary", "(funcdef)"); }
+            |    LEFT_PARENTHESIS funcdef RIGHT_PARENTHESIS { print_derivation("primary", "( funcdef )"); }
             |    const                                      { print_derivation("primary", "const"); }
             ;
 
 lvalue      :    IDENTIFIER              { print_derivation("lvalue", "IDENTIFIER"); }
             |    LOCAL IDENTIFIER        { print_derivation("lvalue", "LOCAL IDENTIFIER"); }
-            |    DOUBLE_COLON IDENTIFIER { print_derivation("lvalue", "::IDENTIFIER"); }
+            |    DOUBLE_COLON IDENTIFIER { print_derivation("lvalue", ":: IDENTIFIER"); }
             |    member                  { print_derivation("lvalue", "member"); }
             ;
 
-member      :    lvalue DOT IDENTIFIER                                { print_derivation("member", "lvalue.IDENTIFIER"); }
-            |    lvalue LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET { print_derivation("member", "lvalue[expr]"); }
-            |    call DOT IDENTIFIER                                  { print_derivation("member", "call.IDENTIFIER"); }
-            |    call LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET   { print_derivation("member", "call[expr]"); }
+member      :    lvalue DOT IDENTIFIER                                { print_derivation("member", "lvalue . IDENTIFIER"); }
+            |    lvalue LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET { print_derivation("member", "lvalue [ expr ]"); }
+            |    call DOT IDENTIFIER                                  { print_derivation("member", "call . IDENTIFIER"); }
+            |    call LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET   { print_derivation("member", "call [ expr ]"); }
             ;
 
 
