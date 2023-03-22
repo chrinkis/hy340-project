@@ -7,7 +7,7 @@ Token::Token() {}
 Token::Token(unsigned int line,
              unsigned int sequence_number,
              const std::string& content,
-             category::Category category)
+             Token::Category category)
     : line(line),
       sequence_number(sequence_number),
       content(content),
@@ -37,10 +37,10 @@ void Token::set_content(const std::string& content) {
   this->content = content;
 }
 
-category::Category Token::get_category() const {
+Token::Category Token::get_category() const {
   return this->category;
 }
 
-void Token::set_category(category::Category category) {
+void Token::set_category(Token::Category category) {
   this->category = category;
 }

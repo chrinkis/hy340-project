@@ -4,30 +4,50 @@
 #include <alpha/syntax/parser.h>
 
 #include <alpha/token/token.h>
-#include <alpha/token/category.h>
 #include <alpha/lex/status.h>
 
 #include <iostream>
 #include <string>
+#include <cassert>
 
 #undef  YY_DECL
-#define YY_DECL                 int alpha::lex::Scanner::yylex(alpha::syntax::Parser::semantic_type* const lval, alpha::syntax::Parser::location_type* location)
+#define YY_DECL                 int alpha::lex::Scanner::yylex( \
+                                    alpha::syntax::Parser::semantic_type* const lval, \
+                                    alpha::syntax::Parser::location_type* location)
 
 #define SUCCESS                 status::SUCCESS
 #define NOT_CLOSED_STRING       status::NOT_CLOSED_STRING
 #define NOT_CLOSED_COMMENT      status::NOT_CLOSED_COMMENT
 #define UNKNOWN_ESCAPE_CHAR     status::UNKNOWN_ESCAPE_CHAR
 #define UNKNOWN_TOKEN           status::UNKNOWN_TOKEN
-#define END_OF_FILE             status::END_OF_FILE
 
 #define RUNTIME_ASSERT(what)    assert(what)
 
-#define RETURN_TOKEN(CATEGORY)                          this->token = Token(yylineno, next_seq_number++, yytext, CATEGORY); RETURN_STATUS(SUCCESS);
-#define RETURN_CUSTOM_TOKEN(LINENO, VALUE, CATEGORY)    this->token = Token(LINENO, next_seq_number++, VALUE, CATEGORY); RETURN_STATUS(SUCCESS);
-#define RETURN_STATUS(STATUS)                           this->status = STATUS; return STATUS;
+#define RETURN_TOKEN(CATEGORY) { \
+    this->token = Token(yylineno, next_seq_number++, yytext, CATEGORY); \
+    this->status = SUCCESS; \
+    return CATEGORY; \
+}
+
+#define RETURN_CUSTOM_TOKEN(LINENO, VALUE, CATEGORY) { \
+    this->token = Token(LINENO, next_seq_number++, VALUE, CATEGORY); \
+    this->status = SUCCESS; \
+    return CATEGORY; \
+}
+
+#define RAISE_ERROR(STATUS) { \
+    assert(STATUS != SUCCESS);\
+\
+    this->status = STATUS; \
+    this->handle_error(); \
+\
+    assert(0); \
+    exit(-1); \
+}
 
 using namespace alpha::lex;
 using namespace alpha::token;
+using category = alpha::token::Token::Category;
 
 static unsigned int next_seq_number = 0;
 %}
@@ -62,8 +82,8 @@ real            {integer}\.{integer}
 <STRING_S>[^\\\"]*      custom.contents += yytext;        /* read until escape char or end of string char */
 <STRING_S>\"            BEGIN(INITIAL); RETURN_CUSTOM_TOKEN(custom.lineno, custom.contents, category::STRING);       /* end of string */
 <STRING_S>\\            BEGIN(ESCAPE_S);                  /* escape char follows */
-<STRING_S><<EOF>>       RETURN_STATUS(NOT_CLOSED_STRING);
-<ESCAPE_S><<EOF>>       RETURN_STATUS(NOT_CLOSED_STRING);
+<STRING_S><<EOF>>       RAISE_ERROR(NOT_CLOSED_STRING);
+<ESCAPE_S><<EOF>>       RAISE_ERROR(NOT_CLOSED_STRING);
 <ESCAPE_S>"\""          { custom.contents += "\"";
                           BEGIN(STRING_S);                /* which escaped char? */
                         }
@@ -76,7 +96,7 @@ real            {integer}\.{integer}
 <ESCAPE_S>"\\"          { custom.contents += "\\";
                           BEGIN(STRING_S);                /* which escaped char? */
                         }
-<ESCAPE_S>.|"\n"        RETURN_STATUS(UNKNOWN_ESCAPE_CHAR);
+<ESCAPE_S>.|"\n"        RAISE_ERROR(UNKNOWN_ESCAPE_CHAR);
 \"                      { custom.lineno = yylineno;
                           custom.contents = std::string();
                           BEGIN(STRING_S);                /* String literal begins */
@@ -147,10 +167,18 @@ real            {integer}\.{integer}
                           RETURN_CUSTOM_TOKEN(custom.lineno, custom.contents, category::BLOCK_COMMENT);
                         }
 <COMMENT_S>.|"\n"       /* ignore the rest of the characters */
-<COMMENT_S><<EOF>>      RETURN_STATUS(NOT_CLOSED_COMMENT);
+<COMMENT_S><<EOF>>      RAISE_ERROR(NOT_CLOSED_COMMENT);
 
-<<EOF>>                 RETURN_STATUS(END_OF_FILE);
-.                       RETURN_STATUS(UNKNOWN_TOKEN);
+<<EOF>>                 RETURN_TOKEN(category::END_OF_FILE);
+.                       RAISE_ERROR(UNKNOWN_TOKEN);
 
 %%
 
+
+void Scanner::handle_error() {
+    std::cout << "Error during lexicographic analysis" << std::endl;
+
+    // TODO add more info in message
+
+    exit(-1);
+}

@@ -10,7 +10,6 @@ enum Status {
   NOT_CLOSED_COMMENT,
   UNKNOWN_ESCAPE_CHAR,
   UNKNOWN_TOKEN,
-  END_OF_FILE,
 };
 }
 
