@@ -156,6 +156,12 @@ primary	:	lvalue										{ print_derivation("primary", "lvalue"); }
 		|	const										{ print_derivation("primary", "const"); }
 		;
 
+member	:	lvalue DOT IDENTIFIER									{ print_derivation("member", "lvalue DOT IDENTIFIER"); }
+		|	lvalue LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET	{ print_derivation("member", "lvalue LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET"); }
+		|	call DOT IDENTIFIER										{ print_derivation("member", "call DOT IDENTIFIER"); }
+		|	call LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET		{ print_derivation("member", "call LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET"); }
+		;
+
 
 /* END OF NICK SECTION */
 
