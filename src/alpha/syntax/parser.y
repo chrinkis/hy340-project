@@ -147,6 +147,13 @@ indexed_opt :   /* empty */
 indexedelem :   LEFT_CURLY_BRACKET expr COLON expr RIGHT_CURLY_BRACKET {}
             ;
 
+block       :   LEFT_SQUARE_BRACKET block_opt RIGHT_CURLY_BRACKET {}
+            ;
+
+block_opt   :   /* empty */    {}
+            |   stmt block_opt {}
+            ;
+
 /* END OF ALEX SECTION */
 
 %%
