@@ -138,12 +138,12 @@ op		:	PLUS				{ print_derivation("op", "PLUS"); }
 		;
 
 term	:	LEFT_PARENTHESIS expr RIGHT_PARENTHESIS	{ print_derivation("term", "LEFT_PARENTHESIS expr RIGHT_PARENTHESIS"); }
-	 	:	NOT expr								{ print_derivation("term", "NOT expr"); }
-	 	:	PLUS_PLUS lvalue						{ print_derivation("term", "PLUS_PLUS lvalue"); }
-	 	:	lvalue PLUS_PLUS						{ print_derivation("term", "lvalue PLUS_PLUS"); }
-	 	:	MINUS_MINUS lvalue						{ print_derivation("term", "MINUS_MINUS lvalue"); }
-	 	:	lvalue MINUS_MINUS						{ print_derivation("term", "lvalue MINUS_MINUS"); }
-	 	:	primary									{ print_derivation("term", "primary"); }
+	 	|	NOT expr								{ print_derivation("term", "NOT expr"); }
+	 	|	PLUS_PLUS lvalue						{ print_derivation("term", "PLUS_PLUS lvalue"); }
+	 	|	lvalue PLUS_PLUS						{ print_derivation("term", "lvalue PLUS_PLUS"); }
+	 	|	MINUS_MINUS lvalue						{ print_derivation("term", "MINUS_MINUS lvalue"); }
+	 	|	lvalue MINUS_MINUS						{ print_derivation("term", "lvalue MINUS_MINUS"); }
+	 	|	primary									{ print_derivation("term", "primary"); }
 		;
 
 assignexpr	:	lvalue ASSIGN expr	{ print_derivation("assignexpr", "lvalue ASSIGN expr	"); }
