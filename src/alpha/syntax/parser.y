@@ -166,6 +166,14 @@ const       :   INTEGER {}
             |   FALS    {}
             ;
 
+idlist      :   /* empty */           {}
+            |   IDENTIFIER idlist_opt {}
+            ;
+
+idlist_opt  :   /* empty */             {}
+            |   COMMA IDENTIFIER idlist {}
+            ;
+
 /* END OF ALEX SECTION */
 
 %%
