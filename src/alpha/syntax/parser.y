@@ -86,14 +86,6 @@
 
 %%
 
-PROGRAM :   foo
-        ;
-
-foo     :   INTEGER         { print_derivation("foo", "INTEGER"); }
-        |   foo INTEGER     { print_derivation("foo", "foo, INTEGER"); }
-        ;
-
-
 /*
  * WARNING! WRITE CODE ONLY IN YOUR
  * SECTION IN ORDER TO AVOID CONFLICTS.
