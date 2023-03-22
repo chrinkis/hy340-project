@@ -158,6 +158,14 @@ funcdef     :   FUNCTION LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS block        
             |   FUNCTION IDENTIFIER LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS block {}
             ;
 
+const       :   INTEGER {}
+            |   FLOAT   {}
+            |   STRING  {}
+            |   NIL     {}
+            |   TRU     {}
+            |   FALS    {}
+            ;
+
 /* END OF ALEX SECTION */
 
 %%
