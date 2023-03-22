@@ -124,6 +124,14 @@ normcall    :   LEFT_PARENTHESIS elist RIGHT_PARENTHESIS {}
 methodcall  :   DOUBLE_DOT IDENTIFIER LEFT_PARENTHESIS elist RIGHT_PARENTHESIS  {}
             ;
 
+elist       :   /* empty */    {}
+            |   expr elist_opt {}
+            ;
+
+elist_opt   :   /* empty */          {}
+            |   COMMA expr elist_opt {}
+            ;
+
 /* END OF ALEX SECTION */
 
 %%
