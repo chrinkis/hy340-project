@@ -132,6 +132,10 @@ elist_opt   :   /* empty */          {}
             |   COMMA expr elist_opt {}
             ;
 
+objectdef   :   LEFT_SQUARE_BRACKET elist RIGHT_SQUARE_BRACKET   {}
+            |   LEFT_SQUARE_BRACKET indexed RIGHT_SQUARE_BRACKET {}
+            ;
+
 /* END OF ALEX SECTION */
 
 %%
