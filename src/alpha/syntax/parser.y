@@ -93,6 +93,24 @@ foo     :   INTEGER         { print_derivation("foo", "INTEGER"); }
         |   foo INTEGER     { print_derivation("foo", "foo, INTEGER"); }
         ;
 
+
+/*
+ * WARNING! WRITE CODE ONLY IN YOUR
+ * SECTION IN ORDER TO AVOID CONFLICTS.
+ */
+
+/* START OF NICK SECTION */
+
+/* END OF NICK SECTION */
+
+
+/* ********************** */
+
+
+/* START OF ALEX SECTION */
+
+/* END OF ALEX SECTION */
+
 %%
 
 static void print_derivation(const std::string& non_final, const std::string& final) {
