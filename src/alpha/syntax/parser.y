@@ -178,6 +178,9 @@ ifstmt      :   IF LEFT_PARENTHESIS expr RIGHT_PARENTHESIS stmt           {}
             |   IF LEFT_PARENTHESIS expr RIGHT_PARENTHESIS stmt ELSE stmt {}
             ;
 
+whilestmt   :   WHILE LEFT_PARENTHESIS expr RIGHT_PARENTHESIS stmt {}
+            ;
+
 /* END OF ALEX SECTION */
 
 %%
