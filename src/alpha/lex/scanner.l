@@ -10,7 +10,9 @@
 #include <string>
 
 #undef  YY_DECL
-#define YY_DECL                 int alpha::lex::Scanner::yylex(alpha::syntax::Parser::semantic_type* const lval, alpha::syntax::Parser::location_type* location)
+#define YY_DECL                 int alpha::lex::Scanner::yylex( \
+                                    alpha::syntax::Parser::semantic_type* const lval, \
+                                    alpha::syntax::Parser::location_type* location)
 
 #define SUCCESS                 status::SUCCESS
 #define NOT_CLOSED_STRING       status::NOT_CLOSED_STRING
@@ -21,9 +23,20 @@
 
 #define RUNTIME_ASSERT(what)    assert(what)
 
-#define RETURN_TOKEN(CATEGORY)                          this->token = Token(yylineno, next_seq_number++, yytext, CATEGORY); RETURN_STATUS(SUCCESS);
-#define RETURN_CUSTOM_TOKEN(LINENO, VALUE, CATEGORY)    this->token = Token(LINENO, next_seq_number++, VALUE, CATEGORY); RETURN_STATUS(SUCCESS);
-#define RETURN_STATUS(STATUS)                           this->status = STATUS; return STATUS;
+#define RETURN_TOKEN(CATEGORY) { \
+    this->token = Token(yylineno, next_seq_number++, yytext, CATEGORY); \
+    RETURN_STATUS(SUCCESS); \
+}
+
+#define RETURN_CUSTOM_TOKEN(LINENO, VALUE, CATEGORY) { \
+    this->token = Token(LINENO, next_seq_number++, VALUE, CATEGORY); \
+    RETURN_STATUS(SUCCESS); \
+}
+
+#define RETURN_STATUS(STATUS) { \
+    this->status = STATUS; \
+    return STATUS; \
+}
 
 using namespace alpha::lex;
 using namespace alpha::token;
