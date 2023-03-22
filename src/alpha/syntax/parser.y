@@ -181,6 +181,9 @@ ifstmt      :   IF LEFT_PARENTHESIS expr RIGHT_PARENTHESIS stmt           {}
 whilestmt   :   WHILE LEFT_PARENTHESIS expr RIGHT_PARENTHESIS stmt {}
             ;
 
+forstmt     :   FOR LEFT_PARENTHESIS elist SEMICOLON expr SEMICOLON elist RIGHT_PARENTHESIS stmt {}
+            ;
+
 /* END OF ALEX SECTION */
 
 %%
