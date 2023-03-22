@@ -121,6 +121,9 @@ callsuffix  :   normcall    {}
 normcall    :   LEFT_PARENTHESIS elist RIGHT_PARENTHESIS {}
             ;
 
+methodcall  :   DOUBLE_DOT IDENTIFIER LEFT_PARENTHESIS elist RIGHT_PARENTHESIS  {}
+            ;
+
 /* END OF ALEX SECTION */
 
 %%
