@@ -122,6 +122,21 @@ expr	:	assignexpr			{ print_derivation("expr", "assignexpr"); }
 		|	term				{ print_derivation("expr", "term"); }
 		;
 
+op		:	PLUS				{ print_derivation("op", "PLUS"); }
+		|	MINUS				{ print_derivation("op", "MINUS"); }
+		|	STAR				{ print_derivation("op", "STAR"); }
+		|	DIV					{ print_derivation("op", "DIV"); }
+		|	MOD					{ print_derivation("op", "MOD"); }
+		|	GREATER				{ print_derivation("op", "GREATER"); }
+		|	GREATER_EQUALS		{ print_derivation("op", "GREATER_EQUALS"); }
+		|	LESS				{ print_derivation("op", "LESS"); }
+		|	LESS_EQUALS			{ print_derivation("op", "LESS_EQUALS"); }
+		|	EQUALS				{ print_derivation("op", "EQUALS"); }
+		|	NOT_EQUALS			{ print_derivation("op", "NOT_EQUALS"); }
+		|	AND					{ print_derivation("op", "AND"); }
+		|	OR					{ print_derivation("op", "OR"); }
+		;
+
 
 /* END OF NICK SECTION */
 
