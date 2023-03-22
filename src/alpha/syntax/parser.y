@@ -117,6 +117,11 @@ stmt	:	expr SEMICOLON		{ print_derivation("stmt", "expr SEMICOLON"); }
 		|	SEMICOLON			{ print_derivation("stmt", "SEMICOLON"); }
 		;
 
+expr	:	assignexpr			{ print_derivation("expr", "assignexpr"); }
+		|	expr op expr		{ print_derivation("expr", "expr op expr"); }
+		|	term				{ print_derivation("expr", "term"); }
+		;
+
 
 /* END OF NICK SECTION */
 
