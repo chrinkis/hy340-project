@@ -146,6 +146,9 @@ term	:	LEFT_PARENTHESIS expr RIGHT_PARENTHESIS	{ print_derivation("term", "LEFT_
 	 	:	primary									{ print_derivation("term", "primary"); }
 		;
 
+assignexpr	:	lvalue ASSIGN expr	{ print_derivation("assignexpr", "lvalue ASSIGN expr	"); }
+			;
+
 
 /* END OF NICK SECTION */
 
