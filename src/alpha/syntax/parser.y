@@ -174,6 +174,10 @@ idlist_opt  :   /* empty */             {}
             |   COMMA IDENTIFIER idlist {}
             ;
 
+ifstmt      :   IF LEFT_PARENTHESIS expr RIGHT_PARENTHESIS stmt           {}
+            |   IF LEFT_PARENTHESIS expr RIGHT_PARENTHESIS stmt ELSE stmt {}
+            ;
+
 /* END OF ALEX SECTION */
 
 %%
