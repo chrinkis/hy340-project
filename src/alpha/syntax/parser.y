@@ -142,7 +142,7 @@ op          :    PLUS           { print_derivation("op", "+"); }
             ;
 
 term        :    LEFT_PARENTHESIS expr RIGHT_PARENTHESIS { print_derivation("term", "( expr )"); }
-            |    MINUS expr    %prec UMINUS              { print_derivation("term", "- expr"); }
+            |    MINUS expr                 %prec UMINUS { print_derivation("term", "- expr"); }
             |    NOT expr                                { print_derivation("term", "NOT expr"); }
             |    PLUS_PLUS lvalue                        { print_derivation("term", "++ lvalue"); }
             |    lvalue PLUS_PLUS                        { print_derivation("term", "lvalue ++"); }
