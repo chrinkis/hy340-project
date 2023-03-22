@@ -29,6 +29,7 @@
     #define yylex scanner.yylex
 }
 
+%token END_OF_FILE 0 "end of file"
 %token INTEGER
 %token FLOAT
 %token STRING

@@ -19,7 +19,6 @@
 #define NOT_CLOSED_COMMENT      status::NOT_CLOSED_COMMENT
 #define UNKNOWN_ESCAPE_CHAR     status::UNKNOWN_ESCAPE_CHAR
 #define UNKNOWN_TOKEN           status::UNKNOWN_TOKEN
-#define END_OF_FILE             status::END_OF_FILE
 
 #define RUNTIME_ASSERT(what)    assert(what)
 
@@ -162,7 +161,7 @@ real            {integer}\.{integer}
 <COMMENT_S>.|"\n"       /* ignore the rest of the characters */
 <COMMENT_S><<EOF>>      RETURN_STATUS(NOT_CLOSED_COMMENT);
 
-<<EOF>>                 RETURN_STATUS(END_OF_FILE);
+<<EOF>>                 RETURN_TOKEN(END_OF_FILE);
 .                       RETURN_STATUS(UNKNOWN_TOKEN);
 
 %%
