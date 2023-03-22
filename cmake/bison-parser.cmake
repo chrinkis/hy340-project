@@ -10,4 +10,7 @@ bison_target(BisonParser
 
     # Output header file
     DEFINES_FILE ${CMAKE_SOURCE_DIR}/include/alpha/syntax/parser.h
+
+    # File with conflicts info
+    VERBOSE REPORT_FILE ${CMAKE_SOURCE_DIR}/build/bison_parser.output
 )
