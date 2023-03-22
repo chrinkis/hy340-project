@@ -84,6 +84,18 @@
 
 %start PROGRAM
 
+%right      ASSIGN
+%left       OR
+%left       AND
+%nonassoc   EQUALS              NOT_EQUALS
+%nonassoc   GREATER             GREATER_EQUALS      LESS        LESS_EQUALS
+%left       PLUS                MINUS
+%left       STAR                DIV                 MOD
+%right      NOT                 PLUS_PLUS           MINUS_MINUS UMINUS
+%left       DOT                 DOUBLE_DOT
+%left       LEFT_SQUARE_BRACKET RIGHT_SQUARE_BRACKET
+%left       LEFT_PARENTHESIS    RIGHT_PARENTHESIS
+
 %%
 
 /*
@@ -130,7 +142,7 @@ op	        :	PLUS			{ print_derivation("op", "+"); }
 	        ;
 
 term        :	LEFT_PARENTHESIS expr RIGHT_PARENTHESIS	{ print_derivation("term", "(expr)"); }
-	        |	MINUS expr				                { print_derivation("term", "-expr"); }
+	        |	MINUS expr	%prec UMINUS                { print_derivation("term", "-expr"); }
 	        |	NOT expr				                { print_derivation("term", "NOT expr"); }
 	        |	PLUS_PLUS lvalue			            { print_derivation("term", "++lvalue"); }
 	        |	lvalue PLUS_PLUS			            { print_derivation("term", "lvalue++"); }
