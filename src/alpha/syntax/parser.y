@@ -101,73 +101,73 @@ foo     :   INTEGER         { print_derivation("foo", "INTEGER"); }
 
 /* START OF NICK SECTION */
 
-PROGRAM :	/* empty */			{ print_derivation("PROGRAM", "empty"); }
-		|	stmt PROGRAM		{ print_derivation("PROGRAM", "stmt PROGRAM"); }
+PROGRAM :	/* empty */		{ print_derivation("PROGRAM", "empty"); }
+	|	stmt PROGRAM		{ print_derivation("PROGRAM", "stmt PROGRAM"); }
         ;
 
 stmt	:	expr SEMICOLON		{ print_derivation("stmt", "expr SEMICOLON"); }
-	 	|	ifstmt				{ print_derivation("stmt", "ifstmt"); }
-		|	whilestmt			{ print_derivation("stmt", "whilestmt"); }
-		|	forstmt				{ print_derivation("stmt", "forstmt"); }
-		|	returnstmt			{ print_derivation("stmt", "returnstmt"); }
-		|	BREAK SEMICOLON		{ print_derivation("stmt", "BREAK SEMICOLON"); }
-		|	CONTINUE SEMICOLON	{ print_derivation("stmt", "CONTINUE SEMICOLON"); }
-		|	block				{ print_derivation("stmt", "block"); }
-		|	funcdef				{ print_derivation("stmt", "funcdef"); }
-		|	SEMICOLON			{ print_derivation("stmt", "SEMICOLON"); }
-		;
+	|	ifstmt			{ print_derivation("stmt", "ifstmt"); }
+	|	whilestmt		{ print_derivation("stmt", "whilestmt"); }
+	|	forstmt			{ print_derivation("stmt", "forstmt"); }
+	|	returnstmt		{ print_derivation("stmt", "returnstmt"); }
+	|	BREAK SEMICOLON		{ print_derivation("stmt", "BREAK SEMICOLON"); }
+	|	CONTINUE SEMICOLON	{ print_derivation("stmt", "CONTINUE SEMICOLON"); }
+	|	block			{ print_derivation("stmt", "block"); }
+	|	funcdef			{ print_derivation("stmt", "funcdef"); }
+	|	SEMICOLON		{ print_derivation("stmt", "SEMICOLON"); }
+	;
 
-expr	:	assignexpr			{ print_derivation("expr", "assignexpr"); }
-		|	expr op expr		{ print_derivation("expr", "expr op expr"); }
-		|	term				{ print_derivation("expr", "term"); }
-		;
+expr	:	assignexpr		{ print_derivation("expr", "assignexpr"); }
+	|	expr op expr		{ print_derivation("expr", "expr op expr"); }
+	|	term			{ print_derivation("expr", "term"); }
+	;
 
-op		:	PLUS				{ print_derivation("op", "PLUS"); }
-		|	MINUS				{ print_derivation("op", "MINUS"); }
-		|	STAR				{ print_derivation("op", "STAR"); }
-		|	DIV					{ print_derivation("op", "DIV"); }
-		|	MOD					{ print_derivation("op", "MOD"); }
-		|	GREATER				{ print_derivation("op", "GREATER"); }
-		|	GREATER_EQUALS		{ print_derivation("op", "GREATER_EQUALS"); }
-		|	LESS				{ print_derivation("op", "LESS"); }
-		|	LESS_EQUALS			{ print_derivation("op", "LESS_EQUALS"); }
-		|	EQUALS				{ print_derivation("op", "EQUALS"); }
-		|	NOT_EQUALS			{ print_derivation("op", "NOT_EQUALS"); }
-		|	AND					{ print_derivation("op", "AND"); }
-		|	OR					{ print_derivation("op", "OR"); }
-		;
+op	:	PLUS			{ print_derivation("op", "PLUS"); }
+	|	MINUS			{ print_derivation("op", "MINUS"); }
+	|	STAR			{ print_derivation("op", "STAR"); }
+	|	DIV			{ print_derivation("op", "DIV"); }
+	|	MOD			{ print_derivation("op", "MOD"); }
+	|	GREATER			{ print_derivation("op", "GREATER"); }
+	|	GREATER_EQUALS		{ print_derivation("op", "GREATER_EQUALS"); }
+	|	LESS			{ print_derivation("op", "LESS"); }
+	|	LESS_EQUALS		{ print_derivation("op", "LESS_EQUALS"); }
+	|	EQUALS			{ print_derivation("op", "EQUALS"); }
+	|	NOT_EQUALS		{ print_derivation("op", "NOT_EQUALS"); }
+	|	AND			{ print_derivation("op", "AND"); }
+	|	OR			{ print_derivation("op", "OR"); }
+	;
 
 term	:	LEFT_PARENTHESIS expr RIGHT_PARENTHESIS	{ print_derivation("term", "LEFT_PARENTHESIS expr RIGHT_PARENTHESIS"); }
-	 	|	NOT expr								{ print_derivation("term", "NOT expr"); }
-	 	|	PLUS_PLUS lvalue						{ print_derivation("term", "PLUS_PLUS lvalue"); }
-	 	|	lvalue PLUS_PLUS						{ print_derivation("term", "lvalue PLUS_PLUS"); }
-	 	|	MINUS_MINUS lvalue						{ print_derivation("term", "MINUS_MINUS lvalue"); }
-	 	|	lvalue MINUS_MINUS						{ print_derivation("term", "lvalue MINUS_MINUS"); }
-	 	|	primary									{ print_derivation("term", "primary"); }
+	|	NOT expr				{ print_derivation("term", "NOT expr"); }
+	|	PLUS_PLUS lvalue			{ print_derivation("term", "PLUS_PLUS lvalue"); }
+	|	lvalue PLUS_PLUS			{ print_derivation("term", "lvalue PLUS_PLUS"); }
+	|	MINUS_MINUS lvalue			{ print_derivation("term", "MINUS_MINUS lvalue"); }
+	|	lvalue MINUS_MINUS			{ print_derivation("term", "lvalue MINUS_MINUS"); }
+	|	primary					{ print_derivation("term", "primary"); }
+	;
+
+assignexpr	:	lvalue ASSIGN expr		{ print_derivation("assignexpr", "lvalue ASSIGN expr	"); }
 		;
 
-assignexpr	:	lvalue ASSIGN expr	{ print_derivation("assignexpr", "lvalue ASSIGN expr	"); }
-			;
+primary	:	lvalue						{ print_derivation("primary", "lvalue"); }
+	|	call						{ print_derivation("primary", "call"); }
+	|	objectdef					{ print_derivation("primary", "objectdef"); }
+	|	LEFT_PARENTHESIS funcdef RIGHT_PARENTHESIS	{ print_derivation("primary", "LEFT_PARENTHESIS funcdef RIGHT_PARENTHESIS"); }
+	|	const						{ print_derivation("primary", "const"); }
+	;
 
-primary	:	lvalue										{ print_derivation("primary", "lvalue"); }
-		|	call										{ print_derivation("primary", "call"); }
-		|	objectdef									{ print_derivation("primary", "objectdef"); }
-		|	LEFT_PARENTHESIS funcdef RIGHT_PARENTHESIS	{ print_derivation("primary", "LEFT_PARENTHESIS funcdef RIGHT_PARENTHESIS"); }
-		|	const										{ print_derivation("primary", "const"); }
-		;
-
-lvalue	:	IDENTIFIER				{ print_derivation("lvalue", "IDENTIFIER"); }
-	   	|	LOCAL IDENTIFIER		{ print_derivation("lvalue", "LOCAL IDENTIFIER"); }
-	   	|	DOUBLE_COLON IDENTIFIER	{ print_derivation("lvalue", "DOUBLE_COLON IDENTIFIER"); }
-	   	|	member					{ print_derivation("lvalue", "member"); }
-		;
+lvalue	:	IDENTIFIER		{ print_derivation("lvalue", "IDENTIFIER"); }
+	|	LOCAL IDENTIFIER	{ print_derivation("lvalue", "LOCAL IDENTIFIER"); }
+	|	DOUBLE_COLON IDENTIFIER	{ print_derivation("lvalue", "DOUBLE_COLON IDENTIFIER"); }
+	|	member			{ print_derivation("lvalue", "member"); }
+	;
 		
 
-member	:	lvalue DOT IDENTIFIER									{ print_derivation("member", "lvalue DOT IDENTIFIER"); }
-		|	lvalue LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET	{ print_derivation("member", "lvalue LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET"); }
-		|	call DOT IDENTIFIER										{ print_derivation("member", "call DOT IDENTIFIER"); }
-		|	call LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET		{ print_derivation("member", "call LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET"); }
-		;
+member	:	lvalue DOT IDENTIFIER					{ print_derivation("member", "lvalue DOT IDENTIFIER"); }
+	|	lvalue LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET	{ print_derivation("member", "lvalue LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET"); }
+	|	call DOT IDENTIFIER					{ print_derivation("member", "call DOT IDENTIFIER"); }
+	|	call LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET	{ print_derivation("member", "call LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET"); }
+	;
 
 
 /* END OF NICK SECTION */
