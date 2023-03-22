@@ -118,6 +118,9 @@ callsuffix  :   normcall    {}
             |   methodcall  {}
             ;
 
+normcall    :   LEFT_PARENTHESIS elist RIGHT_PARENTHESIS {}
+            ;
+
 /* END OF ALEX SECTION */
 
 %%
