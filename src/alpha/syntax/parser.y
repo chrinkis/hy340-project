@@ -162,8 +162,8 @@ const       :   INTEGER {}
             |   FLOAT   {}
             |   STRING  {}
             |   NIL     {}
-            |   TRU     {}
-            |   FALS    {}
+            |   TRUE    {}
+            |   FALSE   {}
             ;
 
 idlist      :   /* empty */           {}
