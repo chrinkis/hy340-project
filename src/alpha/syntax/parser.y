@@ -136,6 +136,14 @@ objectdef   :   LEFT_SQUARE_BRACKET elist RIGHT_SQUARE_BRACKET   {}
             |   LEFT_SQUARE_BRACKET indexed RIGHT_SQUARE_BRACKET {}
             ;
 
+indexed     :   /* empty */             {}
+            |   indexedelem indexed_opt {}
+            ;
+
+indexed_opt :   /* empty */
+            |   COMMA indexedelem indexed_opt
+            ;
+
 /* END OF ALEX SECTION */
 
 %%
