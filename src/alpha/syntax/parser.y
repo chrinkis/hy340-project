@@ -156,6 +156,13 @@ primary	:	lvalue										{ print_derivation("primary", "lvalue"); }
 		|	const										{ print_derivation("primary", "const"); }
 		;
 
+lvalue	:	IDENTIFIER				{ print_derivation("lvalue", "IDENTIFIER"); }
+	   	|	LOCAL IDENTIFIER		{ print_derivation("lvalue", "LOCAL IDENTIFIER"); }
+	   	|	DOUBLE_COLON IDENTIFIER	{ print_derivation("lvalue", "DOUBLE_COLON IDENTIFIER"); }
+	   	|	member					{ print_derivation("lvalue", "member"); }
+		;
+		
+
 member	:	lvalue DOT IDENTIFIER									{ print_derivation("member", "lvalue DOT IDENTIFIER"); }
 		|	lvalue LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET	{ print_derivation("member", "lvalue LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET"); }
 		|	call DOT IDENTIFIER										{ print_derivation("member", "call DOT IDENTIFIER"); }
