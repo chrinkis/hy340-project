@@ -101,6 +101,10 @@ foo     :   INTEGER         { print_derivation("foo", "INTEGER"); }
 
 /* START OF NICK SECTION */
 
+PROGRAM :	/* empty */		{ print_derivation("PROGRAM", "empty"); }
+		|	stmt PROGRAM	{ print_derivation("PROGRAM", "stmt PROGRAM"); }
+        ;
+
 /* END OF NICK SECTION */
 
 
