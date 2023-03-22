@@ -109,6 +109,11 @@ foo     :   INTEGER         { print_derivation("foo", "INTEGER"); }
 
 /* START OF ALEX SECTION */
 
+call        :   call LEFT_PARENTHESIS elist RIGHT_PARENTHESIS                                       {}
+            |   lvalue  callsuffix                                                                  {}
+            |   LEFT_PARENTHESIS funcdef RIGHT_PARENTHESIS LEFT_PARENTHESIS elist RIGHT_PARENTHESIS {}
+            ;
+
 /* END OF ALEX SECTION */
 
 %%
