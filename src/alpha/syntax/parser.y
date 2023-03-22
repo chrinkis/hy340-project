@@ -86,11 +86,11 @@
 
 %%
 
-PROGRAM :   FOO
+PROGRAM :   foo
         ;
 
-FOO     :   INTEGER         { print_derivation("foo", "INTEGER"); }
-        |   FOO INTEGER     { print_derivation("foo", "foo, INTEGER"); }
+foo     :   INTEGER         { print_derivation("foo", "INTEGER"); }
+        |   foo INTEGER     { print_derivation("foo", "foo, INTEGER"); }
         ;
 
 %%
