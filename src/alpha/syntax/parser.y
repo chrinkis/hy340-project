@@ -27,6 +27,8 @@
 
     #undef yylex
     #define yylex scanner.yylex
+
+    static void print_derivation(const std::string&, const std::string&);
 }
 
 %token END_OF_FILE 0 "end of file"
@@ -84,14 +86,36 @@
 
 %%
 
-PROGRAM :   FOO
+PROGRAM :   foo
         ;
 
-FOO     :   INTEGER         { std::cout << "SIMPLE" << std::endl; }
-        |   FOO INTEGER     { std::cout << "COMPLEX" << std::endl; }
+foo     :   INTEGER         { print_derivation("foo", "INTEGER"); }
+        |   foo INTEGER     { print_derivation("foo", "foo, INTEGER"); }
         ;
+
+
+/*
+ * WARNING! WRITE CODE ONLY IN YOUR
+ * SECTION IN ORDER TO AVOID CONFLICTS.
+ */
+
+/* START OF NICK SECTION */
+
+/* END OF NICK SECTION */
+
+
+/* ********************** */
+
+
+/* START OF ALEX SECTION */
+
+/* END OF ALEX SECTION */
 
 %%
+
+static void print_derivation(const std::string& non_final, const std::string& final) {
+    std::cout << non_final << "\t\t -> \t" << final << std::endl;
+}
 
 void
 alpha::syntax::Parser::error( const location_type &l, const std::string &err_message )
