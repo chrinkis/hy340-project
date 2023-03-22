@@ -29,13 +29,66 @@
     #define yylex scanner.yylex
 }
 
-%token      BAR
+%token INTEGER
+%token FLOAT
+%token STRING
+%token IDENTIFIER
+%token ONE_LINE_COMMENT
+%token BLOCK_COMMENT
+%token IF
+%token ELSE
+%token WHILE
+%token FOR
+%token FUNCTION
+%token RETURN
+%token BREAK
+%token CONTINUE
+%token AND
+%token NOT
+%token OR
+%token LOCAL
+%token TRUE
+%token FALSE
+%token NIL
+%token ASSIGN               /*| =  |*/
+%token PLUS                 /*| +  |*/
+%token MINUS                /*| -  |*/
+%token STAR                 /*| *  |*/
+%token DIV                  /*| /  |*/
+%token MOD                  /*| %  |*/
+%token EQUALS               /*| == |*/
+%token NOT_EQUALS           /*| != |*/
+%token PLUS_PLUS            /*| ++ |*/
+%token MINUS_MINUS          /*| -- |*/
+%token GREATER              /*| >  |*/
+%token LESS                 /*| <  |*/
+%token GREATER_EQUALS       /*| >= |*/
+%token LESS_EQUALS          /*| <= |*/
+%token LEFT_CURLY_BRACKET   /*| {  |*/
+%token RIGHT_CURLY_BRACKET  /*| }  |*/
+%token LEFT_SQUARE_BRACKET  /*| [  |*/
+%token RIGHT_SQUARE_BRACKET /*| ]  |*/
+%token LEFT_PARENTHESIS     /*| (  |*/
+%token RIGHT_PARENTHESIS    /*| )  |*/
+%token SEMICOLON            /*| ;  |*/
+%token COMMA                /*| ,  |*/
+%token COLON                /*| :  |*/
+%token DOUBLE_COLON         /*| :: |*/
+%token DOT                  /*| .  |*/
+%token DOUBLE_DOT           /*| .. |*/
 
 /* %locations */
 
+%start PROGRAM
+
 %%
 
-    FOO : BAR { std::cout << "hey" << std::endl; };
+PROGRAM :   FOO
+        ;
+
+FOO     :   INTEGER         { std::cout << "SIMPLE" << std::endl; }
+        |   FOO INTEGER     { std::cout << "COMPLEX" << std::endl; }
+        ;
 
 %%
 

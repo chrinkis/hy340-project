@@ -4,7 +4,6 @@
 #include <alpha/syntax/parser.h>
 
 #include <alpha/token/token.h>
-#include <alpha/token/category.h>
 #include <alpha/lex/status.h>
 
 #include <iostream>
@@ -28,6 +27,7 @@
 
 using namespace alpha::lex;
 using namespace alpha::token;
+using category = alpha::token::Token::Category;
 
 static unsigned int next_seq_number = 0;
 %}
