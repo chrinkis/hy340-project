@@ -25,6 +25,9 @@ class Scanner : public yyFlexLexer {
   Token token;
   Status status;
 
+ private:
+  void handle_error();
+
  public:
   Scanner(std::istream& in) : yyFlexLexer(&in){};
   virtual ~Scanner(){};
