@@ -17,3 +17,9 @@ bison_target(BisonParser
     # File with conflicts info
     VERBOSE REPORT_FILE ${CMAKE_SOURCE_DIR}/build/bison_parser.output
 )
+
+# Create required directories
+file(MAKE_DIRECTORY
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax
+    ${CMAKE_SOURCE_DIR}/include/alpha/syntax
+)

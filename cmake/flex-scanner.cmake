@@ -8,3 +8,8 @@ flex_target(FlexScanner
     # Output (c/cpp) source file
     ${CMAKE_SOURCE_DIR}/src/alpha/lex/scanner.cpp
 )
+
+# Create required directories
+file(MAKE_DIRECTORY
+    ${CMAKE_SOURCE_DIR}/src/alpha/lex
+)
