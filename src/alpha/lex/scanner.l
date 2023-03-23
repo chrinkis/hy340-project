@@ -151,20 +151,17 @@ real            {integer}\.{integer}
 
 {identifier}            RETURN_TOKEN(category::IDENTIFIER);
 
-"//".*                  RETURN_CUSTOM_TOKEN(yylineno, "", category::ONE_LINE_COMMENT);
+"//".*                  ;
 "/*"                    { this->comment_stack.push(yylineno);
                           yy_push_state(COMMENT_S);
                         }
 <COMMENT_S>"/*"         { this->comment_stack.push(yylineno);
                           yy_push_state(COMMENT_S);
                         }
-<COMMENT_S>"*/"         { custom.lineno =  this->comment_stack.top();
-                          this->comment_stack.pop();
-                          custom.contents = std::to_string(custom.lineno) + "-" + std::to_string(yylineno);
-
+<COMMENT_S>"*/"         { this->comment_stack.pop();
                           yy_pop_state();
 
-                          RETURN_CUSTOM_TOKEN(custom.lineno, custom.contents, category::BLOCK_COMMENT);
+                          ;
                         }
 <COMMENT_S>.|"\n"       /* ignore the rest of the characters */
 <COMMENT_S><<EOF>>      RAISE_ERROR(NOT_CLOSED_COMMENT);
