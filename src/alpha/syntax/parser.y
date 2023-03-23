@@ -241,8 +241,8 @@ idlist      :   /* empty */           { print_derivation("idlist", "empty"); }
             |   IDENTIFIER idlist_opt { print_derivation("idlist", "IDENTIFIER idlist_opt"); }
             ;
 
-idlist_opt  :   /* empty */             { print_derivation("idlist_opt", "empty"); }
-            |   COMMA IDENTIFIER idlist { print_derivation("idlist_opt", ", IDENTIFIER idlist"); }
+idlist_opt  :   /* empty */                 { print_derivation("idlist_opt", "empty"); }
+            |   COMMA IDENTIFIER idlist_opt { print_derivation("idlist_opt", ", IDENTIFIER idlist"); }
             ;
 
 ifstmt      :   IF LEFT_PARENTHESIS expr RIGHT_PARENTHESIS stmt %expect 1 { print_derivation("ifstmt", "IF ( expr ) stmt"); }
