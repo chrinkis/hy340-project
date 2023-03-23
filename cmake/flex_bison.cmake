@@ -29,5 +29,5 @@ target_include_directories(flex_and_bison
     PRIVATE
 
     # Files
-    ${CMAKE_SOURCE_DIR}/include/alpha/syntax
+    ${CMAKE_CURRENT_BINARY_DIR}/include/alpha/syntax
 )

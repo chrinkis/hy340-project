@@ -1,6 +1,2 @@
 /.cache
 /build
-/src/alpha/lex/scanner.cpp
-/include/alpha/syntax/parser.h
-/src/alpha/syntax/parser.cpp
-/include/alpha/syntax/location.h
