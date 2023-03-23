@@ -209,8 +209,7 @@ objectdef   :   LEFT_SQUARE_BRACKET elist RIGHT_SQUARE_BRACKET   { print_derivat
             |   LEFT_SQUARE_BRACKET indexed RIGHT_SQUARE_BRACKET { print_derivation("objectdef", "[ indexed ]"); }
             ;
 
-indexed     :   /* empty */             { print_derivation("indexed", "empty"); }
-            |   indexedelem indexed_opt { print_derivation("indexed", "indexedelem indexed_opt"); }
+indexed     :   indexedelem indexed_opt { print_derivation("indexed", "indexedelem indexed_opt"); }
             ;
 
 indexed_opt :   /* empty */                   { print_derivation("indexed_opt", "empty"); }
