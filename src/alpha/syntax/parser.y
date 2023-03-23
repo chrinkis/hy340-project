@@ -30,6 +30,9 @@
     static void print_derivation(const std::string&, const std::string&);
 }
 
+/* The grammar expects 1 shift/reduce conflict (ifstmt) */
+%expect 1
+
 %token END_OF_FILE 0 "end of file"
 %token INTEGER
 %token FLOAT
@@ -243,7 +246,7 @@ idlist_opt  :   /* empty */             { print_derivation("idlist_opt", "empty"
             |   COMMA IDENTIFIER idlist { print_derivation("idlist_opt", ", IDENTIFIER idlist"); }
             ;
 
-ifstmt      :   IF LEFT_PARENTHESIS expr RIGHT_PARENTHESIS stmt           { print_derivation("ifstmt", "IF ( expr ) stmt"); }
+ifstmt      :   IF LEFT_PARENTHESIS expr RIGHT_PARENTHESIS stmt %expect 1 { print_derivation("ifstmt", "IF ( expr ) stmt"); }
             |   IF LEFT_PARENTHESIS expr RIGHT_PARENTHESIS stmt ELSE stmt { print_derivation("ifstmt", "IF ( expr ) stmt ELSE stmt"); }
             ;
 
