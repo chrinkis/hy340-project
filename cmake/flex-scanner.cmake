@@ -6,5 +6,10 @@ flex_target(FlexScanner
     ${CMAKE_SOURCE_DIR}/src/alpha/lex/scanner.l
 
     # Output (c/cpp) source file
-    ${CMAKE_SOURCE_DIR}/src/alpha/lex/scanner.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/src/alpha/lex/scanner.cpp
+)
+
+# Create required directories
+file(MAKE_DIRECTORY
+    ${CMAKE_CURRENT_BINARY_DIR}/src/alpha/lex
 )
