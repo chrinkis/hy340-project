@@ -11,6 +11,9 @@ bison_target(BisonParser
     # Output header file
     DEFINES_FILE ${CMAKE_SOURCE_DIR}/include/alpha/syntax/parser.h
 
+    # Output header file for location
+    COMPILE_FLAGS -Dapi.location.file="${CMAKE_SOURCE_DIR}/include/alpha/syntax/location.h"
+
     # File with conflicts info
     VERBOSE REPORT_FILE ${CMAKE_SOURCE_DIR}/build/bison_parser.output
 )
