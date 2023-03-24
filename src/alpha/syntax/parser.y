@@ -107,7 +107,7 @@
 
 /* START OF NICK SECTION */
 
-PROGRAM     :    /* empty */ { print_derivation("PROGRAM", "empty"); }
+PROGRAM     :   %empty       { print_derivation("PROGRAM", "empty"); }
             |   stmt PROGRAM { print_derivation("PROGRAM", "stmt PROGRAM"); }
             ;
 
@@ -196,11 +196,11 @@ normcall    :   LEFT_PARENTHESIS elist RIGHT_PARENTHESIS { print_derivation("nor
 methodcall  :   DOUBLE_DOT IDENTIFIER LEFT_PARENTHESIS elist RIGHT_PARENTHESIS  { print_derivation("methodcall", ".. IDENTIFIER ( elist )"); }
             ;
 
-elist       :   /* empty */    { print_derivation("elist", "empty"); }
+elist       :   %empty         { print_derivation("elist", "empty"); }
             |   expr elist_opt { print_derivation("elist", "expr elist_opt"); }
             ;
 
-elist_opt   :   /* empty */          { print_derivation("elist_opt", "empty"); }
+elist_opt   :   %empty               { print_derivation("elist_opt", "empty"); }
             |   COMMA expr elist_opt { print_derivation("elist_opt", ", expr elist_opt"); }
             ;
 
@@ -211,7 +211,7 @@ objectdef   :   LEFT_SQUARE_BRACKET elist RIGHT_SQUARE_BRACKET   { print_derivat
 indexed     :   indexedelem indexed_opt { print_derivation("indexed", "indexedelem indexed_opt"); }
             ;
 
-indexed_opt :   /* empty */                   { print_derivation("indexed_opt", "empty"); }
+indexed_opt :   %empty                        { print_derivation("indexed_opt", "empty"); }
             |   COMMA indexedelem indexed_opt { print_derivation("indexed_opt", ", indexedelem indexed_opt"); }
             ;
 
@@ -221,7 +221,7 @@ indexedelem :   LEFT_CURLY_BRACKET expr COLON expr RIGHT_CURLY_BRACKET { print_d
 block       :   LEFT_CURLY_BRACKET block_opt RIGHT_CURLY_BRACKET { print_derivation("block", "{ block_opt }"); }
             ;
 
-block_opt   :   /* empty */    { print_derivation("block_opt", "empty"); }
+block_opt   :   %empty         { print_derivation("block_opt", "empty"); }
             |   stmt block_opt { print_derivation("block_opt", "stmt block_opt"); }
             ;
 
@@ -237,11 +237,11 @@ const       :   INTEGER { print_derivation("const", "INTEGER"); }
             |   FALSE   { print_derivation("const", "FALSE"); }
             ;
 
-idlist      :   /* empty */           { print_derivation("idlist", "empty"); }
+idlist      :   %empty                { print_derivation("idlist", "empty"); }
             |   IDENTIFIER idlist_opt { print_derivation("idlist", "IDENTIFIER idlist_opt"); }
             ;
 
-idlist_opt  :   /* empty */                 { print_derivation("idlist_opt", "empty"); }
+idlist_opt  :   %empty                      { print_derivation("idlist_opt", "empty"); }
             |   COMMA IDENTIFIER idlist_opt { print_derivation("idlist_opt", ", IDENTIFIER idlist"); }
             ;
 
