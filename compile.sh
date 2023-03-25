@@ -12,6 +12,11 @@ if [ $? -ne 0 ]; then
     exit
 fi
 
+if [[ $1 = "-r" ]]; then
+    cd demo && ./al
+    exit
+fi
+
 if [[ $2 = "-r" ]]; then
     cd test && ./tests
 fi
