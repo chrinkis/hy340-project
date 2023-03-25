@@ -1,5 +1,8 @@
 cmake_minimum_required (VERSION 3.18.4)
 
+# User options
+set(skip_tests ON CACHE BOOL "Ignores tests")
+
 # Add `cmake` dir to path
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
@@ -22,3 +25,6 @@ include(flex_bison)
 # Add cmakes from subdirs
 add_subdirectory(src)
 add_subdirectory(demo)
+if (NOT skip_tests)
+    add_subdirectory(test)
+endif()
