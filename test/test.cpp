@@ -15,8 +15,10 @@ using Category = alpha::token::Token::Category;
 
 static std::string file_path = "../../test/phase1_tests/";
 
+static alpha::syntax::Parser::semantic_type lval;
+
 static int next(Scanner& scanner) {
-  return scanner.yylex(nullptr, nullptr);
+  return scanner.yylex(&lval, nullptr);
 }
 
 TEST_CASE("comments", "") {
