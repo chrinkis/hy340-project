@@ -18,3 +18,15 @@ static std::string file_path = "../../test/phase1_tests/";
 static int next(Scanner& scanner) {
   return scanner.yylex(nullptr, nullptr);
 }
+
+TEST_CASE("comments", "") {
+  std::ifstream input(file_path + "comments.alpha");
+  REQUIRE(input.good());
+
+  Scanner scanner(input);
+
+  CHECK(next(scanner) == Category::IDENTIFIER);
+  CHECK(next(scanner) == Category::END_OF_FILE);
+
+  input.close();
+}
