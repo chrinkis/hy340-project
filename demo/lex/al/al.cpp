@@ -9,7 +9,7 @@
 using namespace alpha;
 using Scanner = lex::Scanner;
 using Token = token::Token;
-using Category = token::category::Category;
+using Category = Token::Category;
 using Status = lex::status::Status;
 
 void print_alpha_token(const Token& token, std::ostream& output_stream) {
@@ -202,8 +202,10 @@ int main(int argc, char** argv) {
 
   Scanner scanner(*input_stream);
 
+  alpha::syntax::Parser::semantic_type lval;
+
   do {
-    scanner.yylex();
+    scanner.yylex(&lval, nullptr);
 
     switch (scanner.get_status()) {
       case Status::NOT_CLOSED_STRING:
