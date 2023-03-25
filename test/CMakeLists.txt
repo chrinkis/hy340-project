@@ -10,6 +10,8 @@ FetchContent_MakeAvailable(Catch2)
 
 add_executable(tests
     ${CMAKE_SOURCE_DIR}/test/test.cpp
+
+    $<TARGET_OBJECTS:flex_and_bison>
 )
 
 target_link_libraries(tests
