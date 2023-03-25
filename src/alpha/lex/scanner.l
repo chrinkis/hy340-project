@@ -152,7 +152,7 @@ real            {integer}\.{integer}
 ".."                    RETURN_TOKEN(category::DOUBLE_DOT);
 "."                     RETURN_TOKEN(category::DOT);
 
-{identifier}            lval->emplace<std::string>(custom.contents); RETURN_TOKEN(category::IDENTIFIER);
+{identifier}            lval->emplace<std::string>(yytext); RETURN_TOKEN(category::IDENTIFIER);
 
 "//".*                  ;
 "/*"                    { this->comment_stack.push(yylineno);
