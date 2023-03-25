@@ -123,21 +123,21 @@ stmt        :   expr SEMICOLON     { print_derivation("stmt", "expr ;"); }
             |   SEMICOLON          { print_derivation("stmt", ";"); }
             ;
 
-expr        :   assignexpr                  { print_derivation("expr", "assignexpr"); }
-            |   expr PLUS expr              { print_derivation("expr", "expr + expr"); }
-            |   expr MINUS expr             { print_derivation("expr", "expr - expr"); }
-            |   expr STAR expr              { print_derivation("expr", "expr * expr"); }
-            |   expr DIV expr               { print_derivation("expr", "expr / expr"); }
-            |   expr MOD expr               { print_derivation("expr", "expr % expr"); }
-            |   expr GREATER expr           { print_derivation("expr", "expr > expr"); }
-            |   expr GREATER_EQUALS expr    { print_derivation("expr", "expr >= expr"); }
-            |   expr LESS expr              { print_derivation("expr", "expr < expr"); }
-            |   expr LESS_EQUALS expr       { print_derivation("expr", "expr <= expr"); }
-            |   expr EQUALS expr            { print_derivation("expr", "expr == expr"); }
-            |   expr NOT_EQUALS expr        { print_derivation("expr", "expr != expr"); }
-            |   expr AND expr               { print_derivation("expr", "expr AND expr"); }
-            |   expr OR expr                { print_derivation("expr", "expr OR expr"); }
-            |   term                        { print_derivation("expr", "term"); }
+expr        :   assignexpr               { print_derivation("expr", "assignexpr"); }
+            |   expr PLUS expr           { print_derivation("expr", "expr + expr"); }
+            |   expr MINUS expr          { print_derivation("expr", "expr - expr"); }
+            |   expr STAR expr           { print_derivation("expr", "expr * expr"); }
+            |   expr DIV expr            { print_derivation("expr", "expr / expr"); }
+            |   expr MOD expr            { print_derivation("expr", "expr % expr"); }
+            |   expr GREATER expr        { print_derivation("expr", "expr > expr"); }
+            |   expr GREATER_EQUALS expr { print_derivation("expr", "expr >= expr"); }
+            |   expr LESS expr           { print_derivation("expr", "expr < expr"); }
+            |   expr LESS_EQUALS expr    { print_derivation("expr", "expr <= expr"); }
+            |   expr EQUALS expr         { print_derivation("expr", "expr == expr"); }
+            |   expr NOT_EQUALS expr     { print_derivation("expr", "expr != expr"); }
+            |   expr AND expr            { print_derivation("expr", "expr AND expr"); }
+            |   expr OR expr             { print_derivation("expr", "expr OR expr"); }
+            |   term                     { print_derivation("expr", "term"); }
             ;
 
 term        :   LEFT_PARENTHESIS expr RIGHT_PARENTHESIS { print_derivation("term", "( expr )"); }
