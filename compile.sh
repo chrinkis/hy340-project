@@ -13,7 +13,7 @@ if [ $? -ne 0 ]; then
 fi
 
 if [[ $1 = "-r" ]]; then
-    cd demo && ./al
+    cd demo && ./parser
     exit
 fi
 
