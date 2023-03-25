@@ -33,11 +33,14 @@
 /* The grammar expects 1 shift/reduce conflict (ifstmt) */
 %expect 1
 
+/* For token types */
+%define api.value.type variant
+
 %token END_OF_FILE 0 "end of file"
-%token INTEGER
-%token FLOAT
-%token STRING
-%token IDENTIFIER
+%token <int> INTEGER
+%token <float> FLOAT
+%token <std::string> STRING
+%token <std::string> IDENTIFIER
 %token ONE_LINE_COMMENT
 %token BLOCK_COMMENT
 %token IF

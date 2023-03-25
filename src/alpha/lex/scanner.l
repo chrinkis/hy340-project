@@ -80,7 +80,10 @@ real            {integer}\.{integer}
                         } custom = {"default", 0};
 
 <STRING_S>[^\\\"]*      custom.contents += yytext;        /* read until escape char or end of string char */
-<STRING_S>\"            BEGIN(INITIAL); RETURN_CUSTOM_TOKEN(custom.lineno, custom.contents, category::STRING);       /* end of string */
+<STRING_S>\"            { BEGIN(INITIAL);
+                          lval->emplace<std::string>(custom.contents);
+                          RETURN_CUSTOM_TOKEN(custom.lineno, custom.contents, category::STRING);
+                        } /* end of string */
 <STRING_S>\\            BEGIN(ESCAPE_S);                  /* escape char follows */
 <STRING_S><<EOF>>       RAISE_ERROR(NOT_CLOSED_STRING);
 <ESCAPE_S><<EOF>>       RAISE_ERROR(NOT_CLOSED_STRING);
@@ -103,7 +106,7 @@ real            {integer}\.{integer}
                         }
 
 {whitespaces}           /* ignore whitespaces */
-{real}                  RETURN_TOKEN(category::FLOAT)
+{real}                  lval->emplace<float>(std::stof(yytext)); RETURN_TOKEN(category::FLOAT);
 "="                     RETURN_TOKEN(category::ASSIGN)
 "+"                     RETURN_TOKEN(category::PLUS)
 "-"                     RETURN_TOKEN(category::MINUS)
@@ -140,7 +143,7 @@ real            {integer}\.{integer}
 "true"                  RETURN_TOKEN(category::TRUE);
 "false"                 RETURN_TOKEN(category::FALSE);
 "nil"                   RETURN_TOKEN(category::NIL);
-{integer}               RETURN_TOKEN(category::INTEGER);
+{integer}               lval->emplace<int>(std::stoi(yytext)); RETURN_TOKEN(category::INTEGER);
 
 ";"                     RETURN_TOKEN(category::SEMICOLON);
 ","                     RETURN_TOKEN(category::COMMA);
@@ -149,7 +152,7 @@ real            {integer}\.{integer}
 ".."                    RETURN_TOKEN(category::DOUBLE_DOT);
 "."                     RETURN_TOKEN(category::DOT);
 
-{identifier}            RETURN_TOKEN(category::IDENTIFIER);
+{identifier}            lval->emplace<std::string>(yytext); RETURN_TOKEN(category::IDENTIFIER);
 
 "//".*                  ;
 "/*"                    { this->comment_stack.push(yylineno);
