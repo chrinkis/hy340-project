@@ -231,7 +231,9 @@ indexed_opt :   %empty                        { print_derivation("indexed_opt", 
 indexedelem :   LEFT_CURLY_BRACKET expr COLON expr RIGHT_CURLY_BRACKET { print_derivation("indexedelem", "{ expr : expr }"); }
             ;
 
-block       :   LEFT_CURLY_BRACKET block_opt RIGHT_CURLY_BRACKET { print_derivation("block", "{ block_opt }"); }
+block       :   LEFT_CURLY_BRACKET { S_TABLE_BLOCK_ENTER; } block_opt RIGHT_CURLY_BRACKET { S_TABLE_BLOCK_EXIT;
+                                                                                            print_derivation("block", "{ block_opt }");
+                                                                                          }
             ;
 
 block_opt   :   %empty         { print_derivation("block_opt", "empty"); }
