@@ -31,6 +31,31 @@
     static void print_derivation(const std::string&, const std::string&);
 }
 
+/* Symbol table handles for formal arguments */
+%code {
+
+#define S_TABLE_ADD_ARG(name)                            \
+  {                                                      \
+    if (symbol_table.can_add_argument(name)) {           \
+      symbol_table.add_argument(name);                   \
+    } else {                                             \
+      std::cerr << "error inserting argument \"" << name \
+                << "\" in Symbol Table" << std::endl;    \
+    }                                                    \
+  }
+
+#define S_TABLE_ADD_ARG_LAST(name)                       \
+  {                                                      \
+    if (symbol_table.can_add_argument(name)) {           \
+      symbol_table.add_last_argument(name);              \
+    } else {                                             \
+      std::cerr << "error inserting argument \"" << name \
+                << "\" in Symbol Table" << std::endl;    \
+    }                                                    \
+  }
+
+}
+
 /* The grammar expects 1 shift/reduce conflict (ifstmt) */
 %expect 1
 
