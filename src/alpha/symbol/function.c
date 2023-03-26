@@ -27,3 +27,9 @@ Symbol::Line Function::get_line() const {
 Symbol::Type Function::get_type() const {
   return this->type;
 }
+
+void Function::add_arg(const Symbol::SharedPtr& arg) {
+  assert(arg);
+
+  this->list_of_args.push_back(arg);
+}
