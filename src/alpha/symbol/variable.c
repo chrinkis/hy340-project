@@ -19,3 +19,7 @@ std::string Variable::get_name() const {
 Symbol::Scope Variable::get_scope() const {
   return this->scope;
 }
+
+Symbol::Line Variable::get_line() const {
+  return this->line;
+}
