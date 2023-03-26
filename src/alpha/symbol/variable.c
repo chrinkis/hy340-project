@@ -9,3 +9,7 @@ Variable::Variable(const std::string& name, Scope scope, Line line, Type type)
   assert(this->type == Type::GLOBAL || this->type == Type::FORMAL ||
          this->type == Type::LOCAL);
 }
+
+std::string Variable::get_name() const {
+  return this->name;
+}
