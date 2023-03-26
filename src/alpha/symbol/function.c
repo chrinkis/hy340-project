@@ -1,5 +1,7 @@
 #include <alpha/symbol/function.h>
 
+#include <alpha/symbol/symbol.h>
+
 #include <cassert>
 
 using namespace alpha::symbol;
@@ -12,4 +14,8 @@ Function::Function(const std::string& name, Scope scope, Line line, Type type)
 
 std::string Function::get_name() const {
   return this->name;
+}
+
+Symbol::Scope Function::get_scope() const {
+  return this->scope;
 }
