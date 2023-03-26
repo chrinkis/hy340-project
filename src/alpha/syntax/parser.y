@@ -48,7 +48,7 @@
 #define S_TABLE_FUNC_START_ANONYMOYS \
   { symbol_table.start_function(); }
 
-#define S_TABLE_FUNC_END() \
+#define S_TABLE_FUNC_END \
   { symbol_table.end_function(); }
 
 }
