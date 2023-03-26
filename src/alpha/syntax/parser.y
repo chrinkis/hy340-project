@@ -31,6 +31,28 @@
     static void print_derivation(const std::string&, const std::string&);
 }
 
+/* Symbol table handles for functions */
+%code {
+
+#define S_TABLE_FUNC_START(name)                         \
+  {                                                      \
+    if (symbol_table.can_add_function(name)) {           \
+      symbol_table.start_function(name);                 \
+    } else {                                             \
+      std::cerr << "error inserting function \"" << name \
+                << "\" in Symbol Table" << std::endl;    \
+      S_TABLE_FUNC_START_ANONYMOYS                       \
+    }                                                    \
+  }
+
+#define S_TABLE_FUNC_START_ANONYMOYS \
+  { symbol_table.start_function(); }
+
+#define S_TABLE_FUNC_END() \
+  { symbol_table.end_function(); }
+
+}
+
 /* The grammar expects 1 shift/reduce conflict (ifstmt) */
 %expect 1
 
