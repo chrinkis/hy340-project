@@ -251,8 +251,14 @@ block_opt   :   %empty         { print_derivation("block_opt", "empty"); }
             |   stmt block_opt { print_derivation("block_opt", "stmt block_opt"); }
             ;
 
-funcdef     :   FUNCTION LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS block            { print_derivation("funcdef", "FUNCTION ( idlist ) block"); }
-            |   FUNCTION IDENTIFIER LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS block { print_derivation("funcdef", "FUNCTION IDENTIFIER ( idlist ) block"); }
+funcdef     :   FUNCTION { S_TABLE_FUNC_START_ANONYMOYS } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS block       { S_TABLE_FUNC_END;
+                                                                                                                  print_derivation("funcdef", 
+                                                                                                                  "FUNCTION ( idlist ) block"); 
+                                                                                                                }
+            |   FUNCTION IDENTIFIER { S_TABLE_FUNC_START($2) } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS block  { S_TABLE_FUNC_END;
+                                                                                                                  print_derivation("funcdef", 
+                                                                                                                  "FUNCTION IDENTIFIER ( idlist ) block");
+                                                                                                                }
             ;
 
 const       :   INTEGER { print_derivation("const", "INTEGER"); }
