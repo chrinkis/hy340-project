@@ -1,5 +1,7 @@
 #include <alpha/symbol/variable.h>
 
+#include <alpha/symbol/symbol.h>
+
 #include <cassert>
 
 using namespace alpha::symbol;
@@ -12,4 +14,8 @@ Variable::Variable(const std::string& name, Scope scope, Line line, Type type)
 
 std::string Variable::get_name() const {
   return this->name;
+}
+
+Symbol::Scope Variable::get_scope() const {
+  return this->scope;
 }
