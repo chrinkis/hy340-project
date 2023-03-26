@@ -23,6 +23,7 @@
     #include <iostream>
 
     #include <alpha/lex/scanner.h>
+    #include <alpha/symbol/table.h>
 
     #undef yylex
     #define yylex scanner.yylex
