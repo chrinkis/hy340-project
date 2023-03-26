@@ -23,3 +23,7 @@ Symbol::Scope Variable::get_scope() const {
 Symbol::Line Variable::get_line() const {
   return this->line;
 }
+
+Symbol::Type Variable::get_type() const {
+  return this->type;
+}
