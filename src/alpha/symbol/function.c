@@ -19,3 +19,7 @@ std::string Function::get_name() const {
 Symbol::Scope Function::get_scope() const {
   return this->scope;
 }
+
+Symbol::Line Function::get_line() const {
+  return this->line;
+}
