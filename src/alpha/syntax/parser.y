@@ -31,6 +31,15 @@
     static void print_derivation(const std::string&, const std::string&);
 }
 
+/* Handle code block entry and exit */
+%code {
+
+#define S_TABLE_BLOCK_ENTER { symbol_table.increase_scope(); }
+
+#define S_TABLE_BLOCK_EXIT  { symbol_table.decrease_scope(); }
+
+}
+
 /* The grammar expects 1 shift/reduce conflict (ifstmt) */
 %expect 1
 
