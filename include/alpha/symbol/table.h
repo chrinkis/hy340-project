@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include <stack>
 #include <string>
 
@@ -11,7 +12,7 @@ class Table {
   std::stack<int> max_scope;
 
  public:
-  Table(int (*get_line)(void*));
+  Table(const std::function<unsigned int()>& get_current_line);
 
  public:
   void increase_scope();
