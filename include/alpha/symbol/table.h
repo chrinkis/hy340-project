@@ -1,5 +1,7 @@
 #pragma once
 
+#include <alpha/symbol/symbol.h>
+
 #include <functional>
 #include <stack>
 #include <string>
@@ -9,10 +11,10 @@ namespace symbol {
 
 class Table {
  private:
-  std::stack<int> max_scope;
+  std::stack<Symbol::Scope> max_scope;
 
  public:
-  Table(const std::function<unsigned int()>& get_current_line);
+  Table(const std::function<Symbol::Line()>& get_current_line);
 
  public:
   void increase_scope();
