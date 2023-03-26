@@ -5,13 +5,29 @@
 #include <functional>
 #include <stack>
 #include <string>
+#include <unordered_map>
+#include <vector>
 
 namespace alpha {
 namespace symbol {
 
 class Table {
  private:
+  struct Entry {
+    bool is_active;
+    Symbol::SharedPtr symbol;
+  };
+
+  using Key = std::string;
+  using Map = std::unordered_multimap<Key, Entry>;
+
+ private:
+  Symbol::Scope current_scope;
   std::stack<Symbol::Scope> max_scope;
+
+  std::vector<Map> scope_list;
+
+  std::function<Symbol::Line()> get_current_line;
 
  public:
   Table(const std::function<Symbol::Line()>& get_current_line);
