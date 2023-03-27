@@ -303,12 +303,12 @@ expr        :   assignexpr               { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDE
                                            S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
                                            print_derivation("expr", "expr != expr");
                                          }
-            |   expr NOT_EQUALS expr     { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"AND\" with");
+            |   expr AND expr            { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"AND\" with");
                                            S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"AND\" with");
                                            S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
                                            print_derivation("expr", "expr AND expr");
                                          }
-            |   expr NOT_EQUALS expr     { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"OR\" with");
+            |   expr OR expr             { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"OR\" with");
                                            S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"OR\" with");
                                            S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
                                            print_derivation("expr", "expr OR expr");
