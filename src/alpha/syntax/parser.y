@@ -35,7 +35,7 @@
     static void print_derivation(const std::string&, const std::string&);
 }
 
-/* Search symbols in symbol table */
+/* Insert variables and search (and check usage of) symbols */
 %code {
 
 /* local */
