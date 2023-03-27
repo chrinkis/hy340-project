@@ -26,7 +26,25 @@ static const std::unordered_set<const char*> LIBRARY_FUNCTIONS = {
 using namespace alpha::symbol;
 
 Table::Pair Table::pairForVariable(const std::string& name, Symbol::Type type) {
-  ;  // FIXME
+  assert(type == Symbol::Type::GLOBAL && this->current_scope == 0 ||
+         type == Symbol::Type::FORMAL && this->current_scope > 0 ||
+         type == Symbol::Type::LOCAL && this->current_scope > 0);
+
+  Entry entry(
+      new Variable(name, this->current_scope, this->get_current_line(), type));
+  Key key(entry.get_symbol()->get_name(), entry.get_symbol()->get_scope());
+
+  Pair pair(key, entry);
+
+  assert(pair.second.get_symbol()->get_name() == name);
+  assert(pair.second.get_symbol()->get_type() == type);
+  assert(pair.second.get_symbol()->get_scope() == this->current_scope);
+  assert(pair.second.get_symbol()->get_line() == this->get_current_line());
+  assert(pair.first.get_symbol_name() == pair.second.get_symbol()->get_name());
+  assert(pair.first.get_symbol_scope() ==
+         pair.second.get_symbol()->get_scope());
+
+  return pair;
 }
 
 Table::Pair Table::pairForFunction(const std::string& name) {
