@@ -171,6 +171,7 @@
 %type <SearchResult> assignexpr
 %type <SearchResult> primary
 %type <SearchResult> term
+%type <SearchResult> expr
 
 /* %locations */
 
@@ -213,21 +214,77 @@ stmt        :   expr SEMICOLON     { print_derivation("stmt", "expr ;"); }
             |   SEMICOLON          { print_derivation("stmt", ";"); }
             ;
 
-expr        :   assignexpr               { print_derivation("expr", "assignexpr"); }
-            |   expr PLUS expr           { print_derivation("expr", "expr + expr"); }
-            |   expr MINUS expr          { print_derivation("expr", "expr - expr"); }
-            |   expr STAR expr           { print_derivation("expr", "expr * expr"); }
-            |   expr DIV expr            { print_derivation("expr", "expr / expr"); }
-            |   expr MOD expr            { print_derivation("expr", "expr % expr"); }
-            |   expr GREATER expr        { print_derivation("expr", "expr > expr"); }
-            |   expr GREATER_EQUALS expr { print_derivation("expr", "expr >= expr"); }
-            |   expr LESS expr           { print_derivation("expr", "expr < expr"); }
-            |   expr LESS_EQUALS expr    { print_derivation("expr", "expr <= expr"); }
-            |   expr EQUALS expr         { print_derivation("expr", "expr == expr"); }
-            |   expr NOT_EQUALS expr     { print_derivation("expr", "expr != expr"); }
-            |   expr AND expr            { print_derivation("expr", "expr AND expr"); }
-            |   expr OR expr             { print_derivation("expr", "expr OR expr"); }
-            |   term                     { print_derivation("expr", "term"); }
+expr        :   assignexpr               { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "assignexpr");
+                                         }
+            |   expr PLUS expr           { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"+\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"+\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr + expr");
+                                         }
+            |   expr MINUS expr          { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"-\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"-\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr - expr");
+                                         }
+            |   expr STAR expr           { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"*\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"*\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr * expr");
+                                         }
+            |   expr DIV expr            { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"/\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"/\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr / expr");
+                                         }
+            |   expr MOD expr            { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"%\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"%\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr % expr");
+                                         }
+            |   expr GREATER expr        { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\">\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\">\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr > expr");
+                                         }
+            |   expr GREATER_EQUALS expr { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\">=\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\">=\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr >= expr");
+                                         }
+            |   expr LESS expr           { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"<\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"<\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr < expr");
+                                         }
+            |   expr LESS_EQUALS expr    { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"<=\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"<=\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr <= expr");
+                                         }
+            |   expr EQUALS expr         { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"==\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"==\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr == expr");
+                                         }
+            |   expr NOT_EQUALS expr     { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"!=\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"!=\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr != expr");
+                                         }
+            |   expr NOT_EQUALS expr     { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"AND\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"AND\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr AND expr");
+                                         }
+            |   expr NOT_EQUALS expr     { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"OR\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"OR\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr OR expr");
+                                         }
+            |   term                     { S_TABLE_FURTHER_SYMBOL_CHECK_NEEDED($1);
+                                           print_derivation("expr", "term");
+                                         }
             ;
 
 term        :   LEFT_PARENTHESIS expr RIGHT_PARENTHESIS { S_TABLE_FURTHER_SYMBOL_CHECK_NEEDED($2);
