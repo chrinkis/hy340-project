@@ -69,7 +69,20 @@ void Table::add_variable(const std::string& name) {
 }
 
 bool Table::can_add_local_variable(const std::string& name) const {
-  ;
+  if (LIBRARY_FUNCTIONS.find(name.c_str()) != LIBRARY_FUNCTIONS.cend()) {
+    return false;  // Found library function
+  }
+
+  Key key(name, this->current_scope);
+  auto symbols = this->symbol_map.equal_range(key);
+
+  for (auto symbol = symbols.first; symbol != symbols.second; symbol++) {
+    if (symbol->second.get_is_active()) {
+      return false;  // Found an active homonymous-symbol in scope
+    }
+  }
+
+  return true;
 }
 
 void Table::add_local_variable(const std::string& name) {
