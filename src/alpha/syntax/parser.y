@@ -227,10 +227,18 @@ primary     :   lvalue                                     { print_derivation("p
             |   const                                      { print_derivation("primary", "const"); }
             ;
 
-lvalue      :   IDENTIFIER              { print_derivation("lvalue", "IDENTIFIER"); }
-            |   LOCAL IDENTIFIER        { print_derivation("lvalue", "LOCAL IDENTIFIER"); }
-            |   DOUBLE_COLON IDENTIFIER { print_derivation("lvalue", ":: IDENTIFIER"); }
-            |   member                  { print_derivation("lvalue", "member"); }
+lvalue      :   IDENTIFIER              { S_TABLE_SEARCH_AND_ADD_VAR($1,$$);
+                                          print_derivation("lvalue", "IDENTIFIER"); 
+                                        }
+            |   LOCAL IDENTIFIER        { S_TABLE_SEARCH_AND_ADD_LOCAL_VAR($2,$$);
+                                          print_derivation("lvalue", "LOCAL IDENTIFIER");
+                                        }
+            |   DOUBLE_COLON IDENTIFIER { S_TABLE_SEARCH_GLOBAL_VAR($2,$$);
+                                          print_derivation("lvalue", ":: IDENTIFIER");
+                                        }
+            |   member                  { $$ = SearchResult::NOT_FOUND;
+                                          print_derivation("lvalue", "member");
+                                        }
             ;
 
 member      :   lvalue DOT IDENTIFIER                                { print_derivation("member", "lvalue . IDENTIFIER"); }
