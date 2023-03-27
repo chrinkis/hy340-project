@@ -12,6 +12,10 @@
         class Scanner;
     }
     }
+
+    #include <alpha/symbol/table.h>
+
+    using SearchResult = alpha::symbol::Table::SearchResult;
 }
 
 %parse-param { alpha::lex::Scanner &scanner }
@@ -85,6 +89,8 @@
 %token DOUBLE_COLON         /*| :: |*/
 %token DOT                  /*| .  |*/
 %token DOUBLE_DOT           /*| .. |*/
+
+%type <SearchResult> lvalue
 
 /* %locations */
 
