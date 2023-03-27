@@ -81,6 +81,8 @@ void Table::start_function(const std::string& name) {
 }
 
 void Table::end_function() {
+  assert(!this->current_function);  // last arg didn't passed
+
   this->max_scope.pop();
 }
 
