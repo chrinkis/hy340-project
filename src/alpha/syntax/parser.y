@@ -31,6 +31,31 @@
     static void print_derivation(const std::string&, const std::string&);
 }
 
+/* Symbol table handles for formal arguments */
+%code {
+
+#define S_TABLE_ADD_ARG(name)                            \
+  {                                                      \
+    if (symbol_table.can_add_argument(name)) {           \
+      symbol_table.add_argument(name);                   \
+    } else {                                             \
+      std::cerr << "error inserting argument \"" << name \
+                << "\" in Symbol Table" << std::endl;    \
+    }                                                    \
+  }
+
+#define S_TABLE_ADD_ARG_LAST(name)                       \
+  {                                                      \
+    if (symbol_table.can_add_argument(name)) {           \
+      symbol_table.add_last_argument(name);              \
+    } else {                                             \
+      std::cerr << "error inserting argument \"" << name \
+                << "\" in Symbol Table" << std::endl;    \
+    }                                                    \
+  }
+
+}
+
 /* The grammar expects 1 shift/reduce conflict (ifstmt) */
 %expect 1
 
@@ -241,12 +266,12 @@ const       :   INTEGER { print_derivation("const", "INTEGER"); }
             |   FALSE   { print_derivation("const", "FALSE"); }
             ;
 
-idlist      :   %empty                { print_derivation("idlist", "empty"); }
-            |   IDENTIFIER idlist_opt { print_derivation("idlist", "IDENTIFIER idlist_opt"); }
+idlist      :   %empty                                              { print_derivation("idlist", "empty"); }
+            |   IDENTIFIER { S_TABLE_ADD_ARG_LAST($1); } idlist_opt { print_derivation("idlist", "IDENTIFIER idlist_opt"); }
             ;
 
-idlist_opt  :   %empty                      { print_derivation("idlist_opt", "empty"); }
-            |   COMMA IDENTIFIER idlist_opt { print_derivation("idlist_opt", ", IDENTIFIER idlist"); }
+idlist_opt  :   %empty                                               { print_derivation("idlist_opt", "empty"); }
+            |   COMMA IDENTIFIER { S_TABLE_ADD_ARG($2); } idlist_opt { print_derivation("idlist_opt", ", IDENTIFIER idlist"); }
             ;
 
 ifstmt      :   IF LEFT_PARENTHESIS expr RIGHT_PARENTHESIS stmt %expect 1 { print_derivation("ifstmt", "IF ( expr ) stmt"); }
