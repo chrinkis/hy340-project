@@ -65,7 +65,7 @@ bool Table::can_add_variable(const std::string& name) const {
 }
 
 void Table::add_variable(const std::string& name) {
-  assert(can_add_variable(name));
+  assert(this->can_add_variable(name));
 
   if (this->current_scope == 0) {  // global scope
     this->symbol_map.insert(pairForVariable(name, Symbol::Type::GLOBAL));
