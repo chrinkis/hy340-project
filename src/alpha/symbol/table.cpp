@@ -81,12 +81,7 @@ void Table::start_function(const std::string& name) {
 }
 
 void Table::end_function() {
-  assert(this->current_function);
-
-  this->current_function = Symbol::SharedPtr();
   this->max_scope.pop();
-
-  // FIXME hide all
 }
 
 bool Table::can_add_argument(const std::string& name) const {
