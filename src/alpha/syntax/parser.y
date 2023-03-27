@@ -12,6 +12,10 @@
         class Scanner;
     }
     }
+
+    #include <alpha/symbol/table.h>
+
+    using SearchResult = alpha::symbol::Table::SearchResult;
 }
 
 %parse-param { alpha::lex::Scanner &scanner }
@@ -29,6 +33,112 @@
     #define yylex scanner.yylex
 
     static void print_derivation(const std::string&, const std::string&);
+}
+
+/* Insert variables and search (and check usage of) symbols */
+%code {
+
+/* local */
+#define S_TABLE_SEARCH_AND_ADD_LOCAL_VAR(name, lvalue)                 \
+  {                                                                    \
+    lvalue = symbol_table.search_for_visible_local_symbol(name);       \
+                                                                       \
+    switch (lvalue) {                                                  \
+      case SearchResult::MUTABLE:                                      \
+        break;                                                         \
+                                                                       \
+      case SearchResult::UNMUTABLE:                                    \
+        break;                                                         \
+                                                                       \
+      case SearchResult::NOT_FOUND:                                    \
+                                                                       \
+        if (symbol_table.can_add_local_variable(name)) {               \
+          symbol_table.add_local_variable(name);                       \
+          lvalue = SearchResult::MUTABLE;                              \
+        } else {                                                       \
+          std::cerr << "error with local variable \"" << name          \
+                    << "\" shadowing a library function" << std::endl; \
+        }                                                              \
+        break;                                                         \
+                                                                       \
+      default:                                                         \
+        assert(0);                                                     \
+    }                                                                  \
+  }
+
+/* global */
+#define S_TABLE_SEARCH_GLOBAL_VAR(name, lvalue)                        \
+  {                                                                    \
+    lvalue = symbol_table.search_for_visible_global_symbol(name);      \
+                                                                       \
+    switch (lvalue) {                                                  \
+      case SearchResult::MUTABLE:                                      \
+        break;                                                         \
+                                                                       \
+      case SearchResult::UNMUTABLE:                                    \
+        break;                                                         \
+                                                                       \
+      case SearchResult::NOT_FOUND:                                    \
+                                                                       \
+        std::cerr << "error finding global variable or function "      \
+                  << "with name \"" << name << "\"" << std::endl;      \
+                                                                       \
+        break;                                                         \
+                                                                       \
+      default:                                                         \
+        assert(0);                                                     \
+    }                                                                  \
+  }
+
+/* none (for current visible scope) */
+#define S_TABLE_SEARCH_AND_ADD_VAR(name, lvalue)                       \
+  {                                                                    \
+    lvalue = symbol_table.search_for_visible_symbol(name);             \
+                                                                       \
+    switch (lvalue) {                                                  \
+      case SearchResult::MUTABLE:                                      \
+        break;                                                         \
+                                                                       \
+      case SearchResult::UNMUTABLE:                                    \
+        break;                                                         \
+                                                                       \
+      case SearchResult::NOT_FOUND:                                    \
+                                                                       \
+        if (symbol_table.can_add_variable(name)) {                     \
+          symbol_table.add_variable(name);                             \
+          lvalue = SearchResult::MUTABLE;                              \
+        } else {                                                       \
+          std::cerr << "error accessing a variable or function "       \
+                    << "with name \"" << name << "\" that is not "     \
+                    << "visible" << std::endl;                         \
+        }                                                              \
+                                                                       \
+        break;                                                         \
+                                                                       \
+      default:                                                         \
+        assert(0);                                                     \
+    }                                                                  \
+  }
+
+/* Handle function symbol errors     */
+/* `type_of_symbol` : `SearchResult` */
+/* `usage_info` : string for the possible error message */
+#define S_TABLE_CHECK_FUNCTION_ERRORS(type_of_symbol, usage_info)      \
+  {                                                                    \
+    if (type_of_symbol == SearchResult::UNMUTABLE) {                   \
+      std::cerr << "error: cannot perform " << usage_info              \
+                << " a function" << std::endl;                         \
+    }                                                                  \
+  }
+
+/* For when we need to further check a symbol's usage */
+#define S_TABLE_FURTHER_SYMBOL_CHECK_NEEDED(type_of_symbol)            \
+  { $$ = type_of_symbol; }
+
+/* For when we don't need to further check a symbol's usage */
+#define S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED                         \
+  { $$ = SearchResult::NOT_FOUND; }
+
 }
 
 /* Symbol table handles for functions */
@@ -142,6 +252,13 @@
 %token DOT                  /*| .  |*/
 %token DOUBLE_DOT           /*| .. |*/
 
+%type <SearchResult> lvalue
+%type <SearchResult> member
+%type <SearchResult> assignexpr
+%type <SearchResult> primary
+%type <SearchResult> term
+%type <SearchResult> expr
+
 /* %locations */
 
 %start PROGRAM
@@ -183,53 +300,162 @@ stmt        :   expr SEMICOLON     { print_derivation("stmt", "expr ;"); }
             |   SEMICOLON          { print_derivation("stmt", ";"); }
             ;
 
-expr        :   assignexpr               { print_derivation("expr", "assignexpr"); }
-            |   expr PLUS expr           { print_derivation("expr", "expr + expr"); }
-            |   expr MINUS expr          { print_derivation("expr", "expr - expr"); }
-            |   expr STAR expr           { print_derivation("expr", "expr * expr"); }
-            |   expr DIV expr            { print_derivation("expr", "expr / expr"); }
-            |   expr MOD expr            { print_derivation("expr", "expr % expr"); }
-            |   expr GREATER expr        { print_derivation("expr", "expr > expr"); }
-            |   expr GREATER_EQUALS expr { print_derivation("expr", "expr >= expr"); }
-            |   expr LESS expr           { print_derivation("expr", "expr < expr"); }
-            |   expr LESS_EQUALS expr    { print_derivation("expr", "expr <= expr"); }
-            |   expr EQUALS expr         { print_derivation("expr", "expr == expr"); }
-            |   expr NOT_EQUALS expr     { print_derivation("expr", "expr != expr"); }
-            |   expr AND expr            { print_derivation("expr", "expr AND expr"); }
-            |   expr OR expr             { print_derivation("expr", "expr OR expr"); }
-            |   term                     { print_derivation("expr", "term"); }
+expr        :   assignexpr               { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "assignexpr");
+                                         }
+            |   expr PLUS expr           { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"+\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"+\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr + expr");
+                                         }
+            |   expr MINUS expr          { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"-\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"-\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr - expr");
+                                         }
+            |   expr STAR expr           { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"*\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"*\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr * expr");
+                                         }
+            |   expr DIV expr            { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"/\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"/\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr / expr");
+                                         }
+            |   expr MOD expr            { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"%\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"%\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr % expr");
+                                         }
+            |   expr GREATER expr        { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\">\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\">\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr > expr");
+                                         }
+            |   expr GREATER_EQUALS expr { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\">=\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\">=\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr >= expr");
+                                         }
+            |   expr LESS expr           { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"<\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"<\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr < expr");
+                                         }
+            |   expr LESS_EQUALS expr    { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"<=\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"<=\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr <= expr");
+                                         }
+            |   expr EQUALS expr         { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"==\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"==\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr == expr");
+                                         }
+            |   expr NOT_EQUALS expr     { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"!=\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"!=\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr != expr");
+                                         }
+            |   expr AND expr            { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"AND\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"AND\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr AND expr");
+                                         }
+            |   expr OR expr             { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"OR\" with");
+                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"OR\" with");
+                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                           print_derivation("expr", "expr OR expr");
+                                         }
+            |   term                     { S_TABLE_FURTHER_SYMBOL_CHECK_NEEDED($1);
+                                           print_derivation("expr", "term");
+                                         }
             ;
 
-term        :   LEFT_PARENTHESIS expr RIGHT_PARENTHESIS { print_derivation("term", "( expr )"); }
-            |   MINUS expr                 %prec UMINUS { print_derivation("term", "- expr"); }
-            |   NOT expr                                { print_derivation("term", "NOT expr"); }
-            |   PLUS_PLUS lvalue                        { print_derivation("term", "++ lvalue"); }
-            |   lvalue PLUS_PLUS                        { print_derivation("term", "lvalue ++"); }
-            |   MINUS_MINUS lvalue                      { print_derivation("term", "-- lvalue"); }
-            |   lvalue MINUS_MINUS                      { print_derivation("term", "lvalue --"); }
-            |   primary                                 { print_derivation("term", "primary"); }
+term        :   LEFT_PARENTHESIS expr RIGHT_PARENTHESIS { S_TABLE_FURTHER_SYMBOL_CHECK_NEEDED($2);
+                                                          print_derivation("term", "( expr )");
+                                                        }
+            |   MINUS expr                 %prec UMINUS { S_TABLE_CHECK_FUNCTION_ERRORS($2, "unary \"-\" with");
+                                                          S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                          print_derivation("term", "- expr");
+                                                        }
+            |   NOT expr                                { S_TABLE_CHECK_FUNCTION_ERRORS($2, "\"NOT\" with");
+                                                          S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                          print_derivation("term", "NOT expr");
+                                                        }
+            |   PLUS_PLUS lvalue                        { S_TABLE_CHECK_FUNCTION_ERRORS($2, "\"++\" with");
+                                                          S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                          print_derivation("term", "++ lvalue");
+                                                        }
+            |   lvalue PLUS_PLUS                        { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"++\" with");
+                                                          S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                          print_derivation("term", "lvalue ++");
+                                                        }
+            |   MINUS_MINUS lvalue                      { S_TABLE_CHECK_FUNCTION_ERRORS($2, "\"--\" with");
+                                                          S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                          print_derivation("term", "-- lvalue");
+                                                        }
+            |   lvalue MINUS_MINUS                      { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"--\" with");
+                                                          S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                          print_derivation("term", "lvalue --");
+                                                        }
+            |   primary                                 { S_TABLE_FURTHER_SYMBOL_CHECK_NEEDED($1);
+                                                          print_derivation("term", "primary");
+                                                        }
             ;
 
-assignexpr  :   lvalue ASSIGN expr { print_derivation("assignexpr", "lvalue = expr"); }
+assignexpr  :   lvalue ASSIGN expr { S_TABLE_CHECK_FUNCTION_ERRORS($1, "assignment to");
+                                     S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                     print_derivation("assignexpr", "lvalue = expr");
+                                   }
             ;
 
-primary     :   lvalue                                     { print_derivation("primary", "lvalue"); }
-            |   call                                       { print_derivation("primary", "call"); }
-            |   objectdef                                  { print_derivation("primary", "objectdef"); }
-            |   LEFT_PARENTHESIS funcdef RIGHT_PARENTHESIS { print_derivation("primary", "( funcdef )"); }
-            |   const                                      { print_derivation("primary", "const"); }
+primary     :   lvalue                                     { S_TABLE_FURTHER_SYMBOL_CHECK_NEEDED($1);
+                                                             print_derivation("primary", "lvalue");
+                                                           }
+            |   call                                       { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                             print_derivation("primary", "call");
+                                                           }
+            |   objectdef                                  { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                             print_derivation("primary", "objectdef");
+                                                           }
+            |   LEFT_PARENTHESIS funcdef RIGHT_PARENTHESIS { S_TABLE_FURTHER_SYMBOL_CHECK_NEEDED(SearchResult::UNMUTABLE);
+                                                             print_derivation("primary", "( funcdef )");
+                                                           }
+            |   const                                      { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                             print_derivation("primary", "const");
+                                                           }
             ;
 
-lvalue      :   IDENTIFIER              { print_derivation("lvalue", "IDENTIFIER"); }
-            |   LOCAL IDENTIFIER        { print_derivation("lvalue", "LOCAL IDENTIFIER"); }
-            |   DOUBLE_COLON IDENTIFIER { print_derivation("lvalue", ":: IDENTIFIER"); }
-            |   member                  { print_derivation("lvalue", "member"); }
+lvalue      :   IDENTIFIER              { S_TABLE_SEARCH_AND_ADD_VAR($1,$$);
+                                          print_derivation("lvalue", "IDENTIFIER"); 
+                                        }
+            |   LOCAL IDENTIFIER        { S_TABLE_SEARCH_AND_ADD_LOCAL_VAR($2,$$);
+                                          print_derivation("lvalue", "LOCAL IDENTIFIER");
+                                        }
+            |   DOUBLE_COLON IDENTIFIER { S_TABLE_SEARCH_GLOBAL_VAR($2,$$);
+                                          print_derivation("lvalue", ":: IDENTIFIER");
+                                        }
+            |   member                  { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                          print_derivation("lvalue", "member");
+                                        }
             ;
 
-member      :   lvalue DOT IDENTIFIER                                { print_derivation("member", "lvalue . IDENTIFIER"); }
-            |   lvalue LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET { print_derivation("member", "lvalue [ expr ]"); }
-            |   call DOT IDENTIFIER                                  { print_derivation("member", "call . IDENTIFIER"); }
-            |   call LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET   { print_derivation("member", "call [ expr ]"); }
+member      :   lvalue DOT IDENTIFIER                                { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\".\" with");
+                                                                       S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                                       print_derivation("member", "lvalue . IDENTIFIER");
+                                                                     }
+            |   lvalue LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"[]\" with");
+                                                                       S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                                       print_derivation("member", "lvalue [ expr ]");
+                                                                     }
+            |   call DOT IDENTIFIER                                  { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                                       print_derivation("member", "call . IDENTIFIER");
+                                                                     }
+            |   call LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET   { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                                       print_derivation("member", "call [ expr ]");
+                                                                     }
             ;
 
 
