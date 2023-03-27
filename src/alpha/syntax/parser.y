@@ -139,6 +139,61 @@
 #define S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED                         \
   { $$ = SearchResult::NOT_FOUND; }
 
+}
+
+/* Symbol table handles for functions */
+%code {
+
+#define S_TABLE_FUNC_START(name)                         \
+  {                                                      \
+    if (symbol_table.can_add_function(name)) {           \
+      symbol_table.start_function(name);                 \
+    } else {                                             \
+      std::cerr << "error inserting function \"" << name \
+                << "\" in Symbol Table" << std::endl;    \
+      S_TABLE_FUNC_START_ANONYMOYS                       \
+    }                                                    \
+  }
+
+#define S_TABLE_FUNC_START_ANONYMOYS \
+  { symbol_table.start_function(); }
+
+#define S_TABLE_FUNC_END \
+  { symbol_table.end_function(); }
+
+}
+
+/* Handle code block entry and exit */
+%code {
+
+#define S_TABLE_BLOCK_ENTER { symbol_table.increase_scope(); }
+
+#define S_TABLE_BLOCK_EXIT  { symbol_table.decrease_scope(); }
+
+}
+
+/* Symbol table handles for formal arguments */
+%code {
+
+#define S_TABLE_ADD_ARG(name)                            \
+  {                                                      \
+    if (symbol_table.can_add_argument(name)) {           \
+      symbol_table.add_argument(name);                   \
+    } else {                                             \
+      std::cerr << "error inserting argument \"" << name \
+                << "\" in Symbol Table" << std::endl;    \
+    }                                                    \
+  }
+
+#define S_TABLE_ADD_ARG_LAST(name)                       \
+  {                                                      \
+    if (symbol_table.can_add_argument(name)) {           \
+      symbol_table.add_last_argument(name);              \
+    } else {                                             \
+      std::cerr << "error inserting argument \"" << name \
+                << "\" in Symbol Table" << std::endl;    \
+    }                                                    \
+  }
 
 }
 
@@ -449,15 +504,23 @@ indexed_opt :   %empty                        { print_derivation("indexed_opt", 
 indexedelem :   LEFT_CURLY_BRACKET expr COLON expr RIGHT_CURLY_BRACKET { print_derivation("indexedelem", "{ expr : expr }"); }
             ;
 
-block       :   LEFT_CURLY_BRACKET block_opt RIGHT_CURLY_BRACKET { print_derivation("block", "{ block_opt }"); }
+block       :   LEFT_CURLY_BRACKET { S_TABLE_BLOCK_ENTER; } block_opt RIGHT_CURLY_BRACKET { S_TABLE_BLOCK_EXIT;
+                                                                                            print_derivation("block", "{ block_opt }");
+                                                                                          }
             ;
 
 block_opt   :   %empty         { print_derivation("block_opt", "empty"); }
             |   stmt block_opt { print_derivation("block_opt", "stmt block_opt"); }
             ;
 
-funcdef     :   FUNCTION LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS block            { print_derivation("funcdef", "FUNCTION ( idlist ) block"); }
-            |   FUNCTION IDENTIFIER LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS block { print_derivation("funcdef", "FUNCTION IDENTIFIER ( idlist ) block"); }
+funcdef     :   FUNCTION { S_TABLE_FUNC_START_ANONYMOYS; } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS block      { S_TABLE_FUNC_END;
+                                                                                                                  print_derivation("funcdef", 
+                                                                                                                  "FUNCTION ( idlist ) block"); 
+                                                                                                                }
+            |   FUNCTION IDENTIFIER { S_TABLE_FUNC_START($2); } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS block { S_TABLE_FUNC_END;
+                                                                                                                  print_derivation("funcdef", 
+                                                                                                                  "FUNCTION IDENTIFIER ( idlist ) block");
+                                                                                                                }
             ;
 
 const       :   INTEGER { print_derivation("const", "INTEGER"); }
@@ -468,12 +531,12 @@ const       :   INTEGER { print_derivation("const", "INTEGER"); }
             |   FALSE   { print_derivation("const", "FALSE"); }
             ;
 
-idlist      :   %empty                { print_derivation("idlist", "empty"); }
-            |   IDENTIFIER idlist_opt { print_derivation("idlist", "IDENTIFIER idlist_opt"); }
+idlist      :   %empty                                              { print_derivation("idlist", "empty"); }
+            |   IDENTIFIER { S_TABLE_ADD_ARG_LAST($1); } idlist_opt { print_derivation("idlist", "IDENTIFIER idlist_opt"); }
             ;
 
-idlist_opt  :   %empty                      { print_derivation("idlist_opt", "empty"); }
-            |   COMMA IDENTIFIER idlist_opt { print_derivation("idlist_opt", ", IDENTIFIER idlist"); }
+idlist_opt  :   %empty                                               { print_derivation("idlist_opt", "empty"); }
+            |   COMMA IDENTIFIER { S_TABLE_ADD_ARG($2); } idlist_opt { print_derivation("idlist_opt", ", IDENTIFIER idlist"); }
             ;
 
 ifstmt      :   IF LEFT_PARENTHESIS expr RIGHT_PARENTHESIS stmt %expect 1 { print_derivation("ifstmt", "IF ( expr ) stmt"); }
