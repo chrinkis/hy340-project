@@ -26,8 +26,9 @@ static const std::unordered_set<const char*> LIBRARY_FUNCTIONS = {
 using namespace alpha::symbol;
 
 Table::Pair Table::pairForVariable(const std::string& name, Symbol::Type type) {
-  assert(type == Symbol::Type::GLOBAL || type == Symbol::Type::FORMAL ||
-         type == Symbol::Type::LOCAL);
+  assert(type == Symbol::Type::GLOBAL && this->current_scope == 0 ||
+         type == Symbol::Type::FORMAL && this->current_scope > 0 ||
+         type == Symbol::Type::LOCAL && this->current_scope > 0);
 
   Entry entry(
       new Variable(name, this->current_scope, this->get_current_line(), type));
