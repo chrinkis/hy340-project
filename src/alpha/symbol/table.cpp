@@ -80,7 +80,7 @@ void Table::end_function() {
   ;  // FIXME
 }
 
-void Table::can_add_argument(const std::string& name) const {
+bool Table::can_add_argument(const std::string& name) const {
   ;  // FIXME
 }
 
