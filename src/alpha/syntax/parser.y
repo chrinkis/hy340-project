@@ -100,6 +100,15 @@
     }                                                                 \
   }
 
+/* For when we need to further check a symbol's usage */
+#define S_TABLE_FURTHER_SYMBOL_CHECK_NEEDED(type_of_symbol)           \
+  { $$ = type_of_symbol; }
+
+/* For when we don't need to further check a symbol's usage */
+#define S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED                        \
+  { $$ = SearchResult::NOT_FOUND; }
+
+
 }
 
 /* The grammar expects 1 shift/reduce conflict (ifstmt) */
