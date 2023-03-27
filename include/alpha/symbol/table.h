@@ -58,6 +58,9 @@ class Table {
   bool can_add_variable(const std::string& name) const;
   void add_variable(const std::string& name);
 
+  bool can_add_local_variable(const std::string& name) const;
+  void add_local_variable(const std::string& name);
+
   bool can_add_function(const std::string& name) const;
   void start_function();
   void start_function(const std::string& name);
