@@ -30,7 +30,21 @@ Table::Pair Table::pairForVariable(const std::string& name, Symbol::Type type) {
 }
 
 Table::Pair Table::pairForFunction(const std::string& name) {
-  ;  // FIXME
+  Entry entry(new Function(name, this->current_scope, this->get_current_line(),
+                           Symbol::Type::USER_FUNCTION));
+  Key key(entry.get_symbol()->get_name(), entry.get_symbol()->get_scope());
+
+  Pair pair(key, entry);
+
+  assert(pair.second.get_symbol()->get_name() == name);
+  assert(pair.second.get_symbol()->get_type() == Symbol::Type::USER_FUNCTION);
+  assert(pair.second.get_symbol()->get_scope() == this->current_scope);
+  assert(pair.second.get_symbol()->get_line() == this->get_current_line());
+  assert(pair.first.get_symbol_name() == pair.second.get_symbol()->get_name());
+  assert(pair.first.get_symbol_scope() ==
+         pair.second.get_symbol()->get_scope());
+
+  return pair;
 }
 
 Table::Table(const std::function<Symbol::Line()>& get_current_line)
