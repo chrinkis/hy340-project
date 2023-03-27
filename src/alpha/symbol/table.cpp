@@ -38,7 +38,11 @@ Table::Table(const std::function<Symbol::Line()>& get_current_line) {
 }
 
 void Table::increase_scope() {
-  ;  // FIXME
+  Symbol::Scope prev = this->current_scope;
+
+  this->current_scope++;
+
+  assert(this->current_scope > prev);
 }
 
 void Table::decrease_scope() {
