@@ -39,22 +39,31 @@
 %code {
 
 /* local */
-#define S_TABLE_SEARCH_AND_ADD_LOCAL_VAR(name, lvalue)                \
-  {                                                                   \
-    lvalue = symbol_table.search_for_visible_local_symbol(name);      \
-                                                                      \
-    if ((lvalue == SearchResult::NOT_FOUND)                           \
-      && (symbol_table.can_add_variable(name)) {                      \
-                                                                      \
-        symbol_table.add_variable(name);                              \
-        lvalue = SearchResult::MUTABLE;                               \
-                                                                      \
-      } else (lvalue == SearchResult::NOT_FOUND){                     \
-                                                                      \
-        std::cerr << "error with local variable \"" << name           \
-                  << "\" shadowing a library function" << std::endl;  \
-                                                                      \
-      }                                                               \
+#define S_TABLE_SEARCH_AND_ADD_LOCAL_VAR(name, lvalue)                 \
+  {                                                                    \
+    lvalue = symbol_table.search_for_visible_local_symbol(name);       \
+                                                                       \
+    switch (lvalue) {                                                  \
+      case SearchResult::MUTABLE:                                      \
+        break;                                                         \
+                                                                       \
+      case SearchResult::UNMUTABLE:                                    \
+        break;                                                         \
+                                                                       \
+      case SearchResult::NOT_FOUND:                                    \
+                                                                       \
+        if (symbol_table.can_add_local_variable(name)) {               \
+          symbol_table.add_local_variable(name);                       \
+          lvalue = SearchResult::MUTABLE;                              \
+        } else {                                                       \
+          std::cerr << "error with local variable \"" << name          \
+                    << "\" shadowing a library function" << std::endl; \
+        }                                                              \
+        break;                                                         \
+                                                                       \
+      default:                                                         \
+        assert(0);                                                     \
+    }                                                                  \
   }
 
 /* global */
