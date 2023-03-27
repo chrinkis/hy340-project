@@ -42,7 +42,13 @@ void Table::increase_scope() {
 }
 
 void Table::decrease_scope() {
-  ;  // FIXME
+  Symbol::Scope prev = this->current_scope;
+
+  this->current_scope--;
+
+  assert(this->current_scope < prev);
+
+  // FIXME hide symbols
 }
 
 Table::SearchResult Table::search_for_visible_symbol(
