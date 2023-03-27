@@ -42,7 +42,17 @@ void Table::increase_scope() {
 }
 
 void Table::decrease_scope() {
-  ;  // FIXME
+  Symbol::Scope prev = this->current_scope;
+
+  for (auto pair : this->symbol_map) {  // TODO slow peformance
+    if (pair.second.get_symbol()->get_scope() == this->current_scope) {
+      pair.second.deactivate();
+    }
+  }
+
+  this->current_scope--;
+
+  assert(this->current_scope < prev);
 }
 
 Table::SearchResult Table::search_for_visible_symbol(
