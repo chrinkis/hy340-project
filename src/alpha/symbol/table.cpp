@@ -47,7 +47,32 @@ void Table::decrease_scope() {
 
 Table::SearchResult Table::search_for_visible_symbol(
     const std::string& name) const {
-  ;  // FIXME
+  // TODO see if this function can be used in `can_add_variable`
+
+  for (Variable::Scope scope = this->current_scope; scope <= 0; scope--) {
+    Key key(name, scope);
+    auto symbols = this->symbol_map.equal_range(key);
+
+    for (auto symbol = symbols.first; symbol != symbols.second; symbol++) {
+      if (symbol->second.get_is_active()) {
+        switch (symbol->second.get_symbol()->get_type()) {
+          case Symbol::Type::GLOBAL:
+          case Symbol::Type::LOCAL:
+          case Symbol::Type::FORMAL:
+            return SearchResult::MUTABLE;
+          case Symbol::Type::USER_FUNCTION:
+          case Symbol::Type::LIBRARY_FUNCTION:
+            return SearchResult::UNMUTABLE;  // TODO rename to `IMMUTABLE`
+          default:
+            assert(0);
+        }
+      }
+    }
+  }
+
+  assert(LIBRARY_FUNCTIONS.find(name.c_str()) == LIBRARY_FUNCTIONS.cend());
+
+  return SearchResult::NOT_FOUND;
 }
 
 Table::SearchResult Table::search_for_visible_local_symbol(
