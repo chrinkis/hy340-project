@@ -85,7 +85,22 @@ void Table::end_function() {
 }
 
 bool Table::can_add_argument(const std::string& name) const {
-  ;  // FIXME
+  assert(this->current_function);
+
+  if (LIBRARY_FUNCTIONS.find(name.c_str()) != LIBRARY_FUNCTIONS.cend()) {
+    return false;  // It's a library function
+  }
+
+  Key key(name, this->current_scope);
+  auto symbols = this->symbol_map.equal_range(key);
+
+  for (auto symbol = symbols.first; symbol != symbols.second; symbol++) {
+    if (symbol->second.get_is_active()) {
+      return false;  // Found an active homonymous-symbol in current scope
+    }
+  }
+
+  return true;
 }
 
 void Table::add_argument(const std::string& name) {
