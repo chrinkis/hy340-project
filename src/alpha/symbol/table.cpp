@@ -68,6 +68,14 @@ void Table::add_variable(const std::string& name) {
   ;  // FIXME
 }
 
+bool Table::can_add_local_variable(const std::string& name) const {
+  ;
+}
+
+void Table::add_local_variable(const std::string& name) {
+  ;
+}
+
 bool Table::can_add_function(const std::string& name) const {
   ;  // FIXME
 }
