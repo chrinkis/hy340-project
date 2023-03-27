@@ -167,6 +167,7 @@
 %token DOUBLE_DOT           /*| .. |*/
 
 %type <SearchResult> lvalue
+%type <SearchResult> member
 
 /* %locations */
 
@@ -255,15 +256,25 @@ lvalue      :   IDENTIFIER              { S_TABLE_SEARCH_AND_ADD_VAR($1,$$);
             |   DOUBLE_COLON IDENTIFIER { S_TABLE_SEARCH_GLOBAL_VAR($2,$$);
                                           print_derivation("lvalue", ":: IDENTIFIER");
                                         }
-            |   member                  { $$ = SearchResult::NOT_FOUND;
+            |   member                  { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
                                           print_derivation("lvalue", "member");
                                         }
             ;
 
-member      :   lvalue DOT IDENTIFIER                                { print_derivation("member", "lvalue . IDENTIFIER"); }
-            |   lvalue LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET { print_derivation("member", "lvalue [ expr ]"); }
-            |   call DOT IDENTIFIER                                  { print_derivation("member", "call . IDENTIFIER"); }
-            |   call LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET   { print_derivation("member", "call [ expr ]"); }
+member      :   lvalue DOT IDENTIFIER                                { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\".\" with");
+                                                                       S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                                       print_derivation("member", "lvalue . IDENTIFIER");
+                                                                     }
+            |   lvalue LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"[]\" with");
+                                                                       S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                                       print_derivation("member", "lvalue [ expr ]");
+                                                                     }
+            |   call DOT IDENTIFIER                                  { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                                       print_derivation("member", "call . IDENTIFIER");
+                                                                     }
+            |   call LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET   { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                                       print_derivation("member", "call [ expr ]");
+                                                                     }
             ;
 
 
