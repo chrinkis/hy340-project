@@ -98,4 +98,5 @@ void Table::add_last_argument(const std::string& name) {
 
   this->add_argument(name);
   this->current_scope--;
+  this->current_function = Symbol::SharedPtr();
 }
