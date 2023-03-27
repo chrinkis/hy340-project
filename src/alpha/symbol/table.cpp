@@ -82,8 +82,12 @@ void Table::start_function(const std::string& name) {
 
 void Table::end_function() {
   assert(!this->current_function);  // last arg didn't passed
+  assert(this->max_scope.size() > 1 && this->max_scope.top() != 0);
 
   this->max_scope.pop();
+
+  assert(this->max_scope.size() > 1 && this->max_scope.top() != 0 ||
+         this->max_scope.size() == 1 && this->max_scope.top() == 0);
 }
 
 bool Table::can_add_argument(const std::string& name) const {
