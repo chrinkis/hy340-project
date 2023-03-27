@@ -25,6 +25,7 @@
 
 %code {
     #include <iostream>
+    #include <cassert>
 
     #include <alpha/lex/scanner.h>
     #include <alpha/symbol/table.h>
