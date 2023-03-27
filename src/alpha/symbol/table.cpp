@@ -57,7 +57,27 @@ Table::SearchResult Table::search_for_visible_local_symbol(
 
 Table::SearchResult Table::search_for_visible_global_symbol(
     const std::string& name) const {
-  ;  // FIXME
+  Key key(name, 0);
+
+  auto symbols = this->symbol_map.equal_range(key);
+
+  for (auto symbol = symbols.first; symbol != symbols.second; symbol++) {
+    if (symbol->second.get_is_active()) {
+      switch (symbol->second.get_symbol()->get_type()) {
+        case Symbol::Type::GLOBAL:
+        case Symbol::Type::LOCAL:
+        case Symbol::Type::FORMAL:
+          return SearchResult::MUTABLE;
+        case Symbol::Type::USER_FUNCTION:
+        case Symbol::Type::LIBRARY_FUNCTION:
+          return SearchResult::UNMUTABLE;  // TODO rename to IMMUTABLE
+        default:
+          assert(0);
+      }
+    }
+  }
+
+  return SearchResult::NOT_FOUND;
 }
 
 bool Table::can_add_variable(const std::string& name) const {
