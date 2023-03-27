@@ -30,13 +30,22 @@ class Table {
   std::function<Symbol::Line()> get_current_line;
 
  public:
+  enum class SearchResult {
+    NOT_FOUND,
+    MUTABLE,
+    UNMUTABLE,
+  };
+
+ public:
   Table(const std::function<Symbol::Line()>& get_current_line);
 
  public:
   void increase_scope();
   void decrease_scope();
 
-  bool symbol_is_visible(const std::string& name) const;
+  SearchResult search_for_visible_symbol(const std::string& name) const;
+  SearchResult search_for_visible_local_symbol(const std::string& name) const;
+  SearchResult search_for_visible_global_symbol(const std::string& name) const;
 
   bool can_add_variable(const std::string& name) const;
   void add_variable(const std::string& name);
