@@ -63,7 +63,7 @@ class Table {
   void start_function(const std::string& name);
   void end_function();
 
-  void can_add_argument(const std::string& name) const;
+  bool can_add_argument(const std::string& name) const;
   void add_argument(const std::string& name);
   void add_last_argument(const std::string& name);
 };
