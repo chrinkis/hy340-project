@@ -69,7 +69,7 @@
 /* global */
 #define S_TABLE_SEARCH_GLOBAL_VAR(name, lvalue)                        \
   {                                                                    \
-    lvalue = symbol_table.search_for_visible_gloval_symbol(name);      \
+    lvalue = symbol_table.search_for_visible_global_symbol(name);      \
                                                                        \
     switch (lvalue) {                                                  \
       case SearchResult::MUTABLE:                                      \
