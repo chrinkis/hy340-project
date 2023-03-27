@@ -61,7 +61,20 @@ Table::SearchResult Table::search_for_visible_global_symbol(
 }
 
 bool Table::can_add_variable(const std::string& name) const {
-  ;  // FIXME
+  for (Variable::Scope scope = this->current_scope; scope <= 0; scope--) {
+    Key key(name, scope);
+    auto symbols = this->symbol_map.equal_range(key);
+
+    for (auto symbol = symbols.first; symbol != symbols.second; symbol++) {
+      if (symbol->second.get_is_active()) {
+        return false;  // Found an active homonymous-symbol in scope
+      }
+    }
+  }
+
+  assert(LIBRARY_FUNCTIONS.find(name.c_str()) == LIBRARY_FUNCTIONS.cend());
+
+  return true;
 }
 
 void Table::add_variable(const std::string& name) {
