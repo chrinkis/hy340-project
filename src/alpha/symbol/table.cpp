@@ -188,11 +188,21 @@ bool Table::can_add_function(const std::string& name) const {
 }
 
 void Table::start_function() {
-  ;  // FIXME
+  static unsigned int counter = 0;
+
+  this->start_function("$anonymous$" + std::to_string(counter++));
 }
 
 void Table::start_function(const std::string& name) {
-  ;  // FIXME
+  assert(this->can_add_function(name));
+  assert(!this->current_function);
+
+  Pair pair = pairForFunction(name);
+
+  this->symbol_map.insert(pair);
+  this->current_function = pair.second.get_symbol();
+  this->current_scope++;
+  this->max_scope.push(current_scope);
 }
 
 void Table::end_function() {
