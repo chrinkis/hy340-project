@@ -65,7 +65,15 @@ bool Table::can_add_variable(const std::string& name) const {
 }
 
 void Table::add_variable(const std::string& name) {
-  ;  // FIXME
+  assert(can_add_variable(name));
+
+  if (this->current_scope == 0) {  // global scope
+    this->symbol_map.insert(pairForVariable(name, Symbol::Type::GLOBAL));
+  } else if (this->current_scope > 0) {  // local scope
+    this->symbol_map.insert(pairForVariable(name, Symbol::Type::LOCAL));
+  } else {
+    assert(0);  // No man's land ;)
+  }
 }
 
 bool Table::can_add_function(const std::string& name) const {
