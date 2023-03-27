@@ -1,6 +1,10 @@
 #include <alpha/symbol/table.h>
 
+#include <alpha/symbol/function.h>
+#include <alpha/symbol/variable.h>
+
 #include <cassert>
+#include <string>
 #include <unordered_set>
 #include <utility>
 
