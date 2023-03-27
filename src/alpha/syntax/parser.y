@@ -31,6 +31,28 @@
     static void print_derivation(const std::string&, const std::string&);
 }
 
+/* Symbol table handles for functions */
+%code {
+
+#define S_TABLE_FUNC_START(name)                         \
+  {                                                      \
+    if (symbol_table.can_add_function(name)) {           \
+      symbol_table.start_function(name);                 \
+    } else {                                             \
+      std::cerr << "error inserting function \"" << name \
+                << "\" in Symbol Table" << std::endl;    \
+      S_TABLE_FUNC_START_ANONYMOYS                       \
+    }                                                    \
+  }
+
+#define S_TABLE_FUNC_START_ANONYMOYS \
+  { symbol_table.start_function(); }
+
+#define S_TABLE_FUNC_END \
+  { symbol_table.end_function(); }
+
+}
+
 /* Handle code block entry and exit */
 %code {
 
@@ -265,8 +287,14 @@ block_opt   :   %empty         { print_derivation("block_opt", "empty"); }
             |   stmt block_opt { print_derivation("block_opt", "stmt block_opt"); }
             ;
 
-funcdef     :   FUNCTION LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS block            { print_derivation("funcdef", "FUNCTION ( idlist ) block"); }
-            |   FUNCTION IDENTIFIER LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS block { print_derivation("funcdef", "FUNCTION IDENTIFIER ( idlist ) block"); }
+funcdef     :   FUNCTION { S_TABLE_FUNC_START_ANONYMOYS; } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS block      { S_TABLE_FUNC_END;
+                                                                                                                  print_derivation("funcdef", 
+                                                                                                                  "FUNCTION ( idlist ) block"); 
+                                                                                                                }
+            |   FUNCTION IDENTIFIER { S_TABLE_FUNC_START($2); } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS block { S_TABLE_FUNC_END;
+                                                                                                                  print_derivation("funcdef", 
+                                                                                                                  "FUNCTION IDENTIFIER ( idlist ) block");
+                                                                                                                }
             ;
 
 const       :   INTEGER { print_derivation("const", "INTEGER"); }
