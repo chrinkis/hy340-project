@@ -93,5 +93,9 @@ void Table::add_argument(const std::string& name) {
 }
 
 void Table::add_last_argument(const std::string& name) {
-  ;  // FIXME
+  assert(this->can_add_argument(name));
+  assert(this->current_function);
+
+  this->add_argument(name);
+  this->current_scope--;
 }
