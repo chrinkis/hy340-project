@@ -35,6 +35,27 @@
     static void print_derivation(const std::string&, const std::string&);
 }
 
+/* Search symbols in symbol table */
+%code {
+
+/* local */
+#define S_TABLE_SEARCH_AND_ADD_LOCAL_VAR(name, lvalue)                \
+  {                                                                   \
+    lvalue = symbol_table.search_for_visible_local_symbol(name);      \
+                                                                      \
+    if ((lvalue == SearchResult::NOT_FOUND)                           \
+      && (symbol_table.can_add_variable(name)) {                      \
+                                                                      \
+        symbol_table.add_variable(name);                              \
+        lvalue = SearchResult::MUTABLE;                               \
+      } else {                                                        \
+        std::cerr << "error with local variable \"" << name           \
+                  << "\" shadowing a library function" << std::endl;  \
+      }                                                               \
+  }
+
+}
+
 /* The grammar expects 1 shift/reduce conflict (ifstmt) */
 %expect 1
 
