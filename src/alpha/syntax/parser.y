@@ -89,6 +89,16 @@
       }                                                               \
   }
 
+/* Handle function symbol errors     */
+/* `type_of_symbol` : `SearchResult` */
+/* `usage_info` : string for the possible error message */
+#define S_TABLE_CHECK_FUNCTION_ERRORS(type_of_symbol, usage_info)     \
+  {                                                                   \
+    if (type_of_symbol == SearchResult::UNMUTABLE) {                  \
+      std::cerr << "error: cannot perform " << usage_info             \
+                << " with a function" << std::endl;                   \
+    }                                                                 \
+  }
 
 }
 
