@@ -82,9 +82,11 @@
         symbol_table.add_variable(name);                              \
         lvalue = SearchResult::MUTABLE;                               \
                                                                       \
-      } else {                                                        \
+      } else (lvalue == SearchResult::NOT_FOUND){                     \
                                                                       \
-        assert(0);                                                    \
+        std::cerr << "error accessing a variable or function "        \
+                  << "with name \"" << name << "\" that is not "      \
+                  << "visible" << std::endl;                          \
                                                                       \
       }                                                               \
   }
