@@ -73,7 +73,9 @@ bool Table::can_add_function(const std::string& name) const {
 }
 
 void Table::start_function() {
-  ;  // FIXME
+  static unsigned int counter = 0;
+
+  this->start_function("$anonymous$" + std::to_string(counter++));
 }
 
 void Table::start_function(const std::string& name) {
