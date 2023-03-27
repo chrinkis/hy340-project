@@ -33,8 +33,22 @@ Table::Pair Table::pairForFunction(const std::string& name) {
   ;  // FIXME
 }
 
-Table::Table(const std::function<Symbol::Line()>& get_current_line) {
-  ;  // FIXME
+Table::Table(const std::function<Symbol::Line()>& get_current_line)
+    : get_current_line(get_current_line), current_scope(0) {
+  this->max_scope.push(this->current_scope);
+
+  for (const char* lib_func_name : LIBRARY_FUNCTIONS) {
+    Key key(lib_func_name, 0);
+    Entry entry(
+        new Function(lib_func_name, 0, 0, Symbol::Type::LIBRARY_FUNCTION));
+
+    this->symbol_map.insert(Pair(key, entry));
+  }
+
+  assert(this->current_scope == 0);
+  assert(this->max_scope.top() == this->current_scope);
+  assert(this->max_scope.size() == 1);
+  assert(this->symbol_map.size() == LIBRARY_FUNCTIONS.size());
 }
 
 void Table::increase_scope() {
