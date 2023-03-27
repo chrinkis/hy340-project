@@ -25,6 +25,7 @@
 
 %code {
     #include <iostream>
+    #include <cassert>
 
     #include <alpha/lex/scanner.h>
     #include <alpha/symbol/table.h>
@@ -64,6 +65,22 @@
                   << "with name \"" << name << "\"" << std::endl;     \
       }                                                               \
   }
+
+/* none (for current visible scope) */
+#define S_TABLE_SEARCH_AND_ADD_VAR(name, lvalue)                      \
+  {                                                                   \
+    lvalue = symbol_table.search_for_visible_symbol(name);            \
+                                                                      \
+    if ((lvalue == SearchResult::NOT_FOUND)                           \
+      && (symbol_table.can_add_variable(name)) {                      \
+                                                                      \
+        symbol_table.add_variable(name);                              \
+        lvalue = SearchResult::MUTABLE;                               \
+      } else {                                                        \
+        assert(0);                                                    \
+      }                                                               \
+  }
+
 
 }
 
