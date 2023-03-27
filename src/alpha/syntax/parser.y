@@ -54,6 +54,17 @@
       }                                                               \
   }
 
+/* global */
+#define S_TABLE_SEARCH_GLOBAL_VAR(name, lvalue)                       \
+  {                                                                   \
+    lvalue = symbol_table.search_for_visible_global_symbol(name);     \
+                                                                      \
+    if ((lvalue == SearchResult::NOT_FOUND) {                         \
+        std::cerr << "error finding global variable or function "     \
+                  << "with name \"" << name << "\"" << std::endl;     \
+      }                                                               \
+  }
+
 }
 
 /* The grammar expects 1 shift/reduce conflict (ifstmt) */
