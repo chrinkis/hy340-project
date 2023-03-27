@@ -169,6 +169,7 @@
 %type <SearchResult> lvalue
 %type <SearchResult> member
 %type <SearchResult> assignexpr
+%type <SearchResult> primary
 
 /* %locations */
 
@@ -244,11 +245,21 @@ assignexpr  :   lvalue ASSIGN expr { S_TABLE_CHECK_FUNCTION_ERRORS($1, "assignme
                                    }
             ;
 
-primary     :   lvalue                                     { print_derivation("primary", "lvalue"); }
-            |   call                                       { print_derivation("primary", "call"); }
-            |   objectdef                                  { print_derivation("primary", "objectdef"); }
-            |   LEFT_PARENTHESIS funcdef RIGHT_PARENTHESIS { print_derivation("primary", "( funcdef )"); }
-            |   const                                      { print_derivation("primary", "const"); }
+primary     :   lvalue                                     { S_TABLE_FURTHER_SYMBOL_CHECK_NEEDED($1);
+                                                             print_derivation("primary", "lvalue");
+                                                           }
+            |   call                                       { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                             print_derivation("primary", "call");
+                                                           }
+            |   objectdef                                  { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                             print_derivation("primary", "objectdef");
+                                                           }
+            |   LEFT_PARENTHESIS funcdef RIGHT_PARENTHESIS { S_TABLE_FURTHER_SYMBOL_CHECK_NEEDED(SearchResult::UNMUTABLE);
+                                                             print_derivation("primary", "( funcdef )");
+                                                           }
+            |   const                                      { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                             print_derivation("primary", "const");
+                                                           }
             ;
 
 lvalue      :   IDENTIFIER              { S_TABLE_SEARCH_AND_ADD_VAR($1,$$);
