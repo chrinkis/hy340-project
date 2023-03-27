@@ -204,7 +204,20 @@ bool Table::can_add_argument(const std::string& name) const {
 }
 
 void Table::add_argument(const std::string& name) {
-  ;  // FIXME
+  assert(this->can_add_argument(name));
+  assert(this->current_function);
+
+  Pair pair = pairForVariable(name, Symbol::Type::FORMAL);
+
+  this->symbol_map.insert(pair);
+
+  Function* current_function =
+      dynamic_cast<Function*>(this->current_function.get());
+
+  assert(current_function);
+  assert(current_function->get_type() == Symbol::Type::USER_FUNCTION);
+
+  current_function->add_arg(pair.second.get_symbol());
 }
 
 void Table::add_last_argument(const std::string& name) {
