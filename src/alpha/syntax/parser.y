@@ -49,7 +49,7 @@
         symbol_table.add_variable(name);                              \
         lvalue = SearchResult::MUTABLE;                               \
                                                                       \
-      } else {                                                        \
+      } else (lvalue == SearchResult::NOT_FOUND){                     \
                                                                       \
         std::cerr << "error with local variable \"" << name           \
                   << "\" shadowing a library function" << std::endl;  \
