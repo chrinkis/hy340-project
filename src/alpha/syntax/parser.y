@@ -67,16 +67,27 @@
   }
 
 /* global */
-#define S_TABLE_SEARCH_GLOBAL_VAR(name, lvalue)                       \
-  {                                                                   \
-    lvalue = symbol_table.search_for_visible_global_symbol(name);     \
-                                                                      \
-    if ((lvalue == SearchResult::NOT_FOUND) {                         \
-                                                                      \
-        std::cerr << "error finding global variable or function "     \
-                  << "with name \"" << name << "\"" << std::endl;     \
-                                                                      \
-      }                                                               \
+#define S_TABLE_SEARCH_GLOBAL_VAR(name, lvalue)                        \
+  {                                                                    \
+    lvalue = symbol_table.search_for_visible_gloval_symbol(name);      \
+                                                                       \
+    switch (lvalue) {                                                  \
+      case SearchResult::MUTABLE:                                      \
+        break;                                                         \
+                                                                       \
+      case SearchResult::UNMUTABLE:                                    \
+        break;                                                         \
+                                                                       \
+      case SearchResult::NOT_FOUND:                                    \
+                                                                       \
+        std::cerr << "error finding global variable or function "      \
+                  << "with name \"" << name << "\"" << std::endl;      \
+                                                                       \
+        break;                                                         \
+                                                                       \
+      default:                                                         \
+        assert(0);                                                     \
+    }                                                                  \
   }
 
 /* none (for current visible scope) */
