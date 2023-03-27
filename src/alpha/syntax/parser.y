@@ -168,6 +168,7 @@
 
 %type <SearchResult> lvalue
 %type <SearchResult> member
+%type <SearchResult> assignexpr
 
 /* %locations */
 
@@ -237,7 +238,10 @@ term        :   LEFT_PARENTHESIS expr RIGHT_PARENTHESIS { print_derivation("term
             |   primary                                 { print_derivation("term", "primary"); }
             ;
 
-assignexpr  :   lvalue ASSIGN expr { print_derivation("assignexpr", "lvalue = expr"); }
+assignexpr  :   lvalue ASSIGN expr { S_TABLE_CHECK_FUNCTION_ERRORS($1, "assignment to");
+                                     S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                     print_derivation("assignexpr", "lvalue = expr");
+                                   }
             ;
 
 primary     :   lvalue                                     { print_derivation("primary", "lvalue"); }
