@@ -170,6 +170,7 @@
 %type <SearchResult> member
 %type <SearchResult> assignexpr
 %type <SearchResult> primary
+%type <SearchResult> term
 
 /* %locations */
 
@@ -229,14 +230,36 @@ expr        :   assignexpr               { print_derivation("expr", "assignexpr"
             |   term                     { print_derivation("expr", "term"); }
             ;
 
-term        :   LEFT_PARENTHESIS expr RIGHT_PARENTHESIS { print_derivation("term", "( expr )"); }
-            |   MINUS expr                 %prec UMINUS { print_derivation("term", "- expr"); }
-            |   NOT expr                                { print_derivation("term", "NOT expr"); }
-            |   PLUS_PLUS lvalue                        { print_derivation("term", "++ lvalue"); }
-            |   lvalue PLUS_PLUS                        { print_derivation("term", "lvalue ++"); }
-            |   MINUS_MINUS lvalue                      { print_derivation("term", "-- lvalue"); }
-            |   lvalue MINUS_MINUS                      { print_derivation("term", "lvalue --"); }
-            |   primary                                 { print_derivation("term", "primary"); }
+term        :   LEFT_PARENTHESIS expr RIGHT_PARENTHESIS { S_TABLE_FURTHER_SYMBOL_CHECK_NEEDED($2);
+                                                          print_derivation("term", "( expr )");
+                                                        }
+            |   MINUS expr                 %prec UMINUS { S_TABLE_CHECK_FUNCTION_ERRORS($2, "unary \"-\" with");
+                                                          S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                          print_derivation("term", "- expr");
+                                                        }
+            |   NOT expr                                { S_TABLE_CHECK_FUNCTION_ERRORS($2, "\"NOT\" with");
+                                                          S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                          print_derivation("term", "NOT expr");
+                                                        }
+            |   PLUS_PLUS lvalue                        { S_TABLE_CHECK_FUNCTION_ERRORS($2, "\"++\" with");
+                                                          S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                          print_derivation("term", "++ lvalue");
+                                                        }
+            |   lvalue PLUS_PLUS                        { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"++\" with");
+                                                          S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                          print_derivation("term", "lvalue ++");
+                                                        }
+            |   MINUS_MINUS lvalue                      { S_TABLE_CHECK_FUNCTION_ERRORS($2, "\"--\" with");
+                                                          S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                          print_derivation("term", "-- lvalue");
+                                                        }
+            |   lvalue MINUS_MINUS                      { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"--\" with");
+                                                          S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED;
+                                                          print_derivation("term", "lvalue --");
+                                                        }
+            |   primary                                 { S_TABLE_FURTHER_SYMBOL_CHECK_NEEDED($1);
+                                                          print_derivation("term", "primary");
+                                                        }
             ;
 
 assignexpr  :   lvalue ASSIGN expr { S_TABLE_CHECK_FUNCTION_ERRORS($1, "assignment to");
