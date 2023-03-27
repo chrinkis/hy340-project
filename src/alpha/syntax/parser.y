@@ -96,7 +96,7 @@
   {                                                                   \
     if (type_of_symbol == SearchResult::UNMUTABLE) {                  \
       std::cerr << "error: cannot perform " << usage_info             \
-                << " with a function" << std::endl;                   \
+                << " a function" << std::endl;                        \
     }                                                                 \
   }
 
