@@ -15,6 +15,11 @@ add_library(flex_and_bison
 
     # Files Flex and Bison needs
     ${CMAKE_SOURCE_DIR}/src/alpha/token/token.cpp
+
+    # Files Bison needs
+    ${CMAKE_SOURCE_DIR}/src/alpha/symbol/function.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/symbol/table.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/symbol/variable.cpp
 )
 
 # WARNING: all file of of lib `flex_and_bison` have direct
