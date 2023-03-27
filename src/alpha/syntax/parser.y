@@ -91,23 +91,33 @@
   }
 
 /* none (for current visible scope) */
-#define S_TABLE_SEARCH_AND_ADD_VAR(name, lvalue)                      \
-  {                                                                   \
-    lvalue = symbol_table.search_for_visible_symbol(name);            \
-                                                                      \
-    if ((lvalue == SearchResult::NOT_FOUND)                           \
-      && (symbol_table.can_add_variable(name)) {                      \
-                                                                      \
-        symbol_table.add_variable(name);                              \
-        lvalue = SearchResult::MUTABLE;                               \
-                                                                      \
-      } else (lvalue == SearchResult::NOT_FOUND){                     \
-                                                                      \
-        std::cerr << "error accessing a variable or function "        \
-                  << "with name \"" << name << "\" that is not "      \
-                  << "visible" << std::endl;                          \
-                                                                      \
-      }                                                               \
+#define S_TABLE_SEARCH_AND_ADD_VAR(name, lvalue)                       \
+  {                                                                    \
+    lvalue = symbol_table.search_for_visible_symbol(name);             \
+                                                                       \
+    switch (lvalue) {                                                  \
+      case SearchResult::MUTABLE:                                      \
+        break;                                                         \
+                                                                       \
+      case SearchResult::UNMUTABLE:                                    \
+        break;                                                         \
+                                                                       \
+      case SearchResult::NOT_FOUND:                                    \
+                                                                       \
+        if (symbol_table.can_add_variable(name)) {                     \
+          symbol_table.add_variable(name);                             \
+          lvalue = SearchResult::MUTABLE;                              \
+        } else {                                                       \
+          std::cerr << "error accessing a variable or function "       \
+                    << "with name \"" << name << "\" that is not "     \
+                    << "visible" << std::endl;                         \
+        }                                                              \
+                                                                       \
+        break;                                                         \
+                                                                       \
+      default:                                                         \
+        assert(0);                                                     \
+    }                                                                  \
   }
 
 /* Handle function symbol errors     */
