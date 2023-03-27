@@ -49,9 +49,12 @@
                                                                       \
         symbol_table.add_variable(name);                              \
         lvalue = SearchResult::MUTABLE;                               \
+                                                                      \
       } else {                                                        \
+                                                                      \
         std::cerr << "error with local variable \"" << name           \
                   << "\" shadowing a library function" << std::endl;  \
+                                                                      \
       }                                                               \
   }
 
@@ -61,8 +64,10 @@
     lvalue = symbol_table.search_for_visible_global_symbol(name);     \
                                                                       \
     if ((lvalue == SearchResult::NOT_FOUND) {                         \
+                                                                      \
         std::cerr << "error finding global variable or function "     \
                   << "with name \"" << name << "\"" << std::endl;     \
+                                                                      \
       }                                                               \
   }
 
@@ -76,8 +81,11 @@
                                                                       \
         symbol_table.add_variable(name);                              \
         lvalue = SearchResult::MUTABLE;                               \
+                                                                      \
       } else {                                                        \
+                                                                      \
         assert(0);                                                    \
+                                                                      \
       }                                                               \
   }
 
