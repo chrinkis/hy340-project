@@ -33,7 +33,7 @@ class Scanner : public yyFlexLexer {
   virtual ~Scanner(){};
 
  public:
-  virtual int yylex(
+  virtual int alpha_yylex(
       alpha::syntax::Parser::semantic_type* const lval,
       alpha::syntax::Parser::location_type* location);  // implemented by Flex
 

@@ -211,7 +211,7 @@ int main(int argc, char** argv) {
   Location location;
 
   do {
-    scanner.yylex(&lval, &location);
+    scanner.alpha_yylex(&lval, &location);
 
     switch (scanner.get_status()) {
       case Status::NOT_CLOSED_STRING:

@@ -11,7 +11,7 @@
 #include <cassert>
 
 #undef  YY_DECL
-#define YY_DECL                 int alpha::lex::Scanner::yylex( \
+#define YY_DECL                 int alpha::lex::Scanner::alpha_yylex( \
                                     alpha::syntax::Parser::semantic_type* const lval, \
                                     alpha::syntax::Parser::location_type* location)
 
