@@ -163,6 +163,9 @@ void print_alpha_token(const Token& token, std::ostream& output_stream) {
     case Category::DOUBLE_DOT:
       output_stream << "PUNCTUATION\tDOUBLE_DOT\t<-enumerated";
       break;
+    case Category::END_OF_FILE:
+      output_stream << "END_OF_FILE";
+      break;
     default:
       fprintf(stderr, "Unkown token category!");
       break;
@@ -229,7 +232,8 @@ int main(int argc, char** argv) {
       default:;
     }
 
-  } while (scanner.get_status() == Status::SUCCESS);
+  } while (scanner.get_status() == Status::SUCCESS &&
+           scanner.get_token().get_category() != Category::END_OF_FILE);
 
   /* Close open file streams (if any) */
   if (output_file_stream.is_open()) {
