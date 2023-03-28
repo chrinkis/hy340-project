@@ -120,7 +120,7 @@ void Table::increase_scope() {
 void Table::decrease_scope() {
   Symbol::Scope prev = this->current_scope;
 
-  for (auto pair : this->symbol_map) {  // TODO slow peformance
+  for (auto& pair : this->symbol_map) {  // TODO slow peformance
     if (pair.second.get_symbol()->get_scope() == this->current_scope) {
       pair.second.deactivate();
     }
