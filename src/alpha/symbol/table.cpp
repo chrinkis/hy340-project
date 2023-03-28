@@ -276,6 +276,8 @@ void Table::start_function(const std::string& name) {
   this->current_function = pair.second.get_symbol();
   this->current_scope++;
   this->max_scope.push(current_scope);
+
+  assert(this->current_function);
 }
 
 void Table::end_function() {
@@ -324,11 +326,9 @@ void Table::add_argument(const std::string& name) {
   current_function->add_arg(pair.second.get_symbol());
 }
 
-void Table::add_last_argument(const std::string& name) {
-  assert(this->can_add_argument(name));
+void Table::end_argument_list() {
   assert(this->current_function);
 
-  this->add_argument(name);
   this->current_scope--;
   this->current_function = Symbol::SharedPtr();
 }

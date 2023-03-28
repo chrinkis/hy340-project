@@ -186,14 +186,9 @@
     }                                                    \
   }
 
-#define S_TABLE_ADD_ARG_LAST(name)                       \
+#define S_TABLE_END_LIST_ARG()                           \
   {                                                      \
-    if (symbol_table.can_add_argument(name)) {           \
-      symbol_table.add_last_argument(name);              \
-    } else {                                             \
-      std::cerr << "error inserting argument \"" << name \
-                << "\" in Symbol Table" << std::endl;    \
-    }                                                    \
+      symbol_table.end_argument_list();                  \
   }
 
 }
@@ -514,14 +509,14 @@ block_opt   :   %empty         { print_derivation("block_opt", "empty"); }
             |   stmt block_opt { print_derivation("block_opt", "stmt block_opt"); }
             ;
 
-funcdef     :   FUNCTION { S_TABLE_FUNC_START_ANONYMOYS; } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS block      { S_TABLE_FUNC_END;
-                                                                                                                  print_derivation("funcdef", 
-                                                                                                                  "FUNCTION ( idlist ) block"); 
-                                                                                                                }
-            |   FUNCTION IDENTIFIER { S_TABLE_FUNC_START($2); } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS block { S_TABLE_FUNC_END;
-                                                                                                                  print_derivation("funcdef", 
-                                                                                                                  "FUNCTION IDENTIFIER ( idlist ) block");
-                                                                                                                }
+funcdef     :   FUNCTION { S_TABLE_FUNC_START_ANONYMOYS; } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS {S_TABLE_END_LIST_ARG();} block      { S_TABLE_FUNC_END;
+                                                                                                                                            print_derivation("funcdef", 
+                                                                                                                                            "FUNCTION ( idlist ) block"); 
+                                                                                                                                          }
+            |   FUNCTION IDENTIFIER { S_TABLE_FUNC_START($2); } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS {S_TABLE_END_LIST_ARG();} block { S_TABLE_FUNC_END;
+                                                                                                                                            print_derivation("funcdef", 
+                                                                                                                                            "FUNCTION IDENTIFIER ( idlist ) block");
+                                                                                                                                          }
             ;
 
 const       :   INTEGER { print_derivation("const", "INTEGER"); }
@@ -533,7 +528,7 @@ const       :   INTEGER { print_derivation("const", "INTEGER"); }
             ;
 
 idlist      :   %empty                                              { print_derivation("idlist", "empty"); }
-            |   IDENTIFIER { S_TABLE_ADD_ARG_LAST($1); } idlist_opt { print_derivation("idlist", "IDENTIFIER idlist_opt"); }
+            |   IDENTIFIER { S_TABLE_ADD_ARG($1); } idlist_opt { print_derivation("idlist", "IDENTIFIER idlist_opt"); }
             ;
 
 idlist_opt  :   %empty                                               { print_derivation("idlist_opt", "empty"); }
