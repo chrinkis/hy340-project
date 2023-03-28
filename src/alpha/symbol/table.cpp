@@ -9,20 +9,26 @@
 #include <unordered_set>
 #include <utility>
 
-static const std::unordered_set<const char*> LIBRARY_FUNCTIONS = {
-    "print",
-    "input",
-    "objectmemberkeys",
-    "objecttotalmembers",
-    "objectcopy",
-    "totalarguments",
-    "argument",
-    "typeof",
-    "strtonum",
-    "sqrt",
-    "cos",
-    "sin",
-};
+#define LIBRARY_FUNCTIONS (GET_LIBRARY_FUNCTIONS())
+
+const std::unordered_set<const char*>& GET_LIBRARY_FUNCTIONS() {
+  static const std::unordered_set<const char*> library_functions = {
+      "print",
+      "input",
+      "objectmemberkeys",
+      "objecttotalmembers",
+      "objectcopy",
+      "totalarguments",
+      "argument",
+      "typeof",
+      "strtonum",
+      "sqrt",
+      "cos",
+      "sin",
+  };
+
+  return library_functions;
+}
 
 using namespace alpha::symbol;
 
