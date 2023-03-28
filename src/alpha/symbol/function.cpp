@@ -6,8 +6,11 @@
 
 using namespace alpha::symbol;
 
-Function::Function(const std::string& name, Scope scope, Line line, Type type)
-    : name(name), scope(scope), line(line), type(type) {
+Function::Function(const std::string& name,
+                   Scope scope,
+                   const Location& location,
+                   Type type)
+    : name(name), scope(scope), location(location), type(type) {
   assert(this->type == Type::LIBRARY_FUNCTION ||
          this->type == Type::USER_FUNCTION);
 }
@@ -20,8 +23,8 @@ Symbol::Scope Function::get_scope() const {
   return this->scope;
 }
 
-Symbol::Line Function::get_line() const {
-  return this->line;
+Symbol::Location Function::get_location() const {
+  return this->location;
 }
 
 Symbol::Type Function::get_type() const {

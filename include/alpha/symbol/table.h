@@ -33,8 +33,12 @@ class Table {
   Map symbol_map;
 
  private:
-  Pair pairForVariable(const std::string& name, Symbol::Type type);
-  Pair pairForFunction(const std::string& name);
+  Pair pairForVariable(const std::string& name,
+                       Symbol::Type type,
+                       const Symbol::Location& location);
+
+  Pair pairForFunction(const std::string& name,
+                       const Symbol::Location& location);
 
  public:
   enum class SearchResult {

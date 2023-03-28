@@ -6,6 +6,7 @@
 #include <cassert>
 #include <iomanip>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <unordered_set>
 #include <utility>
@@ -33,13 +34,14 @@ const std::unordered_set<const char*>& GET_LIBRARY_FUNCTIONS() {
 
 using namespace alpha::symbol;
 
-Table::Pair Table::pairForVariable(const std::string& name, Symbol::Type type) {
+Table::Pair Table::pairForVariable(const std::string& name,
+                                   Symbol::Type type,
+                                   const Symbol::Location& location) {
   assert(type == Symbol::Type::GLOBAL && this->current_scope == 0 ||
          type == Symbol::Type::FORMAL && this->current_scope > 0 ||
          type == Symbol::Type::LOCAL && this->current_scope > 0);
 
-  Entry entry(
-      new Variable(name, this->current_scope, this->get_current_line(), type));
+  Entry entry(new Variable(name, this->current_scope, location, type));
   Key key(entry.get_symbol()->get_name(), entry.get_symbol()->get_scope());
 
   Pair pair(key, entry);
@@ -47,16 +49,25 @@ Table::Pair Table::pairForVariable(const std::string& name, Symbol::Type type) {
   assert(pair.second.get_symbol()->get_name() == name);
   assert(pair.second.get_symbol()->get_type() == type);
   assert(pair.second.get_symbol()->get_scope() == this->current_scope);
-  assert(pair.second.get_symbol()->get_line() == this->get_current_line());
   assert(pair.first.get_symbol_name() == pair.second.get_symbol()->get_name());
   assert(pair.first.get_symbol_scope() ==
          pair.second.get_symbol()->get_scope());
 
+  assert(pair.second.get_symbol()->get_location().begin.line ==
+         location.begin.line);
+  assert(pair.second.get_symbol()->get_location().begin.column ==
+         location.begin.column);
+  assert(pair.second.get_symbol()->get_location().end.line ==
+         location.end.line);
+  assert(pair.second.get_symbol()->get_location().end.column ==
+         location.end.column);
+
   return pair;
 }
 
-Table::Pair Table::pairForFunction(const std::string& name) {
-  Entry entry(new Function(name, this->current_scope, this->get_current_line(),
+Table::Pair Table::pairForFunction(const std::string& name,
+                                   const Symbol::Location& location) {
+  Entry entry(new Function(name, this->current_scope, location,
                            Symbol::Type::USER_FUNCTION));
   Key key(entry.get_symbol()->get_name(), entry.get_symbol()->get_scope());
 
@@ -65,22 +76,29 @@ Table::Pair Table::pairForFunction(const std::string& name) {
   assert(pair.second.get_symbol()->get_name() == name);
   assert(pair.second.get_symbol()->get_type() == Symbol::Type::USER_FUNCTION);
   assert(pair.second.get_symbol()->get_scope() == this->current_scope);
-  assert(pair.second.get_symbol()->get_line() == this->get_current_line());
   assert(pair.first.get_symbol_name() == pair.second.get_symbol()->get_name());
   assert(pair.first.get_symbol_scope() ==
          pair.second.get_symbol()->get_scope());
 
+  assert(pair.second.get_symbol()->get_location().begin.line ==
+         location.begin.line);
+  assert(pair.second.get_symbol()->get_location().begin.column ==
+         location.begin.column);
+  assert(pair.second.get_symbol()->get_location().end.line ==
+         location.end.line);
+  assert(pair.second.get_symbol()->get_location().end.column ==
+         location.end.column);
+
   return pair;
 }
 
-Table::Table(const std::function<Symbol::Line()>& get_current_line)
-    : get_current_line(get_current_line), current_scope(0) {
+Table::Table() : current_scope(0) {
   this->max_scope.push(this->current_scope);
 
   for (const char* lib_func_name : LIBRARY_FUNCTIONS) {
     Key key(lib_func_name, 0);
-    Entry entry(
-        new Function(lib_func_name, 0, 0, Symbol::Type::LIBRARY_FUNCTION));
+    Entry entry(new Function(lib_func_name, 0, Symbol::Location(),
+                             Symbol::Type::LIBRARY_FUNCTION));
 
     this->symbol_map.insert(Pair(key, entry));
   }
@@ -210,13 +228,16 @@ bool Table::can_add_variable(const std::string& name) const {
   return true;
 }
 
-void Table::add_variable(const std::string& name) {
+void Table::add_variable(const std::string& name,
+                         const Symbol::Location& location) {
   assert(this->can_add_variable(name));
 
   if (this->current_scope == 0) {  // global scope
-    this->symbol_map.insert(pairForVariable(name, Symbol::Type::GLOBAL));
+    this->symbol_map.insert(
+        pairForVariable(name, Symbol::Type::GLOBAL, location));
   } else if (this->current_scope > 0) {  // local scope
-    this->symbol_map.insert(pairForVariable(name, Symbol::Type::LOCAL));
+    this->symbol_map.insert(
+        pairForVariable(name, Symbol::Type::LOCAL, location));
   } else {
     assert(0);  // No man's land ;)
   }
@@ -239,13 +260,16 @@ bool Table::can_add_local_variable(const std::string& name) const {
   return true;
 }
 
-void Table::add_local_variable(const std::string& name) {
+void Table::add_local_variable(const std::string& name,
+                               const Symbol::Location& location) {
   assert(this->can_add_local_variable(name));
 
   if (this->current_scope == 0) {  // global scope
-    this->symbol_map.insert(pairForVariable(name, Symbol::Type::GLOBAL));
+    this->symbol_map.insert(
+        pairForVariable(name, Symbol::Type::GLOBAL, location));
   } else if (this->current_scope > 0) {  // local scope
-    this->symbol_map.insert(pairForVariable(name, Symbol::Type::LOCAL));
+    this->symbol_map.insert(
+        pairForVariable(name, Symbol::Type::LOCAL, location));
   } else {
     assert(0);  // No man's land ;)
   }
@@ -268,17 +292,18 @@ bool Table::can_add_function(const std::string& name) const {
   return true;
 }
 
-void Table::start_function() {
+void Table::start_function(const Symbol::Location& location) {
   static unsigned int counter = 0;
 
-  this->start_function("$anonymous$" + std::to_string(counter++));
+  this->start_function("$anonymous$" + std::to_string(counter++), location);
 }
 
-void Table::start_function(const std::string& name) {
+void Table::start_function(const std::string& name,
+                           const Symbol::Location& location) {
   assert(this->can_add_function(name));
   assert(!this->current_function);
 
-  Pair pair = pairForFunction(name);
+  Pair pair = pairForFunction(name, location);
 
   this->symbol_map.insert(pair);
   this->current_function = pair.second.get_symbol();
@@ -317,11 +342,12 @@ bool Table::can_add_argument(const std::string& name) const {
   return true;
 }
 
-void Table::add_argument(const std::string& name) {
+void Table::add_argument(const std::string& name,
+                         const Symbol::Location& location) {
   assert(this->can_add_argument(name));
   assert(this->current_function);
 
-  Pair pair = pairForVariable(name, Symbol::Type::FORMAL);
+  Pair pair = pairForVariable(name, Symbol::Type::FORMAL, location);
 
   this->symbol_map.insert(pair);
 
@@ -380,7 +406,9 @@ std::ostream& operator<<(std::ostream& os, const Table& st) {
     }
 
     os << ident();
-    os << "(line " + std::to_string(symbol->get_line()) + ')';
+    std::stringstream location;
+    location << "(line " << symbol->get_location().begin.line << ')';
+    os << location.str();
 
     os << ident();
     os << "(scope " + std::to_string(symbol->get_scope()) + ')';
