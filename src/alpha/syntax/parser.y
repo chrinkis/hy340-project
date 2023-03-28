@@ -168,7 +168,7 @@
                 << "error inserting function \"" << name \
                 << "\" in Symbol Table" << std::endl     \
                 << RESET_COLOR;                          \
-      S_TABLE_FUNC_START_ANONYMOYS                       \
+      S_TABLE_FUNC_START_ANONYMOYS(location)             \
     }                                                    \
   }
 
@@ -448,7 +448,7 @@ lvalue      :   IDENTIFIER              { S_TABLE_SEARCH_AND_ADD_VAR($1,$$,@1);
             |   LOCAL IDENTIFIER        { S_TABLE_SEARCH_AND_ADD_LOCAL_VAR($2,$$,@2);
                                           print_derivation("lvalue", "LOCAL IDENTIFIER");
                                         }
-            |   DOUBLE_COLON IDENTIFIER { S_TABLE_SEARCH_GLOBAL_VAR($2,$$,@2);
+            |   DOUBLE_COLON IDENTIFIER { S_TABLE_SEARCH_GLOBAL_VAR($2,$$);
                                           print_derivation("lvalue", ":: IDENTIFIER");
                                         }
             |   member                  { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
