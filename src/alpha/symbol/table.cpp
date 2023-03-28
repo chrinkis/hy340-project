@@ -4,6 +4,7 @@
 #include <alpha/symbol/variable.h>
 
 #include <cassert>
+#include <iomanip>
 #include <iostream>
 #include <string>
 #include <unordered_set>
@@ -344,7 +345,9 @@ namespace alpha {
 namespace symbol {
 
 std::ostream& operator<<(std::ostream& os, const Table& st) {
-  const char* const IDENTATION = "\t";
+  auto ident = [](int w = 26) { return std::setw(w); };
+
+  os << std::left;
 
   os << "\x1B[42m";
   os << "\x1B[30m";
@@ -352,39 +355,35 @@ std::ostream& operator<<(std::ostream& os, const Table& st) {
   for (auto pair : st.symbol_map) {
     Symbol::SharedPtr symbol = pair.second.get_symbol();
 
-    os << '\"' << symbol->get_name() << '\"';
+    os << ident();
+    os << "\"" + symbol->get_name() + "\"";
 
-    os << IDENTATION;
-
-    os << '[';
+    os << ident();
     switch (symbol->get_type()) {
       case Symbol::Type::GLOBAL:
-        os << "global variable";
+        os << "[global variable]";
         break;
       case Symbol::Type::LOCAL:
-        os << "local variable";
+        os << "[local variable]";
         break;
       case Symbol::Type::FORMAL:
-        os << "formal argument";
+        os << "[formal argument]";
         break;
       case Symbol::Type::USER_FUNCTION:
-        os << "user function";
+        os << "[user function]";
         break;
       case Symbol::Type::LIBRARY_FUNCTION:
-        os << "library function";
+        os << "[library function]";
         break;
       default:
         assert(0);
     }
-    os << ']';
 
-    os << IDENTATION;
+    os << ident();
+    os << "(line " + std::to_string(symbol->get_line()) + ')';
 
-    os << "(line " << symbol->get_line() << ')';
-
-    os << IDENTATION;
-
-    os << "(scope " << symbol->get_scope() << ')';
+    os << ident();
+    os << "(scope " + std::to_string(symbol->get_scope()) + ')';
 
     os << std::endl;
   }
