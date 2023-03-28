@@ -63,7 +63,7 @@ static unsigned int next_seq_number = 0;
 %option stack
 
 /* Flex macros */
-newline         "\n"
+newlines        [\n]+
 delimeter       [ \t]
 whitespaces     {delimeter}+
 letter          [a-zA-Z]
@@ -83,7 +83,7 @@ real            {integer}\.{integer}
                             unsigned int lineno;
                         } custom = {"default", 0};
 
-<STRING_S>{newline}     { UPDATE_LOCATION_LINES; 
+<STRING_S>{newlines}    { UPDATE_LOCATION_LINES; 
                           custom.contents += yytext;
                         }
 <STRING_S>[^\\\"\n]*    custom.contents += yytext;        /* read until escape char or end of string char */
@@ -112,7 +112,7 @@ real            {integer}\.{integer}
                           BEGIN(STRING_S);                /* String literal begins */
                         }
 
-{newline}               UPDATE_LOCATION_LINES;
+{newlines}              UPDATE_LOCATION_LINES;
 {whitespaces}           /* ignore whitespaces */
 {real}                  lval->emplace<float>(std::stof(yytext)); RETURN_TOKEN(category::FLOAT);
 "="                     RETURN_TOKEN(category::ASSIGN)
@@ -175,7 +175,7 @@ real            {integer}\.{integer}
                           ;
                         }
 <COMMENT_S>.            /* ignore the rest of the characters */
-<COMMENT_S>{newline}    UPDATE_LOCATION_LINES;
+<COMMENT_S>{newlines}   UPDATE_LOCATION_LINES;
 <COMMENT_S><<EOF>>      RAISE_ERROR(NOT_CLOSED_COMMENT);
 
 <<EOF>>                 RETURN_TOKEN(category::END_OF_FILE);
