@@ -10,18 +10,21 @@ namespace symbol {
 class Variable : public Symbol {
   const std::string name;
   const Scope scope;
-  const Line line;
+  const Location location;
   const Type type;
 
  public:
-  Variable(const std::string& name, Scope scope, Line line, Type type);
+  Variable(const std::string& name,
+           Scope scope,
+           const Location& location,
+           Type type);
 
  public:
   std::string get_name() const override;
 
   Scope get_scope() const override;
 
-  Line get_line() const override;
+  Location get_location() const override;
 
   Type get_type() const override;
 };
