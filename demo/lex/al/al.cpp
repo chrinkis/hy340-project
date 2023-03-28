@@ -1,5 +1,6 @@
 #include <alpha/lex/scanner.h>
 #include <alpha/lex/status.h>
+#include <alpha/syntax/location.h>
 #include <alpha/token/token.h>
 
 #include <assert.h>
@@ -11,6 +12,7 @@ using Scanner = lex::Scanner;
 using Token = token::Token;
 using Category = Token::Category;
 using Status = lex::status::Status;
+using Location = syntax::location;
 
 void print_alpha_token(const Token& token, std::ostream& output_stream) {
   assert(output_stream);
@@ -203,9 +205,10 @@ int main(int argc, char** argv) {
   Scanner scanner(*input_stream);
 
   alpha::syntax::Parser::semantic_type lval;
+  Location location;
 
   do {
-    scanner.yylex(&lval, nullptr);
+    scanner.yylex(&lval, &location);
 
     switch (scanner.get_status()) {
       case Status::NOT_CLOSED_STRING:
