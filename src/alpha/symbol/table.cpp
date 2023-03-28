@@ -419,6 +419,9 @@ std::ostream& operator<<(std::ostream& os, const Table& st) {
     os << ident();
     os << "(scope " + std::to_string(symbol->get_scope()) + ')';
 
+    os << ident();
+    os << "{active " + std::to_string(pair.second.get_is_active()) + '}';
+
     os << std::endl;
   }
 
