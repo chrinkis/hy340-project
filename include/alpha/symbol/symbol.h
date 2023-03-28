@@ -1,5 +1,7 @@
 #pragma once
 
+#include <alpha/syntax/location.h>
+
 #include <memory>
 #include <string>
 
@@ -9,7 +11,7 @@ namespace symbol {
 class Symbol {
  public:
   using Scope = unsigned int;
-  using Line = unsigned int;
+  using Location = syntax::location;
 
   using SharedPtr = std::shared_ptr<Symbol>;
 
@@ -26,7 +28,7 @@ class Symbol {
 
   virtual Scope get_scope() const = 0;
 
-  virtual Line get_line() const = 0;
+  virtual Location get_location() const = 0;
 
   virtual Type get_type() const = 0;
 };

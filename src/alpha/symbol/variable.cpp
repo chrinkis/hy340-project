@@ -6,8 +6,11 @@
 
 using namespace alpha::symbol;
 
-Variable::Variable(const std::string& name, Scope scope, Line line, Type type)
-    : name(name), scope(scope), line(line), type(type) {
+Variable::Variable(const std::string& name,
+                   Scope scope,
+                   const Location& location,
+                   Type type)
+    : name(name), scope(scope), location(location), type(type) {
   assert(this->type == Type::GLOBAL || this->type == Type::FORMAL ||
          this->type == Type::LOCAL);
 }
@@ -20,8 +23,8 @@ Symbol::Scope Variable::get_scope() const {
   return this->scope;
 }
 
-Symbol::Line Variable::get_line() const {
-  return this->line;
+Symbol::Location Variable::get_location() const {
+  return this->location;
 }
 
 Symbol::Type Variable::get_type() const {
