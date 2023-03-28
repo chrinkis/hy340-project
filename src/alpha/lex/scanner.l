@@ -15,6 +15,8 @@
                                     alpha::syntax::Parser::semantic_type* const lval, \
                                     alpha::syntax::Parser::location_type* location)
 
+#define YY_USER_ACTION          { location->step(); location->columns(yyleng); }
+
 #define SUCCESS                 status::SUCCESS
 #define NOT_CLOSED_STRING       status::NOT_CLOSED_STRING
 #define NOT_CLOSED_COMMENT      status::NOT_CLOSED_COMMENT
