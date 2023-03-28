@@ -33,7 +33,7 @@
     #include <alpha/symbol/table.h>
 
     #undef yylex
-    #define yylex scanner.yylex
+    #define yylex scanner.alpha_yylex
 
     static void print_derivation(const std::string&, const std::string&);
 }
