@@ -15,6 +15,9 @@
                                     alpha::syntax::Parser::semantic_type* const lval, \
                                     alpha::syntax::Parser::location_type* location)
 
+#define YY_USER_ACTION          { location->step(); location->columns(yyleng); }
+#define UPDATE_LOCATION_LINES   { location->lines(); }
+
 #define SUCCESS                 status::SUCCESS
 #define NOT_CLOSED_STRING       status::NOT_CLOSED_STRING
 #define NOT_CLOSED_COMMENT      status::NOT_CLOSED_COMMENT
@@ -60,7 +63,8 @@ static unsigned int next_seq_number = 0;
 %option stack
 
 /* Flex macros */
-delimeter       [ \t\n]
+newline         "\n"
+delimeter       [ \t]
 whitespaces     {delimeter}+
 letter          [a-zA-Z]
 digit           [0-9]
@@ -79,7 +83,10 @@ real            {integer}\.{integer}
                             unsigned int lineno;
                         } custom = {"default", 0};
 
-<STRING_S>[^\\\"]*      custom.contents += yytext;        /* read until escape char or end of string char */
+<STRING_S>{newline}     { UPDATE_LOCATION_LINES; 
+                          custom.contents += yytext;
+                        }
+<STRING_S>[^\\\"\n]*    custom.contents += yytext;        /* read until escape char or end of string char */
 <STRING_S>\"            { BEGIN(INITIAL);
                           lval->emplace<std::string>(custom.contents);
                           RETURN_CUSTOM_TOKEN(custom.lineno, custom.contents, category::STRING);
@@ -105,6 +112,7 @@ real            {integer}\.{integer}
                           BEGIN(STRING_S);                /* String literal begins */
                         }
 
+{newline}               UPDATE_LOCATION_LINES;
 {whitespaces}           /* ignore whitespaces */
 {real}                  lval->emplace<float>(std::stof(yytext)); RETURN_TOKEN(category::FLOAT);
 "="                     RETURN_TOKEN(category::ASSIGN)
@@ -166,7 +174,8 @@ real            {integer}\.{integer}
 
                           ;
                         }
-<COMMENT_S>.|"\n"       /* ignore the rest of the characters */
+<COMMENT_S>.            /* ignore the rest of the characters */
+<COMMENT_S>{newline}    UPDATE_LOCATION_LINES;
 <COMMENT_S><<EOF>>      RAISE_ERROR(NOT_CLOSED_COMMENT);
 
 <<EOF>>                 RETURN_TOKEN(category::END_OF_FILE);
