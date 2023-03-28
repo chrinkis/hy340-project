@@ -46,7 +46,7 @@
 %code {
 
 /* local */
-#define S_TABLE_SEARCH_AND_ADD_LOCAL_VAR(name, lvalue)                 \
+#define S_TABLE_SEARCH_AND_ADD_LOCAL_VAR(name, lvalue, location)       \
   {                                                                    \
     lvalue = symbol_table.search_for_visible_local_symbol(name);       \
                                                                        \
@@ -60,7 +60,7 @@
       case SearchResult::NOT_FOUND:                                    \
                                                                        \
         if (symbol_table.can_add_local_variable(name)) {               \
-          symbol_table.add_local_variable(name);                       \
+          symbol_table.add_local_variable(name, location);             \
           lvalue = SearchResult::MUTABLE;                              \
         } else {                                                       \
           std::cerr << SET_COLOR_FOR_ERROR                             \
@@ -102,7 +102,7 @@
   }
 
 /* none (for current visible scope) */
-#define S_TABLE_SEARCH_AND_ADD_VAR(name, lvalue)                       \
+#define S_TABLE_SEARCH_AND_ADD_VAR(name, lvalue, location)             \
   {                                                                    \
     lvalue = symbol_table.search_for_visible_symbol(name);             \
                                                                        \
@@ -116,7 +116,7 @@
       case SearchResult::NOT_FOUND:                                    \
                                                                        \
         if (symbol_table.can_add_variable(name)) {                     \
-          symbol_table.add_variable(name);                             \
+          symbol_table.add_variable(name, location);                   \
           lvalue = SearchResult::MUTABLE;                              \
         } else {                                                       \
           std::cerr << SET_COLOR_FOR_ERROR                             \
@@ -159,10 +159,10 @@
 /* Symbol table handles for functions */
 %code {
 
-#define S_TABLE_FUNC_START(name)                         \
+#define S_TABLE_FUNC_START(name, location)               \
   {                                                      \
     if (symbol_table.can_add_function(name)) {           \
-      symbol_table.start_function(name);                 \
+      symbol_table.start_function(name, location);       \
     } else {                                             \
       std::cerr << SET_COLOR_FOR_ERROR                   \
                 << "error inserting function \"" << name \
@@ -172,8 +172,8 @@
     }                                                    \
   }
 
-#define S_TABLE_FUNC_START_ANONYMOYS \
-  { symbol_table.start_function(); }
+#define S_TABLE_FUNC_START_ANONYMOYS(location) \
+  { symbol_table.start_function(location); }
 
 #define S_TABLE_FUNC_END \
   { symbol_table.end_function(); }
@@ -192,10 +192,10 @@
 /* Symbol table handles for formal arguments */
 %code {
 
-#define S_TABLE_ADD_ARG(name)                            \
+#define S_TABLE_ADD_ARG(name, location)                  \
   {                                                      \
     if (symbol_table.can_add_argument(name)) {           \
-      symbol_table.add_argument(name);                   \
+      symbol_table.add_argument(name, location);         \
     } else {                                             \
       std::cerr << SET_COLOR_FOR_ERROR                   \
                 << "error inserting argument \"" << name \
