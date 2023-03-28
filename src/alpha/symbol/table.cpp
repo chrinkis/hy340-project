@@ -13,8 +13,8 @@
 
 #define LIBRARY_FUNCTIONS (GET_LIBRARY_FUNCTIONS())
 
-const std::unordered_set<const char*>& GET_LIBRARY_FUNCTIONS() {
-  static const std::unordered_set<const char*> library_functions = {
+const std::unordered_set<std::string>& GET_LIBRARY_FUNCTIONS() {
+  static const std::unordered_set<std::string> library_functions = {
       "print",
       "input",
       "objectmemberkeys",
@@ -95,7 +95,7 @@ Table::Pair Table::pairForFunction(const std::string& name,
 Table::Table() : current_scope(0) {
   this->max_scope.push(this->current_scope);
 
-  for (const char* lib_func_name : LIBRARY_FUNCTIONS) {
+  for (auto lib_func_name : LIBRARY_FUNCTIONS) {
     Key key(lib_func_name, 0);
     Entry entry(new Function(lib_func_name, 0, Symbol::Location(),
                              Symbol::Type::LIBRARY_FUNCTION));
@@ -156,7 +156,7 @@ Table::SearchResult Table::search_for_visible_symbol(
     }
   }
 
-  assert(LIBRARY_FUNCTIONS.find(name.c_str()) == LIBRARY_FUNCTIONS.cend());
+  assert(LIBRARY_FUNCTIONS.find(name) == LIBRARY_FUNCTIONS.cend());
 
   return SearchResult::NOT_FOUND;
 }
@@ -223,7 +223,7 @@ bool Table::can_add_variable(const std::string& name) const {
     }
   }
 
-  assert(LIBRARY_FUNCTIONS.find(name.c_str()) == LIBRARY_FUNCTIONS.cend());
+  assert(LIBRARY_FUNCTIONS.find(name) == LIBRARY_FUNCTIONS.cend());
 
   return true;
 }
@@ -244,7 +244,7 @@ void Table::add_variable(const std::string& name,
 }
 
 bool Table::can_add_local_variable(const std::string& name) const {
-  if (LIBRARY_FUNCTIONS.find(name.c_str()) != LIBRARY_FUNCTIONS.cend()) {
+  if (LIBRARY_FUNCTIONS.find(name) != LIBRARY_FUNCTIONS.cend()) {
     return false;  // Found library function
   }
 
@@ -276,7 +276,7 @@ void Table::add_local_variable(const std::string& name,
 }
 
 bool Table::can_add_function(const std::string& name) const {
-  if (LIBRARY_FUNCTIONS.find(name.c_str()) != LIBRARY_FUNCTIONS.cend()) {
+  if (LIBRARY_FUNCTIONS.find(name) != LIBRARY_FUNCTIONS.cend()) {
     return false;  // It's a library function
   }
 
@@ -326,7 +326,7 @@ void Table::end_function() {
 bool Table::can_add_argument(const std::string& name) const {
   assert(this->current_function);
 
-  if (LIBRARY_FUNCTIONS.find(name.c_str()) != LIBRARY_FUNCTIONS.cend()) {
+  if (LIBRARY_FUNCTIONS.find(name) != LIBRARY_FUNCTIONS.cend()) {
     return false;  // It's a library function
   }
 
