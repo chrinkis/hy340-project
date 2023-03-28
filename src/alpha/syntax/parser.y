@@ -442,13 +442,13 @@ primary     :   lvalue                                     { S_TABLE_FURTHER_SYM
                                                            }
             ;
 
-lvalue      :   IDENTIFIER              { S_TABLE_SEARCH_AND_ADD_VAR($1,$$);
+lvalue      :   IDENTIFIER              { S_TABLE_SEARCH_AND_ADD_VAR($1,$$,@1);
                                           print_derivation("lvalue", "IDENTIFIER"); 
                                         }
-            |   LOCAL IDENTIFIER        { S_TABLE_SEARCH_AND_ADD_LOCAL_VAR($2,$$);
+            |   LOCAL IDENTIFIER        { S_TABLE_SEARCH_AND_ADD_LOCAL_VAR($2,$$,@2);
                                           print_derivation("lvalue", "LOCAL IDENTIFIER");
                                         }
-            |   DOUBLE_COLON IDENTIFIER { S_TABLE_SEARCH_GLOBAL_VAR($2,$$);
+            |   DOUBLE_COLON IDENTIFIER { S_TABLE_SEARCH_GLOBAL_VAR($2,$$,@2);
                                           print_derivation("lvalue", ":: IDENTIFIER");
                                         }
             |   member                  { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
@@ -527,11 +527,11 @@ block_opt   :   %empty         { print_derivation("block_opt", "empty"); }
             |   stmt block_opt { print_derivation("block_opt", "stmt block_opt"); }
             ;
 
-funcdef     :   FUNCTION { S_TABLE_FUNC_START_ANONYMOYS; } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS {S_TABLE_END_LIST_ARG();} block      { S_TABLE_FUNC_END;
+funcdef     :   FUNCTION { S_TABLE_FUNC_START_ANONYMOYS(@1); } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS {S_TABLE_END_LIST_ARG();} block      { S_TABLE_FUNC_END;
                                                                                                                                             print_derivation("funcdef", 
                                                                                                                                             "FUNCTION ( idlist ) block"); 
                                                                                                                                           }
-            |   FUNCTION IDENTIFIER { S_TABLE_FUNC_START($2); } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS {S_TABLE_END_LIST_ARG();} block { S_TABLE_FUNC_END;
+            |   FUNCTION IDENTIFIER { S_TABLE_FUNC_START($2,@2); } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS {S_TABLE_END_LIST_ARG();} block { S_TABLE_FUNC_END;
                                                                                                                                             print_derivation("funcdef", 
                                                                                                                                             "FUNCTION IDENTIFIER ( idlist ) block");
                                                                                                                                           }
@@ -546,11 +546,11 @@ const       :   INTEGER { print_derivation("const", "INTEGER"); }
             ;
 
 idlist      :   %empty                                              { print_derivation("idlist", "empty"); }
-            |   IDENTIFIER { S_TABLE_ADD_ARG($1); } idlist_opt { print_derivation("idlist", "IDENTIFIER idlist_opt"); }
+            |   IDENTIFIER { S_TABLE_ADD_ARG($1, @1); } idlist_opt { print_derivation("idlist", "IDENTIFIER idlist_opt"); }
             ;
 
 idlist_opt  :   %empty                                               { print_derivation("idlist_opt", "empty"); }
-            |   COMMA IDENTIFIER { S_TABLE_ADD_ARG($2); } idlist_opt { print_derivation("idlist_opt", ", IDENTIFIER idlist"); }
+            |   COMMA IDENTIFIER { S_TABLE_ADD_ARG($2,@2); } idlist_opt { print_derivation("idlist_opt", ", IDENTIFIER idlist"); }
             ;
 
 ifstmt      :   IF LEFT_PARENTHESIS expr RIGHT_PARENTHESIS stmt %expect 1 { print_derivation("ifstmt", "IF ( expr ) stmt"); }
