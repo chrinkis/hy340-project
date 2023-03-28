@@ -149,20 +149,18 @@ Table::SearchResultWithAccess Table::search_for_visible_symbol(
       assert(symbol->second.get_symbol()->get_scope() == scope);
 
       if (symbol->second.get_is_active()) {
-        bool is_accessible = (scope >= this->max_scope.top() || scope == 0);
-
         switch (symbol->second.get_symbol()->get_type()) {
           case Symbol::Type::GLOBAL:
           case Symbol::Type::LOCAL:
           case Symbol::Type::FORMAL:
             return SearchResultWithAccess{
-                .accessible = is_accessible,
+                .accessible = (scope >= this->max_scope.top() || scope == 0),
                 .result = SearchResult::MUTABLE,
             };
           case Symbol::Type::USER_FUNCTION:
           case Symbol::Type::LIBRARY_FUNCTION:
             return SearchResultWithAccess{
-                .accessible = is_accessible,
+                .accessible = true,
                 .result =
                     SearchResult::UNMUTABLE,  // TODO rename to `IMMUTABLE`
             };
