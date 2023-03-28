@@ -545,11 +545,11 @@ const       :   INTEGER { print_derivation("const", "INTEGER"); }
             |   FALSE   { print_derivation("const", "FALSE"); }
             ;
 
-idlist      :   %empty                                              { print_derivation("idlist", "empty"); }
+idlist      :   %empty                                             { print_derivation("idlist", "empty"); }
             |   IDENTIFIER { S_TABLE_ADD_ARG($1, @1); } idlist_opt { print_derivation("idlist", "IDENTIFIER idlist_opt"); }
             ;
 
-idlist_opt  :   %empty                                               { print_derivation("idlist_opt", "empty"); }
+idlist_opt  :   %empty                                                  { print_derivation("idlist_opt", "empty"); }
             |   COMMA IDENTIFIER { S_TABLE_ADD_ARG($2,@2); } idlist_opt { print_derivation("idlist_opt", ", IDENTIFIER idlist"); }
             ;
 
