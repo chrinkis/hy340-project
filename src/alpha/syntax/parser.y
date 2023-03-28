@@ -19,6 +19,7 @@
 }
 
 %parse-param { alpha::lex::Scanner &scanner }
+%parse-param { alpha::symbol::Table &symbol_table }
 
 %locations
 %define api.location.include {<alpha/syntax/location.h>}
