@@ -36,6 +36,12 @@
     static void print_derivation(const std::string&, const std::string&);
 }
 
+/* color codes for defualt and error messages */
+%code {
+#define SET_COLOR_FOR_ERROR "\033[31m"
+#define RESET_COLOR         "\033[0m"
+}
+
 /* Insert variables and search (and check usage of) symbols */
 %code {
 
@@ -57,8 +63,10 @@
           symbol_table.add_local_variable(name);                       \
           lvalue = SearchResult::MUTABLE;                              \
         } else {                                                       \
-          std::cerr << "error with local variable \"" << name          \
-                    << "\" shadowing a library function" << std::endl; \
+          std::cerr << SET_COLOR_FOR_ERROR                             \
+                    << "error with local variable \"" << name          \
+                    << "\" shadowing a library function" << std::endl  \
+                    << RESET_COLOR;                                    \
         }                                                              \
         break;                                                         \
                                                                        \
@@ -81,8 +89,10 @@
                                                                        \
       case SearchResult::NOT_FOUND:                                    \
                                                                        \
-        std::cerr << "error finding global variable or function "      \
-                  << "with name \"" << name << "\"" << std::endl;      \
+        std::cerr << SET_COLOR_FOR_ERROR                               \
+                  << "error finding global variable or function "      \
+                  << "with name \"" << name << "\"" << std::endl       \
+                  << RESET_COLOR;                                      \
                                                                        \
         break;                                                         \
                                                                        \
@@ -109,9 +119,11 @@
           symbol_table.add_variable(name);                             \
           lvalue = SearchResult::MUTABLE;                              \
         } else {                                                       \
-          std::cerr << "error accessing a variable or function "       \
+          std::cerr << SET_COLOR_FOR_ERROR                             \
+                    << "error accessing a variable or function "       \
                     << "with name \"" << name << "\" that is not "     \
-                    << "visible" << std::endl;                         \
+                    << "visible" << std::endl                          \
+                    << RESET_COLOR;                                    \
         }                                                              \
                                                                        \
         break;                                                         \
@@ -127,8 +139,10 @@
 #define S_TABLE_CHECK_FUNCTION_ERRORS(type_of_symbol, usage_info)      \
   {                                                                    \
     if (type_of_symbol == SearchResult::UNMUTABLE) {                   \
-      std::cerr << "error: cannot perform " << usage_info              \
-                << " a function" << std::endl;                         \
+      std::cerr << SET_COLOR_FOR_ERROR                                 \
+                << "error: cannot perform " << usage_info              \
+                << " a function" << std::endl                          \
+                << RESET_COLOR;                                        \
     }                                                                  \
   }
 
@@ -150,8 +164,10 @@
     if (symbol_table.can_add_function(name)) {           \
       symbol_table.start_function(name);                 \
     } else {                                             \
-      std::cerr << "error inserting function \"" << name \
-                << "\" in Symbol Table" << std::endl;    \
+      std::cerr << SET_COLOR_FOR_ERROR                   \
+                << "error inserting function \"" << name \
+                << "\" in Symbol Table" << std::endl     \
+                << RESET_COLOR;                          \
       S_TABLE_FUNC_START_ANONYMOYS                       \
     }                                                    \
   }
@@ -181,8 +197,10 @@
     if (symbol_table.can_add_argument(name)) {           \
       symbol_table.add_argument(name);                   \
     } else {                                             \
-      std::cerr << "error inserting argument \"" << name \
-                << "\" in Symbol Table" << std::endl;    \
+      std::cerr << SET_COLOR_FOR_ERROR                   \
+                << "error inserting argument \"" << name \
+                << "\" in Symbol Table" << std::endl     \
+                << RESET_COLOR;                          \
     }                                                    \
   }
 
@@ -560,5 +578,5 @@ static void print_derivation(const std::string& non_final, const std::string& fi
 void
 alpha::syntax::Parser::error( const location_type &l, const std::string &err_message )
 {
-   std::cerr << "\033[31m" << "Error: " << err_message << " at " << l << "\n\033[0m";
+   std::cerr << SET_COLOR_FOR_ERROR << "Error: " << err_message << " at " << l << std::endl << RESET_COLOR;
 }
