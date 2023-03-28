@@ -560,5 +560,5 @@ static void print_derivation(const std::string& non_final, const std::string& fi
 void
 alpha::syntax::Parser::error( const location_type &l, const std::string &err_message )
 {
-   std::cerr << "Error: " << err_message << " at " << l << "\n";
+   std::cerr << "\033[31m" << "Error: " << err_message << " at " << l << "\n\033[0m";
 }
