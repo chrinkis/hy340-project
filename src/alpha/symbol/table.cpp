@@ -135,7 +135,10 @@ Table::SearchResult Table::search_for_visible_symbol(
     const std::string& name) const {
   // TODO see if this function can be used in `can_add_variable`
 
-  for (Variable::Scope scope = this->current_scope; scope <= 0; scope--) {
+  for (Variable::Scope scope = this->current_scope;
+       scope >= 0 &&
+       scope <= this->current_scope /* scope is unsigned int (always > 0)*/;
+       scope--) {
     Key key(name, scope);
     auto symbols = this->symbol_map.equal_range(key);
 
@@ -212,7 +215,10 @@ Table::SearchResult Table::search_for_visible_global_symbol(
 }
 
 bool Table::can_add_variable(const std::string& name) const {
-  for (Variable::Scope scope = this->current_scope; scope <= 0; scope--) {
+  for (Variable::Scope scope = this->current_scope;
+       scope >= 0 &&
+       scope <= this->current_scope /* scope is unsigned int (always > 0)*/;
+       scope--) {
     Key key(name, scope);
     auto symbols = this->symbol_map.equal_range(key);
 
