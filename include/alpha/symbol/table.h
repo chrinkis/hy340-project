@@ -32,8 +32,6 @@ class Table {
 
   Map symbol_map;
 
-  std::function<Symbol::Line()> get_current_line;
-
  private:
   Pair pairForVariable(const std::string& name, Symbol::Type type);
   Pair pairForFunction(const std::string& name);
@@ -46,7 +44,7 @@ class Table {
   };
 
  public:
-  Table(const std::function<Symbol::Line()>& get_current_line);
+  Table();
 
  public:
   void increase_scope();
@@ -57,18 +55,27 @@ class Table {
   SearchResult search_for_visible_global_symbol(const std::string& name) const;
 
   bool can_add_variable(const std::string& name) const;
-  void add_variable(const std::string& name);
+
+  void add_variable(const std::string& name, const Symbol::Location& location);
 
   bool can_add_local_variable(const std::string& name) const;
-  void add_local_variable(const std::string& name);
+
+  void add_local_variable(const std::string& name,
+                          const Symbol::Location& location);
 
   bool can_add_function(const std::string& name) const;
-  void start_function();
-  void start_function(const std::string& name);
+
+  void start_function(const Symbol::Location& location);
+
+  void start_function(const std::string& name,
+                      const Symbol::Location& location);
+
   void end_function();
 
   bool can_add_argument(const std::string& name) const;
-  void add_argument(const std::string& name);
+
+  void add_argument(const std::string& name, const Symbol::Location& location);
+
   void end_argument_list();
 
  public:
