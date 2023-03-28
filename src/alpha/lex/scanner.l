@@ -185,7 +185,7 @@ real            {integer}\.{integer}
 
 
 void Scanner::handle_error() {
-    std::cout << "\033[91m" << "Error during lexicographic analysis" << std::endl << "\033[0m";
+    std::cerr << "\033[91m" << "Error during lexicographic analysis" << std::endl << "\033[0m";
 
     // TODO add more info in message
 
