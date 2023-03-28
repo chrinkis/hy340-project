@@ -48,6 +48,11 @@ class Table {
     UNMUTABLE,
   };
 
+  struct SearchResultWithAccess {
+    bool accessible;
+    SearchResult result;
+  };
+
  public:
   Table();
 
@@ -55,7 +60,8 @@ class Table {
   void increase_scope();
   void decrease_scope();
 
-  SearchResult search_for_visible_symbol(const std::string& name) const;
+  SearchResultWithAccess search_for_visible_symbol(
+      const std::string& name) const;
   SearchResult search_for_visible_local_symbol(const std::string& name) const;
   SearchResult search_for_visible_global_symbol(const std::string& name) const;
 
