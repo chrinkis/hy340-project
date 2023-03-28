@@ -68,7 +68,7 @@ class Table {
 
   bool can_add_argument(const std::string& name) const;
   void add_argument(const std::string& name);
-  void add_last_argument(const std::string& name);
+  void end_argument_list();
 };
 
 }  // namespace symbol
