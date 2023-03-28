@@ -6,6 +6,7 @@
 #include <alpha/symbol/symbol.h>
 
 #include <functional>
+#include <ostream>
 #include <stack>
 #include <string>
 #include <unordered_map>
@@ -69,6 +70,9 @@ class Table {
   bool can_add_argument(const std::string& name) const;
   void add_argument(const std::string& name);
   void end_argument_list();
+
+ public:
+  friend std::ostream& operator<<(std::ostream& os, const Table& st);
 };
 
 }  // namespace symbol
