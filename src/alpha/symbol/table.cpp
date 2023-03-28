@@ -407,7 +407,7 @@ std::ostream& operator<<(std::ostream& os, const Table& st) {
 
     os << ident();
     std::stringstream location;
-    location << "(location " << symbol->get_location() << ')';
+    location << "(line " << symbol->get_location().begin.line << ')';
     os << location.str();
 
     os << ident();
