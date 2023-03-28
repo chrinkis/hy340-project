@@ -11,6 +11,7 @@
 #include <string>
 #include <unordered_map>
 #include <utility>
+#include <vector>
 
 namespace alpha {
 namespace symbol {
@@ -18,7 +19,7 @@ namespace symbol {
 class Table {
  private:
   using Entry = TableEntry;
-  using Key = TableKey;
+  using Key = std::string;
   using Pair = std::pair<Key, Entry>;
 
   using Map = std::unordered_multimap<Key, Entry>;
@@ -30,7 +31,7 @@ class Table {
   Symbol::Scope current_scope;
   std::stack<Symbol::Scope> max_scope;
 
-  Map symbol_map;
+  std::vector<Map> per_scope_map;
 
  private:
   Pair pairForVariable(const std::string& name,
