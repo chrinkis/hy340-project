@@ -134,7 +134,7 @@ void Table::decrease_scope() {
   assert(this->current_scope < prev);
 }
 
-Table::SearchResult Table::search_for_visible_symbol(
+Table::SearchResultWithAccess Table::search_for_visible_symbol(
     const std::string& name) const {
   // TODO see if this function can be used in `can_add_variable`
 
@@ -149,14 +149,23 @@ Table::SearchResult Table::search_for_visible_symbol(
       assert(symbol->second.get_symbol()->get_scope() == scope);
 
       if (symbol->second.get_is_active()) {
+        bool is_accessible = (scope >= this->max_scope.top() || scope == 0);
+
         switch (symbol->second.get_symbol()->get_type()) {
           case Symbol::Type::GLOBAL:
           case Symbol::Type::LOCAL:
           case Symbol::Type::FORMAL:
-            return SearchResult::MUTABLE;
+            return SearchResultWithAccess{
+                .accessible = is_accessible,
+                .result = SearchResult::MUTABLE,
+            };
           case Symbol::Type::USER_FUNCTION:
           case Symbol::Type::LIBRARY_FUNCTION:
-            return SearchResult::UNMUTABLE;  // TODO rename to `IMMUTABLE`
+            return SearchResultWithAccess{
+                .accessible = is_accessible,
+                .result =
+                    SearchResult::UNMUTABLE,  // TODO rename to `IMMUTABLE`
+            };
           default:
             assert(0);
         }
@@ -166,7 +175,10 @@ Table::SearchResult Table::search_for_visible_symbol(
 
   assert(LIBRARY_FUNCTIONS.find(name) == LIBRARY_FUNCTIONS.cend());
 
-  return SearchResult::NOT_FOUND;
+  return SearchResultWithAccess{
+      .accessible = false,  // undefined
+      .result = SearchResult::NOT_FOUND,
+  };
 }
 
 Table::SearchResult Table::search_for_visible_local_symbol(
