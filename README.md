@@ -38,7 +38,7 @@ Target `scanner` of cmake
 
 ### parser
 
-Target `scanner` of cmake
+Target `parser` of cmake
 
 Alternatively, if `bash` is installed:
 - Command: `bash compile.sh`
