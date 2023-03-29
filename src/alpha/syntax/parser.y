@@ -311,13 +311,6 @@
 
 %%
 
-/*
- * WARNING! WRITE CODE ONLY IN YOUR
- * SECTION IN ORDER TO AVOID CONFLICTS.
- */
-
-/* START OF NICK SECTION */
-
 PROGRAM     :   %empty       { print_derivation("PROGRAM", "empty"); }
             |   stmt PROGRAM { print_derivation("PROGRAM", "stmt PROGRAM"); }
             ;
@@ -492,15 +485,6 @@ member      :   lvalue DOT IDENTIFIER                                { S_TABLE_C
                                                                      }
             ;
 
-
-/* END OF NICK SECTION */
-
-
-/* ********************** */
-
-
-/* START OF ALEX SECTION */
-
 call        :   call LEFT_PARENTHESIS elist RIGHT_PARENTHESIS                                       { print_derivation("call", "call ( elist )"); }
             |   lvalue  callsuffix                                                                  { print_derivation("call", "lvalue callsuffix"); }
             |   LEFT_PARENTHESIS funcdef RIGHT_PARENTHESIS LEFT_PARENTHESIS elist RIGHT_PARENTHESIS { print_derivation("call", "( funcdef ) ( elist )"); }
@@ -586,8 +570,6 @@ forstmt     :   FOR LEFT_PARENTHESIS elist SEMICOLON expr SEMICOLON elist RIGHT_
 returnstmt  :   RETURN SEMICOLON      { print_derivation("returnstmt", "RETURN ;"); }
             |   RETURN expr SEMICOLON { print_derivation("returnstmt", "RETURN expr ;"); }
             ;
-
-/* END OF ALEX SECTION */
 
 %%
 
