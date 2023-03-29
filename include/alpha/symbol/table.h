@@ -1,7 +1,6 @@
 #pragma once
 
 #include <alpha/symbol/table_entry.h>
-#include <alpha/symbol/table_key.h>
 
 #include <alpha/symbol/symbol.h>
 
