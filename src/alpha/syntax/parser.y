@@ -25,6 +25,8 @@
 %locations
 %define api.location.include {<alpha/syntax/location.h>}
 
+%define parse.error verbose
+
 %code {
     #include <iostream>
     #include <cassert>
