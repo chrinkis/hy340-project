@@ -1,5 +1,7 @@
 #pragma once
 
+#define symTable (alpha::symbol::Table::get())
+
 #include <alpha/symbol/table_entry.h>
 
 #include <alpha/symbol/symbol.h>
@@ -16,6 +18,13 @@ namespace alpha {
 namespace symbol {
 
 class Table {
+ public:
+  static Table& get() {
+    static Table table;
+
+    return table;
+  }
+
  private:
   using Entry = TableEntry;
   using Key = std::string;
