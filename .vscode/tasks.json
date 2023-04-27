@@ -9,6 +9,11 @@
             "command": "mkdir -p build && cd build && cmake .."
         },
         {
+            "label": "cmake with tests",
+            "type": "shell",
+            "command": "mkdir -p build && cd build && cmake -Dskip_tests:BOOL=OFF .."
+        },
+        {
             "label": "scanner: build",
             "type": "shell",
             "command": "cd build && make scanner",
@@ -40,5 +45,21 @@
                 "parser: build"
             ]
         },
+        {
+            "label": "test: build",
+            "type": "shell",
+            "command": "cd build && make tests",
+            "dependsOn": [
+                "cmake with tests"
+            ]
+        },
+        {
+            "label": "test: run",
+            "type": "shell",
+            "command": "cd build/test && ./tests",
+            "dependsOn": [
+                "test: build"
+            ]
+        }
     ]
 }
