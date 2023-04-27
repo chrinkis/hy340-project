@@ -41,15 +41,14 @@ class Table {
                        const Symbol::Location& location);
 
  public:
-  enum class SearchResult {
-    NOT_FOUND,
-    MUTABLE,
-    UNMUTABLE,
-  };
-
-  struct SearchResultWithAccess {
+  struct SearchResult {
     bool accessible;
-    SearchResult result;
+
+    enum {
+      NOT_FOUND,
+      MUTABLE,
+      UNMUTABLE,
+    } result;
   };
 
  public:
@@ -59,8 +58,7 @@ class Table {
   void increase_scope();
   void decrease_scope();
 
-  SearchResultWithAccess search_for_visible_symbol(
-      const std::string& name) const;
+  SearchResult search_for_visible_symbol(const std::string& name) const;
   SearchResult search_for_visible_local_symbol(const std::string& name) const;
   SearchResult search_for_visible_global_symbol(const std::string& name) const;
 
