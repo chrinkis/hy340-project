@@ -134,7 +134,7 @@ void Table::decrease_scope() {
   assert(this->current_scope < prev);
 }
 
-Table::SearchResultWithAccess Table::search_for_visible_symbol(
+Table::SearchResult Table::search_for_visible_symbol(
     const std::string& name) const {
   // TODO see if this function can be used in `can_add_variable`
 
@@ -153,13 +153,13 @@ Table::SearchResultWithAccess Table::search_for_visible_symbol(
           case Symbol::Type::GLOBAL:
           case Symbol::Type::LOCAL:
           case Symbol::Type::FORMAL:
-            return SearchResultWithAccess{
+            return SearchResult{
                 .accessible = (scope >= this->max_scope.top() || scope == 0),
                 .result = SearchResult::MUTABLE,
             };
           case Symbol::Type::USER_FUNCTION:
           case Symbol::Type::LIBRARY_FUNCTION:
-            return SearchResultWithAccess{
+            return SearchResult{
                 .accessible = true,
                 .result =
                     SearchResult::UNMUTABLE,  // TODO rename to `IMMUTABLE`
@@ -173,7 +173,7 @@ Table::SearchResultWithAccess Table::search_for_visible_symbol(
 
   assert(LIBRARY_FUNCTIONS.find(name) == LIBRARY_FUNCTIONS.cend());
 
-  return SearchResultWithAccess{
+  return SearchResult{
       .accessible = false,  // undefined
       .result = SearchResult::NOT_FOUND,
   };
@@ -193,17 +193,20 @@ Table::SearchResult Table::search_for_visible_local_symbol(
         case Symbol::Type::GLOBAL:
         case Symbol::Type::LOCAL:
         case Symbol::Type::FORMAL:
-          return SearchResult::MUTABLE;
+          return SearchResult{.accessible = true,
+                              .result = SearchResult::MUTABLE};
         case Symbol::Type::USER_FUNCTION:
         case Symbol::Type::LIBRARY_FUNCTION:
-          return SearchResult::UNMUTABLE;  // TODO rename to IMMUTABLE
+          return SearchResult{.accessible = true,
+                              .result = SearchResult::UNMUTABLE};
         default:
           assert(0);
       }
     }
   }
 
-  return SearchResult::NOT_FOUND;
+  return SearchResult{.accessible = true, .result = SearchResult::NOT_FOUND};
+  ;
 }
 
 Table::SearchResult Table::search_for_visible_global_symbol(
@@ -220,17 +223,19 @@ Table::SearchResult Table::search_for_visible_global_symbol(
         case Symbol::Type::GLOBAL:
         case Symbol::Type::LOCAL:
         case Symbol::Type::FORMAL:
-          return SearchResult::MUTABLE;
+          return SearchResult{.accessible = true,
+                              .result = SearchResult::MUTABLE};
         case Symbol::Type::USER_FUNCTION:
         case Symbol::Type::LIBRARY_FUNCTION:
-          return SearchResult::UNMUTABLE;  // TODO rename to IMMUTABLE
+          return SearchResult{.accessible = true,
+                              .result = SearchResult::UNMUTABLE};
         default:
           assert(0);
       }
     }
   }
 
-  return SearchResult::NOT_FOUND;
+  return SearchResult{.accessible = true, .result = SearchResult::NOT_FOUND};
 }
 
 bool Table::can_add_variable(const std::string& name) const {
