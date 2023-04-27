@@ -198,7 +198,7 @@ Table::SearchResult Table::search_for_visible_local_symbol(
         case Symbol::Type::USER_FUNCTION:
         case Symbol::Type::LIBRARY_FUNCTION:
           return SearchResult{.accessible = true,
-                              .result = SearchResult::MUTABLE};
+                              .result = SearchResult::UNMUTABLE};
         default:
           assert(0);
       }
