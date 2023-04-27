@@ -1,7 +1,17 @@
 #pragma once
 
-#define SET_COLOR_FOR_ERROR "\033[31m"
-#define RESET_COLOR "\033[0m"
+namespace alpha {
+namespace syntax {
+namespace handlers {
+namespace block {
+
+void enter();
+void exit();
+
+}  // namespace block
+}  // namespace handlers
+}  // namespace syntax
+}  // namespace alpha
 
 #define S_TABLE_BLOCK_ENTER \
   { symbol_table.increase_scope(); }
