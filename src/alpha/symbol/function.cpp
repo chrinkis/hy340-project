@@ -31,6 +31,10 @@ Symbol::Type Function::get_type() const {
   return this->type;
 }
 
+Function* Function::clone() const {
+  return new Function(*this);
+}
+
 void Function::add_arg(const Symbol::SharedPtr& arg) {
   assert(arg);
 

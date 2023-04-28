@@ -1,6 +1,7 @@
 #pragma once
 
 #include <alpha/symbol/symbol.h>
+#include <cassert>
 
 namespace alpha {
 namespace symbol {
@@ -12,7 +13,9 @@ class TableEntry {
   Symbol::SharedPtr symbol;
 
  public:
-  TableEntry(Symbol* symbol) : symbol(symbol), is_active(true) {}
+  TableEntry(Symbol* symbol) : symbol(symbol), is_active(true) {
+    assert(symbol);
+  }
 
   bool get_is_active() const { return is_active; };
   Symbol::SharedPtr get_symbol() const { return symbol; };

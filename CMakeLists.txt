@@ -15,6 +15,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # Define the project
 project(hy340-project)
 
+# Cpp version
+set(CMAKE_CXX_STANDARD 17)
+
 # Add `include` directory
 include_directories(${CMAKE_SOURCE_DIR}/include)
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)

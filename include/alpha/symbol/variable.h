@@ -2,12 +2,17 @@
 
 #include <alpha/symbol/symbol.h>
 
+#include <memory>
 #include <string>
 
 namespace alpha {
 namespace symbol {
 
 class Variable : public Symbol {
+ public:
+  using SharedPtr = std::shared_ptr<Variable>;
+
+ private:
   const std::string name;
   const Scope scope;
   const Location location;
@@ -25,6 +30,8 @@ class Variable : public Symbol {
   Scope get_scope() const override;
 
   Location get_location() const override;
+
+  Variable* clone() const override;
 
   Type get_type() const override;
 };

@@ -27,6 +27,10 @@ Symbol::Location Variable::get_location() const {
   return this->location;
 }
 
+Variable* Variable::clone() const {
+  return new Variable(*this);
+}
+
 Symbol::Type Variable::get_type() const {
   return this->type;
 }

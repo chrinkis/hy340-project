@@ -2,6 +2,7 @@
 
 #include <alpha/symbol/symbol.h>
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -9,6 +10,10 @@ namespace alpha {
 namespace symbol {
 
 class Function : public Symbol {
+ public:
+  using SharedPtr = std::shared_ptr<Function>;
+
+ private:
   const std::string name;
   const Scope scope;
   const Location location;
@@ -29,6 +34,8 @@ class Function : public Symbol {
   Location get_location() const override;
 
   Type get_type() const override;
+
+  Function* clone() const override;
 
   void add_arg(const Symbol::SharedPtr& arg);
 };
