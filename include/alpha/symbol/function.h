@@ -35,9 +35,9 @@ class Function : public Symbol {
 
   Type get_type() const override;
 
-  void add_arg(const Symbol::SharedPtr& arg);
+  Function* clone() const override;
 
-  Function* clone() const override { return new Function(*this); }
+  void add_arg(const Symbol::SharedPtr& arg);
 };
 
 }  // namespace symbol

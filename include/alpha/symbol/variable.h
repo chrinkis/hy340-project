@@ -31,9 +31,9 @@ class Variable : public Symbol {
 
   Location get_location() const override;
 
-  Type get_type() const override;
+  Variable* clone() const override;
 
-  Variable* clone() const override { return new Variable(*this); }
+  Type get_type() const override;
 };
 
 }  // namespace symbol
