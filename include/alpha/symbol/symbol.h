@@ -31,6 +31,8 @@ class Symbol {
   virtual Location get_location() const = 0;
 
   virtual Type get_type() const = 0;
+
+  virtual Symbol* clone() const = 0;
 };
 
 }  // namespace symbol
