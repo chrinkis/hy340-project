@@ -7,7 +7,9 @@ namespace syntax {
 namespace handlers {
 namespace symbol {
 
-void continue_checking(holder::Symbol& symbol_holder, holder::Symbol& previous);
+void continue_checking(holder::Symbol& symbol_holder,
+                       const holder::Symbol& previous);
+
 void stop_checking(holder::Symbol& symbol_holder);
 
 }  // namespace symbol
