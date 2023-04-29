@@ -152,15 +152,17 @@ bool TableManager::can_add_local_variable(const std::string& name) const {
          !this->table.lookup(name, this->current_scope, this->current_scope);
 }
 
-void TableManager::add_local_variable(const std::string& name,
-                                      const Symbol::Location& location) {
+Symbol::SharedPtr TableManager::add_local_variable(
+    const std::string& name,
+    const Symbol::Location& location) {
   assert(this->can_add_local_variable(name));
 
   using Type = Symbol::Type;
 
   Type type = this->current_scope ? Type::LOCAL : Type::GLOBAL;
 
-  this->table.insert(Variable(name, this->current_scope, location, type));
+  return this->table.insert(
+      Variable(name, this->current_scope, location, type));
 }
 
 bool TableManager::can_add_function(const std::string& name) const {
