@@ -8,6 +8,7 @@ namespace manager {
 namespace nonterminal {
 
 class Lvalue;
+class Funcdef;
 
 class Primary : public holder::Symbol {
  public:
@@ -17,7 +18,7 @@ class Primary : public holder::Symbol {
 
   static Primary from_objectdef();
 
-  static Primary from_lParTkn_funcdef_rParTkn();
+  static Primary from_lParTkn_funcdef_rParTkn(const Funcdef& funcdef);
 
   static Primary from_const();
 };

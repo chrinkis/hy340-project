@@ -1,5 +1,6 @@
 #pragma once
 
+#include <alpha/syntax/holder/Symbol.h>
 #include <alpha/syntax/manager/terminal/function.h>
 #include <alpha/syntax/manager/terminal/identifier.h>
 
@@ -9,8 +10,11 @@ namespace handlers {
 namespace symbol {
 namespace function {
 
-void start(manager::terminal::Identifier& identifier);
-void start(manager::terminal::Function& function);
+void start(holder::Symbol& symbol_holder,
+           manager::terminal::Identifier& identifier);
+
+void start(holder::Symbol& symbol_holder,
+           manager::terminal::Function& function);
 void end();
 
 }  // namespace function

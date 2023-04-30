@@ -7,19 +7,31 @@ using alpha::syntax::handlers::symbol::function::end;
 using alpha::syntax::handlers::symbol::function::end_arg_list;
 using alpha::syntax::handlers::symbol::function::start;
 
-void Funcdef::functionTkn(const terminal::Function& function) {
-  start(function);
+Funcdef Funcdef::from_functionTkn(const terminal::Function& function) {
+  Funcdef funcdef;
+
+  start(funcdef, function);
+
+  return funcdef;
 }
 
-void Funcdef::functionTkn_identifierTkn(
+Funcdef Funcdef::from_functionTkn_identifierTkn(
     const terminal::Identifier& identifier) {
-  start(identifier);
+  Funcdef funcdef;
+
+  start(funcdef, identifier);
+
+  return funcdef;
 }
 
-void Funcdef::rightParenthesisTkn() {
+Funcdef Funcdef::rightParenthesisTkn() {
   end_arg_list();
+
+  return Funcdef();
 }
 
-void Funcdef::block() {
+Funcdef Funcdef::block() {
   end();
+
+  return Funcdef();
 }

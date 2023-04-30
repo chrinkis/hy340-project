@@ -3,17 +3,23 @@
 #include <alpha/syntax/manager/terminal/function.h>
 #include <alpha/syntax/manager/terminal/identifier.h>
 
+#include <alpha/syntax/holder/Symbol.h>
+
 namespace alpha {
 namespace syntax {
 namespace manager {
 namespace nonterminal {
 
-class Funcdef {
+class Funcdef : public holder::Symbol {
  public:
-  static void functionTkn(const terminal::Function& function);
-  static void functionTkn_identifierTkn(const terminal::Identifier& identifier);
-  static void rightParenthesisTkn();
-  static void block();
+  static Funcdef from_functionTkn(const terminal::Function& function);
+
+  static Funcdef from_functionTkn_identifierTkn(
+      const terminal::Identifier& identifier);
+
+  static Funcdef rightParenthesisTkn();
+
+  static Funcdef block();
 };
 
 }  // namespace nonterminal
