@@ -15,8 +15,11 @@
 
     #include <alpha/symbol/table.h>
 
-    using SearchResult = alpha::symbol::Table::SearchResult;
-    using SearchResultWithAccess = alpha::symbol::Table::SearchResultWithAccess;
+    #include <alpha/syntax/manager/nonterminal.h>
+    #include <alpha/syntax/manager/terminal.h>
+
+    namespace manager = alpha::syntax::manager::nonterminal;
+    namespace terminal = alpha::syntax::manager::terminal;
 }
 
 %parse-param { alpha::lex::Scanner &scanner }
@@ -36,12 +39,6 @@
 
     #undef yylex
     #define yylex scanner.alpha_yylex
-
-    #include <alpha/syntax/manager/nonterminal.h>
-    #include <alpha/syntax/manager/terminal.h>
-
-    namespace manager = alpha::syntax::manager::nonterminal;
-    namespace terminal = alpha::syntax::manager::terminal;
 
     static void print_derivation(const std::string&, const std::string&);
 }
