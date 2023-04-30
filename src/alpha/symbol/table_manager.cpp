@@ -171,14 +171,16 @@ bool TableManager::can_add_function(const std::string& name) const {
          !this->table.lookup(name, this->current_scope, this->current_scope);
 }
 
-void TableManager::start_function(const Symbol::Location& location) {
+Symbol::SharedPtr TableManager::start_function(
+    const Symbol::Location& location) {
   static unsigned int counter = 0;
 
-  this->start_function("$fn_" + std::to_string(counter++), location);
+  return this->start_function("$fn_" + std::to_string(counter++), location);
 }
 
-void TableManager::start_function(const std::string& name,
-                                  const Symbol::Location& location) {
+Symbol::SharedPtr TableManager::start_function(
+    const std::string& name,
+    const Symbol::Location& location) {
   assert(this->can_add_function(name));
   assert(!this->current_function);
 
@@ -194,6 +196,8 @@ void TableManager::start_function(const std::string& name,
   this->max_scope.push(current_scope);
 
   assert(this->current_function);
+
+  return symbol;
 }
 
 void TableManager::end_function() {
