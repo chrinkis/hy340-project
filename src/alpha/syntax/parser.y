@@ -142,75 +142,49 @@ stmt        :   expr SEMICOLON     { print_derivation("stmt", "expr ;"); }
             |   SEMICOLON          { print_derivation("stmt", ";"); }
             ;
 
-expr        :   assignexpr               { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+expr        :   assignexpr               { $$ = manager::Expr::from_assignexpr();
                                            print_derivation("expr", "assignexpr");
                                          }
-            |   expr PLUS expr           { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"+\" with");
-                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"+\" with");
-                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   expr PLUS expr           { $$ = manager::Expr::from_expr_plusTkn_expr($1, $2);
                                            print_derivation("expr", "expr + expr");
                                          }
-            |   expr MINUS expr          { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"-\" with");
-                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"-\" with");
-                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   expr MINUS expr          { $$ = manager::Expr::from_expr_minusTkn_expr($1, $2);
                                            print_derivation("expr", "expr - expr");
                                          }
-            |   expr STAR expr           { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"*\" with");
-                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"*\" with");
-                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   expr STAR expr           { $$ = manager::Expr::from_expr_starTkn_expr($1, $2);
                                            print_derivation("expr", "expr * expr");
                                          }
-            |   expr DIV expr            { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"/\" with");
-                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"/\" with");
-                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   expr DIV expr            { $$ = manager::Expr::from_expr_divTkn_expr($1, $2);
                                            print_derivation("expr", "expr / expr");
                                          }
-            |   expr MOD expr            { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"%\" with");
-                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"%\" with");
-                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   expr MOD expr            { $$ = manager::Expr::from_expr_modTkn_expr($1, $2);
                                            print_derivation("expr", "expr % expr");
                                          }
-            |   expr GREATER expr        { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\">\" with");
-                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\">\" with");
-                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   expr GREATER expr        { $$ = manager::Expr::from_expr_greaterTkn_expr($1, $2);
                                            print_derivation("expr", "expr > expr");
                                          }
-            |   expr GREATER_EQUALS expr { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\">=\" with");
-                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\">=\" with");
-                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   expr GREATER_EQUALS expr { $$ = manager::Expr::from_expr_greaterEqTkn_expr($1, $2);
                                            print_derivation("expr", "expr >= expr");
                                          }
-            |   expr LESS expr           { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"<\" with");
-                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"<\" with");
-                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   expr LESS expr           { $$ = manager::Expr::from_expr_lessTkn_expr($1, $2);
                                            print_derivation("expr", "expr < expr");
                                          }
-            |   expr LESS_EQUALS expr    { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"<=\" with");
-                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"<=\" with");
-                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   expr LESS_EQUALS expr    { $$ = manager::Expr::from_expr_lessEqTkn_expr($1, $2);
                                            print_derivation("expr", "expr <= expr");
                                          }
-            |   expr EQUALS expr         { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"==\" with");
-                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"==\" with");
-                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   expr EQUALS expr         { $$ = manager::Expr::from_expr_equalsTkn_expr($1, $2);
                                            print_derivation("expr", "expr == expr");
                                          }
-            |   expr NOT_EQUALS expr     { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"!=\" with");
-                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"!=\" with");
-                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   expr NOT_EQUALS expr     { $$ = manager::Expr::from_expr_notEqualsTkn_expr($1, $2);
                                            print_derivation("expr", "expr != expr");
                                          }
-            |   expr AND expr            { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"AND\" with");
-                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"AND\" with");
-                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   expr AND expr            { $$ = manager::Expr::from_expr_andTkn_expr($1, $2);
                                            print_derivation("expr", "expr AND expr");
                                          }
-            |   expr OR expr             { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"OR\" with");
-                                           S_TABLE_CHECK_FUNCTION_ERRORS($3, "\"OR\" with");
-                                           S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   expr OR expr             { $$ = manager::Expr::from_expr_orTkn_expr($1, $2);
                                            print_derivation("expr", "expr OR expr");
                                          }
-            |   term                     { S_TABLE_FURTHER_SYMBOL_CHECK_NEEDED($1, $$);
+            |   term                     { $$ = manager::Expr::from_term($1);
                                            print_derivation("expr", "term");
                                          }
             ;
