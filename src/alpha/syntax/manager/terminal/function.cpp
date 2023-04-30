@@ -1,5 +1,6 @@
-#include <alpha/syntax/location.h>
 #include <alpha/syntax/manager/terminal/function.h>
+
+#include <alpha/syntax/location.h>
 
 using namespace alpha::syntax::manager::terminal;
 

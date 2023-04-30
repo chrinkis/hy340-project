@@ -1,6 +1,7 @@
+#include <alpha/syntax/manager/nonterminal/funcdef.h>
+
 #include <alpha/syntax/handler/symbol/function/argument.h>
 #include <alpha/syntax/handler/symbol/function/definition.h>
-#include <alpha/syntax/manager/nonterminal/funcdef.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 using alpha::syntax::handlers::symbol::function::end;
