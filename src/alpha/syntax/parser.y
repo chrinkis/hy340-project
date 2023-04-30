@@ -232,8 +232,7 @@ term        :   LEFT_PARENTHESIS expr RIGHT_PARENTHESIS { S_TABLE_FURTHER_SYMBOL
                                                         }
             ;
 
-assignexpr  :   lvalue ASSIGN expr { S_TABLE_CHECK_FUNCTION_ERRORS($1, "assignment to");
-                                     S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+assignexpr  :   lvalue ASSIGN expr { $$ = manager::Assignexpr::from_lvalue_assignTkn_expr($1)
                                      print_derivation("assignexpr", "lvalue = expr");
                                    }
             ;
