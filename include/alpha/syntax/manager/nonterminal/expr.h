@@ -1,7 +1,6 @@
 #pragma once
 
 #include <alpha/syntax/holder/Symbol.h>
-#include <alpha/syntax/parser.h>
 
 namespace alpha {
 namespace syntax {
