@@ -9,7 +9,7 @@ namespace nonterminal {
 
 class Lvalue;
 
-class Assignexpr : private holder::Symbol {
+class Assignexpr : public holder::Symbol {
  public:
   static Assignexpr from_lvalue_assignTkn_expr(const Lvalue& lvalue);
 };
