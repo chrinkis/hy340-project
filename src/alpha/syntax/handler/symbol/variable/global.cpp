@@ -2,8 +2,7 @@
 
 #include <alpha/symbol/table_manager.h>
 
-using namespace alpha::syntax::handlers::symbol::variable;
-namespace holder = alpha::syntax::holder;
+namespace alpha::syntax::handlers::symbol::variable {
 
 void ensure_global_exists(holder::Symbol& symbol_holder,
                           const std::string& name) {
@@ -23,3 +22,5 @@ void ensure_global_exists(holder::Symbol& symbol_holder,
   auto result = result_opt.value();
   symbol_holder.set_symbol(holder::Symbol::Optional(result.symbol));
 }
+
+}  // namespace alpha::syntax::handlers::symbol::variable

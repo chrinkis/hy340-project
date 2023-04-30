@@ -3,9 +3,9 @@
 #include <alpha/symbol/table_manager.h>
 #include <cassert>
 
-using namespace alpha::syntax::handlers::symbol::variable;
-namespace holder = alpha::syntax::holder;
 using Symbol = alpha::symbol::Symbol;
+
+namespace alpha::syntax::handlers::symbol::variable {
 
 void ensure_local_exists(holder::Symbol& symbol_holder,
                          const std::string& name) {
@@ -33,3 +33,5 @@ void ensure_local_exists(holder::Symbol& symbol_holder,
 
   symbol_holder.set_symbol(holder::Symbol::Optional(symbol));
 }
+
+}  // namespace alpha::syntax::handlers::symbol::variable

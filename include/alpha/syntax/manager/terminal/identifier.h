@@ -11,7 +11,7 @@ namespace terminal {
 
 class Identifier {
  private:
-  using Location = location;
+  using Location = alpha::syntax::location;
 
  private:
   const std::string name;

@@ -3,8 +3,7 @@
 #include <alpha/symbol/table_manager.h>
 #include <cassert>
 
-using namespace alpha::syntax::handlers::symbol::variable;
-namespace holder = alpha::syntax::holder;
+namespace alpha::syntax::handlers::symbol::variable {
 
 void ensure_exists(holder::Symbol& symbol_holder, const std::string& name) {
   assert(!symbol_holder.get_symbol());
@@ -36,3 +35,5 @@ void ensure_exists(holder::Symbol& symbol_holder, const std::string& name) {
 
   symbol_holder.set_symbol(result.symbol);
 }
+
+}  // namespace alpha::syntax::handlers::symbol::variable

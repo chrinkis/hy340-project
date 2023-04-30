@@ -11,10 +11,10 @@ namespace symbol {
 namespace function {
 
 void start(holder::Symbol& symbol_holder,
-           manager::terminal::Identifier& identifier);
+           const manager::terminal::Identifier& identifier);
 
 void start(holder::Symbol& symbol_holder,
-           manager::terminal::Function& function);
+           const manager::terminal::Function& function);
 void end();
 
 }  // namespace function

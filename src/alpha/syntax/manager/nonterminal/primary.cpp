@@ -1,3 +1,6 @@
+#include <alpha/syntax/manager/nonterminal/funcdef.h>
+#include <alpha/syntax/manager/nonterminal/lvalue.h>
+
 #include <alpha/syntax/manager/nonterminal/primary.h>
 
 #include <alpha/syntax/handler/symbol/symbol.h>
