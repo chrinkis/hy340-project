@@ -1,8 +1,6 @@
 #include <alpha/syntax/handler/symbol/function/error_checker.h>
 #include <alpha/syntax/handler/symbol/symbol.h>
 #include <alpha/syntax/manager/nonterminal/assignexpr.h>
-#include <alpha/syntax/manager/nonterminal/lvalue.h>
-#include "alpha/syntax/holder/Symbol.h"
 
 using namespace alpha::syntax::manager::nonterminal;
 
