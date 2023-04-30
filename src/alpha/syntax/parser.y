@@ -231,19 +231,19 @@ assignexpr  :   lvalue ASSIGN expr { $$ = manager::Assignexpr::from_lvalue_assig
                                    }
             ;
 
-primary     :   lvalue                                     { S_TABLE_FURTHER_SYMBOL_CHECK_NEEDED($1, $$);
+primary     :   lvalue                                     { $$ = manager::Primary::from_lvalue($1);
                                                              print_derivation("primary", "lvalue");
                                                            }
-            |   call                                       { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   call                                       { $$ = manager::Primary::from_calll();
                                                              print_derivation("primary", "call");
                                                            }
-            |   objectdef                                  { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   objectdef                                  { $$ = manager::Primary::from_objectdef();
                                                              print_derivation("primary", "objectdef");
                                                            }
-            |   LEFT_PARENTHESIS funcdef RIGHT_PARENTHESIS { S_TABLE_FURTHER_SYMBOL_CHECK_NEEDED(SearchResult::UNMUTABLE, $$);
+            |   LEFT_PARENTHESIS funcdef RIGHT_PARENTHESIS { $$ = manager::Primary::from_lParTkn_funcdef_rParTkn($2);
                                                              print_derivation("primary", "( funcdef )");
                                                            }
-            |   const                                      { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   const                                      { $$ = manager::Primary::from_const();
                                                              print_derivation("primary", "const");
                                                            }
             ;
