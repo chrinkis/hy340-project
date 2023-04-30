@@ -2,11 +2,13 @@
 #include <alpha/syntax/manager/nonterminal/block.h>
 
 using namespace alpha::syntax::manager::nonterminal;
+using alpha::syntax::handlers::block::enter;
+using alpha::syntax::handlers::block::exit;
 
 void Block::leftCurlyBracketTkn() {
-  handlers::block::enter();
+  enter();
 }
 
 void Block::rightCurlyBracketTkn() {
-  handlers::block::exit();
+  exit();
 }
