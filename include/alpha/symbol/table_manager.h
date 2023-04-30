@@ -56,7 +56,8 @@ class TableManager {
 
   bool can_add_variable(const std::string& name) const;
 
-  void add_variable(const std::string& name, const Symbol::Location& location);
+  Symbol::SharedPtr add_variable(const std::string& name,
+                                 const Symbol::Location& location);
 
   bool can_add_local_variable(const std::string& name) const;
 
