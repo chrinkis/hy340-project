@@ -20,6 +20,24 @@ add_library(flex_and_bison
     ${CMAKE_SOURCE_DIR}/src/alpha/symbol/function.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/symbol/table.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/symbol/variable.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/handler/symbol/function/argument.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/handler/symbol/function/definition.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/handler/symbol/function/error_checker.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/handler/symbol/symbol.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/handler/block.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/holder/symbol.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/assignexpr.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/block.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/expr.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/funcdef.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/idlist.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/idlist_opt.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/lvalue.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/member.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/primary.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/term.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/terminal/function.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/terminal/identifier.cpp
 )
 
 # WARNING: all file of of lib `flex_and_bison` have direct
