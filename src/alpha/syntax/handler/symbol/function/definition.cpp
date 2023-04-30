@@ -2,9 +2,7 @@
 
 #include <alpha/symbol/table_manager.h>
 
-using namespace alpha::syntax::handlers::symbol::function;
-namespace manager = alpha::syntax::manager;
-namespace holder = alpha::syntax::holder;
+namespace alpha::syntax::handlers::symbol::function {
 
 void start(holder::Symbol& symbol_holder,
            const manager::terminal::Identifier& identifier) {
@@ -33,3 +31,5 @@ void start(holder::Symbol& symbol_holder,
 void end() {
   symTable.end_function();
 }
+
+}  // namespace alpha::syntax::handlers::symbol::function

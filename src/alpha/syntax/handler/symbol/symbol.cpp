@@ -2,8 +2,7 @@
 
 #include <assert.h>
 
-using namespace alpha::syntax::handlers::symbol;
-namespace holder = alpha::syntax::holder;
+namespace alpha::syntax::handlers::symbol {
 
 void continue_checking(holder::Symbol& symbol_holder,
                        const holder::Symbol& previous) {
@@ -15,3 +14,5 @@ void continue_checking(holder::Symbol& symbol_holder,
 void stop_checking(holder::Symbol& symbol_holder) {
   symbol_holder.set_symbol(holder::Symbol::Optional());
 }
+
+}  // namespace alpha::syntax::handlers::symbol

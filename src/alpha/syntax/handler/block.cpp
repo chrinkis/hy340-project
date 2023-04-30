@@ -2,7 +2,7 @@
 
 #include <alpha/symbol/table_manager.h>
 
-using namespace alpha::syntax::handlers::block;
+namespace alpha::syntax::handlers::block {
 
 void enter() {
   symTable.increase_scope();
@@ -11,3 +11,5 @@ void enter() {
 void exit() {
   symTable.decrease_scope();
 }
+
+}  // namespace alpha::syntax::handlers::block

@@ -4,8 +4,7 @@
 
 #include <cassert>
 
-using namespace alpha::syntax::handlers::symbol::function;
-namespace holder = alpha::syntax::holder;
+namespace alpha::syntax::handlers::symbol::function {
 
 void check_for_errors(const holder::Symbol& symbol_holder,
                       const std::string& description) {
@@ -30,3 +29,5 @@ void check_for_errors(const holder::Symbol& symbol_holder,
       assert(0);
   }
 }
+
+}  // namespace alpha::syntax::handlers::symbol::function

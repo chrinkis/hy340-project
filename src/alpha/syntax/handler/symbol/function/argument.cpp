@@ -2,8 +2,7 @@
 
 #include <alpha/symbol/table_manager.h>
 
-using namespace alpha::syntax::handlers::symbol::function;
-namespace manager = alpha::syntax::manager;
+namespace alpha::syntax::handlers::symbol::function {
 
 void add_arg(const manager::terminal::Identifier& argument) {
   if (!symTable.can_add_argument(argument.get_name())) {
@@ -20,3 +19,5 @@ void add_arg(const manager::terminal::Identifier& argument) {
 void end_arg_list() {
   symTable.end_argument_list();
 }
+
+}  // namespace alpha::syntax::handlers::symbol::function
