@@ -37,6 +37,12 @@
     #undef yylex
     #define yylex scanner.alpha_yylex
 
+    #include <alpha/syntax/manager/nonterminal.h>
+    #include <alpha/syntax/manager/terminal.h>
+
+    namespace manager = alpha::syntax::manager::nonterminal;
+    namespace terminal = alpha::syntax::manager::terminal;
+
     static void print_derivation(const std::string&, const std::string&);
 }
 
@@ -101,12 +107,17 @@
 %token DOT                  /*| .  |*/
 %token DOUBLE_DOT           /*| .. |*/
 
-%type <SearchResult> lvalue
-%type <SearchResult> member
-%type <SearchResult> assignexpr
-%type <SearchResult> primary
-%type <SearchResult> term
-%type <SearchResult> expr
+%type <manager::Assignexpr>  assignexpr
+%type <manager::Block>       block
+%type <manager::Expr>        expr
+%type <manager::Funcdef>     funcdef
+%type <manager::Idlist>      idlist
+%type <manager::Idlist_opt>  idlist_opt
+%type <manager::Lvalue>      lvalue
+%type <manager::Member>      member
+%type <manager::Primary>     primary
+%type <manager::Term>        term
+
 
 /* %locations */
 
