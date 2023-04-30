@@ -109,7 +109,7 @@
 %type <nterm::Expr>        expr
 %type <nterm::Funcdef>     funcdef
 %type <nterm::Idlist>      idlist
-%type <nterm::Idlist_opt>  idlist_opt
+%type <nterm::IdlistOpt>  idlist_opt
 %type <nterm::Lvalue>      lvalue
 %type <nterm::Member>      member
 %type <nterm::Primary>     primary
