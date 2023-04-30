@@ -12,7 +12,7 @@ namespace variable_handler = alpha::syntax::handlers::symbol::variable;
 Lvalue Lvalue::from_idTkn(const Identifier& identifier) {
   Lvalue lvalue;
 
-  variable_handler::ensure_exists(lvalue, identifier.get_name());
+  variable_handler::ensure_exists(lvalue, identifier);
 
   return lvalue;
 }
@@ -20,7 +20,7 @@ Lvalue Lvalue::from_idTkn(const Identifier& identifier) {
 Lvalue Lvalue::from_localIdTkn(const Identifier& identifier) {
   Lvalue lvalue;
 
-  variable_handler::ensure_local_exists(lvalue, identifier.get_name());
+  variable_handler::ensure_local_exists(lvalue, identifier);
 
   return lvalue;
 }
