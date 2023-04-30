@@ -1,6 +1,7 @@
 #include <alpha/syntax/handler/symbol/variable/implicit.h>
 
 #include <alpha/symbol/table_manager.h>
+
 #include <cassert>
 
 namespace alpha::syntax::handlers::symbol::variable {

@@ -1,6 +1,7 @@
 #include <alpha/syntax/handler/symbol/variable/local.h>
 
 #include <alpha/symbol/table_manager.h>
+
 #include <cassert>
 
 using Symbol = alpha::symbol::Symbol;
