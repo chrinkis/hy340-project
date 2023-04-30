@@ -9,7 +9,7 @@ namespace nonterminal {
 
 class Lvalue;
 
-class Member : private holder::Symbol {
+class Member : public holder::Symbol {
  public:
   static Member from_lvalue_dotTkn_idTkn(const Lvalue& lvalue);
 

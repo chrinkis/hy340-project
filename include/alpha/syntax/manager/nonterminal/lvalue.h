@@ -9,7 +9,7 @@ namespace syntax {
 namespace manager {
 namespace nonterminal {
 
-class Lvalue : private holder::Symbol {
+class Lvalue : public holder::Symbol {
  private:
   using Identifier = terminal::Identifier;
 

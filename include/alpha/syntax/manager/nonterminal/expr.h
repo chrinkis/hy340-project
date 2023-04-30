@@ -11,7 +11,7 @@ namespace nonterminal {
 class Expr;
 class Term;
 
-class Expr : private holder::Symbol {
+class Expr : public holder::Symbol {
  public:
   static Expr from_assignexpr();
 

@@ -9,7 +9,7 @@ namespace nonterminal {
 
 class Lvalue;
 
-class Primary : private holder::Symbol {
+class Primary : public holder::Symbol {
  public:
   static Primary from_lvalue(const Lvalue& lvalue);
 

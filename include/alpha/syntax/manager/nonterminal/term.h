@@ -11,7 +11,7 @@ class Expr;
 class Lvalue;
 class Primary;
 
-class Term : private holder::Symbol {
+class Term : public holder::Symbol {
  public:
   static Term from_lParTkn_expr_rParTkn(const Expr& expr);
 
