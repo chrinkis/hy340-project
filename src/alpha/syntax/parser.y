@@ -346,14 +346,14 @@ block_opt   :   %empty         { print_derivation("block_opt", "empty"); }
             |   stmt block_opt { print_derivation("block_opt", "stmt block_opt"); }
             ;
 
-funcdef     :   FUNCTION { S_TABLE_FUNC_START_ANONYMOYS(@1); } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS {S_TABLE_END_LIST_ARG();} block      { S_TABLE_FUNC_END;
-                                                                                                                                            print_derivation("funcdef", 
-                                                                                                                                            "FUNCTION ( idlist ) block"); 
-                                                                                                                                          }
-            |   FUNCTION IDENTIFIER { S_TABLE_FUNC_START($2,@2); } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS {S_TABLE_END_LIST_ARG();} block { S_TABLE_FUNC_END;
-                                                                                                                                            print_derivation("funcdef", 
-                                                                                                                                            "FUNCTION IDENTIFIER ( idlist ) block");
-                                                                                                                                          }
+funcdef     :   FUNCTION { manager::Funcdef::functionTkn($1); } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS { manager::Funcdef::rightParenthesisTkn(); } block                          { manager::Funcdef::block();
+                                                                                                                                                                                        print_derivation("funcdef", 
+                                                                                                                                                                                        "FUNCTION ( idlist ) block"); 
+                                                                                                                                                                                      }
+            |   FUNCTION IDENTIFIER { manager::Funcdef::functionTkn_identifierTkn($2); } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS { manager::Funcdef::rightParenthesisTkn(); } block { manager::Fundef::block();
+                                                                                                                                                                                        print_derivation("funcdef", 
+                                                                                                                                                                                        "FUNCTION IDENTIFIER ( idlist ) block");
+                                                                                                                                                                                      }
             ;
 
 const       :   INTEGER { print_derivation("const", "INTEGER"); }
