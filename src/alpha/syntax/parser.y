@@ -18,7 +18,7 @@
     #include <alpha/syntax/manager/nonterminal.h>
     #include <alpha/syntax/manager/terminal.h>
 
-    namespace manager = alpha::syntax::manager::nonterminal;
+    namespace nterm = alpha::syntax::manager::nonterminal;
     namespace terminal = alpha::syntax::manager::terminal;
 }
 
@@ -104,16 +104,16 @@
 %token DOT                  /*| .  |*/
 %token DOUBLE_DOT           /*| .. |*/
 
-%type <manager::Assignexpr>  assignexpr
-%type <manager::Block>       block
-%type <manager::Expr>        expr
-%type <manager::Funcdef>     funcdef
-%type <manager::Idlist>      idlist
-%type <manager::Idlist_opt>  idlist_opt
-%type <manager::Lvalue>      lvalue
-%type <manager::Member>      member
-%type <manager::Primary>     primary
-%type <manager::Term>        term
+%type <nterm::Assignexpr>  assignexpr
+%type <nterm::Block>       block
+%type <nterm::Expr>        expr
+%type <nterm::Funcdef>     funcdef
+%type <nterm::Idlist>      idlist
+%type <nterm::Idlist_opt>  idlist_opt
+%type <nterm::Lvalue>      lvalue
+%type <nterm::Member>      member
+%type <nterm::Primary>     primary
+%type <nterm::Term>        term
 
 
 /* %locations */
@@ -150,125 +150,125 @@ stmt        :   expr SEMICOLON     { print_derivation("stmt", "expr ;"); }
             |   SEMICOLON          { print_derivation("stmt", ";"); }
             ;
 
-expr        :   assignexpr               { $$ = manager::Expr::from_assignexpr();
+expr        :   assignexpr               { $$ = nterm::Expr::from_assignexpr();
                                            print_derivation("expr", "assignexpr");
                                          }
-            |   expr PLUS expr           { $$ = manager::Expr::from_expr_plusTkn_expr($1, $3);
+            |   expr PLUS expr           { $$ = nterm::Expr::from_expr_plusTkn_expr($1, $3);
                                            print_derivation("expr", "expr + expr");
                                          }
-            |   expr MINUS expr          { $$ = manager::Expr::from_expr_minusTkn_expr($1, $3);
+            |   expr MINUS expr          { $$ = nterm::Expr::from_expr_minusTkn_expr($1, $3);
                                            print_derivation("expr", "expr - expr");
                                          }
-            |   expr STAR expr           { $$ = manager::Expr::from_expr_starTkn_expr($1, $3);
+            |   expr STAR expr           { $$ = nterm::Expr::from_expr_starTkn_expr($1, $3);
                                            print_derivation("expr", "expr * expr");
                                          }
-            |   expr DIV expr            { $$ = manager::Expr::from_expr_divTkn_expr($1, $3);
+            |   expr DIV expr            { $$ = nterm::Expr::from_expr_divTkn_expr($1, $3);
                                            print_derivation("expr", "expr / expr");
                                          }
-            |   expr MOD expr            { $$ = manager::Expr::from_expr_modTkn_expr($1, $3);
+            |   expr MOD expr            { $$ = nterm::Expr::from_expr_modTkn_expr($1, $3);
                                            print_derivation("expr", "expr % expr");
                                          }
-            |   expr GREATER expr        { $$ = manager::Expr::from_expr_greaterTkn_expr($1, $3);
+            |   expr GREATER expr        { $$ = nterm::Expr::from_expr_greaterTkn_expr($1, $3);
                                            print_derivation("expr", "expr > expr");
                                          }
-            |   expr GREATER_EQUALS expr { $$ = manager::Expr::from_expr_greaterEqTkn_expr($1, $3);
+            |   expr GREATER_EQUALS expr { $$ = nterm::Expr::from_expr_greaterEqTkn_expr($1, $3);
                                            print_derivation("expr", "expr >= expr");
                                          }
-            |   expr LESS expr           { $$ = manager::Expr::from_expr_lessTkn_expr($1, $3);
+            |   expr LESS expr           { $$ = nterm::Expr::from_expr_lessTkn_expr($1, $3);
                                            print_derivation("expr", "expr < expr");
                                          }
-            |   expr LESS_EQUALS expr    { $$ = manager::Expr::from_expr_lessEqTkn_expr($1, $3);
+            |   expr LESS_EQUALS expr    { $$ = nterm::Expr::from_expr_lessEqTkn_expr($1, $3);
                                            print_derivation("expr", "expr <= expr");
                                          }
-            |   expr EQUALS expr         { $$ = manager::Expr::from_expr_equalsTkn_expr($1, $3);
+            |   expr EQUALS expr         { $$ = nterm::Expr::from_expr_equalsTkn_expr($1, $3);
                                            print_derivation("expr", "expr == expr");
                                          }
-            |   expr NOT_EQUALS expr     { $$ = manager::Expr::from_expr_notEqualsTkn_expr($1, $3);
+            |   expr NOT_EQUALS expr     { $$ = nterm::Expr::from_expr_notEqualsTkn_expr($1, $3);
                                            print_derivation("expr", "expr != expr");
                                          }
-            |   expr AND expr            { $$ = manager::Expr::from_expr_andTkn_expr($1, $3);
+            |   expr AND expr            { $$ = nterm::Expr::from_expr_andTkn_expr($1, $3);
                                            print_derivation("expr", "expr AND expr");
                                          }
-            |   expr OR expr             { $$ = manager::Expr::from_expr_orTkn_expr($1, $3);
+            |   expr OR expr             { $$ = nterm::Expr::from_expr_orTkn_expr($1, $3);
                                            print_derivation("expr", "expr OR expr");
                                          }
-            |   term                     { $$ = manager::Expr::from_term($1);
+            |   term                     { $$ = nterm::Expr::from_term($1);
                                            print_derivation("expr", "term");
                                          }
             ;
 
-term        :   LEFT_PARENTHESIS expr RIGHT_PARENTHESIS { $$ = manager::Term::from_lParTkn_expr_rParTkn($2);
+term        :   LEFT_PARENTHESIS expr RIGHT_PARENTHESIS { $$ = nterm::Term::from_lParTkn_expr_rParTkn($2);
                                                           print_derivation("term", "( expr )");
                                                         }
-            |   MINUS expr                 %prec UMINUS { $$ = manager::Term::from_minusTkn_expr($2);
+            |   MINUS expr                 %prec UMINUS { $$ = nterm::Term::from_minusTkn_expr($2);
                                                           print_derivation("term", "- expr");
                                                         }
-            |   NOT expr                                { $$ = manager::Term::from_notTkn_expr($2);
+            |   NOT expr                                { $$ = nterm::Term::from_notTkn_expr($2);
                                                           print_derivation("term", "NOT expr");
                                                         }
-            |   PLUS_PLUS lvalue                        { $$ = manager::Term::from_plusPlusTkn_lvalue($2);
+            |   PLUS_PLUS lvalue                        { $$ = nterm::Term::from_plusPlusTkn_lvalue($2);
                                                           print_derivation("term", "++ lvalue");
                                                         }
-            |   lvalue PLUS_PLUS                        { $$ = manager::Term::from_lvalue_plusPlusTkn($1);
+            |   lvalue PLUS_PLUS                        { $$ = nterm::Term::from_lvalue_plusPlusTkn($1);
                                                           print_derivation("term", "lvalue ++");
                                                         }
-            |   MINUS_MINUS lvalue                      { $$ = manager::Term::from_minusMinusTkn_lvalue($2);
+            |   MINUS_MINUS lvalue                      { $$ = nterm::Term::from_minusMinusTkn_lvalue($2);
                                                           print_derivation("term", "-- lvalue");
                                                         }
-            |   lvalue MINUS_MINUS                      { $$ = manager::Term::from_lvalue_minusMinusTkn($1);
+            |   lvalue MINUS_MINUS                      { $$ = nterm::Term::from_lvalue_minusMinusTkn($1);
                                                           print_derivation("term", "lvalue --");
                                                         }
-            |   primary                                 { $$ = manager::Term::from_primary($1);
+            |   primary                                 { $$ = nterm::Term::from_primary($1);
                                                           print_derivation("term", "primary");
                                                         }
             ;
 
-assignexpr  :   lvalue ASSIGN expr { $$ = manager::Assignexpr::from_lvalue_assignTkn_expr($1)
+assignexpr  :   lvalue ASSIGN expr { $$ = nterm::Assignexpr::from_lvalue_assignTkn_expr($1)
                                      print_derivation("assignexpr", "lvalue = expr");
                                    }
             ;
 
-primary     :   lvalue                                     { $$ = manager::Primary::from_lvalue($1);
+primary     :   lvalue                                     { $$ = nterm::Primary::from_lvalue($1);
                                                              print_derivation("primary", "lvalue");
                                                            }
-            |   call                                       { $$ = manager::Primary::from_calll();
+            |   call                                       { $$ = nterm::Primary::from_calll();
                                                              print_derivation("primary", "call");
                                                            }
-            |   objectdef                                  { $$ = manager::Primary::from_objectdef();
+            |   objectdef                                  { $$ = nterm::Primary::from_objectdef();
                                                              print_derivation("primary", "objectdef");
                                                            }
-            |   LEFT_PARENTHESIS funcdef RIGHT_PARENTHESIS { $$ = manager::Primary::from_lParTkn_funcdef_rParTkn($2);
+            |   LEFT_PARENTHESIS funcdef RIGHT_PARENTHESIS { $$ = nterm::Primary::from_lParTkn_funcdef_rParTkn($2);
                                                              print_derivation("primary", "( funcdef )");
                                                            }
-            |   const                                      { $$ = manager::Primary::from_const();
+            |   const                                      { $$ = nterm::Primary::from_const();
                                                              print_derivation("primary", "const");
                                                            }
             ;
 
-lvalue      :   IDENTIFIER              { $$ = manager::Lvalue::from_idTkn(terminal::Identifier($1, @1));
+lvalue      :   IDENTIFIER              { $$ = nterm::Lvalue::from_idTkn(terminal::Identifier($1, @1));
                                           print_derivation("lvalue", "IDENTIFIER"); 
                                         }
-            |   LOCAL IDENTIFIER        { $$ = manager::Lvalue::from_localIdTkn(terminal::Identifier($2, @2));
+            |   LOCAL IDENTIFIER        { $$ = nterm::Lvalue::from_localIdTkn(terminal::Identifier($2, @2));
                                           print_derivation("lvalue", "LOCAL IDENTIFIER");
                                         }
-            |   DOUBLE_COLON IDENTIFIER { $$ = manager::Lvalue::from_doubleColonTkn_localIdTkn(terminal::Identifier($2, @2));
+            |   DOUBLE_COLON IDENTIFIER { $$ = nterm::Lvalue::from_doubleColonTkn_localIdTkn(terminal::Identifier($2, @2));
                                           print_derivation("lvalue", ":: IDENTIFIER");
                                         }
-            |   member                  { $$ = manager::Lvalue::from_member();
+            |   member                  { $$ = nterm::Lvalue::from_member();
                                           print_derivation("lvalue", "member");
                                         }
             ;
 
-member      :   lvalue DOT IDENTIFIER                                { $$ = manager::Member::from_lvalue_dotTkn_idTkn($1);
+member      :   lvalue DOT IDENTIFIER                                { $$ = nterm::Member::from_lvalue_dotTkn_idTkn($1);
                                                                        print_derivation("member", "lvalue . IDENTIFIER");
                                                                      }
-            |   lvalue LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET { $$ = manager::Member::from_lvalue_lSqrBrackTkn_expr_rSqrtBrackTkn($1);
+            |   lvalue LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET { $$ = nterm::Member::from_lvalue_lSqrBrackTkn_expr_rSqrtBrackTkn($1);
                                                                        print_derivation("member", "lvalue [ expr ]");
                                                                      }
-            |   call DOT IDENTIFIER                                  { $$ = manager::Member::from_call_dotTkn_idTkn();
+            |   call DOT IDENTIFIER                                  { $$ = nterm::Member::from_call_dotTkn_idTkn();
                                                                        print_derivation("member", "call . IDENTIFIER");
                                                                      }
-            |   call LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET   { $$ = manager::Member::from_call_lSqrBrackTkn_expr_rSqrtBrackTkn();
+            |   call LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET   { $$ = nterm::Member::from_call_lSqrBrackTkn_expr_rSqrtBrackTkn();
                                                                        print_derivation("member", "call [ expr ]");
                                                                      }
             ;
@@ -310,7 +310,7 @@ indexed_opt :   %empty                        { print_derivation("indexed_opt", 
 indexedelem :   LEFT_CURLY_BRACKET expr COLON expr RIGHT_CURLY_BRACKET { print_derivation("indexedelem", "{ expr : expr }"); }
             ;
 
-block       :   LEFT_CURLY_BRACKET { manager::Block::leftCurlyBracketTkn(); } block_opt RIGHT_CURLY_BRACKET { manager::Block::rightCurlyBracketTkn();
+block       :   LEFT_CURLY_BRACKET { nterm::Block::leftCurlyBracketTkn(); } block_opt RIGHT_CURLY_BRACKET { nterm::Block::rightCurlyBracketTkn();
                                                                                                               print_derivation("block", "{ block_opt }");
                                                                                                              }
             ;
@@ -319,10 +319,10 @@ block_opt   :   %empty         { print_derivation("block_opt", "empty"); }
             |   stmt block_opt { print_derivation("block_opt", "stmt block_opt"); }
             ;
 
-funcdef     :   FUNCTION { $$ = manager::Funcdef::from_functionTkn(terminal::Function(@1); } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS { manager::Funcdef::rightParenthesisTkn(); } block                            { manager::Funcdef::block();
+funcdef     :   FUNCTION { $<nterm::Funcdef>$ = nterm::Funcdef::from_functionTkn(terminal::Function(@1); } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS { nterm::Funcdef::rightParenthesisTkn(); } block                            { nterm::Funcdef::block();
                                                                                                                                                                                                                                 print_derivation("funcdef", "FUNCTION ( idlist ) block");
                                                                                                                                                                                                                               }
-            |   FUNCTION IDENTIFIER { $$ = manager::Funcdef::from_functionTkn_identifierTkn(terminal::Identifier($2, @2); } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS { manager::Funcdef::rightParenthesisTkn(); } block { manager::Fundef::block();
+            |   FUNCTION IDENTIFIER { $<nterm::Funcdef>$ = nterm::Funcdef::from_functionTkn_identifierTkn(terminal::Identifier($2, @2); } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS { nterm::Funcdef::rightParenthesisTkn(); } block { nterm::Fundef::block();
                                                                                                                                                                                                                                 print_derivation("funcdef", "FUNCTION IDENTIFIER ( idlist ) block");
                                                                                                                                                                                                                               }
             ;
@@ -336,11 +336,11 @@ const       :   INTEGER { print_derivation("const", "INTEGER"); }
             ;
 
 idlist      :   %empty                                                                                  { print_derivation("idlist", "empty"); }
-            |   IDENTIFIER { manager::Idlist::identifierTkn(terminal::Identifier($1, @1)); } idlist_opt { print_derivation("idlist", "IDENTIFIER idlist_opt"); }
+            |   IDENTIFIER { nterm::Idlist::identifierTkn(terminal::Identifier($1, @1)); } idlist_opt { print_derivation("idlist", "IDENTIFIER idlist_opt"); }
             ;
 
 idlist_opt  :   %empty                                                                                                    { print_derivation("idlist_opt", "empty"); }
-            |   COMMA IDENTIFIER { manager::IdlistOpt::commaTkn_identifierTkn(terminal::Identifier($2, @2)); } idlist_opt { print_derivation("idlist_opt", ", IDENTIFIER idlist"); }
+            |   COMMA IDENTIFIER { nterm::IdlistOpt::commaTkn_identifierTkn(terminal::Identifier($2, @2)); } idlist_opt { print_derivation("idlist_opt", ", IDENTIFIER idlist"); }
             ;
 
 ifstmt      :   IF LEFT_PARENTHESIS expr RIGHT_PARENTHESIS stmt %expect 1 { print_derivation("ifstmt", "IF ( expr ) stmt"); }
