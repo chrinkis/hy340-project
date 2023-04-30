@@ -200,34 +200,28 @@ expr        :   assignexpr               { $$ = manager::Expr::from_assignexpr()
                                          }
             ;
 
-term        :   LEFT_PARENTHESIS expr RIGHT_PARENTHESIS { S_TABLE_FURTHER_SYMBOL_CHECK_NEEDED($2, $$);
+term        :   LEFT_PARENTHESIS expr RIGHT_PARENTHESIS { $$ = manager::Term::from_lParTkn_expr_rParTkn($2);
                                                           print_derivation("term", "( expr )");
                                                         }
-            |   MINUS expr                 %prec UMINUS { S_TABLE_CHECK_FUNCTION_ERRORS($2, "unary \"-\" with");
-                                                          S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   MINUS expr                 %prec UMINUS { $$ = manager::Term::from_minusTkn_expr($2);
                                                           print_derivation("term", "- expr");
                                                         }
-            |   NOT expr                                { S_TABLE_CHECK_FUNCTION_ERRORS($2, "\"NOT\" with");
-                                                          S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   NOT expr                                { $$ = manager::Term::from_notTkn_expr($2);
                                                           print_derivation("term", "NOT expr");
                                                         }
-            |   PLUS_PLUS lvalue                        { S_TABLE_CHECK_FUNCTION_ERRORS($2, "\"++\" with");
-                                                          S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   PLUS_PLUS lvalue                        { $$ = manager::Term::from_plusPlusTkn_lvalue($2);
                                                           print_derivation("term", "++ lvalue");
                                                         }
-            |   lvalue PLUS_PLUS                        { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"++\" with");
-                                                          S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   lvalue PLUS_PLUS                        { $$ = manager::Term::from_lvalue_plusPlusTkn($1);
                                                           print_derivation("term", "lvalue ++");
                                                         }
-            |   MINUS_MINUS lvalue                      { S_TABLE_CHECK_FUNCTION_ERRORS($2, "\"--\" with");
-                                                          S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   MINUS_MINUS lvalue                      { $$ = manager::Term::from_minusMinusTkn_lvalue($2);
                                                           print_derivation("term", "-- lvalue");
                                                         }
-            |   lvalue MINUS_MINUS                      { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"--\" with");
-                                                          S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   lvalue MINUS_MINUS                      { $$ = manager::Term::from_lvalue_minusMinusTkn($1);
                                                           print_derivation("term", "lvalue --");
                                                         }
-            |   primary                                 { S_TABLE_FURTHER_SYMBOL_CHECK_NEEDED($1, $$);
+            |   primary                                 { $$ = manager::Term::from_primary($1);
                                                           print_derivation("term", "primary");
                                                         }
             ;
