@@ -11,7 +11,7 @@ namespace terminal {
 
 class Function {
  private:
-  using Location = location;
+  using Location = alpha::syntax::location;
 
  private:
   const Location location;
