@@ -2,7 +2,8 @@
 #include <alpha/syntax/manager/nonterminal/idlist.h>
 
 using namespace alpha::syntax::manager::nonterminal;
+using alpha::syntax::handlers::symbol::function::add_arg;
 
 void Idlist::identifierTkn(const terminal::Identifier& identifier) {
-  handlers::symbol::function::add_arg(identifier);
+  add_arg(identifier);
 }
