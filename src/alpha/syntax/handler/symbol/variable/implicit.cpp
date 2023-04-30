@@ -5,16 +5,16 @@
 
 namespace alpha::syntax::handlers::symbol::variable {
 
-void ensure_exists(holder::Symbol& symbol_holder, const std::string& name) {
+void ensure_exists(holder::Symbol& symbol_holder,
+                   const manager::terminal::Identifier& id) {
   assert(!symbol_holder.get_symbol());
 
-  auto result_opt = symTable.search_for_visible_symbol(name);
+  auto result_opt = symTable.search_for_visible_symbol(id.get_name());
 
   if (!result_opt) {
-    assert(symTable.can_add_variable(name));
+    assert(symTable.can_add_variable(id.get_name()));
 
-    auto symbol = symTable.add_variable(
-        name, alpha::symbol::Symbol::Location());  // FIXME update location
+    auto symbol = symTable.add_variable(id.get_name(), id.get_location());
 
     symbol_holder.set_symbol(symbol);
 
@@ -26,7 +26,7 @@ void ensure_exists(holder::Symbol& symbol_holder, const std::string& name) {
   if (!result.accessible) {
     std::cerr << SET_COLOR_FOR_ERROR
               << "error trying  to access a variable/function "
-              << "with name \"" << name << "\" that is not "
+              << "with name \"" << id.get_name() << "\" that is not "
               << "accesible" << std::endl
               << RESET_COLOR;
 

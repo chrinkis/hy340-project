@@ -1,6 +1,7 @@
 #pragma once
 
 #include <alpha/syntax/holder/Symbol.h>
+#include <alpha/syntax/manager/terminal/identifier.h>
 
 #include <string>
 
@@ -11,7 +12,7 @@ namespace symbol {
 namespace variable {
 
 void ensure_local_exists(holder::Symbol& symbol_holder,
-                         const std::string& name);
+                         const manager::terminal::Identifier& id);
 
 }  // namespace variable
 }  // namespace symbol
