@@ -1,5 +1,6 @@
 #include <alpha/lex/scanner.h>
 #include <alpha/symbol/table.h>
+#include <alpha/symbol/table_manager.h>
 #include <alpha/syntax/parser.h>
 
 #include <iostream>
@@ -15,7 +16,7 @@ int main() {
 
   parser.parse();
 
-  std::cout << symbol_table << std::endl;
+  std::cout << symTable << std::endl;
 
   return 0;
 }
