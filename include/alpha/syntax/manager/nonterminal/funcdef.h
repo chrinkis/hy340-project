@@ -17,9 +17,9 @@ class Funcdef : public holder::Symbol {
   static Funcdef from_functionTkn_identifierTkn(
       const terminal::Identifier& identifier);
 
-  static Funcdef from_rightParenthesisTkn();
+  static Funcdef rightParenthesisTkn();
 
-  static Funcdef from_block();
+  static Funcdef block();
 };
 
 }  // namespace nonterminal

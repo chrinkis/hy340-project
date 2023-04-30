@@ -24,13 +24,13 @@ Funcdef Funcdef::from_functionTkn_identifierTkn(
   return funcdef;
 }
 
-Funcdef Funcdef::from_rightParenthesisTkn() {
+Funcdef Funcdef::rightParenthesisTkn() {
   end_arg_list();
 
   return Funcdef();
 }
 
-Funcdef Funcdef::from_block() {
+Funcdef Funcdef::block() {
   end();
 
   return Funcdef();
