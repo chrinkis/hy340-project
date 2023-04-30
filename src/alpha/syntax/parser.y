@@ -231,7 +231,7 @@ assignexpr  :   lvalue ASSIGN expr { $$ = nterm::Assignexpr::from_lvalue_assignT
 primary     :   lvalue                                     { $$ = nterm::Primary::from_lvalue($1);
                                                              print_derivation("primary", "lvalue");
                                                            }
-            |   call                                       { $$ = nterm::Primary::from_calll();
+            |   call                                       { $$ = nterm::Primary::from_call();
                                                              print_derivation("primary", "call");
                                                            }
             |   objectdef                                  { $$ = nterm::Primary::from_objectdef();
