@@ -284,18 +284,16 @@ lvalue      :   IDENTIFIER              { S_TABLE_SEARCH_AND_ADD_VAR($1,$$,@1);
                                         }
             ;
 
-member      :   lvalue DOT IDENTIFIER                                { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\".\" with");
-                                                                       S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+member      :   lvalue DOT IDENTIFIER                                { $$ = manager::Member::from_lvalue_dotTkn_idTkn($1);
                                                                        print_derivation("member", "lvalue . IDENTIFIER");
                                                                      }
-            |   lvalue LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET { S_TABLE_CHECK_FUNCTION_ERRORS($1, "\"[]\" with");
-                                                                       S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   lvalue LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET { $$ = manager::Member::from_lvalue_lSqrBrackTkn_expr_rSqrtBrackTkn($1);
                                                                        print_derivation("member", "lvalue [ expr ]");
                                                                      }
-            |   call DOT IDENTIFIER                                  { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   call DOT IDENTIFIER                                  { $$ = manager::Member::from_call_dotTkn_idTkn();
                                                                        print_derivation("member", "call . IDENTIFIER");
                                                                      }
-            |   call LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET   { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   call LEFT_SQUARE_BRACKET expr RIGHT_SQUARE_BRACKET   { $$ = manager::Member::from_call_lSqrBrackTkn_expr_rSqrtBrackTkn();
                                                                        print_derivation("member", "call [ expr ]");
                                                                      }
             ;
