@@ -42,9 +42,6 @@ class Expr : public holder::Symbol {
   static Expr from_expr_orTkn_expr(const Expr& left, const Expr& right);
 
   static Expr from_term(const Term& term);
-
- public:
-  SearchResult get_result() const;
 };
 
 }  // namespace nonterminal
