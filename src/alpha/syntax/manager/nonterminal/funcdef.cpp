@@ -2,16 +2,18 @@
 #include <alpha/syntax/manager/nonterminal/funcdef.h>
 
 using namespace alpha::syntax::manager::nonterminal;
+using alpha::syntax::handlers::symbol::function::end;
+using alpha::syntax::handlers::symbol::function::start;
 
 void Funcdef::functionTkn(const terminal::Function& function) {
-  handlers::symbol::function::start(function);
+  start(function);
 }
 
 void Funcdef::functionTkn_identifierTkn(
     const terminal::Identifier& identifier) {
-  handlers::symbol::function::start(identifier);
+  start(identifier);
 }
 
 void Funcdef::rightParenthesisTkn() {
-  handlers::symbol::function::end();
+  end();
 }
