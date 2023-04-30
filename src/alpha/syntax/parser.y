@@ -156,43 +156,43 @@ stmt        :   expr SEMICOLON     { print_derivation("stmt", "expr ;"); }
 expr        :   assignexpr               { $$ = manager::Expr::from_assignexpr();
                                            print_derivation("expr", "assignexpr");
                                          }
-            |   expr PLUS expr           { $$ = manager::Expr::from_expr_plusTkn_expr($1, $2);
+            |   expr PLUS expr           { $$ = manager::Expr::from_expr_plusTkn_expr($1, $3);
                                            print_derivation("expr", "expr + expr");
                                          }
-            |   expr MINUS expr          { $$ = manager::Expr::from_expr_minusTkn_expr($1, $2);
+            |   expr MINUS expr          { $$ = manager::Expr::from_expr_minusTkn_expr($1, $3);
                                            print_derivation("expr", "expr - expr");
                                          }
-            |   expr STAR expr           { $$ = manager::Expr::from_expr_starTkn_expr($1, $2);
+            |   expr STAR expr           { $$ = manager::Expr::from_expr_starTkn_expr($1, $3);
                                            print_derivation("expr", "expr * expr");
                                          }
-            |   expr DIV expr            { $$ = manager::Expr::from_expr_divTkn_expr($1, $2);
+            |   expr DIV expr            { $$ = manager::Expr::from_expr_divTkn_expr($1, $3);
                                            print_derivation("expr", "expr / expr");
                                          }
-            |   expr MOD expr            { $$ = manager::Expr::from_expr_modTkn_expr($1, $2);
+            |   expr MOD expr            { $$ = manager::Expr::from_expr_modTkn_expr($1, $3);
                                            print_derivation("expr", "expr % expr");
                                          }
-            |   expr GREATER expr        { $$ = manager::Expr::from_expr_greaterTkn_expr($1, $2);
+            |   expr GREATER expr        { $$ = manager::Expr::from_expr_greaterTkn_expr($1, $3);
                                            print_derivation("expr", "expr > expr");
                                          }
-            |   expr GREATER_EQUALS expr { $$ = manager::Expr::from_expr_greaterEqTkn_expr($1, $2);
+            |   expr GREATER_EQUALS expr { $$ = manager::Expr::from_expr_greaterEqTkn_expr($1, $3);
                                            print_derivation("expr", "expr >= expr");
                                          }
-            |   expr LESS expr           { $$ = manager::Expr::from_expr_lessTkn_expr($1, $2);
+            |   expr LESS expr           { $$ = manager::Expr::from_expr_lessTkn_expr($1, $3);
                                            print_derivation("expr", "expr < expr");
                                          }
-            |   expr LESS_EQUALS expr    { $$ = manager::Expr::from_expr_lessEqTkn_expr($1, $2);
+            |   expr LESS_EQUALS expr    { $$ = manager::Expr::from_expr_lessEqTkn_expr($1, $3);
                                            print_derivation("expr", "expr <= expr");
                                          }
-            |   expr EQUALS expr         { $$ = manager::Expr::from_expr_equalsTkn_expr($1, $2);
+            |   expr EQUALS expr         { $$ = manager::Expr::from_expr_equalsTkn_expr($1, $3);
                                            print_derivation("expr", "expr == expr");
                                          }
-            |   expr NOT_EQUALS expr     { $$ = manager::Expr::from_expr_notEqualsTkn_expr($1, $2);
+            |   expr NOT_EQUALS expr     { $$ = manager::Expr::from_expr_notEqualsTkn_expr($1, $3);
                                            print_derivation("expr", "expr != expr");
                                          }
-            |   expr AND expr            { $$ = manager::Expr::from_expr_andTkn_expr($1, $2);
+            |   expr AND expr            { $$ = manager::Expr::from_expr_andTkn_expr($1, $3);
                                            print_derivation("expr", "expr AND expr");
                                          }
-            |   expr OR expr             { $$ = manager::Expr::from_expr_orTkn_expr($1, $2);
+            |   expr OR expr             { $$ = manager::Expr::from_expr_orTkn_expr($1, $3);
                                            print_derivation("expr", "expr OR expr");
                                          }
             |   term                     { $$ = manager::Expr::from_term($1);
