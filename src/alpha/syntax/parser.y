@@ -364,8 +364,8 @@ const       :   INTEGER { print_derivation("const", "INTEGER"); }
             |   FALSE   { print_derivation("const", "FALSE"); }
             ;
 
-idlist      :   %empty                                                        { print_derivation("idlist", "empty"); }
-            |   IDENTIFIER { manager::Idlist::identifierTkn($1); } idlist_opt { print_derivation("idlist", "IDENTIFIER idlist_opt"); }
+idlist      :   %empty                                                                                  { print_derivation("idlist", "empty"); }
+            |   IDENTIFIER { manager::Idlist::identifierTkn(terminal::Identifier($1, @1)); } idlist_opt { print_derivation("idlist", "IDENTIFIER idlist_opt"); }
             ;
 
 idlist_opt  :   %empty                                                  { print_derivation("idlist_opt", "empty"); }
