@@ -270,16 +270,16 @@ primary     :   lvalue                                     { S_TABLE_FURTHER_SYM
                                                            }
             ;
 
-lvalue      :   IDENTIFIER              { S_TABLE_SEARCH_AND_ADD_VAR($1,$$,@1);
+lvalue      :   IDENTIFIER              { $$ = manager::Lvalue::from_idTkn(terminal::Identifier($1, @1));
                                           print_derivation("lvalue", "IDENTIFIER"); 
                                         }
-            |   LOCAL IDENTIFIER        { S_TABLE_SEARCH_AND_ADD_LOCAL_VAR($2,$$,@2);
+            |   LOCAL IDENTIFIER        { $$ = manager::Lvalue::from_localIdTkn(terminal::Identifier($2, @2));
                                           print_derivation("lvalue", "LOCAL IDENTIFIER");
                                         }
-            |   DOUBLE_COLON IDENTIFIER { S_TABLE_SEARCH_GLOBAL_VAR($2,$$);
+            |   DOUBLE_COLON IDENTIFIER { $$ = manager::Lvalue::from_doubleColonTkn_localIdTkn(terminal::Identifier($2, @2));
                                           print_derivation("lvalue", ":: IDENTIFIER");
                                         }
-            |   member                  { S_TABLE_NO_FURTHER_SYMBOL_CHECK_NEEDED($$);
+            |   member                  { $$ = manager::Lvalue::from_member();
                                           print_derivation("lvalue", "member");
                                         }
             ;
