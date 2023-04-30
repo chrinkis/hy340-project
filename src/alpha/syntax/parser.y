@@ -223,7 +223,7 @@ term        :   LEFT_PARENTHESIS expr RIGHT_PARENTHESIS { $$ = nterm::Term::from
                                                         }
             ;
 
-assignexpr  :   lvalue ASSIGN expr { $$ = nterm::Assignexpr::from_lvalue_assignTkn_expr($1)
+assignexpr  :   lvalue ASSIGN expr { $$ = nterm::Assignexpr::from_lvalue_assignTkn_expr($1);
                                      print_derivation("assignexpr", "lvalue = expr");
                                    }
             ;
