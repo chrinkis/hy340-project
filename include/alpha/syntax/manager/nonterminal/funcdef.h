@@ -13,6 +13,7 @@ class Funcdef {
   static void functionTkn(const terminal::Function& function);
   static void functionTkn_identifierTkn(const terminal::Identifier& identifier);
   static void rightParenthesisTkn();
+  static void block();
 };
 
 }  // namespace nonterminal
