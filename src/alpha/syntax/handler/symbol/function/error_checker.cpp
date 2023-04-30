@@ -7,7 +7,7 @@
 using namespace alpha::syntax::handlers::symbol::function;
 namespace holder = alpha::syntax::holder;
 
-void check_for_errors(holder::Symbol& symbol_holder,
+void check_for_errors(const holder::Symbol& symbol_holder,
                       const std::string& description) {
   if (!symbol_holder.get_symbol()) {
     return;

@@ -8,7 +8,7 @@ namespace handlers {
 namespace symbol {
 namespace function {
 
-void add_arg(manager::terminal::Identifier& argument);
+void add_arg(const manager::terminal::Identifier& argument);
 void end_arg_list();
 
 }  // namespace function

@@ -5,7 +5,7 @@
 using namespace alpha::syntax::handlers::symbol::function;
 namespace manager = alpha::syntax::manager;
 
-void add_arg(manager::terminal::Identifier& argument) {
+void add_arg(const manager::terminal::Identifier& argument) {
   if (!symTable.can_add_argument(argument.get_name())) {
     std::cerr << SET_COLOR_FOR_ERROR << "error inserting argument \""
               << argument.get_name() << "\" in Symbol Table" << std::endl

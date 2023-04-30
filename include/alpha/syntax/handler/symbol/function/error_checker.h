@@ -10,7 +10,7 @@ namespace handlers {
 namespace symbol {
 namespace function {
 
-void check_for_errors(holder::Symbol& symbol_holder,
+void check_for_errors(const holder::Symbol& symbol_holder,
                       const std::string& description);
 
 }  // namespace function
