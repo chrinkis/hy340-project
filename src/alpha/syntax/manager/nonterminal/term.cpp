@@ -1,3 +1,7 @@
+#include <alpha/syntax/manager/nonterminal/expr.h>
+#include <alpha/syntax/manager/nonterminal/lvalue.h>
+#include <alpha/syntax/manager/nonterminal/primary.h>
+
 #include <alpha/syntax/handler/symbol/function/error_checker.h>
 #include <alpha/syntax/handler/symbol/symbol.h>
 #include <alpha/syntax/manager/nonterminal/term.h>
