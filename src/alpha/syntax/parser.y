@@ -353,8 +353,8 @@ idlist      :   %empty                                             { print_deriv
             |   IDENTIFIER { S_TABLE_ADD_ARG($1, @1); } idlist_opt { print_derivation("idlist", "IDENTIFIER idlist_opt"); }
             ;
 
-idlist_opt  :   %empty                                                  { print_derivation("idlist_opt", "empty"); }
-            |   COMMA IDENTIFIER { S_TABLE_ADD_ARG($2,@2); } idlist_opt { print_derivation("idlist_opt", ", IDENTIFIER idlist"); }
+idlist_opt  :   %empty                                                                                                    { print_derivation("idlist_opt", "empty"); }
+            |   COMMA IDENTIFIER { manager::IdlistOpt::commaTkn_identifierTkn(terminal::Identifier($2, @2)); } idlist_opt { print_derivation("idlist_opt", ", IDENTIFIER idlist"); }
             ;
 
 ifstmt      :   IF LEFT_PARENTHESIS expr RIGHT_PARENTHESIS stmt %expect 1 { print_derivation("ifstmt", "IF ( expr ) stmt"); }
