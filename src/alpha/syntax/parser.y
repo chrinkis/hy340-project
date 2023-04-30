@@ -319,10 +319,10 @@ block_opt   :   %empty         { print_derivation("block_opt", "empty"); }
             |   stmt block_opt { print_derivation("block_opt", "stmt block_opt"); }
             ;
 
-funcdef     :   FUNCTION { $<nterm::Funcdef>$ = nterm::Funcdef::from_functionTkn(terminal::Function(@1); } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS { nterm::Funcdef::rightParenthesisTkn(); } block                            { nterm::Funcdef::block();
+funcdef     :   FUNCTION { $<nterm::Funcdef>$ = nterm::Funcdef::from_functionTkn(terminal::Function(@1)); } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS { nterm::Funcdef::rightParenthesisTkn(); } block                            { nterm::Funcdef::block();
                                                                                                                                                                                                                                 print_derivation("funcdef", "FUNCTION ( idlist ) block");
                                                                                                                                                                                                                               }
-            |   FUNCTION IDENTIFIER { $<nterm::Funcdef>$ = nterm::Funcdef::from_functionTkn_identifierTkn(terminal::Identifier($2, @2); } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS { nterm::Funcdef::rightParenthesisTkn(); } block { nterm::Fundef::block();
+            |   FUNCTION IDENTIFIER { $<nterm::Funcdef>$ = nterm::Funcdef::from_functionTkn_identifierTkn(terminal::Identifier($2, @2)); } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS { nterm::Funcdef::rightParenthesisTkn(); } block { nterm::Funcdef::block();
                                                                                                                                                                                                                                 print_derivation("funcdef", "FUNCTION IDENTIFIER ( idlist ) block");
                                                                                                                                                                                                                               }
             ;
