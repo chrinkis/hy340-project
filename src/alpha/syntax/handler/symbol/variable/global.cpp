@@ -1,6 +1,7 @@
 #include <alpha/syntax/handler/symbol/variable/global.h>
 
 #include <alpha/symbol/table_manager.h>
+#include <alpha/syntax/error.h>
 
 namespace alpha::syntax::handlers::symbol::variable {
 
@@ -15,6 +16,8 @@ void ensure_global_exists(holder::Symbol& symbol_holder,
               << "error finding global variable or function "
               << "with name \"" << name << "\"" << std::endl
               << RESET_COLOR;
+    error::print_semantic("undefined refference to global variable/function `" +
+                          name + "`");  // TODO add location
 
     return;
   }

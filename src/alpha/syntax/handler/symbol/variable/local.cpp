@@ -1,6 +1,7 @@
 #include <alpha/syntax/handler/symbol/variable/local.h>
 
 #include <alpha/symbol/table_manager.h>
+#include <alpha/syntax/error.h>
 
 #include <cassert>
 
@@ -22,9 +23,10 @@ void ensure_local_exists(holder::Symbol& symbol_holder,
   }
 
   if (!symTable.can_add_local_variable(id.get_name())) {
-    std::cerr << SET_COLOR_FOR_ERROR << "error with local variable \""
-              << id.get_name() << "\" shadowing a library function" << std::endl
-              << RESET_COLOR;
+    error::print_semantic(
+        "can not define local variable with the libray function `" +
+            id.get_name() + "`",
+        id.get_location());
 
     return;
   }

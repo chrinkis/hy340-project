@@ -1,6 +1,7 @@
 #include <alpha/syntax/handler/symbol/variable/implicit.h>
 
 #include <alpha/symbol/table_manager.h>
+#include <alpha/syntax/error.h>
 
 #include <cassert>
 
@@ -25,11 +26,9 @@ void ensure_exists(holder::Symbol& symbol_holder,
   auto result = result_opt.value();
 
   if (!result.accessible) {
-    std::cerr << SET_COLOR_FOR_ERROR
-              << "error trying  to access a variable/function "
-              << "with name \"" << id.get_name() << "\" that is not "
-              << "accesible" << std::endl
-              << RESET_COLOR;
+    error::print_semantic(
+        "can not access variable/function `" + id.get_name() + "`",
+        id.get_location());
 
     return;
   }
