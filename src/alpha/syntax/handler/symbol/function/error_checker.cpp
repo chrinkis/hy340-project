@@ -1,6 +1,7 @@
 #include <alpha/syntax/handler/symbol/function/error_checker.h>
 
 #include <alpha/symbol/table_manager.h>
+#include <alpha/syntax/error.h>
 
 #include <cassert>
 
@@ -21,9 +22,10 @@ void check_for_errors(const holder::Symbol& symbol_holder,
       break;
     case alpha::symbol::Symbol::Type::USER_FUNCTION:
     case alpha::symbol::Symbol::Type::LIBRARY_FUNCTION:
-      std::cerr << SET_COLOR_FOR_ERROR << "error: cannot perform "
-                << description << " a function" << std::endl
-                << RESET_COLOR;
+      error::print_semantic("cannot perform " + description +
+                            " the function `" + symbol->get_name() +
+                            "`");  // TODO use location of error instead of
+                                   // function defintion
       break;
     default:
       assert(0);

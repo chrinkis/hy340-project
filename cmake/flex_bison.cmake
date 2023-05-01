@@ -16,6 +16,9 @@ add_library(flex_and_bison
     # Files Flex and Bison needs
     ${CMAKE_SOURCE_DIR}/src/alpha/token/token.cpp
 
+    # Files Flex needs
+    ${CMAKE_SOURCE_DIR}/src/alpha/lex/error.cpp
+
     # Files Bison needs
     ${CMAKE_SOURCE_DIR}/src/alpha/symbol/function.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/symbol/table.cpp
@@ -23,6 +26,8 @@ add_library(flex_and_bison
     ${CMAKE_SOURCE_DIR}/src/alpha/symbol/variable.cpp
 
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/handler/symbol/symbol.cpp
+
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/error.cpp
 
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/handler/symbol/function/argument.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/handler/symbol/function/definition.cpp

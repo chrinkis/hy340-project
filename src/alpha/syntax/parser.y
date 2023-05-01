@@ -36,17 +36,12 @@
 
     #include <alpha/lex/scanner.h>
     #include <alpha/symbol/table.h>
+    #include <alpha/syntax/error.h>
 
     #undef yylex
     #define yylex scanner.alpha_yylex
 
     static void print_derivation(const std::string&, const std::string&);
-}
-
-/* color codes for defualt and error messages */
-%code {
-#define SET_COLOR_FOR_ERROR "\033[31m"
-#define RESET_COLOR         "\033[0m"
 }
 
 /* The grammar expects 1 shift/reduce conflict (ifstmt) */
@@ -366,5 +361,5 @@ static void print_derivation(const std::string& non_final, const std::string& fi
 void
 alpha::syntax::Parser::error( const location_type &l, const std::string &err_message )
 {
-   std::cerr << SET_COLOR_FOR_ERROR << "Error: " << err_message << " at " << l << std::endl << RESET_COLOR;
+   error::print(err_message, l);
 }
