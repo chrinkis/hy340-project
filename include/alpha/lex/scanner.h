@@ -26,7 +26,7 @@ class Scanner : public yyFlexLexer {
   Status status;
 
  private:
-  void handle_error();
+  bool handle_error(alpha::syntax::Parser::location_type* location);
 
  public:
   Scanner(std::istream& in) : yyFlexLexer(&in){};

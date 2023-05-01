@@ -42,10 +42,10 @@
     assert(STATUS != SUCCESS);\
 \
     this->status = STATUS; \
-    this->handle_error(); \
-\
-    assert(0); \
-    exit(-1); \
+    bool should_terminate = this->handle_error(location); \
+    if (should_terminate) { \
+        yyterminate(); \
+    } \
 }
 
 using namespace alpha::lex;
@@ -106,7 +106,9 @@ real            {integer}\.{integer}
 <ESCAPE_S>"\\"          { custom.contents += "\\";
                           BEGIN(STRING_S);                /* which escaped char? */
                         }
-<ESCAPE_S>.|"\n"        RAISE_ERROR(UNKNOWN_ESCAPE_CHAR);
+<ESCAPE_S>.|"\n"        { RAISE_ERROR(UNKNOWN_ESCAPE_CHAR);
+                          BEGIN(STRING_S);
+                        }
 \"                      { custom.lineno = yylineno;
                           custom.contents = std::string();
                           BEGIN(STRING_S);                /* String literal begins */
@@ -184,10 +186,40 @@ real            {integer}\.{integer}
 %%
 
 
-void Scanner::handle_error() {
-    std::cerr << "\033[91m" << "Error during lexicographic analysis" << std::endl << "\033[0m";
+bool Scanner::handle_error(alpha::syntax::Parser::location_type* location) {
+    bool should_terminate = false;
 
-    // TODO add more info in message
+    std::cerr << "\033[91m";
 
-    exit(-1);
+    switch (this->status) {
+        case SUCCESS:
+            assert(0);
+            break;
+        case NOT_CLOSED_STRING:
+            std::cerr << "Unclossed string";
+            should_terminate = true;
+            break;
+        case NOT_CLOSED_COMMENT:
+            std::cerr << "Unclossed comment";
+            should_terminate = true;
+            break;
+        case UNKNOWN_ESCAPE_CHAR:
+            std::cerr << "Unknown escaped character";
+            break;
+        case UNKNOWN_TOKEN:
+            std::cerr << "Unknown token `" << yytext << "`";
+            break;
+        default:
+            assert(0);
+            std::cerr << "Lexicographic error";
+    };
+
+      std::cerr << " in ("
+                << "line: " << location->begin.line
+                << ", column: " << location->begin.column
+                << ")"
+                << std::endl
+                << "\033[0m";
+
+    return should_terminate;
 }
