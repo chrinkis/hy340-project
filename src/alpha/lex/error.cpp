@@ -1,0 +1,19 @@
+#include <alpha/lex/error.h>
+
+#include <iostream>
+#include <string>
+
+#define ERROR_COLOR "\033[91m"
+#define DEFAULT_COLOR "\033[0m"
+
+namespace alpha::lex::error {
+
+void print(const std::string& message,
+           const alpha::syntax::Parser::location_type& location) {
+  std::cerr << ERROR_COLOR << "lexicographic error, " << message << " at ("
+            << "line: " << location.begin.line
+            << ", column: " << location.begin.column << ")" << std::endl
+            << DEFAULT_COLOR;
+}
+
+}  // namespace alpha::lex::error

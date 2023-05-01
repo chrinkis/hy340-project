@@ -5,6 +5,7 @@
 
 #include <alpha/token/token.h>
 #include <alpha/lex/status.h>
+#include <alpha/lex/error.h>
 
 #include <iostream>
 #include <string>
@@ -189,37 +190,32 @@ real            {integer}\.{integer}
 bool Scanner::handle_error(alpha::syntax::Parser::location_type* location) {
     bool should_terminate = false;
 
-    std::cerr << "\033[91m";
+    std::string message;
 
     switch (this->status) {
         case SUCCESS:
             assert(0);
             break;
         case NOT_CLOSED_STRING:
-            std::cerr << "Unclossed string";
+            message = "unclossed string";
             should_terminate = true;
             break;
         case NOT_CLOSED_COMMENT:
-            std::cerr << "Unclossed comment";
+            message = "unclossed comment";
             should_terminate = true;
             break;
         case UNKNOWN_ESCAPE_CHAR:
-            std::cerr << "Unknown escaped character";
+            message = "unknown escaped character";
             break;
         case UNKNOWN_TOKEN:
-            std::cerr << "Unknown token `" << yytext << "`";
+            message = "unknown token `" + std::string(yytext) + "`";
             break;
         default:
             assert(0);
-            std::cerr << "Lexicographic error";
+            message = "unknown error";
     };
 
-      std::cerr << " in ("
-                << "line: " << location->begin.line
-                << ", column: " << location->begin.column
-                << ")"
-                << std::endl
-                << "\033[0m";
+    error::print(message, *location);
 
     return should_terminate;
 }
