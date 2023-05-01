@@ -149,7 +149,7 @@ Expr Expr::from_expr_orTkn_expr(const Expr& left, const Expr& right) {
 Expr Expr::from_term(const Term& term) {
   Expr expr;
 
-  symbol_handler::stop_checking(expr);
+  symbol_handler::continue_checking(expr, term);
 
   return expr;
 }
