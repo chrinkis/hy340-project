@@ -12,10 +12,6 @@ void ensure_global_exists(holder::Symbol& symbol_holder,
   auto result_opt = symTable.search_for_visible_global_symbol(name);
 
   if (!result_opt) {
-    std::cerr << SET_COLOR_FOR_ERROR
-              << "error finding global variable or function "
-              << "with name \"" << name << "\"" << std::endl
-              << RESET_COLOR;
     error::print_semantic("undefined refference to global variable/function `" +
                           name + "`");  // TODO add location
 
