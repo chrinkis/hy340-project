@@ -11,6 +11,7 @@ namespace symbol {
 class Symbol {
  public:
   using Scope = unsigned int;
+  using Offset = unsigned int;
   using Location = syntax::location;
 
   using SharedPtr = std::shared_ptr<Symbol>;
@@ -23,6 +24,12 @@ class Symbol {
     LIBRARY_FUNCTION,
   };
 
+  enum class ScopeSpace {
+    GLOBAL_VAR,
+    FORMAL_ARG,
+    FUNCTION_LOCAL,
+  };
+
  public:
   virtual std::string get_name() const = 0;
 
@@ -31,6 +38,10 @@ class Symbol {
   virtual Location get_location() const = 0;
 
   virtual Type get_type() const = 0;
+
+  virtual Offset get_offset() const = 0;
+
+  virtual ScopeSpace get_space() const = 0;
 
   virtual Symbol* clone() const = 0;
 };
