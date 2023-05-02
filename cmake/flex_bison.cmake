@@ -23,9 +23,6 @@ add_library(flex_and_bison
     ${CMAKE_SOURCE_DIR}/src/alpha/icode/quad/quad.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/icode/quad/table.cpp
 
-    ${CMAKE_SOURCE_DIR}/src/alpha/icode/expr.cpp
-    ${CMAKE_SOURCE_DIR}/src/alpha/icode/opcode.cpp
-
     ${CMAKE_SOURCE_DIR}/src/alpha/symbol/function.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/symbol/scope_space_manager.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/symbol/table.cpp
