@@ -20,11 +20,11 @@ add_library(flex_and_bison
     ${CMAKE_SOURCE_DIR}/src/alpha/lex/error.cpp
 
     # Files Bison needs
-    ${CMAKE_SOURCE_DIR}/src/alpha/icode/quad/quad.h
-    ${CMAKE_SOURCE_DIR}/src/alpha/icode/quad/table.h
+    ${CMAKE_SOURCE_DIR}/src/alpha/icode/quad/quad.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/icode/quad/table.cpp
 
-    ${CMAKE_SOURCE_DIR}/src/alpha/icode/expr.h
-    ${CMAKE_SOURCE_DIR}/src/alpha/icode/opcode.h
+    ${CMAKE_SOURCE_DIR}/src/alpha/icode/expr.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/icode/opcode.cpp
 
     ${CMAKE_SOURCE_DIR}/src/alpha/symbol/function.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/symbol/scope_space_manager.cpp
