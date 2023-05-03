@@ -170,13 +170,18 @@ Symbol::SharedPtr TableManager::new_temp_variable(
     const Symbol::Location& location) {
   std::string temp_name = this->new_temp_variable_name();
 
-  auto result = this->table.lookup(temp_name, this->current_scope, 0);
+  auto result = this->search_for_visible_symbol(temp_name);
 
-  if (!result) {
-    return this->add_variable(temp_name, location);
+  if (!result || !result->accessible) {
+    using Type = Symbol::Type;
+
+    Type type = this->current_scope ? Type::LOCAL : Type::GLOBAL;
+
+    return this->table.insert(
+        Variable(temp_name, this->current_scope, location, type));
   }
 
-  return result->get_symbol();
+  return result->symbol;
 }
 
 void TableManager::reset_temp_variables() {
