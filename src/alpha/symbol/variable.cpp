@@ -9,8 +9,15 @@ using namespace alpha::symbol;
 Variable::Variable(const std::string& name,
                    Scope scope,
                    const Location& location,
-                   Type type)
-    : name(name), scope(scope), location(location), type(type) {
+                   Type type,
+                   Offset offset,
+                   ScopeSpace scope_space)
+    : name(name),
+      scope(scope),
+      location(location),
+      type(type),
+      offset(offset),
+      scope_space(scope_space) {
   assert(this->type == Type::GLOBAL || this->type == Type::FORMAL ||
          this->type == Type::LOCAL);
 }
@@ -33,4 +40,12 @@ Variable* Variable::clone() const {
 
 Symbol::Type Variable::get_type() const {
   return this->type;
+}
+
+Symbol::Offset Variable::get_offset() const {
+  return this->offset;
+}
+
+Symbol::ScopeSpace Variable::get_space() const {
+  return this->scope_space;
 }
