@@ -17,12 +17,16 @@ class Variable : public Symbol {
   const Scope scope;
   const Location location;
   const Type type;
+  const Offset offset;
+  const ScopeSpace scope_space;
 
  public:
   Variable(const std::string& name,
            Scope scope,
            const Location& location,
-           Type type);
+           Type type,
+           Offset offset,
+           ScopeSpace scope_space);
 
  public:
   std::string get_name() const override;
@@ -34,6 +38,10 @@ class Variable : public Symbol {
   Variable* clone() const override;
 
   Type get_type() const override;
+
+  Offset get_offset() const override;
+
+  ScopeSpace get_space() const override;
 };
 
 }  // namespace symbol
