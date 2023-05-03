@@ -18,8 +18,12 @@ Variable::Variable(const std::string& name,
       type(type),
       offset(offset),
       scope_space(scope_space) {
-  assert(this->type == Type::GLOBAL || this->type == Type::FORMAL ||
-         this->type == Type::LOCAL);
+  assert(this->type == Type::GLOBAL &&
+             this->scope_space == ScopeSpace::GLOBAL_VAR ||
+         this->type == Type::FORMAL &&
+             this->scope_space == ScopeSpace::FORMAL_ARG ||
+         this->type == Type::LOCAL &&
+             this->scope_space == ScopeSpace::FUNCTION_LOCAL);
 }
 
 std::string Variable::get_name() const {
