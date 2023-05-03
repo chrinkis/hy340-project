@@ -29,6 +29,7 @@ class TableManager {
   };
 
   using SearchResultOpt = std::optional<SearchResult>;
+  using Counter = unsigned int;
 
  private:
   Table table;
@@ -37,6 +38,8 @@ class TableManager {
 
   Symbol::Scope current_scope;
   std::stack<Symbol::Scope> max_scope;
+
+  Counter temp_var_counter;
 
  public:
   TableManager();
@@ -64,7 +67,7 @@ class TableManager {
   Symbol::SharedPtr add_local_variable(const std::string& name,
                                        const Symbol::Location& location);
 
-  Symbol::SharedPtr new_temp_variable(const Symbol::Location& location);
+  Symbol::SharedPtr new_temp_variable();
 
   void reset_temp_variables();
 
@@ -82,6 +85,9 @@ class TableManager {
   void add_argument(const std::string& name, const Symbol::Location& location);
 
   void end_argument_list();
+
+ private:
+  std::string new_temp_variable_name();
 
  public:
   friend std::ostream& operator<<(std::ostream& os,
