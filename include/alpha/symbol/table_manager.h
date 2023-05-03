@@ -3,6 +3,7 @@
 #define symTable (alpha::symbol::TableManager::get())
 
 #include <alpha/symbol/function.h>
+#include <alpha/symbol/scope_space_manager.h>
 #include <alpha/symbol/symbol.h>
 #include <alpha/symbol/table.h>
 
@@ -40,6 +41,8 @@ class TableManager {
   std::stack<Symbol::Scope> max_scope;
 
   Counter temp_var_counter;
+
+  ScopeSpaceManager scope_space_manager;
 
  public:
   TableManager();
