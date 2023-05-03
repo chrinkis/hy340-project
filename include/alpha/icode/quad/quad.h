@@ -20,6 +20,17 @@ class Quad {
   Label label;
 
   Line line;
+
+ public:
+  Opcode get_opcode() const;
+
+  Expr::SharedPtr get_result() const;
+  Expr::SharedPtr get_arg1() const;
+  Expr::SharedPtr get_arg2() const;
+
+  Label get_label() const;
+
+  Line get_line() const;
 };
 
 }  // namespace alpha::icode::quad
