@@ -19,12 +19,16 @@ class Function : public Symbol {
   const Location location;
   const Type type;
   std::vector<Symbol::SharedPtr> list_of_args;
+  const Offset offset;
+  const ScopeSpace scope_space;
 
  public:
   Function(const std::string& name,
            Scope scope,
            const Location& location,
-           Type type);
+           Type type,
+           Offset offset,
+           ScopeSpace scope_space);
 
  public:
   std::string get_name() const override;
@@ -38,6 +42,10 @@ class Function : public Symbol {
   Function* clone() const override;
 
   void add_arg(const Symbol::SharedPtr& arg);
+
+  Offset get_offset() const override;
+
+  ScopeSpace get_space() const override;
 };
 
 }  // namespace symbol
