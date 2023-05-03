@@ -33,7 +33,7 @@ const std::unordered_set<std::string>& GET_LIBRARY_FUNCTIONS() {
 
 using namespace alpha::symbol;
 
-TableManager::TableManager() : current_scope(0) {
+TableManager::TableManager() : current_scope(0), temp_var_counter(0) {
   this->max_scope.push(this->current_scope);
 
   for (auto lib_func_name : LIBRARY_FUNCTIONS) {
@@ -166,6 +166,23 @@ Symbol::SharedPtr TableManager::add_local_variable(
       Variable(name, this->current_scope, location, type));
 }
 
+Symbol::SharedPtr TableManager::new_temp_variable(
+    const Symbol::Location& location) {
+  std::string temp_name = this->new_temp_variable_name();
+
+  auto result = this->table.lookup(temp_name, this->current_scope, 0);
+
+  if (!result) {
+    return this->add_variable(temp_name, location);
+  }
+
+  return result->get_symbol();
+}
+
+void TableManager::reset_temp_variables() {
+  this->temp_var_counter = 0;
+}
+
 bool TableManager::can_add_function(const std::string& name) const {
   return !IS_LIBRAY_FUNCTION(name) &&
          !this->table.lookup(name, this->current_scope, this->current_scope);
@@ -238,6 +255,10 @@ void TableManager::end_argument_list() {
 
   this->current_scope--;
   this->current_function = Function::SharedPtr();
+}
+
+std::string TableManager::new_temp_variable_name() {
+  return "$tmp_" + std::to_string(this->temp_var_counter++);
 }
 
 namespace alpha {
