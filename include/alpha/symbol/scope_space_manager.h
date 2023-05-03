@@ -3,6 +3,7 @@
 #include <alpha/symbol/symbol.h>
 
 #include <cassert>
+#include <stack>
 
 namespace alpha::symbol {
 
@@ -14,12 +15,14 @@ class ScopeSpaceManager {
   struct {
     Symbol::Offset global_var;
     Symbol::Offset formal_arg;
-    Symbol::Offset function_local;
-  } ofsset = {0, 0, 0};
+    std::stack<Symbol::Offset> function_local;
+  } ofsset = {0, 0};
 
   Counter scope_space = 1;
 
  public:
+  ScopeSpaceManager();
+
   Symbol::ScopeSpace get_current_scope_space();
   Symbol::Offset get_current_scope_offset();
   void increase_current_scope_offset();
