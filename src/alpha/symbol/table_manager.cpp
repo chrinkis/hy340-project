@@ -166,8 +166,7 @@ Symbol::SharedPtr TableManager::add_local_variable(
       Variable(name, this->current_scope, location, type));
 }
 
-Symbol::SharedPtr TableManager::new_temp_variable(
-    const Symbol::Location& location) {
+Symbol::SharedPtr TableManager::new_temp_variable() {
   std::string temp_name = this->new_temp_variable_name();
 
   auto result = this->search_for_visible_symbol(temp_name);
@@ -178,7 +177,7 @@ Symbol::SharedPtr TableManager::new_temp_variable(
     Type type = this->current_scope ? Type::LOCAL : Type::GLOBAL;
 
     return this->table.insert(
-        Variable(temp_name, this->current_scope, location, type));
+        Variable(temp_name, this->current_scope, Symbol::Location(), type));
   }
 
   return result->symbol;

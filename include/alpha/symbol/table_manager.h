@@ -67,7 +67,7 @@ class TableManager {
   Symbol::SharedPtr add_local_variable(const std::string& name,
                                        const Symbol::Location& location);
 
-  Symbol::SharedPtr new_temp_variable(const Symbol::Location& location);
+  Symbol::SharedPtr new_temp_variable();
 
   void reset_temp_variables();
 
