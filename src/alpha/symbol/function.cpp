@@ -9,8 +9,15 @@ using namespace alpha::symbol;
 Function::Function(const std::string& name,
                    Scope scope,
                    const Location& location,
-                   Type type)
-    : name(name), scope(scope), location(location), type(type) {
+                   Type type,
+                   Offset offset,
+                   ScopeSpace scope_space)
+    : name(name),
+      scope(scope),
+      location(location),
+      type(type),
+      offset(offset),
+      scope_space(scope_space) {
   assert(this->type == Type::LIBRARY_FUNCTION ||
          this->type == Type::USER_FUNCTION);
 }
@@ -39,4 +46,12 @@ void Function::add_arg(const Symbol::SharedPtr& arg) {
   assert(arg);
 
   this->list_of_args.push_back(arg);
+}
+
+Symbol::Offset Function::get_offset() const {
+  return this->offset;
+}
+
+Symbol::ScopeSpace Function::get_space() const {
+  return this->scope_space;
 }
