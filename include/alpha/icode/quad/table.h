@@ -6,13 +6,13 @@
 
 namespace alpha::icode::quad {
 
-class QuadTable {
+class Table {
  private:
   using Collection = std::vector<Quad>;
 
  public:
-  static QuadTable& get() {
-    static QuadTable quad_table;
+  static Table& get() {
+    static Table quad_table;
 
     return quad_table;
   }
