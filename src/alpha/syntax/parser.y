@@ -115,17 +115,17 @@
 
 %start PROGRAM
 
-%right      ASSIGN
+%right      '='
 %left       OR
 %left       AND
-%nonassoc   EQUALS              NOT_EQUALS
-%nonassoc   GREATER             GREATER_EQUALS      LESS        LESS_EQUALS
-%left       PLUS                MINUS
-%left       STAR                DIV                 MOD
-%right      NOT                 PLUS_PLUS           MINUS_MINUS UMINUS
-%left       DOT                 DOUBLE_DOT
-%left       LEFT_SQUARE_BRACKET RIGHT_SQUARE_BRACKET
-%left       LEFT_PARENTHESIS    RIGHT_PARENTHESIS
+%nonassoc   "=="    "!="
+%nonassoc   '>'     ">="    '<'     "<="
+%left       '+'     '-'
+%left       '*'     '/'     '%'
+%right      NOT     "++"    "--"    UMINUS
+%left       '.'     ".."
+%left       '['     ']'
+%left       '('     ')'
 
 %%
 
