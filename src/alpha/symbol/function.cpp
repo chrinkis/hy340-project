@@ -21,7 +21,7 @@ Function::Function(const std::string& name,
   assert(this->type == Type::LIBRARY_FUNCTION ||
          this->type == Type::USER_FUNCTION);
 
-  assert(this->scope_space == ScopeSpace::GLOBAL_VAR ||
+  assert(this->scope_space == ScopeSpace::PROGRAM_VAR ||
          this->scope_space == ScopeSpace::FUNCTION_LOCAL);
 }
 
