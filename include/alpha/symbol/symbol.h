@@ -25,7 +25,7 @@ class Symbol {
   };
 
   enum class ScopeSpace {
-    GLOBAL_VAR,
+    PROGRAM_VAR,
     FORMAL_ARG,
     FUNCTION_LOCAL,
   };

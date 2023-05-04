@@ -8,8 +8,8 @@
 using namespace alpha::symbol;
 
 ScopeSpaceManager::ScopeSpaceManager() {
-  assert(this->ofsset.formal_arg = 0);
-  assert(this->ofsset.global_var = 0);
+  assert(this->ofsset.formal_arg == 0);
+  assert(this->ofsset.global_var == 0);
 
   this->ofsset.function_local.push(0);
 
@@ -20,7 +20,7 @@ Symbol::ScopeSpace ScopeSpaceManager::get_current_scope_space() {
   CHECK_INVARIANTS
 
   if (this->scope_space == 1) {
-    return Symbol::ScopeSpace::GLOBAL_VAR;
+    return Symbol::ScopeSpace::PROGRAM_VAR;
   } else if (this->scope_space % 2 == 0) {
     return Symbol::ScopeSpace::FORMAL_ARG;
   } else {
@@ -34,7 +34,7 @@ Symbol::Offset ScopeSpaceManager::get_current_scope_offset() {
   CHECK_INVARIANTS
 
   switch (get_current_scope_space()) {
-    case Symbol::ScopeSpace::GLOBAL_VAR:
+    case Symbol::ScopeSpace::PROGRAM_VAR:
       return this->ofsset.global_var;
     case Symbol::ScopeSpace::FORMAL_ARG:
       return this->ofsset.formal_arg;
@@ -51,7 +51,7 @@ void ScopeSpaceManager::increase_current_scope_offset() {
   CHECK_INVARIANTS
 
   switch (get_current_scope_space()) {
-    case Symbol::ScopeSpace::GLOBAL_VAR:
+    case Symbol::ScopeSpace::PROGRAM_VAR:
       this->ofsset.global_var++;
       break;
     case Symbol::ScopeSpace::FORMAL_ARG:
@@ -73,7 +73,7 @@ void ScopeSpaceManager::enter_scope_space() {
   this->scope_space++;
 
   switch (this->get_current_scope_space()) {
-    case Symbol::ScopeSpace::GLOBAL_VAR:
+    case Symbol::ScopeSpace::PROGRAM_VAR:
       assert(0);  // No man's land
       break;
     case Symbol::ScopeSpace::FORMAL_ARG:
@@ -94,7 +94,7 @@ void ScopeSpaceManager::exit_scope_space() {
   assert(this->scope_space > 1);
 
   switch (this->get_current_scope_space()) {
-    case Symbol::ScopeSpace::GLOBAL_VAR:
+    case Symbol::ScopeSpace::PROGRAM_VAR:
       assert(0);
     case Symbol::ScopeSpace::FORMAL_ARG:
       this->ofsset.formal_arg = 0;
