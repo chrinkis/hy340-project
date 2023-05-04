@@ -7,9 +7,9 @@ namespace syntax {
 namespace manager {
 namespace nonterminal {
 
-class IdlistOpt {
+class IdlistId {
  public:
-  static void commaTkn_identifierTkn(const terminal::Identifier& identifier);
+  static void identifierTkn(const terminal::Identifier& identifier);
 };
 
 }  // namespace nonterminal
