@@ -12,6 +12,16 @@
 #define IS_LIBRAY_FUNCTION(name) \
   (LIBRARY_FUNCTIONS.find(name) != LIBRARY_FUNCTIONS.cend())
 
+#define VARIABLE(name, scope, location, type)                    \
+  Variable(name, scope, location, type,                          \
+           this->scope_space_manager.get_current_scope_offset(), \
+           this->scope_space_manager.get_current_scope_space())
+
+#define FUNCTION(name, scope, location, type)                    \
+  Function(name, scope, location, type,                          \
+           this->scope_space_manager.get_current_scope_offset(), \
+           this->scope_space_manager.get_current_scope_space())
+
 const std::unordered_set<std::string>& GET_LIBRARY_FUNCTIONS() {
   static const std::unordered_set<std::string> library_functions = {
       "print",
@@ -37,7 +47,7 @@ TableManager::TableManager() : current_scope(0), temp_var_counter(0) {
   this->max_scope.push(this->current_scope);
 
   for (auto lib_func_name : LIBRARY_FUNCTIONS) {
-    this->table.insert(Function(lib_func_name, 0, Symbol::Location(),
+    this->table.insert(FUNCTION(lib_func_name, 0, Symbol::Location(),
                                 Symbol::Type::LIBRARY_FUNCTION));
   }
 
@@ -145,7 +155,7 @@ Symbol::SharedPtr TableManager::add_variable(const std::string& name,
   Type type = this->current_scope ? Type::LOCAL : Type::GLOBAL;
 
   return this->table.insert(
-      Variable(name, this->current_scope, location, type));
+      VARIABLE(name, this->current_scope, location, type));
 }
 
 bool TableManager::can_add_local_variable(const std::string& name) const {
@@ -163,7 +173,7 @@ Symbol::SharedPtr TableManager::add_local_variable(
   Type type = this->current_scope ? Type::LOCAL : Type::GLOBAL;
 
   return this->table.insert(
-      Variable(name, this->current_scope, location, type));
+      VARIABLE(name, this->current_scope, location, type));
 }
 
 Symbol::SharedPtr TableManager::new_temp_variable() {
@@ -177,7 +187,7 @@ Symbol::SharedPtr TableManager::new_temp_variable() {
     Type type = this->current_scope ? Type::LOCAL : Type::GLOBAL;
 
     return this->table.insert(
-        Variable(temp_name, this->current_scope, Symbol::Location(), type));
+        VARIABLE(temp_name, this->current_scope, Symbol::Location(), type));
   }
 
   return result->symbol;
@@ -208,7 +218,7 @@ Symbol::SharedPtr TableManager::start_function(
   using Type = Symbol::Type;
 
   Function function =
-      Function(name, this->current_scope, location, Type::USER_FUNCTION);
+      FUNCTION(name, this->current_scope, location, Type::USER_FUNCTION);
 
   Symbol::SharedPtr symbol = this->table.insert(function);
 
@@ -247,7 +257,7 @@ void TableManager::add_argument(const std::string& name,
   using Type = Symbol::Type;
 
   Symbol::SharedPtr arg = this->table.insert(
-      Variable(name, this->current_scope, location, Type::FORMAL));
+      VARIABLE(name, this->current_scope, location, Type::FORMAL));
 
   assert(arg);
 
