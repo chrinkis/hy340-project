@@ -20,6 +20,9 @@ Function::Function(const std::string& name,
       scope_space(scope_space) {
   assert(this->type == Type::LIBRARY_FUNCTION ||
          this->type == Type::USER_FUNCTION);
+
+  assert(this->scope_space == ScopeSpace::GLOBAL_VAR ||
+         this->scope_space == ScopeSpace::FUNCTION_LOCAL);
 }
 
 std::string Function::get_name() const {
