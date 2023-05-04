@@ -48,7 +48,10 @@ add_library(flex_and_bison
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/block_close.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/block_open.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/expr.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/funcargs.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/funcbody.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/funcdef.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/funcprefix.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/idlist.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/idlist_opt.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/lvalue.cpp

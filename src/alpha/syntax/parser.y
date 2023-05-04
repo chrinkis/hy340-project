@@ -104,6 +104,7 @@
 %type <nterm::BlockOpen>   block_open
 %type <nterm::Expr>        expr
 %type <nterm::Funcdef>     funcdef
+%type <nterm::Funcprefix>  funcprefix
 %type <nterm::Idlist>      idlist
 %type <nterm::IdlistOpt>  idlist_opt
 %type <nterm::Lvalue>      lvalue
@@ -322,12 +323,27 @@ block_close : RIGHT_CURLY_BRACKET { nterm::BlockClose::rightCurlyBracketTkn();
                                   }
             ;
 
-funcdef     :   FUNCTION { $<nterm::Funcdef>$ = nterm::Funcdef::from_functionTkn(terminal::Function(@1)); } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS { nterm::Funcdef::rightParenthesisTkn(); } block                            { nterm::Funcdef::block();
-                                                                                                                                                                                                                                print_derivation("funcdef", "FUNCTION ( idlist ) block");
-                                                                                                                                                                                                                              }
-            |   FUNCTION IDENTIFIER { $<nterm::Funcdef>$ = nterm::Funcdef::from_functionTkn_identifierTkn(terminal::Identifier($2, @2)); } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS { nterm::Funcdef::rightParenthesisTkn(); } block { nterm::Funcdef::block();
-                                                                                                                                                                                                                                print_derivation("funcdef", "FUNCTION IDENTIFIER ( idlist ) block");
-                                                                                                                                                                                                                              }
+funcdef     :   funcprefix funcargs funcbody { $$ = nterm::Funcdef::from_funcprefix_funcargs_funcbody($1);
+                                               print_derivation("funcdef", "funcprefix funcargs funcbody");
+                                             }
+            ;
+
+funcprefix  :   FUNCTION            { $$ = nterm::Funcprefix::from_functionTkn(terminal::Function(@1));
+                                      print_derivation("funcprefix", "FUNCTION");
+                                    }
+            |   FUNCTION IDENTIFIER { $$ = nterm::Funcprefix::from_functionTkn_identifierTkn(terminal::Identifier($2, @2));
+                                      print_derivation("funcprefix", "FUNCTION IDENTIFIER");
+                                    }
+            ;
+
+funcargs    :   LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS { nterm::Funcargs::lParTkn_idlist_rParTkn();
+                                                            print_derivation("funcargs", "( idlist )");
+                                                          }
+            ;
+
+funcbody    :   block { nterm::Funcbody::block();
+                        print_derivation("funcbody", "block");
+                      }
             ;
 
 const       :   INTEGER { print_derivation("const", "INTEGER"); }
