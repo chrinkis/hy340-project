@@ -142,7 +142,7 @@ stmt        :   expr ';'     { print_derivation("stmt", "expr ;"); }
             |   CONTINUE ';' { print_derivation("stmt", "CONTINUE ;"); }
             |   block              { print_derivation("stmt", "block"); }
             |   funcdef            { print_derivation("stmt", "funcdef"); }
-            |   ';'          { print_derivation("stmt", ';'); }
+            |   ';'          { print_derivation("stmt", ";"); }
             ;
 
 expr        :   assignexpr               { $$ = nterm::Expr::from_assignexpr();
@@ -308,7 +308,7 @@ indexedelem :   '{' expr ':' expr '}' { print_derivation("indexedelem", "{ expr 
 block       :   block_open block_body block_close { print_derivation("block", "block_open block_body block_close"); }
 
 block_open  :   '{' { nterm::BlockOpen::leftCurlyBracketTkn();
-                                     print_derivation("block_open", '{');
+                                     print_derivation("block_open", "{");
                                    }
             ;
 
@@ -317,7 +317,7 @@ block_body  :   %empty          { print_derivation("block_body", "empty"); }
             ;
 
 block_close : '}' { nterm::BlockClose::rightCurlyBracketTkn();
-                                    print_derivation("block_close", '}');
+                                    print_derivation("block_close", "}");
                                   }
             ;
 
