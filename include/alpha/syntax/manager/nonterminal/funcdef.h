@@ -1,7 +1,6 @@
 #pragma once
 
-#include <alpha/syntax/manager/terminal/function.h>
-#include <alpha/syntax/manager/terminal/identifier.h>
+#include <alpha/syntax/manager/nonterminal/funcprefix.h>
 
 #include <alpha/syntax/holder/Symbol.h>
 
@@ -12,14 +11,8 @@ namespace nonterminal {
 
 class Funcdef : public holder::Symbol {
  public:
-  static Funcdef from_functionTkn(const terminal::Function& function);
-
-  static Funcdef from_functionTkn_identifierTkn(
-      const terminal::Identifier& identifier);
-
-  static Funcdef rightParenthesisTkn();
-
-  static Funcdef block();
+  static Funcdef from_funcprefix_funcargs_funcbody(
+      const Funcprefix& funcprefix);
 };
 
 }  // namespace nonterminal
