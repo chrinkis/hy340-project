@@ -2,7 +2,7 @@
 
 namespace alpha::icode::quad {
 
-void QuadTable::emit(const Quad& quad) {
+void Table::emit(const Quad& quad) {
   this->table.push_back(quad);
 }
 
