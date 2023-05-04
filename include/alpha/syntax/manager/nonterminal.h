@@ -8,8 +8,7 @@
 #include <alpha/syntax/manager/nonterminal/funcbody.h>
 #include <alpha/syntax/manager/nonterminal/funcdef.h>
 #include <alpha/syntax/manager/nonterminal/funcprefix.h>
-#include <alpha/syntax/manager/nonterminal/idlist.h>
-#include <alpha/syntax/manager/nonterminal/idlist_opt.h>
+#include <alpha/syntax/manager/nonterminal/idlist_id.h>
 #include <alpha/syntax/manager/nonterminal/lvalue.h>
 #include <alpha/syntax/manager/nonterminal/member.h>
 #include <alpha/syntax/manager/nonterminal/primary.h>

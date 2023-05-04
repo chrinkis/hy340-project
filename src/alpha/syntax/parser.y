@@ -105,8 +105,6 @@
 %type <nterm::Expr>        expr
 %type <nterm::Funcdef>     funcdef
 %type <nterm::Funcprefix>  funcprefix
-%type <nterm::Idlist>      idlist
-%type <nterm::IdlistOpt>  idlist_opt
 %type <nterm::Lvalue>      lvalue
 %type <nterm::Member>      member
 %type <nterm::Primary>     primary
@@ -354,12 +352,17 @@ const       :   INTEGER { print_derivation("const", "INTEGER"); }
             |   FALSE   { print_derivation("const", "FALSE"); }
             ;
 
-idlist      :   %empty                                                                                  { print_derivation("idlist", "empty"); }
-            |   IDENTIFIER { nterm::Idlist::identifierTkn(terminal::Identifier($1, @1)); } idlist_opt { print_derivation("idlist", "IDENTIFIER idlist_opt"); }
+idlist      :   %empty               { print_derivation("idlist", "empty"); }
+            |   idlist_id idlist_opt { print_derivation("idlist", "idlist_id idlist_opt"); }
             ;
 
-idlist_opt  :   %empty                                                                                                    { print_derivation("idlist_opt", "empty"); }
-            |   COMMA IDENTIFIER { nterm::IdlistOpt::commaTkn_identifierTkn(terminal::Identifier($2, @2)); } idlist_opt { print_derivation("idlist_opt", ", IDENTIFIER idlist"); }
+idlist_id   :   IDENTIFIER { nterm::IdlistId::identifierTkn(terminal::Identifier($1, @1));
+                             print_derivation("idlist_id", "IDENTIFIER");
+                           }
+            ;
+
+idlist_opt  :   %empty                     { print_derivation("idlist_opt", "empty"); }
+            |   idlist_id COMMA idlist_opt { print_derivation("idlist_opt", "idlist_id , idlist_opt"); }
             ;
 
 ifstmt      :   IF LEFT_PARENTHESIS expr RIGHT_PARENTHESIS stmt %expect 1 { print_derivation("ifstmt", "IF ( expr ) stmt"); }
