@@ -52,7 +52,7 @@
 
 %token END_OF_FILE 0 "end of file"
 %token <int> INTEGER
-%token <float> FLOAT
+%token <double> FLOAT
 %token <std::string> STRING
 %token <std::string> IDENTIFIER
 %token ONE_LINE_COMMENT

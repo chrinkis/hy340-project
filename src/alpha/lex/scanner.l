@@ -117,7 +117,7 @@ real            {integer}\.{integer}
 
 {newline}               UPDATE_LOCATION_LINES;
 {whitespaces}           /* ignore whitespaces */
-{real}                  lval->emplace<float>(std::stof(yytext)); RETURN_TOKEN(category::FLOAT);
+{real}                  lval->emplace<double>(std::stof(yytext)); RETURN_TOKEN(category::FLOAT);
 "="                     RETURN_TOKEN(category::ASSIGN)
 "+"                     RETURN_TOKEN(category::PLUS)
 "-"                     RETURN_TOKEN(category::MINUS)
