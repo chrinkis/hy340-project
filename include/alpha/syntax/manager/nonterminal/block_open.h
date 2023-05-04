@@ -5,10 +5,9 @@ namespace syntax {
 namespace manager {
 namespace nonterminal {
 
-class Block {
+class BlockOpen {
  public:
   static void leftCurlyBracketTkn();
-  static void rightCurlyBracketTkn();
 };
 
 }  // namespace nonterminal

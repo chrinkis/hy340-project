@@ -100,7 +100,8 @@
 %token DOUBLE_DOT           /*| .. |*/
 
 %type <nterm::Assignexpr>  assignexpr
-%type <nterm::Block>       block
+%type <nterm::BlockClose>  block_close
+%type <nterm::BlockOpen>   block_open
 %type <nterm::Expr>        expr
 %type <nterm::Funcdef>     funcdef
 %type <nterm::Idlist>      idlist
@@ -305,13 +306,20 @@ indexed_opt :   %empty                        { print_derivation("indexed_opt", 
 indexedelem :   LEFT_CURLY_BRACKET expr COLON expr RIGHT_CURLY_BRACKET { print_derivation("indexedelem", "{ expr : expr }"); }
             ;
 
-block       :   LEFT_CURLY_BRACKET { nterm::Block::leftCurlyBracketTkn(); } block_opt RIGHT_CURLY_BRACKET { nterm::Block::rightCurlyBracketTkn();
-                                                                                                              print_derivation("block", "{ block_opt }");
-                                                                                                             }
+block       :   block_open block_body block_close { print_derivation("block", "block_open block_body block_close"); }
+
+block_open  :   LEFT_CURLY_BRACKET { nterm::BlockOpen::leftCurlyBracketTkn();
+                                     print_derivation("block_open", "{");
+                                   }
             ;
 
-block_opt   :   %empty         { print_derivation("block_opt", "empty"); }
-            |   stmt block_opt { print_derivation("block_opt", "stmt block_opt"); }
+block_body  :   %empty          { print_derivation("block_body", "empty"); }
+            |   stmt block_body { print_derivation("block_body", "stmt block_body"); }
+            ;
+
+block_close : RIGHT_CURLY_BRACKET { nterm::BlockClose::rightCurlyBracketTkn();
+                                    print_derivation("block_close", "}");
+                                  }
             ;
 
 funcdef     :   FUNCTION { $<nterm::Funcdef>$ = nterm::Funcdef::from_functionTkn(terminal::Function(@1)); } LEFT_PARENTHESIS idlist RIGHT_PARENTHESIS { nterm::Funcdef::rightParenthesisTkn(); } block                            { nterm::Funcdef::block();
