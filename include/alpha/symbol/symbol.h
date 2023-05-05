@@ -3,6 +3,7 @@
 #include <alpha/syntax/location.h>
 
 #include <memory>
+#include <ostream>
 #include <string>
 
 namespace alpha {
@@ -44,6 +45,8 @@ class Symbol {
   virtual ScopeSpace get_space() const = 0;
 
   virtual Symbol* clone() const = 0;
+
+  friend std::ostream& operator<<(std::ostream& os, const Symbol& symbol);
 };
 
 }  // namespace symbol

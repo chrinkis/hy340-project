@@ -4,11 +4,14 @@
 #include <alpha/symbol/variable.h>
 
 #include <cassert>
-#include <iomanip>
 #include <iostream>
 #include <sstream>
 
 #define pairOf(symbol) (Pair(symbol.get_name(), Entry(symbol.clone())))
+
+#define FG_COLOR "\x1B[30m"
+#define BG_COLOR "\x1B[42m"
+#define DEFAULT_COLOR "\033[0m"
 
 using namespace alpha::symbol;
 
@@ -77,12 +80,9 @@ namespace alpha {
 namespace symbol {
 
 std::ostream& operator<<(std::ostream& os, const Table& st) {
-  auto ident = [](int w = 26) { return std::setw(w); };
-
   os << std::left;
 
-  os << "\x1B[42m";
-  os << "\x1B[30m";
+  os << FG_COLOR << BG_COLOR;
   os << std::endl;
 
   for (Symbol::Scope scope = 0; scope < st.per_scope_map.size(); scope++) {
@@ -93,48 +93,13 @@ std::ostream& operator<<(std::ostream& os, const Table& st) {
     for (auto pair : map) {
       Symbol::SharedPtr symbol = pair.second.get_symbol();
 
-      os << ident();
-      os << "\"" + symbol->get_name() + "\"";
-
-      os << ident();
-      switch (symbol->get_type()) {
-        case Symbol::Type::GLOBAL:
-          os << "[global variable]";
-          break;
-        case Symbol::Type::LOCAL:
-          os << "[local variable]";
-          break;
-        case Symbol::Type::FORMAL:
-          os << "[formal argument]";
-          break;
-        case Symbol::Type::USER_FUNCTION:
-          os << "[user function]";
-          break;
-        case Symbol::Type::LIBRARY_FUNCTION:
-          os << "[library function]";
-          break;
-        default:
-          assert(0);
-      }
-
-      os << ident();
-      std::stringstream location;
-      location << "(line " << symbol->get_location().begin.line << ')';
-      os << location.str();
-
-      os << ident();
-      os << "(scope " + std::to_string(symbol->get_scope()) + ')';
-
-      os << ident();
-      os << "{active " + std::to_string(pair.second.get_is_active()) + '}';
-
-      os << std::endl;
+      os << *symbol << std::endl;
     }
 
     os << std::endl;
   }
 
-  os << "\033[0m\t\t";
+  os << DEFAULT_COLOR;
 
   return os;
 }
