@@ -25,6 +25,7 @@ add_library(flex_and_bison
 
     ${CMAKE_SOURCE_DIR}/src/alpha/symbol/function.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/symbol/scope_space_manager.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/symbol/symbol.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/symbol/table.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/symbol/table_manager.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/symbol/variable.cpp
