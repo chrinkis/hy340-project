@@ -313,9 +313,9 @@ block_body  :   %empty          { print_derivation("block_body", "empty"); }
             |   stmt block_body { print_derivation("block_body", "stmt block_body"); }
             ;
 
-block_close : "}" { nterm::BlockClose::rightCurlyBracketTkn();
-                    print_derivation("block_close", "}");
-                  }
+block_close :   "}" { nterm::BlockClose::rightCurlyBracketTkn();
+                      print_derivation("block_close", "}");
+                    }
             ;
 
 funcdef     :   funcprefix funcargs funcbody { $$ = nterm::Funcdef::from_funcprefix_funcargs_funcbody($1);
