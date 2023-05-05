@@ -385,8 +385,7 @@ static void print_derivation(const std::string& non_final, const std::string& fi
     std::cout << non_final << "\t\t -> \t" << final << std::endl;
 }
 
-void
-alpha::syntax::Parser::error( const location_type &l, const std::string &err_message )
+void alpha::syntax::Parser::error( const location_type &l, const std::string &err_message )
 {
    error::print(err_message, l);
 }
