@@ -110,9 +110,6 @@
 %type <nterm::Primary>     primary
 %type <nterm::Term>        term
 
-
-/* %locations */
-
 %start PROGRAM
 
 %right      ASSIGN
