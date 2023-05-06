@@ -11,8 +11,4 @@ void continue_checking(holder::Symbol& symbol_holder,
   symbol_holder.set_symbol(previous.get_symbol());
 }
 
-void stop_checking(holder::Symbol& symbol_holder) {
-  symbol_holder.set_symbol(holder::Symbol::Optional());
-}
-
 }  // namespace alpha::syntax::handlers::symbol

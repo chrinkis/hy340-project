@@ -36,7 +36,5 @@ Lvalue Lvalue::from_doubleColonTkn_localIdTkn(const Identifier& identifier) {
 Lvalue Lvalue::from_member() {
   Lvalue lvalue;
 
-  symbol_handler::stop_checking(lvalue);
-
   return lvalue;
 }

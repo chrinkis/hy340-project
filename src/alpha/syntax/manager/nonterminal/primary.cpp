@@ -18,15 +18,11 @@ Primary Primary::from_lvalue(const Lvalue& lvalue) {
 Primary Primary::from_call() {
   Primary primary;
 
-  symbol_handler::stop_checking(primary);
-
   return primary;
 }
 
 Primary Primary::from_objectdef() {
   Primary primary;
-
-  symbol_handler::stop_checking(primary);
 
   return primary;
 }
@@ -41,8 +37,6 @@ Primary Primary::from_lParTkn_funcdef_rParTkn(const Funcdef& funcdef) {
 
 Primary Primary::from_const() {
   Primary primary;
-
-  symbol_handler::stop_checking(primary);
 
   return primary;
 }

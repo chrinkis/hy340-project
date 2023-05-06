@@ -11,8 +11,6 @@ namespace function_handler = alpha::syntax::handlers::symbol::function;
 Expr Expr::from_assignexpr() {
   Expr expr;
 
-  symbol_handler::stop_checking(expr);
-
   return expr;
 }
 
@@ -21,7 +19,6 @@ Expr Expr::from_expr_plusTkn_expr(const Expr& left, const Expr& right) {
 
   function_handler::check_for_errors(left, "\"+\" with");
   function_handler::check_for_errors(right, "\"+\" with");
-  symbol_handler::stop_checking(expr);
 
   return expr;
 }
@@ -31,7 +28,6 @@ Expr Expr::from_expr_minusTkn_expr(const Expr& left, const Expr& right) {
 
   function_handler::check_for_errors(left, "\"-\" with");
   function_handler::check_for_errors(right, "\"-\" with");
-  symbol_handler::stop_checking(expr);
 
   return expr;
 }
@@ -41,7 +37,6 @@ Expr Expr::from_expr_starTkn_expr(const Expr& left, const Expr& right) {
 
   function_handler::check_for_errors(left, "\"*\" with");
   function_handler::check_for_errors(right, "\"*\" with");
-  symbol_handler::stop_checking(expr);
 
   return expr;
 }
@@ -51,7 +46,6 @@ Expr Expr::from_expr_divTkn_expr(const Expr& left, const Expr& right) {
 
   function_handler::check_for_errors(left, "\"/\" with");
   function_handler::check_for_errors(right, "\"/\" with");
-  symbol_handler::stop_checking(expr);
 
   return expr;
 }
@@ -61,7 +55,6 @@ Expr Expr::from_expr_modTkn_expr(const Expr& left, const Expr& right) {
 
   function_handler::check_for_errors(left, "\"%\" with");
   function_handler::check_for_errors(right, "\"%\" with");
-  symbol_handler::stop_checking(expr);
 
   return expr;
 }
@@ -71,7 +64,6 @@ Expr Expr::from_expr_greaterTkn_expr(const Expr& left, const Expr& right) {
 
   function_handler::check_for_errors(left, "\">\" with");
   function_handler::check_for_errors(right, "\">\" with");
-  symbol_handler::stop_checking(expr);
 
   return expr;
 }
@@ -81,7 +73,6 @@ Expr Expr::from_expr_greaterEqTkn_expr(const Expr& left, const Expr& right) {
 
   function_handler::check_for_errors(left, "\">=\" with");
   function_handler::check_for_errors(right, "\">=\" with");
-  symbol_handler::stop_checking(expr);
 
   return expr;
 }
@@ -91,7 +82,6 @@ Expr Expr::from_expr_lessTkn_expr(const Expr& left, const Expr& right) {
 
   function_handler::check_for_errors(left, "\"<\" with");
   function_handler::check_for_errors(right, "\"<\" with");
-  symbol_handler::stop_checking(expr);
 
   return expr;
 }
@@ -101,7 +91,6 @@ Expr Expr::from_expr_lessEqTkn_expr(const Expr& left, const Expr& right) {
 
   function_handler::check_for_errors(left, "\"<=\" with");
   function_handler::check_for_errors(right, "\"<=\" with");
-  symbol_handler::stop_checking(expr);
 
   return expr;
 }
@@ -111,7 +100,6 @@ Expr Expr::from_expr_equalsTkn_expr(const Expr& left, const Expr& right) {
 
   function_handler::check_for_errors(left, "\"==\" with");
   function_handler::check_for_errors(right, "\"==\" with");
-  symbol_handler::stop_checking(expr);
 
   return expr;
 }
@@ -121,7 +109,6 @@ Expr Expr::from_expr_notEqualsTkn_expr(const Expr& left, const Expr& right) {
 
   function_handler::check_for_errors(left, "\"!=\" with");
   function_handler::check_for_errors(right, "\"!=\" with");
-  symbol_handler::stop_checking(expr);
 
   return expr;
 }
@@ -131,7 +118,6 @@ Expr Expr::from_expr_andTkn_expr(const Expr& left, const Expr& right) {
 
   function_handler::check_for_errors(left, "\"AND\" with");
   function_handler::check_for_errors(right, "\"AND\" with");
-  symbol_handler::stop_checking(expr);
 
   return expr;
 }
@@ -141,7 +127,6 @@ Expr Expr::from_expr_orTkn_expr(const Expr& left, const Expr& right) {
 
   function_handler::check_for_errors(left, "\"OR\" with");
   function_handler::check_for_errors(right, "\"OR\" with");
-  symbol_handler::stop_checking(expr);
 
   return expr;
 }
