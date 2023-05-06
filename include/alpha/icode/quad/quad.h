@@ -26,6 +26,7 @@ class Quad {
     IF_GREATEREQ,
     IF_LESS,
     IF_GREATER,
+    JUMP,
     CALL,
     PARAM,
     RET,
