@@ -13,7 +13,7 @@ std::ostream& operator<<(std::ostream& os, const Table& qt) {
     os << quad << std::endl;
   }
 
-  return os << qt.table.size();
+  return os;
 }
 
 }  // namespace alpha::icode::quad
