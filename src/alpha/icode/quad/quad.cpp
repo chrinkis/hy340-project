@@ -7,23 +7,23 @@ Opcode Quad::get_opcode() const {
 }
 
 Expr Quad::get_result() const {
-  return this->result;
+  return this->result.value();
 }
 
 Expr Quad::get_arg1() const {
-  return this->arg1;
+  return this->arg1.value();
 }
 
 Expr Quad::get_arg2() const {
-  return this->arg2;
+  return this->arg2.value();
 }
 
 Quad::Label Quad::get_label() const {
-  return this->label;
+  return this->label.value();
 }
 
 Quad::Line Quad::get_line() const {
-  return this->line;
+  return this->line.value();
 }
 
 }  // namespace alpha::icode::quad

@@ -3,6 +3,8 @@
 #include <alpha/icode/expr.h>
 #include <alpha/icode/opcode.h>
 
+#include <optional>
+
 namespace alpha::icode::quad {
 
 class Quad {
@@ -13,13 +15,13 @@ class Quad {
  private:
   Opcode opcode;
 
-  Expr result;
-  Expr arg1;
-  Expr arg2;
+  std::optional<Expr> result;
+  std::optional<Expr> arg1;
+  std::optional<Expr> arg2;
 
-  Label label;
+  std::optional<Label> label;
 
-  Line line;
+  std::optional<Line> line;
 
  public:
   Opcode get_opcode() const;
