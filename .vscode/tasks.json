@@ -46,6 +46,22 @@
             ]
         },
         {
+            "label": "icode: build",
+            "type": "shell",
+            "command": "cd build && make icode",
+            "dependsOn": [
+                "cmake"
+            ]
+        },
+        {
+            "label": "icode: run",
+            "type": "shell",
+            "command": "cd build && demo/icode",
+            "dependsOn": [
+                "icode: build"
+            ]
+        },
+        {
             "label": "test: build",
             "type": "shell",
             "command": "cd build && make tests",

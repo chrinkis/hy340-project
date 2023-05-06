@@ -11,3 +11,11 @@ add_executable(parser
 
     $<TARGET_OBJECTS:flex_and_bison>
 )
+
+
+# For target icode
+add_executable(icode
+    icode/main.cpp
+
+    $<TARGET_OBJECTS:flex_and_bison>
+)

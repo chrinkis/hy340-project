@@ -4,6 +4,7 @@
 
 #include <alpha/icode/quad/quad.h>
 
+#include <ostream>
 #include <vector>
 
 namespace alpha::icode::quad {
@@ -24,6 +25,8 @@ class Table {
 
  public:
   void emit(const Quad& quad);
+
+  friend std::ostream& operator<<(std::ostream& os, const Table& qt);
 };
 
 }  // namespace alpha::icode::quad
