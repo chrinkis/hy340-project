@@ -6,6 +6,7 @@
 
 #include <memory>
 #include <optional>
+#include <ostream>
 #include <string>
 
 namespace alpha::icode {
@@ -67,6 +68,9 @@ class Expr {
   double get_number_const() const;
   std::string get_string_const() const;
   bool get_bool_const() const;
+
+ public:
+  friend std::ostream& operator<<(std::ostream& os, const Expr& expr);
 };
 
 }  // namespace alpha::icode
