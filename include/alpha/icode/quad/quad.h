@@ -2,6 +2,8 @@
 
 #include <alpha/icode/expr.h>
 
+#include <optional>
+
 namespace alpha::icode::quad {
 
 class Quad {
@@ -40,20 +42,20 @@ class Quad {
  private:
   Opcode opcode;
 
-  Expr::SharedPtr result;
-  Expr::SharedPtr arg1;
-  Expr::SharedPtr arg2;
+  std::optional<Expr> result;
+  std::optional<Expr> arg1;
+  std::optional<Expr> arg2;
 
-  Label label;
+  std::optional<Label> label;
 
-  Line line;
+  std::optional<Line> line;
 
  public:
   Opcode get_opcode() const;
 
-  Expr::SharedPtr get_result() const;
-  Expr::SharedPtr get_arg1() const;
-  Expr::SharedPtr get_arg2() const;
+  Expr get_result() const;
+  Expr get_arg1() const;
+  Expr get_arg2() const;
 
   Label get_label() const;
 
