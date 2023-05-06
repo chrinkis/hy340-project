@@ -1,10 +1,8 @@
 #include <alpha/syntax/manager/nonterminal/lvalue.h>
 
 #include <alpha/syntax/error.h>
-#include <alpha/syntax/handler/symbol/variable/local.h>
 
 using namespace alpha::syntax::manager::nonterminal;
-namespace variable_handler = alpha::syntax::handlers::symbol::variable;
 
 Lvalue Lvalue::from_idTkn(const Identifier& id) {
   Lvalue lvalue;
@@ -32,10 +30,29 @@ Lvalue Lvalue::from_idTkn(const Identifier& id) {
   return lvalue;
 }
 
-Lvalue Lvalue::from_localIdTkn(const Identifier& identifier) {
+Lvalue Lvalue::from_localIdTkn(const Identifier& id) {
   Lvalue lvalue;
 
-  variable_handler::ensure_local_exists(lvalue, identifier);
+  auto result_opt = symTable.search_for_visible_local_symbol(id.get_name());
+
+  if (result_opt) {
+    auto result = result_opt.value();
+
+    lvalue.set_symbol(holder::Symbol::Optional(result.symbol));
+  } else {
+    if (!symTable.can_add_local_variable(id.get_name())) {
+      error::print_semantic(
+          "can not define local variable with the libray function `" +
+              id.get_name() + "`",
+          id.get_location());
+
+    } else {
+      symbol::Symbol::SharedPtr symbol =
+          symTable.add_local_variable(id.get_name(), id.get_location());
+
+      lvalue.set_symbol(holder::Symbol::Optional(symbol));
+    }
+  }
 
   return lvalue;
 }
