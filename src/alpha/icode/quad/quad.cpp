@@ -100,6 +100,8 @@ std::string to_string(Quad::Opcode opcode) {
       return "if_less";
     case Quad::Opcode::IF_GREATER:
       return "if_greater";
+    case Quad::Opcode::JUMP:
+      return "jump";
     case Quad::Opcode::CALL:
       return "call";
     case Quad::Opcode::PARAM:
