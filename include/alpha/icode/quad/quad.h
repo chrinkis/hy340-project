@@ -3,6 +3,7 @@
 #include <alpha/icode/expr.h>
 
 #include <optional>
+#include <ostream>
 
 namespace alpha::icode::quad {
 
@@ -63,6 +64,9 @@ class Quad {
   Label get_label() const;
 
   Line get_line() const;
+
+ public:
+  friend std::ostream& operator<<(std::ostream& os, const Quad& quad);
 };
 
 }  // namespace alpha::icode::quad
