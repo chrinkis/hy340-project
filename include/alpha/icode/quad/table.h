@@ -1,5 +1,7 @@
 #pragma once
 
+#define quadTable (alpha::icode::quad::Table::get())
+
 #include <alpha/icode/quad/quad.h>
 
 #include <vector>
