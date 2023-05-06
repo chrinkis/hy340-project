@@ -1,8 +1,13 @@
 #include <alpha/icode/quad/quad.h>
 
+#include <cassert>
+
 namespace alpha::icode::quad {
 
-Opcode Quad::get_opcode() const {
+Quad::Quad(const Opcode& opcode, const Expr& result)
+    : opcode(opcode), result(result) {}
+
+Quad::Opcode Quad::get_opcode() const {
   return this->opcode;
 }
 

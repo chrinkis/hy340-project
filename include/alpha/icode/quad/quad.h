@@ -51,6 +51,9 @@ class Quad {
   std::optional<Line> line;
 
  public:
+  Quad(const Opcode& opcode,
+       const Expr& result);  // for function
+
   Opcode get_opcode() const;
 
   Expr get_result() const;
