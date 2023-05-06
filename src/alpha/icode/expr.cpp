@@ -15,6 +15,30 @@ Expr Expr::for_program_func(const Symbol::SharedPtr& symbol) {
   return expr;
 }
 
+Expr::Type Expr::get_type() const {
+  return this->type;
+}
+
+Expr::Symbol::SharedPtr Expr::get_symbol() const {
+  return this->symbol.value();
+}
+
+Expr::SharedPtr Expr::get_index() const {
+  return this->index.value();
+}
+
+double Expr::get_number_const() const {
+  return this->number_const.value();
+}
+
+std::string Expr::get_string_const() const {
+  return this->string_const.value();
+}
+
+bool Expr::get_bool_const() const {
+  return this->bool_const.value();
+}
+
 std::ostream& operator<<(std::ostream& os, const Expr& expr) {
   switch (expr.type) {
     case Expr::Type::VAR:
