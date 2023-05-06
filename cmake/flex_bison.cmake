@@ -45,6 +45,7 @@ add_library(flex_and_bison
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/handler/symbol/variable/local.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/handler/block.cpp
 
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/holder/expr.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/holder/symbol.cpp
 
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/assignexpr.cpp
