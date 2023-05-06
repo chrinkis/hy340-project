@@ -1,12 +1,39 @@
 #pragma once
 
 #include <alpha/icode/expr.h>
-#include <alpha/icode/opcode.h>
 
 namespace alpha::icode::quad {
 
 class Quad {
  public:
+  enum class Opcode {
+    ASSIGN,
+    ADD,
+    SUB,
+    MUL,
+    DIV,
+    MOD,
+    UMINUS,
+    AND,
+    OR,
+    NOT,
+    IF_EQ,
+    IF_NOTEQ,
+    IF_LESSEQ,
+    IF_GREATEREQ,
+    IF_LESS,
+    IF_GREATER,
+    CALL,
+    PARAM,
+    RET,
+    GETRETVAL,
+    FUNCSTART,
+    FUNCEND,
+    TABLECREATE,
+    TABLEGETELEM,
+    TABLESETELEM,
+  };
+
   using Label = unsigned;
   using Line = unsigned;
 
