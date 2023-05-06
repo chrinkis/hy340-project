@@ -6,15 +6,15 @@ Opcode Quad::get_opcode() const {
   return this->opcode;
 }
 
-Expr::SharedPtr Quad::get_result() const {
+Expr Quad::get_result() const {
   return this->result;
 }
 
-Expr::SharedPtr Quad::get_arg1() const {
+Expr Quad::get_arg1() const {
   return this->arg1;
 }
 
-Expr::SharedPtr Quad::get_arg2() const {
+Expr Quad::get_arg2() const {
   return this->arg2;
 }
 
