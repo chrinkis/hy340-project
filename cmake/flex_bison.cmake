@@ -32,8 +32,6 @@ add_library(flex_and_bison
     ${CMAKE_SOURCE_DIR}/src/alpha/symbol/table_manager.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/symbol/variable.cpp
 
-    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/handler/symbol/symbol.cpp
-
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/error.cpp
 
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/handler/symbol/function/argument.cpp

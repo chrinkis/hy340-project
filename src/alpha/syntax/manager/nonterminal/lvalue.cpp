@@ -1,6 +1,5 @@
 #include <alpha/syntax/manager/nonterminal/lvalue.h>
 
-#include <alpha/syntax/handler/symbol/symbol.h>
 #include <alpha/syntax/handler/symbol/variable/global.h>
 #include <alpha/syntax/handler/symbol/variable/implicit.h>
 #include <alpha/syntax/handler/symbol/variable/local.h>

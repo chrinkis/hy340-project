@@ -1,7 +1,6 @@
 #include <alpha/syntax/manager/nonterminal/expr.h>
 
 #include <alpha/syntax/handler/symbol/function/error_checker.h>
-#include <alpha/syntax/handler/symbol/symbol.h>
 #include <alpha/syntax/manager/nonterminal/term.h>
 
 using namespace alpha::syntax::manager::nonterminal;
@@ -134,7 +133,7 @@ Expr Expr::from_expr_orTkn_expr(const Expr& left, const Expr& right) {
 Expr Expr::from_term(const Term& term) {
   Expr expr;
 
-  symbol_handler::continue_checking(expr, term);
+  expr.set_symbol(term.get_symbol());
 
   return expr;
 }

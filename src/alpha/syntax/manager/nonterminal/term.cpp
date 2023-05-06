@@ -1,20 +1,18 @@
 #include <alpha/syntax/manager/nonterminal/term.h>
 
 #include <alpha/syntax/handler/symbol/function/error_checker.h>
-#include <alpha/syntax/handler/symbol/symbol.h>
 #include <alpha/syntax/manager/nonterminal/expr.h>
 #include <alpha/syntax/manager/nonterminal/lvalue.h>
 #include <alpha/syntax/manager/nonterminal/primary.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 
-using alpha::syntax::handlers::symbol::continue_checking;
 using alpha::syntax::handlers::symbol::function::check_for_errors;
 
 Term Term::from_lParTkn_expr_rParTkn(const Expr& expr) {
   Term term;
 
-  continue_checking(term, expr);
+  term.set_symbol(expr.get_symbol());
 
   return term;
 }
@@ -70,7 +68,7 @@ Term Term::from_lvalue_minusMinusTkn(const Lvalue& lvalue) {
 Term Term::from_primary(const Primary& primary) {
   Term term;
 
-  continue_checking(term, primary);
+  term.set_symbol(primary.get_symbol());
 
   return term;
 }
