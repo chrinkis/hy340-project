@@ -362,9 +362,16 @@ idlist_opt  :   %empty                   { print_derivation("idlist_opt", "empty
             |   idlist_id "," idlist_opt { print_derivation("idlist_opt", "idlist_id , idlist_opt"); }
             ;
 
-ifstmt      :   IF "(" expr ")" stmt %expect 1 { print_derivation("ifstmt", "IF ( expr ) stmt"); }
-            |   IF "(" expr ")" stmt ELSE stmt { print_derivation("ifstmt", "IF ( expr ) stmt ELSE stmt"); }
+ifstmt      :   ifstmt_if stmt        %expect 1 { print_derivation("ifstmt", "ifstmt_if stmt"); }
+            |   ifstmt_if stmt ifstmt_else stmt { print_derivation("ifstmt", "ifstmt_if stmt ifstmt_else stmt"); }
             ;
+
+ifstmt_if   :   IF "(" expr ")" { print_derivation("ifstmt_if", "IF ( expr )"); }
+            ;
+
+ifstmt_else :   ELSE { print_derivation("ifstmt_else", "ELSE"); }
+            ;
+
 
 whilestmt   :   WHILE "(" expr ")" stmt { print_derivation("whilestmt", "WHILE ( expr ) stmt"); }
             ;
