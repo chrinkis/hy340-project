@@ -373,8 +373,14 @@ ifstmt_else :   ELSE { print_derivation("ifstmt_else", "ELSE"); }
             ;
 
 
-whilestmt   :   WHILE "(" expr ")" stmt { print_derivation("whilestmt", "WHILE ( expr ) stmt"); }
-            ;
+whilestmt       :   whilestmt_while whilestmt_cond stmt { print_derivation("whilestmt", "whilestmt_while whilestmt_cond stmt"); }
+                ;
+
+whilestmt_while :   WHILE { print_derivation("whilestmt_while", "WHILE"); }
+                ;
+
+whilestmt_cond  :   "(" expr ")" { print_derivation("whilestmt_cond", "( expr )"); }
+                ;
 
 forstmt     :   FOR "(" elist ";" expr ";" elist ")" stmt { print_derivation("forstmt", "FOR ( elist ; expr ; elist ) stmt"); }
             ;
