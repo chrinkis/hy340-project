@@ -1,13 +1,12 @@
 #include <alpha/syntax/manager/nonterminal/term.h>
 
-#include <alpha/syntax/handler/symbol/function/error_checker.h>
 #include <alpha/syntax/manager/nonterminal/expr.h>
 #include <alpha/syntax/manager/nonterminal/lvalue.h>
 #include <alpha/syntax/manager/nonterminal/primary.h>
 
-using namespace alpha::syntax::manager::nonterminal;
+#include <alpha/syntax/error.h>
 
-using alpha::syntax::handlers::symbol::function::check_for_errors;
+using namespace alpha::syntax::manager::nonterminal;
 
 Term Term::from_lParTkn_expr_rParTkn(const Expr& expr) {
   Term term;
@@ -18,7 +17,10 @@ Term Term::from_lParTkn_expr_rParTkn(const Expr& expr) {
 }
 
 Term Term::from_minusTkn_expr(const Expr& expr) {
-  check_for_errors(expr, "unary \"-\" with");
+  if (expr.get_symbol() && expr.get_symbol().value()->has_function_type()) {
+    error::print(error::INVALID_FUNCTION_OPERATION, error::Operator::MINUS,
+                 expr.get_symbol().value());
+  }
 
   Term term;
 
@@ -26,7 +28,10 @@ Term Term::from_minusTkn_expr(const Expr& expr) {
 }
 
 Term Term::from_notTkn_expr(const Expr& expr) {
-  check_for_errors(expr, "\"NOT\" with");
+  if (expr.get_symbol() && expr.get_symbol().value()->has_function_type()) {
+    error::print(error::INVALID_FUNCTION_OPERATION, error::Operator::NOT,
+                 expr.get_symbol().value());
+  }
 
   Term term;
 
@@ -34,7 +39,10 @@ Term Term::from_notTkn_expr(const Expr& expr) {
 }
 
 Term Term::from_plusPlusTkn_lvalue(const Lvalue& lvalue) {
-  check_for_errors(lvalue, "\"++\" with");
+  if (lvalue.get_symbol() && lvalue.get_symbol().value()->has_function_type()) {
+    error::print(error::INVALID_FUNCTION_OPERATION,
+                 error::Operator::PLUS_PLUS_PRE, lvalue.get_symbol().value());
+  }
 
   Term term;
 
@@ -42,7 +50,10 @@ Term Term::from_plusPlusTkn_lvalue(const Lvalue& lvalue) {
 }
 
 Term Term::from_lvalue_plusPlusTkn(const Lvalue& lvalue) {
-  check_for_errors(lvalue, "\"++\" with");
+  if (lvalue.get_symbol() && lvalue.get_symbol().value()->has_function_type()) {
+    error::print(error::INVALID_FUNCTION_OPERATION,
+                 error::Operator::PLUS_PLUS_POST, lvalue.get_symbol().value());
+  }
 
   Term term;
 
@@ -50,7 +61,10 @@ Term Term::from_lvalue_plusPlusTkn(const Lvalue& lvalue) {
 }
 
 Term Term::from_minusMinusTkn_lvalue(const Lvalue& lvalue) {
-  check_for_errors(lvalue, "\"--\" with");
+  if (lvalue.get_symbol() && lvalue.get_symbol().value()->has_function_type()) {
+    error::print(error::INVALID_FUNCTION_OPERATION,
+                 error::Operator::MINUS_MINUS_PRE, lvalue.get_symbol().value());
+  }
 
   Term term;
 
@@ -58,7 +72,11 @@ Term Term::from_minusMinusTkn_lvalue(const Lvalue& lvalue) {
 }
 
 Term Term::from_lvalue_minusMinusTkn(const Lvalue& lvalue) {
-  check_for_errors(lvalue, "\"--\" with");
+  if (lvalue.get_symbol() && lvalue.get_symbol().value()->has_function_type()) {
+    error::print(error::INVALID_FUNCTION_OPERATION,
+                 error::Operator::MINUS_MINUS_POST,
+                 lvalue.get_symbol().value());
+  }
 
   Term term;
 

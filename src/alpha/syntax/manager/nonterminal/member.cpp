@@ -1,13 +1,15 @@
 #include <alpha/syntax/manager/nonterminal/lvalue.h>
 
-#include <alpha/syntax/handler/symbol/function/error_checker.h>
+#include <alpha/syntax/error.h>
 #include <alpha/syntax/manager/nonterminal/member.h>
 
 using namespace alpha::syntax::manager::nonterminal;
-using alpha::syntax::handlers::symbol::function::check_for_errors;
 
 Member Member::from_lvalue_dotTkn_idTkn(const Lvalue& lvalue) {
-  check_for_errors(lvalue, "\".\" with");
+  if (lvalue.get_symbol() && lvalue.get_symbol().value()->has_function_type()) {
+    error::print(error::INVALID_FUNCTION_OPERATION, error::Operator::DOT,
+                 lvalue.get_symbol().value());
+  }
 
   Member member;
 
@@ -16,7 +18,10 @@ Member Member::from_lvalue_dotTkn_idTkn(const Lvalue& lvalue) {
 
 Member Member::from_lvalue_lSqrBrackTkn_expr_rSqrtBrackTkn(
     const Lvalue& lvalue) {
-  check_for_errors(lvalue, "\"[]\" with");
+  if (lvalue.get_symbol() && lvalue.get_symbol().value()->has_function_type()) {
+    error::print(error::INVALID_FUNCTION_OPERATION,
+                 error::Operator::SQUARE_BRACKETS, lvalue.get_symbol().value());
+  }
 
   Member member;
 
