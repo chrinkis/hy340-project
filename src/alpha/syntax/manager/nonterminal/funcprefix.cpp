@@ -1,23 +1,37 @@
 #include <alpha/syntax/manager/nonterminal/funcprefix.h>
 
-#include <alpha/syntax/handler/symbol/function/definition.h>
+#include <alpha/symbol/table_manager.h>
+#include <alpha/syntax/error.h>
 
 using namespace alpha::syntax::manager::nonterminal;
-namespace function = alpha::syntax::handlers::symbol::function;
 
 Funcprefix Funcprefix::from_functionTkn(const terminal::Function& function) {
   Funcprefix funcprefix;
 
-  function::start(funcprefix, function);
+  auto symbol = symTable.start_function(function.get_location());
+
+  funcprefix.set_symbol(symbol);
 
   return funcprefix;
 }
 
 Funcprefix Funcprefix::from_functionTkn_identifierTkn(
-    const terminal::Identifier& identifier) {
+    const terminal::Identifier& id) {
   Funcprefix funcprefix;
 
-  function::start(funcprefix, identifier);
+  if (!symTable.can_add_function(id.get_name())) {
+    error::print_semantic(
+        "invalid name `" + id.get_name() + "` for function definition",
+        id.get_location());
+
+    auto symbol = symTable.start_function(id.get_location());
+
+    funcprefix.set_symbol(symbol);
+  } else {
+    auto symbol = symTable.start_function(id.get_name(), id.get_location());
+
+    funcprefix.set_symbol(symbol);
+  }
 
   return funcprefix;
 }

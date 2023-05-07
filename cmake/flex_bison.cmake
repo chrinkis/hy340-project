@@ -34,7 +34,6 @@ add_library(flex_and_bison
 
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/error.cpp
 
-    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/handler/symbol/function/definition.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/handler/symbol/function/error_checker.cpp
 
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/holder/expr.cpp
