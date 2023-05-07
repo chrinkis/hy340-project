@@ -46,6 +46,8 @@ class Symbol {
 
   virtual Symbol* clone() const = 0;
 
+  bool has_function_type() const;
+
   friend std::ostream& operator<<(std::ostream& os, const Symbol& symbol);
 };
 
