@@ -382,7 +382,16 @@ whilestmt_while :   WHILE { print_derivation("whilestmt_while", "WHILE"); }
 whilestmt_cond  :   "(" expr ")" { print_derivation("whilestmt_cond", "( expr )"); }
                 ;
 
-forstmt     :   FOR "(" elist ";" expr ";" elist ")" stmt { print_derivation("forstmt", "FOR ( elist ; expr ; elist ) stmt"); }
+forstmt     :   forstmt_pre forstmt_n elist ")" forstmt_m stmt forstmt_m { print_derivation("forstmt", "forstmt_pre forstmt_n elist ) forstmt_m stmt forstmt_m"); }
+            ;
+
+forstmt_pre :   FOR "(" elist ";" forstmt_m expr ";" { print_derivation("forstmt_pre", "FOR ( elist ; forstmt_m expr ;"); }
+            ;
+
+forstmt_n   :   %empty { print_derivation("forstmt_n", "empty"); }
+            ;
+
+forstmt_m   :   %empty { print_derivation("forstmt_n", "empty"); }
             ;
 
 returnstmt  :   RETURN ";"      { print_derivation("returnstmt", "RETURN ;"); }
