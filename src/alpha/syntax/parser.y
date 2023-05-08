@@ -135,7 +135,7 @@ stmt        :   expr ";"     { print_derivation("stmt", "expr ;"); }
             |   whilestmt    { print_derivation("stmt", "whilestmt"); }
             |   forstmt      { print_derivation("stmt", "forstmt"); }
             |   returnstmt   { print_derivation("stmt", "returnstmt"); }
-            |   BREAK ";"    { print_derivation("stmt", "BREAK ;"); }
+            |   breakstmt    { print_derivation("stmt", "breakstmt"); }
             |   CONTINUE ";" { print_derivation("stmt", "CONTINUE ;"); }
             |   block        { print_derivation("stmt", "block"); }
             |   funcdef      { print_derivation("stmt", "funcdef"); }
@@ -410,6 +410,8 @@ loop_start  :   %empty { print_derivation("loop_start", "empty"); }
 loop_end    :   %empty { print_derivation("loop_end", "empty"); }
             ;
 
+breakstmt   :   BREAK ";" { print_derivation("breakstmt", "BREAK ;"); }
+            ;
 
 returnstmt  :   RETURN ";"      { print_derivation("returnstmt", "RETURN ;"); }
             |   RETURN expr ";" { print_derivation("returnstmt", "RETURN expr ;"); }
