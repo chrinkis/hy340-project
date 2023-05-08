@@ -136,7 +136,7 @@ stmt        :   expr ";"     { print_derivation("stmt", "expr ;"); }
             |   forstmt      { print_derivation("stmt", "forstmt"); }
             |   returnstmt   { print_derivation("stmt", "returnstmt"); }
             |   breakstmt    { print_derivation("stmt", "breakstmt"); }
-            |   continuestmt { print_derivation("stmt", "continuestmt); }
+            |   continuestmt { print_derivation("stmt", "continuestmt"); }
             |   block        { print_derivation("stmt", "block"); }
             |   funcdef      { print_derivation("stmt", "funcdef"); }
             |   ";"          { print_derivation("stmt", ";"); }
