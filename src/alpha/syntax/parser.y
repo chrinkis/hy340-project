@@ -336,10 +336,17 @@ funcargs    :   "(" idlist ")" { nterm::Funcargs::lParTkn_idlist_rParTkn();
                                }
             ;
 
-funcbody    :   block { nterm::Funcbody::block();
-                        print_derivation("funcbody", "block");
-                      }
+funcbody    :   funcbody_pre block funcbody_post { nterm::Funcbody::block();
+                                                   print_derivation("funcbody", "block");
+                                                 }
             ;
+
+funcbody_pre:   %empty { print_derivation("funcbody_pre", "empty"); }
+            ;
+
+funcbody_post   :   %empty { print_derivation("funcbody_post", "empty"); }
+                ;
+
 
 const       :   INTEGER { print_derivation("const", "INTEGER"); }
             |   FLOAT   { print_derivation("const", "FLOAT"); }
