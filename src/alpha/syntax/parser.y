@@ -382,7 +382,7 @@ whilestmt_while :   WHILE { print_derivation("whilestmt_while", "WHILE"); }
 whilestmt_cond  :   "(" expr ")" { print_derivation("whilestmt_cond", "( expr )"); }
                 ;
 
-forstmt     :   forstmt_pre forstmt_n elist ")" forstmt_m stmt forstmt_m { print_derivation("forstmt", "forstmt_pre forstmt_n elist ) forstmt_m stmt forstmt_m"); }
+forstmt     :   forstmt_pre forstmt_n elist ")" forstmt_m loop_stmt forstmt_m { print_derivation("forstmt", "forstmt_pre forstmt_n elist ) forstmt_m loop_stmt forstmt_m"); }
             ;
 
 forstmt_pre :   FOR "(" elist ";" forstmt_m expr ";" { print_derivation("forstmt_pre", "FOR ( elist ; forstmt_m expr ;"); }
@@ -393,6 +393,16 @@ forstmt_n   :   %empty { print_derivation("forstmt_n", "empty"); }
 
 forstmt_m   :   %empty { print_derivation("forstmt_n", "empty"); }
             ;
+
+loop_stmt   :   loopstart stmt loopend { print_derivation("loop_stmt", "loopstart stmt loopend"); }
+            ;
+
+loop_start  :   %empty { print_derivation("loop_start", "empty"); }
+            ;
+
+loop_end    :   %empty { print_derivation("loop_end", "empty"); }
+            ;
+
 
 returnstmt  :   RETURN ";"      { print_derivation("returnstmt", "RETURN ;"); }
             |   RETURN expr ";" { print_derivation("returnstmt", "RETURN expr ;"); }
