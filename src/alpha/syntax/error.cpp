@@ -32,6 +32,13 @@ void print_semantic(const std::string& message) {
             << DEFAULT_COLOR;
 }
 
+void invalid_name_for_func_definition(
+    const std::string& name,
+    const alpha::syntax::Parser::location_type& location) {
+  error::print_semantic("invalid name `" + name + "` for function definition",
+                        location);
+}
+
 void invalid_function_operation(
     Operator op,
     const alpha::symbol::Symbol::SharedPtr& symbol) {

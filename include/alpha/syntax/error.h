@@ -12,7 +12,6 @@ enum Type {
   INACCESSIBLE_REFFERENCE_TO_VAR,
   LOCAL_VAR_SHADOWS_LIB_FUNCTION,
   INVALID_ARGUMNET_NAME,
-  INVALID_NAME_FOR_FUNC_DEFINITION,
 };
 
 enum class Operator {
@@ -47,6 +46,10 @@ void print_semantic(const std::string& message,
                     const alpha::syntax::Parser::location_type& location);
 
 void print_semantic(const std::string& message);
+
+void invalid_name_for_func_definition(
+    const std::string& name,
+    const alpha::syntax::Parser::location_type& location);
 
 void invalid_function_operation(Operator op,
                                 const alpha::symbol::Symbol::SharedPtr& symbol);

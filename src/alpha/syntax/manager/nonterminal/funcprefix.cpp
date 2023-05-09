@@ -20,9 +20,7 @@ Funcprefix Funcprefix::from_functionTkn_identifierTkn(
   Funcprefix funcprefix;
 
   if (!symTable.can_add_function(id.get_name())) {
-    error::print_semantic(
-        "invalid name `" + id.get_name() + "` for function definition",
-        id.get_location());
+    error::invalid_name_for_func_definition(id.get_name(), id.get_location());
 
     auto symbol = symTable.start_function(id.get_location());
 
