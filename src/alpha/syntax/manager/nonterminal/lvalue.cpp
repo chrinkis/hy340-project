@@ -19,9 +19,7 @@ Lvalue Lvalue::from_idTkn(const Identifier& id) {
     auto result = result_opt.value();
 
     if (!result.accessible) {
-      error::print_semantic(
-          "can not access variable/function `" + id.get_name() + "`",
-          id.get_location());
+      error::inaccessible_refference_to_var(id.get_name(), id.get_location());
     } else {
       lvalue.set_symbol(result.symbol);
     }

@@ -32,6 +32,13 @@ void print_semantic(const std::string& message) {
             << DEFAULT_COLOR;
 }
 
+void inaccessible_refference_to_var(
+    const std::string& name,
+    const alpha::syntax::Parser::location_type& location) {
+  error::print_semantic("can not access variable/function `" + name + "`",
+                        location);
+}
+
 void local_var_shadows_lib_function(
     const std::string& name,
     const alpha::syntax::Parser::location_type& location) {
