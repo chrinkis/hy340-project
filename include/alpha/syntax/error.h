@@ -7,8 +7,6 @@
 
 namespace alpha::syntax::error {
 
-enum Type {};
-
 enum class Operator {
   ASSIGN,
   PLUS,
@@ -36,11 +34,6 @@ enum class Operator {
 
 void print(const std::string& message,
            const alpha::syntax::Parser::location_type& location);
-
-void print_semantic(const std::string& message,
-                    const alpha::syntax::Parser::location_type& location);
-
-void print_semantic(const std::string& message);
 
 void undefined_refference_to_global_var(
     const std::string& name,
