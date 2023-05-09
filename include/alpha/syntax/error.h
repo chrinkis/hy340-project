@@ -10,7 +10,6 @@ namespace alpha::syntax::error {
 enum Type {
   UNDEFINED_REFFERENCE_TO_GLOBAL_VAR,
   INACCESSIBLE_REFFERENCE_TO_VAR,
-  LOCAL_VAR_SHADOWS_LIB_FUNCTION,
 };
 
 enum class Operator {
@@ -45,6 +44,10 @@ void print_semantic(const std::string& message,
                     const alpha::syntax::Parser::location_type& location);
 
 void print_semantic(const std::string& message);
+
+void local_var_shadows_lib_function(
+    const std::string& name,
+    const alpha::syntax::Parser::location_type& location);
 
 void invalid_argumnet_name(
     const std::string& name,

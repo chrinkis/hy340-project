@@ -41,11 +41,7 @@ Lvalue Lvalue::from_localIdTkn(const Identifier& id) {
     lvalue.set_symbol(holder::Symbol::Optional(result.symbol));
   } else {
     if (!symTable.can_add_local_variable(id.get_name())) {
-      error::print_semantic(
-          "can not define local variable with the libray function `" +
-              id.get_name() + "`",
-          id.get_location());
-
+      error::local_var_shadows_lib_function(id.get_name(), id.get_location());
     } else {
       symbol::Symbol::SharedPtr symbol =
           symTable.add_local_variable(id.get_name(), id.get_location());

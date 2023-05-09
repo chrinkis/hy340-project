@@ -32,6 +32,14 @@ void print_semantic(const std::string& message) {
             << DEFAULT_COLOR;
 }
 
+void local_var_shadows_lib_function(
+    const std::string& name,
+    const alpha::syntax::Parser::location_type& location) {
+  error::print_semantic(
+      "can not define local variable with the libray function `" + name + "`",
+      location);
+}
+
 void invalid_argumnet_name(
     const std::string& name,
     const alpha::syntax::Parser::location_type& location) {
