@@ -341,7 +341,7 @@ funcargs    :   "(" idlist ")" { nterm::Funcargs::lParTkn_idlist_rParTkn();
             ;
 
 funcbody    :   funcbody_pre block funcbody_post { nterm::Funcbody::block();
-                                                   print_derivation("funcbody", "block");
+                                                   print_derivation("funcbody", "funcbody_pre block funcbody_post");
                                                  }
             ;
 
