@@ -32,6 +32,12 @@ void print_semantic(const std::string& message) {
             << DEFAULT_COLOR;
 }
 
+void invalid_argumnet_name(
+    const std::string& name,
+    const alpha::syntax::Parser::location_type& location) {
+  error::print_semantic("invalid argument name `" + name + "`", location);
+}
+
 void invalid_name_for_func_definition(
     const std::string& name,
     const alpha::syntax::Parser::location_type& location) {
