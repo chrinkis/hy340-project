@@ -135,8 +135,8 @@ stmt        :   expr ";"     { print_derivation("stmt", "expr ;"); }
             |   whilestmt    { print_derivation("stmt", "whilestmt"); }
             |   forstmt      { print_derivation("stmt", "forstmt"); }
             |   returnstmt   { print_derivation("stmt", "returnstmt"); }
-            |   BREAK ";"    { print_derivation("stmt", "BREAK ;"); }
-            |   CONTINUE ";" { print_derivation("stmt", "CONTINUE ;"); }
+            |   breakstmt    { print_derivation("stmt", "breakstmt"); }
+            |   continuestmt { print_derivation("stmt", "continuestmt"); }
             |   block        { print_derivation("stmt", "block"); }
             |   funcdef      { print_derivation("stmt", "funcdef"); }
             |   ";"          { print_derivation("stmt", ";"); }
@@ -309,8 +309,12 @@ block_open  :   "{" { nterm::BlockOpen::leftCurlyBracketTkn();
                     }
             ;
 
-block_body  :   %empty          { print_derivation("block_body", "empty"); }
-            |   stmt block_body { print_derivation("block_body", "stmt block_body"); }
+block_body  :   %empty { print_derivation("block_body", "empty"); }
+            |   stmts  { print_derivation("block_body", "stmts"); }
+            ;
+
+stmts       :   stmt       { print_derivation("stmts", "stmt"); }
+            |   stmts stmt { print_derivation("stmts", "stmts stmt"); }
             ;
 
 block_close :   "}" { nterm::BlockClose::rightCurlyBracketTkn();
@@ -336,10 +340,17 @@ funcargs    :   "(" idlist ")" { nterm::Funcargs::lParTkn_idlist_rParTkn();
                                }
             ;
 
-funcbody    :   block { nterm::Funcbody::block();
-                        print_derivation("funcbody", "block");
-                      }
+funcbody    :   funcbody_pre block funcbody_post { nterm::Funcbody::block();
+                                                   print_derivation("funcbody", "funcbody_pre block funcbody_post");
+                                                 }
             ;
+
+funcbody_pre:   %empty { print_derivation("funcbody_pre", "empty"); }
+            ;
+
+funcbody_post   :   %empty { print_derivation("funcbody_post", "empty"); }
+                ;
+
 
 const       :   INTEGER { print_derivation("const", "INTEGER"); }
             |   FLOAT   { print_derivation("const", "FLOAT"); }
@@ -382,7 +393,7 @@ whilestmt_while :   WHILE { print_derivation("whilestmt_while", "WHILE"); }
 whilestmt_cond  :   "(" expr ")" { print_derivation("whilestmt_cond", "( expr )"); }
                 ;
 
-forstmt     :   forstmt_pre forstmt_n elist ")" forstmt_m stmt forstmt_m { print_derivation("forstmt", "forstmt_pre forstmt_n elist ) forstmt_m stmt forstmt_m"); }
+forstmt     :   forstmt_pre forstmt_n elist ")" forstmt_m loop_stmt forstmt_m { print_derivation("forstmt", "forstmt_pre forstmt_n elist ) forstmt_m loop_stmt forstmt_m"); }
             ;
 
 forstmt_pre :   FOR "(" elist ";" forstmt_m expr ";" { print_derivation("forstmt_pre", "FOR ( elist ; forstmt_m expr ;"); }
@@ -392,6 +403,21 @@ forstmt_n   :   %empty { print_derivation("forstmt_n", "empty"); }
             ;
 
 forstmt_m   :   %empty { print_derivation("forstmt_n", "empty"); }
+            ;
+
+loop_stmt   :   loop_start stmt loop_end { print_derivation("loop_stmt", "loopstart stmt loopend"); }
+            ;
+
+loop_start  :   %empty { print_derivation("loop_start", "empty"); }
+            ;
+
+loop_end    :   %empty { print_derivation("loop_end", "empty"); }
+            ;
+
+breakstmt   :   BREAK ";" { print_derivation("breakstmt", "BREAK ;"); }
+            ;
+
+continuestmt:   CONTINUE ";" { print_derivation("breakstmt", "CONTINUE ;"); }
             ;
 
 returnstmt  :   RETURN ";"      { print_derivation("returnstmt", "RETURN ;"); }
