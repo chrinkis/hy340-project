@@ -6,6 +6,22 @@
 namespace alpha {
 namespace symbol {
 
+bool Symbol::has_function_type() const {
+  switch (this->get_type()) {
+    case Type::GLOBAL:
+    case Type::LOCAL:
+    case Type::FORMAL:
+      return false;
+    case Type::USER_FUNCTION:
+    case Type::LIBRARY_FUNCTION:
+      return true;
+    default:
+      assert(0);
+  }
+
+  assert(0);
+}
+
 std::ostream& operator<<(std::ostream& os, const Symbol& symbol) {
   auto ident = [](int w = 26) { return std::setw(w); };
 

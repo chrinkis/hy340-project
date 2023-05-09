@@ -1,26 +1,52 @@
 #include <alpha/syntax/manager/nonterminal/lvalue.h>
 
-#include <alpha/syntax/handler/symbol/symbol.h>
-#include <alpha/syntax/handler/symbol/variable/global.h>
-#include <alpha/syntax/handler/symbol/variable/implicit.h>
-#include <alpha/syntax/handler/symbol/variable/local.h>
+#include <alpha/syntax/error.h>
 
 using namespace alpha::syntax::manager::nonterminal;
-namespace symbol_handler = alpha::syntax::handlers::symbol;
-namespace variable_handler = alpha::syntax::handlers::symbol::variable;
 
-Lvalue Lvalue::from_idTkn(const Identifier& identifier) {
+Lvalue Lvalue::from_idTkn(const Identifier& id) {
   Lvalue lvalue;
 
-  variable_handler::ensure_exists(lvalue, identifier);
+  auto result_opt = symTable.search_for_visible_symbol(id.get_name());
+
+  if (!result_opt) {
+    assert(symTable.can_add_variable(id.get_name()));
+
+    auto symbol = symTable.add_variable(id.get_name(), id.get_location());
+
+    lvalue.set_symbol(symbol);
+  } else {
+    auto result = result_opt.value();
+
+    if (!result.accessible) {
+      error::inaccessible_refference_to_var(id.get_name(), id.get_location());
+    } else {
+      lvalue.set_symbol(result.symbol);
+    }
+  }
 
   return lvalue;
 }
 
-Lvalue Lvalue::from_localIdTkn(const Identifier& identifier) {
+Lvalue Lvalue::from_localIdTkn(const Identifier& id) {
   Lvalue lvalue;
 
-  variable_handler::ensure_local_exists(lvalue, identifier);
+  auto result_opt = symTable.search_for_visible_local_symbol(id.get_name());
+
+  if (result_opt) {
+    auto result = result_opt.value();
+
+    lvalue.set_symbol(holder::Symbol::Optional(result.symbol));
+  } else {
+    if (!symTable.can_add_local_variable(id.get_name())) {
+      error::local_var_shadows_lib_function(id.get_name(), id.get_location());
+    } else {
+      symbol::Symbol::SharedPtr symbol =
+          symTable.add_local_variable(id.get_name(), id.get_location());
+
+      lvalue.set_symbol(holder::Symbol::Optional(symbol));
+    }
+  }
 
   return lvalue;
 }
@@ -28,15 +54,21 @@ Lvalue Lvalue::from_localIdTkn(const Identifier& identifier) {
 Lvalue Lvalue::from_doubleColonTkn_localIdTkn(const Identifier& identifier) {
   Lvalue lvalue;
 
-  variable_handler::ensure_global_exists(lvalue, identifier.get_name());
+  std::string name = identifier.get_name();
+  auto result_opt = symTable.search_for_visible_global_symbol(name);
+
+  if (!result_opt) {
+    error::undefined_refference_to_global_var(name, identifier.get_location());
+  } else {
+    auto result = result_opt.value();
+    lvalue.set_symbol(holder::Symbol::Optional(result.symbol));
+  }
 
   return lvalue;
 }
 
 Lvalue Lvalue::from_member() {
   Lvalue lvalue;
-
-  symbol_handler::stop_checking(lvalue);
 
   return lvalue;
 }
