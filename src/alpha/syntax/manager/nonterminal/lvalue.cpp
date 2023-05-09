@@ -58,10 +58,7 @@ Lvalue Lvalue::from_doubleColonTkn_localIdTkn(const Identifier& identifier) {
   auto result_opt = symTable.search_for_visible_global_symbol(name);
 
   if (!result_opt) {
-    error::print_semantic(
-        "undefined refference to global variable/function `" + name + "`",
-        identifier.get_location());
-
+    error::undefined_refference_to_global_var(name, identifier.get_location());
   } else {
     auto result = result_opt.value();
     lvalue.set_symbol(holder::Symbol::Optional(result.symbol));

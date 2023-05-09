@@ -32,6 +32,14 @@ void print_semantic(const std::string& message) {
             << DEFAULT_COLOR;
 }
 
+void undefined_refference_to_global_var(
+    const std::string& name,
+    const alpha::syntax::Parser::location_type& location) {
+  error::print_semantic(
+      "undefined refference to global variable/function `" + name + "`",
+      location);
+}
+
 void inaccessible_refference_to_var(
     const std::string& name,
     const alpha::syntax::Parser::location_type& location) {
