@@ -41,7 +41,7 @@ Target `scanner` of cmake
 Target `parser` of cmake
 
 Alternatively, if `bash` is installed:
-- Command: `bash compile.sh`
+- Command: `bash ./.scripts/build/compile.sh`
 - Output: `build/demo/parser`
 
 > *Note that parser uses `stdin` for input.*
