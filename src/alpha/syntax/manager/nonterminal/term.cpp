@@ -18,8 +18,8 @@ Term Term::from_lParTkn_expr_rParTkn(const Expr& expr) {
 
 Term Term::from_minusTkn_expr(const Expr& expr) {
   if (expr.get_symbol() && expr.get_symbol().value()->has_function_type()) {
-    error::print(error::INVALID_FUNCTION_OPERATION, error::Operator::MINUS,
-                 expr.get_symbol().value());
+    error::invalid_function_operation(error::Operator::MINUS,
+                                      expr.get_symbol().value());
   }
 
   Term term;
@@ -29,8 +29,8 @@ Term Term::from_minusTkn_expr(const Expr& expr) {
 
 Term Term::from_notTkn_expr(const Expr& expr) {
   if (expr.get_symbol() && expr.get_symbol().value()->has_function_type()) {
-    error::print(error::INVALID_FUNCTION_OPERATION, error::Operator::NOT,
-                 expr.get_symbol().value());
+    error::invalid_function_operation(error::Operator::NOT,
+                                      expr.get_symbol().value());
   }
 
   Term term;
@@ -40,8 +40,8 @@ Term Term::from_notTkn_expr(const Expr& expr) {
 
 Term Term::from_plusPlusTkn_lvalue(const Lvalue& lvalue) {
   if (lvalue.get_symbol() && lvalue.get_symbol().value()->has_function_type()) {
-    error::print(error::INVALID_FUNCTION_OPERATION,
-                 error::Operator::PLUS_PLUS_PRE, lvalue.get_symbol().value());
+    error::invalid_function_operation(error::Operator::PLUS_PLUS_PRE,
+                                      lvalue.get_symbol().value());
   }
 
   Term term;
@@ -51,8 +51,8 @@ Term Term::from_plusPlusTkn_lvalue(const Lvalue& lvalue) {
 
 Term Term::from_lvalue_plusPlusTkn(const Lvalue& lvalue) {
   if (lvalue.get_symbol() && lvalue.get_symbol().value()->has_function_type()) {
-    error::print(error::INVALID_FUNCTION_OPERATION,
-                 error::Operator::PLUS_PLUS_POST, lvalue.get_symbol().value());
+    error::invalid_function_operation(error::Operator::PLUS_PLUS_POST,
+                                      lvalue.get_symbol().value());
   }
 
   Term term;
@@ -62,8 +62,8 @@ Term Term::from_lvalue_plusPlusTkn(const Lvalue& lvalue) {
 
 Term Term::from_minusMinusTkn_lvalue(const Lvalue& lvalue) {
   if (lvalue.get_symbol() && lvalue.get_symbol().value()->has_function_type()) {
-    error::print(error::INVALID_FUNCTION_OPERATION,
-                 error::Operator::MINUS_MINUS_PRE, lvalue.get_symbol().value());
+    error::invalid_function_operation(error::Operator::MINUS_MINUS_PRE,
+                                      lvalue.get_symbol().value());
   }
 
   Term term;
@@ -73,9 +73,8 @@ Term Term::from_minusMinusTkn_lvalue(const Lvalue& lvalue) {
 
 Term Term::from_lvalue_minusMinusTkn(const Lvalue& lvalue) {
   if (lvalue.get_symbol() && lvalue.get_symbol().value()->has_function_type()) {
-    error::print(error::INVALID_FUNCTION_OPERATION,
-                 error::Operator::MINUS_MINUS_POST,
-                 lvalue.get_symbol().value());
+    error::invalid_function_operation(error::Operator::MINUS_MINUS_POST,
+                                      lvalue.get_symbol().value());
   }
 
   Term term;

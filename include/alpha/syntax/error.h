@@ -13,7 +13,6 @@ enum Type {
   LOCAL_VAR_SHADOWS_LIB_FUNCTION,
   INVALID_ARGUMNET_NAME,
   INVALID_NAME_FOR_FUNC_DEFINITION,
-  INVALID_FUNCTION_OPERATION,
 };
 
 enum class Operator {
@@ -49,8 +48,7 @@ void print_semantic(const std::string& message,
 
 void print_semantic(const std::string& message);
 
-void print(Type err_type,
-           Operator op,
-           const alpha::symbol::Symbol::SharedPtr& symbol);
+void invalid_function_operation(Operator op,
+                                const alpha::symbol::Symbol::SharedPtr& symbol);
 
 }  // namespace alpha::syntax::error

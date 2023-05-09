@@ -32,26 +32,11 @@ void print_semantic(const std::string& message) {
             << DEFAULT_COLOR;
 }
 
-void print(Type err_type,
-           Operator op,
-           const alpha::symbol::Symbol::SharedPtr& symbol) {
-  switch (err_type) {
-    case UNDEFINED_REFFERENCE_TO_GLOBAL_VAR:
-    case INACCESSIBLE_REFFERENCE_TO_VAR:
-      assert(0);  // FIXME
-    case LOCAL_VAR_SHADOWS_LIB_FUNCTION:
-      assert(0);  // FIXME
-    case INVALID_ARGUMNET_NAME:
-      assert(0);  // FIXME
-    case INVALID_NAME_FOR_FUNC_DEFINITION:
-      assert(0);  // FIXME
-    case INVALID_FUNCTION_OPERATION:
-      print_semantic("cannot perform `" + to_string(op) + "` with function `" +
-                     symbol->get_name() + "` as operand");
-      break;
-    default:
-      assert(0);
-  }
+void invalid_function_operation(
+    Operator op,
+    const alpha::symbol::Symbol::SharedPtr& symbol) {
+  print_semantic("cannot perform `" + to_string(op) + "` with function `" +
+                 symbol->get_name() + "` as operand");
 }
 
 static std::string to_string(Operator op) {
