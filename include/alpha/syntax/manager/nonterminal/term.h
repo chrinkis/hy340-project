@@ -1,6 +1,6 @@
 #pragma once
 
-#include <alpha/syntax/holder/Symbol.h>
+#include <alpha/icode/expr.h>
 
 namespace alpha {
 namespace syntax {
@@ -11,7 +11,10 @@ class Expr;
 class Lvalue;
 class Primary;
 
-class Term : public holder::Symbol {
+class Term {
+ private:
+  icode::Expr expr;
+
  public:
   static Term from_lParTkn_expr_rParTkn(const Expr& expr);
 
@@ -28,6 +31,10 @@ class Term : public holder::Symbol {
   static Term from_lvalue_minusMinusTkn(const Lvalue& lvalue);
 
   static Term from_primary(const Primary& primary);
+
+ public:
+  icode::Expr get_expr() const;
+  void set_expr(const icode::Expr& expr);
 };
 
 }  // namespace nonterminal
