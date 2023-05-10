@@ -2,17 +2,27 @@
 
 #include <alpha/syntax/manager/nonterminal/funcprefix.h>
 
-#include <alpha/syntax/holder/Symbol.h>
+#include <alpha/symbol/symbol.h>
 
 namespace alpha {
 namespace syntax {
 namespace manager {
 namespace nonterminal {
 
-class Funcdef : public holder::Symbol {
+class Funcdef {
+ public:
+  using Symbol = symbol::Symbol;
+
+ private:
+  Symbol::SharedPtr symbol;
+
  public:
   static Funcdef from_funcprefix_funcargs_funcbody(
       const Funcprefix& funcprefix);
+
+ public:
+  Symbol::SharedPtr get_symbol() const;
+  void set_symbol(const Symbol::SharedPtr& symbol);
 };
 
 }  // namespace nonterminal
