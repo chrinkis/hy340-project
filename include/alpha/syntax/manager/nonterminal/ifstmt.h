@@ -11,8 +11,8 @@ class Stmt;
 
 class Ifstmt {
  public:
-  static void IfstmtIf_Stmt(const IfstmtIf& ifstmt_if, const Stmt& stmt);
-  static void IfstmtIf_Stmt_IfstmtElse_Stmt(const IfstmtIf& ifstmt_if,
+  static void ifstmtIf_stmt(const IfstmtIf& ifstmt_if, const Stmt& stmt);
+  static void ifstmtIf_stmt_ifstmtElse_stmt(const IfstmtIf& ifstmt_if,
                                             const Stmt& stmt1,
                                             const IfstmtElse& ifstmt_else,
                                             const Stmt& stmt2);
