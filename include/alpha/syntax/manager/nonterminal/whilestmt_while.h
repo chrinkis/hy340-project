@@ -7,7 +7,7 @@ namespace syntax {
 namespace manager {
 namespace nonterminal {
 
-class Whilestmt_while {
+class WhilestmtWhile {
  public:
   using Quad = alpha::icode::quad::Quad;
 
@@ -15,7 +15,7 @@ class Whilestmt_while {
   Quad::Label quad_address;
 
  public:
-  static Whilestmt_while from_whileTkn();
+  static WhilestmtWhile from_whileTkn();
 
  public:
   Quad::Label get_quad_address() const;
