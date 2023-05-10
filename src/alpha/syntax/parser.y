@@ -384,7 +384,7 @@ ifstmt_else :   ELSE { print_derivation("ifstmt_else", "ELSE"); }
             ;
 
 
-whilestmt       :   whilestmt_while whilestmt_cond stmt { print_derivation("whilestmt", "whilestmt_while whilestmt_cond stmt"); }
+whilestmt       :   whilestmt_while whilestmt_cond loop_stmt { print_derivation("whilestmt", "whilestmt_while whilestmt_cond loop_stmt"); }
                 ;
 
 whilestmt_while :   WHILE { print_derivation("whilestmt_while", "WHILE"); }
