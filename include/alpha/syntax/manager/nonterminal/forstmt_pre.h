@@ -7,10 +7,10 @@ namespace syntax {
 namespace manager {
 namespace nonterminal {
 
-class Forstmt_M;
+class ForstmtM;
 class Expr;
 
-class Forstmt_pre {
+class ForstmtPre {
  public:
   using Quad = alpha::icode::quad::Quad;
 
@@ -19,8 +19,8 @@ class Forstmt_pre {
   Quad::Label enter;
 
  public:
-  static Forstmt_pre from_forTkn_lParTkn_elist_smclnTkn_M_expr_smclnTkn(
-      const Forstmt_M& M,
+  static ForstmtPre from_forTkn_lParTkn_elist_smclnTkn_M_expr_smclnTkn(
+      const ForstmtM& M,
       const Expr& expr);
 
  public:
