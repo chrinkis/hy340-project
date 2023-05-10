@@ -7,7 +7,7 @@ namespace syntax {
 namespace manager {
 namespace nonterminal {
 
-class Forstmt_N {
+class ForstmtN {
  public:
   using Quad = alpha::icode::quad::Quad;
 
@@ -15,7 +15,7 @@ class Forstmt_N {
   Quad::Label quad_address;
 
  public:
-  static Forstmt_N from_empty();
+  static ForstmtN from_empty();
 
  public:
   Quad::Label get_quad_address() const;
