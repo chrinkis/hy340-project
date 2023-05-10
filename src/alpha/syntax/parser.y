@@ -393,7 +393,7 @@ whilestmt_while :   WHILE { print_derivation("whilestmt_while", "WHILE"); }
 whilestmt_cond  :   "(" expr ")" { print_derivation("whilestmt_cond", "( expr )"); }
                 ;
 
-forstmt     :   forstmt_pre forstmt_n elist ")" forstmt_m loop_stmt forstmt_m { print_derivation("forstmt", "forstmt_pre forstmt_n elist ) forstmt_m loop_stmt forstmt_m"); }
+forstmt     :   forstmt_pre forstmt_n elist ")" forstmt_n loop_stmt forstmt_n { print_derivation("forstmt", "forstmt_pre forstmt_n elist ) forstmt_n loop_stmt forstmt_n"); }
             ;
 
 forstmt_pre :   FOR "(" elist ";" forstmt_m expr ";" { print_derivation("forstmt_pre", "FOR ( elist ; forstmt_m expr ;"); }
