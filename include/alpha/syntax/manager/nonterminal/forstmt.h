@@ -5,18 +5,18 @@ namespace syntax {
 namespace manager {
 namespace nonterminal {
 
-class Forstmt_pre;
-class Forstmt_N;
+class ForstmtPre;
+class ForstmtN;
 class Loopstmt;
 
 class Forstmt {
  public:
   static void forstmtPre_N_elist_rParTkn_N_loopstmt_N(
-      const Forstmt_pre& forstmt_pre,
-      const Forstmt_N& N1,
-      const Forstmt_N& N2,
+      const ForstmtPre& forstmt_pre,
+      const ForstmtN& N1,
+      const ForstmtN& N2,
       const Loopstmt& loopstmt,
-      const Forstmt_N& N3);
+      const ForstmtN& N3);
 };
 
 }  // namespace nonterminal
