@@ -7,7 +7,7 @@ namespace syntax {
 namespace manager {
 namespace nonterminal {
 
-class Ifstmt_else {
+class IfstmtElse {
  public:
   using Quad = alpha::icode::quad::Quad;
 
@@ -15,7 +15,7 @@ class Ifstmt_else {
   Quad::Label quad_address;
 
  public:
-  static Ifstmt_else from_elseTkn();
+  static IfstmtElse from_elseTkn();
 
  public:
   Quad::Label get_quad_address() const;
