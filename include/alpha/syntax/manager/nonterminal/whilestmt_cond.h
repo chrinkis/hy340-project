@@ -9,7 +9,7 @@ namespace nonterminal {
 
 class Expr;
 
-class Whilestmt_cond {
+class WhilestmtCond {
  public:
   using Quad = alpha::icode::quad::Quad;
 
@@ -17,7 +17,7 @@ class Whilestmt_cond {
   Quad::Label quad_address;
 
  public:
-  static Whilestmt_cond from_lParTkn_expr_rParTkn(const Expr& expr);
+  static WhilestmtCond from_lParTkn_expr_rParTkn(const Expr& expr);
 
  public:
   Quad::Label get_quad_address() const;
