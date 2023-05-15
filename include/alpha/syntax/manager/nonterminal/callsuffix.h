@@ -11,7 +11,7 @@ namespace manager {
 namespace nonterminal {
 
 class Elist;
-class Normalcall;
+class Normcall;
 class Methodcall;
 
 class Callsuffix {
@@ -24,7 +24,7 @@ class Callsuffix {
   terminal::Identifier id;
 
  public:
-  static Callsuffix from_normalcall(const Normalcall& normalcall);
+  static Callsuffix from_normcall(const Normcall& normcall);
   static Callsuffix from_methodcall(const Methodcall& methodcall);
 
  public:
