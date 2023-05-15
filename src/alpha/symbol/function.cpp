@@ -17,7 +17,8 @@ Function::Function(const std::string& name,
       location(location),
       type(type),
       offset(offset),
-      scope_space(scope_space) {
+      scope_space(scope_space),
+      total_locals(0) {
   assert(this->type == Type::LIBRARY_FUNCTION ||
          this->type == Type::USER_FUNCTION);
 
@@ -57,4 +58,12 @@ Symbol::Offset Function::get_offset() const {
 
 Symbol::ScopeSpace Function::get_space() const {
   return this->scope_space;
+}
+
+Function::LocalCounter Function::get_total_locals() const {
+  return this->total_locals;
+}
+
+void Function::set_total_locals(const LocalCounter& total_locals) {
+  this->total_locals = total_locals;
 }
