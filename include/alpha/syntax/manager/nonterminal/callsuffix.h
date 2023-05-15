@@ -16,7 +16,7 @@ class Methodcall;
 
 class Callsuffix {
  public:
-  using ExprCollection = std::vector<Expr>;
+  using ExprCollection = std::vector<icode::Expr>;
 
  private:
   ExprCollection elist;
