@@ -62,10 +62,15 @@ class Expr {
  public:
   Type get_type() const;
 
+  bool has_symbol() const;
   Symbol::SharedPtr get_symbol() const;
+
   SharedPtr get_index() const;
+
   double get_number_const() const;
+
   std::string get_string_const() const;
+
   bool get_bool_const() const;
 
  public:
