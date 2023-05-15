@@ -90,7 +90,7 @@ void Table::emit_getretval() {
   ;
 }
 
-void Table::emit_funcstart() {
+void Table::emit_funcstart(const std::string& name) {
   ;
 }
 

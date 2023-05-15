@@ -5,6 +5,7 @@
 #include <alpha/icode/quad/quad.h>
 
 #include <ostream>
+#include <string>
 #include <vector>
 
 namespace alpha::icode::quad {
@@ -47,7 +48,7 @@ class Table {
   void emit_param();
   void emit_ret();
   void emit_getretval();
-  void emit_funcstart();
+  void emit_funcstart(const std::string& name);
   void emit_funcend();
   void emit_tablecreate();
   void emit_tablegetelem();
