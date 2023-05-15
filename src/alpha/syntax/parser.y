@@ -277,7 +277,10 @@ callsuffix  :   normcall   { print_derivation("callsuffix", "normcall"); }
 normcall    :   "(" elist ")" { print_derivation("normcall", "( elist )"); }
             ;
 
-methodcall  :   ".." IDENTIFIER "(" elist ")" { print_derivation("methodcall", ".. IDENTIFIER ( elist )"); }
+methodcall  :   ".." IDENTIFIER "(" elist ")" { $$ = nterm::Methodcall::from_doubleDotTkn_identifier_lParTkn_elist_rParTkn(
+                                                                terminal::Identifier($2, @2), $4);
+                                                print_derivation("methodcall", ".. IDENTIFIER ( elist )"); 
+                                              }
             ;
 
 elist       :   %empty         { print_derivation("elist", "empty"); }
