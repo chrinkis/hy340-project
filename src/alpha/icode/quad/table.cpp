@@ -74,11 +74,11 @@ void Table::emit_jump() {
   ;
 }
 
-void Table::emit_call() {
+void emit_call(const Expr& expr) {
   ;
 }
 
-void Table::emit_param() {
+void emit_param(const Expr& expr) {
   ;
 }
 
@@ -86,7 +86,7 @@ void Table::emit_ret() {
   ;
 }
 
-void Table::emit_getretval() {
+void emit_getretval(const Expr& expr) {
   ;
 }
 
