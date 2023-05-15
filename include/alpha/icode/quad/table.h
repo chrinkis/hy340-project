@@ -26,6 +26,33 @@ class Table {
  public:
   void emit(const Quad& quad);
 
+  void emit_assign();
+  void emit_add();
+  void emit_sub();
+  void emit_mul();
+  void emit_div();
+  void emit_mod();
+  void emit_uminus();
+  void emit_and();
+  void emit_or();
+  void emit_not();
+  void emit_if_eq();
+  void emit_if_noteq();
+  void emit_if_lesseq();
+  void emit_if_greatereq();
+  void emit_if_less();
+  void emit_if_greater();
+  void emit_jump();
+  void emit_call();
+  void emit_param();
+  void emit_ret();
+  void emit_getretval();
+  void emit_funcstart();
+  void emit_funcend();
+  void emit_tablecreate();
+  void emit_tablegetelem();
+  void emit_tablesetelem();
+
   friend std::ostream& operator<<(std::ostream& os, const Table& qt);
 };
 
