@@ -102,6 +102,7 @@
 %type <nterm::Assignexpr>  assignexpr
 %type <nterm::BlockClose>  block_close
 %type <nterm::BlockOpen>   block_open
+%type <nterm::Elist>       elist
 %type <nterm::Expr>        expr
 %type <nterm::Funcdef>     funcdef
 %type <nterm::Funcprefix>  funcprefix
