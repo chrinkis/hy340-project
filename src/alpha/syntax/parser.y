@@ -280,8 +280,12 @@ normcall    :   "(" elist ")" { print_derivation("normcall", "( elist )"); }
 methodcall  :   ".." IDENTIFIER "(" elist ")" { print_derivation("methodcall", ".. IDENTIFIER ( elist )"); }
             ;
 
-elist       :   %empty         { print_derivation("elist", "empty"); }
-            |   expr elist_opt { print_derivation("elist", "expr elist_opt"); }
+elist       :   %empty         { $$ = nterm::Elist::from_empty();
+                                 print_derivation("elist", "empty");
+                               }
+            |   expr elist_opt { $$ = nterm::Elist::from_expr_elistOpt($1, $2);
+                                 print_derivation("elist", "expr elist_opt");
+                               }
             ;
 
 elist_opt   :   %empty             { print_derivation("elist_opt", "empty"); }
