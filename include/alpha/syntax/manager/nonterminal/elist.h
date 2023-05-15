@@ -12,6 +12,7 @@ class ElistOpt;
 class Expr;
 
 class Elist {
+ public:
   using ExprCollection = std::vector<icode::Expr>;
 
  private:

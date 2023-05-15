@@ -11,8 +11,10 @@ namespace nonterminal {
 class Expr;
 
 class ElistOpt {
+ public:
   using ExprCollection = std::vector<icode::Expr>;
 
+ private:
   ExprCollection expr_list;
 
  public:
