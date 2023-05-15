@@ -1,6 +1,6 @@
 #pragma once
 
-#include <alpha/syntax/manager/nonterminal/expr.h>
+#include <alpha/icode/expr.h>
 #include <alpha/syntax/manager/terminal/identifier.h>
 
 #include <vector>
@@ -14,7 +14,7 @@ class Elist;
 
 class Normcall {
  public:
-  using ExprCollection = std::vector<Expr>;
+  using ExprCollection = std::vector<icode::Expr>;
 
  private:
   ExprCollection elist;
