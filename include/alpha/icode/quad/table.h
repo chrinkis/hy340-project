@@ -53,6 +53,8 @@ class Table {
   void emit_tablegetelem();
   void emit_tablesetelem();
 
+  Quad::Label get_next_label() const;
+
   friend std::ostream& operator<<(std::ostream& os, const Table& qt);
 };
 

@@ -110,6 +110,10 @@ void Table::emit_tablesetelem() {
   ;
 }
 
+Quad::Label Table::get_next_label() const {
+  return 0;  // FIXME
+}
+
 std::ostream& operator<<(std::ostream& os, const Table& qt) {
   os << std::left;
 
