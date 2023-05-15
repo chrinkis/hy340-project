@@ -246,7 +246,7 @@ lvalue      :   IDENTIFIER       { $$ = nterm::Lvalue::from_idTkn(terminal::Iden
             |   "::" IDENTIFIER  { $$ = nterm::Lvalue::from_doubleColonTkn_localIdTkn(terminal::Identifier($2, @2));
                                    print_derivation("lvalue", ":: IDENTIFIER");
                                  }
-            |   member           { $$ = nterm::Lvalue::from_member();
+            |   member           { $$ = nterm::Lvalue::from_member($1);
                                    print_derivation("lvalue", "member");
                                  }
             ;
