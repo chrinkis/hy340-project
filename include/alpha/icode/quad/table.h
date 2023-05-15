@@ -27,16 +27,16 @@ class Table {
  public:
   void emit(const Quad& quad);
 
-  void emit_assign();
-  void emit_add();
-  void emit_sub();
+  void emit_assign(const Expr& dest, const Expr& src);
+  void emit_add(const Expr& result, const Expr& op_a, const Expr& op_b);
+  void emit_sub(const Expr& result, const Expr& op_a, const Expr& op_b);
   void emit_mul();
   void emit_div();
   void emit_mod();
-  void emit_uminus();
+  void emit_uminus(const Expr& result, const Expr& operand);
   void emit_and();
   void emit_or();
-  void emit_not();
+  void emit_not(const Expr& result, const Expr& operand);
   void emit_if_eq();
   void emit_if_noteq();
   void emit_if_lesseq();
@@ -52,7 +52,7 @@ class Table {
   void emit_funcend();
   void emit_tablecreate();
   void emit_tablegetelem();
-  void emit_tablesetelem();
+  void emit_tablesetelem(const Expr& table, const Expr& index, const Expr& val);
 
   icode::Expr emit_if_table_item(const icode::Expr& expr);
 

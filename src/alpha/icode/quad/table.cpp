@@ -6,15 +6,15 @@ void Table::emit(const Quad& quad) {
   this->table.push_back(quad);
 }
 
-void Table::emit_assign() {
+void Table::emit_assign(const Expr& dest, const Expr& src) {
   ;
 }
 
-void Table::emit_add() {
+void Table::emit_add(const Expr& result, const Expr& op_a, const Expr& op_b) {
   ;
 }
 
-void Table::emit_sub() {
+void Table::emit_sub(const Expr& result, const Expr& op_a, const Expr& op_b) {
   ;
 }
 
@@ -30,7 +30,7 @@ void Table::emit_mod() {
   ;
 }
 
-void Table::emit_uminus() {
+void Table::emit_uminus(const Expr& result, const Expr& operand) {
   ;
 }
 
@@ -42,7 +42,7 @@ void Table::emit_or() {
   ;
 }
 
-void Table::emit_not() {
+void Table::emit_not(const Expr& result, const Expr& operand) {
   ;
 }
 
@@ -106,7 +106,9 @@ void Table::emit_tablegetelem() {
   ;
 }
 
-void Table::emit_tablesetelem() {
+void Table::emit_tablesetelem(const Expr& table,
+                              const Expr& index,
+                              const Expr& val) {
   ;
 }
 
