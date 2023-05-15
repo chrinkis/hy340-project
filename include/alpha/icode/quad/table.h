@@ -2,6 +2,7 @@
 
 #define quadTable (alpha::icode::quad::Table::get())
 
+#include <alpha/icode/expr.h>
 #include <alpha/icode/quad/quad.h>
 
 #include <ostream>
@@ -52,6 +53,8 @@ class Table {
   void emit_tablecreate();
   void emit_tablegetelem();
   void emit_tablesetelem();
+
+  icode::Expr emit_if_table_item(const icode::Expr& expr);
 
   Quad::Label get_next_label() const;
 
