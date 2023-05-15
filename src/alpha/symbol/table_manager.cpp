@@ -269,6 +269,7 @@ void TableManager::end_argument_list() {
 
   this->current_scope--;
   this->current_function = Function::SharedPtr();
+  this->scope_space_manager.enter_scope_space();
 }
 
 std::string TableManager::new_temp_variable_name() {
