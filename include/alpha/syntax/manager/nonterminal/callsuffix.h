@@ -30,6 +30,7 @@ class Callsuffix {
  public:
   ExprCollection get_elist() const;
   void set_elist(const ExprCollection& elist);
+  void add_to_elist(const icode::Expr& elist);
 
   bool is_method() const;
   bool set_method(bool is_method);
