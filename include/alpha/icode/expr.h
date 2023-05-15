@@ -52,7 +52,7 @@ class Expr {
 
   static Expr for_table_item(const Expr& symbol_expr, const Expr& index);
 
-  static Expr for_assign_expr(const SharedPtr& other);
+  static Expr for_assign_expr(const Expr& other);
   static Expr for_assign_expr(const Symbol::SharedPtr& symbol);
 
   static Expr for_const_num(double number);
