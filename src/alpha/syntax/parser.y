@@ -215,7 +215,7 @@ term        :   "(" expr ")"          { $$ = nterm::Term::from_lParTkn_expr_rPar
                                       }
             ;
 
-assignexpr  :   lvalue "=" expr { $$ = nterm::Assignexpr::from_lvalue_assignTkn_expr($1);
+assignexpr  :   lvalue "=" expr { $$ = nterm::Assignexpr::from_lvalue_assignTkn_expr($1, $3);
                                   print_derivation("assignexpr", "lvalue = expr");
                                 }
             ;
