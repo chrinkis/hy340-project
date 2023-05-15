@@ -55,6 +55,9 @@ class Expr {
   static Expr for_assign_expr(const Expr& other);
   static Expr for_assign_expr(const Symbol::SharedPtr& symbol);
 
+  static Expr for_arithm_expr(const Symbol::SharedPtr& symbol);
+  static Expr for_bool_expr(const Symbol::SharedPtr& symbol);
+
   static Expr for_const_num(double number);
   static Expr for_const_bool(bool value);
   static Expr for_const_string(const std::string& string);
