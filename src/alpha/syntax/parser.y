@@ -105,6 +105,7 @@
 %type <nterm::Expr>        expr
 %type <nterm::Funcdef>     funcdef
 %type <nterm::Funcprefix>  funcprefix
+%type <nterm::Indexed>     indexed
 %type <nterm::Lvalue>      lvalue
 %type <nterm::Member>      member
 %type <nterm::Primary>     primary
@@ -292,7 +293,9 @@ objectdef   :   "[" elist "]"   { print_derivation("objectdef", "[ elist ]"); }
             |   "[" indexed "]" { print_derivation("objectdef", "[ indexed ]"); }
             ;
 
-indexed     :   indexedelem indexed_opt { print_derivation("indexed", "indexedelem indexed_opt"); }
+indexed     :   indexedelem indexed_opt { $$ = nterm::Indexed::from_indexedElem_indexedOpt($1, $2);
+                                          print_derivation("indexed", "indexedelem indexed_opt");
+                                        }
             ;
 
 indexed_opt :   %empty                      { print_derivation("indexed_opt", "empty"); }
