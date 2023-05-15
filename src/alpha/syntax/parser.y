@@ -102,6 +102,7 @@
 %type <nterm::Assignexpr>  assignexpr
 %type <nterm::BlockClose>  block_close
 %type <nterm::BlockOpen>   block_open
+%type <nterm::ElistOpt>    elist_opt
 %type <nterm::Expr>        expr
 %type <nterm::Funcdef>     funcdef
 %type <nterm::Funcprefix>  funcprefix
@@ -284,8 +285,13 @@ elist       :   %empty         { print_derivation("elist", "empty"); }
             |   expr elist_opt { print_derivation("elist", "expr elist_opt"); }
             ;
 
-elist_opt   :   %empty             { print_derivation("elist_opt", "empty"); }
-            |   "," expr elist_opt { print_derivation("elist_opt", ", expr elist_opt"); }
+elist_opt   :   %empty             { $$ = nterm::ElistOpt::from_empty();
+                                     print_derivation("elist_opt", "empty");
+                                   }
+            |   "," expr elist_opt { $$ = nterm::ElistOpt::from_commaTkn_expr_elistOpt($2, $3);
+                                     print_derivation("elist_opt", ", expr elist_opt");
+                                   }
+
             ;
 
 objectdef   :   "[" elist "]"   { print_derivation("objectdef", "[ elist ]"); }
