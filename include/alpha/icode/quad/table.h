@@ -3,6 +3,7 @@
 #define quadTable (alpha::icode::quad::Table::get())
 
 #include <alpha/icode/quad/quad.h>
+#include <alpha/symbol/symbol.h>
 
 #include <ostream>
 #include <vector>
@@ -48,7 +49,7 @@ class Table {
   void emit_ret();
   void emit_getretval();
   void emit_funcstart();
-  void emit_funcend();
+  void emit_funcend(const symbol::Symbol::SharedPtr& function);
   void emit_tablecreate();
   void emit_tablegetelem();
   void emit_tablesetelem();
