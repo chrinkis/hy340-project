@@ -1,7 +1,6 @@
 #pragma once
 
 #include <alpha/icode/expr.h>
-#include <alpha/syntax/manager/terminal/identifier.h>
 
 #include <vector>
 
@@ -19,7 +18,6 @@ class Normcall {
  private:
   ExprCollection elist;
   bool method;
-  terminal::Identifier id;
 
  public:
   static Normcall from_lParTkn_elist_rParTkn(const Elist& elist);
@@ -30,9 +28,6 @@ class Normcall {
 
   bool is_method() const;
   bool set_method(bool is_method);
-
-  terminal::Identifier get_id() const;
-  void set_id(const terminal::Identifier& id);
 };
 
 }  // namespace nonterminal
