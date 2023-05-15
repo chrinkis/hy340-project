@@ -14,7 +14,7 @@ class Elist;
 class Normalcall;
 class Methodcall;
 
-class Callsufix {
+class Callsuffix {
  public:
   using ExprCollection = std::vector<Expr>;
 
@@ -24,8 +24,8 @@ class Callsufix {
   terminal::Identifier id;
 
  public:
-  static Callsufix from_normalcall(const Normalcall& normalcall);
-  static Callsufix from_methodcall(const Methodcall& methodcall);
+  static Callsuffix from_normalcall(const Normalcall& normalcall);
+  static Callsuffix from_methodcall(const Methodcall& methodcall);
 
  public:
   ExprCollection get_elist() const;
