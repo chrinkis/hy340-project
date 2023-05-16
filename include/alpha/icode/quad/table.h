@@ -58,6 +58,8 @@ class Table {
 
   Quad::Label get_next_label() const;
 
+  void patch_label(const Quad::Line& line, const Quad::Label& label);
+
   friend std::ostream& operator<<(std::ostream& os, const Table& qt);
 };
 
