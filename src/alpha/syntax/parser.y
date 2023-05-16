@@ -380,7 +380,9 @@ ifstmt      :   ifstmt_if stmt        %expect 1 { print_derivation("ifstmt", "if
 ifstmt_if   :   IF "(" expr ")" { print_derivation("ifstmt_if", "IF ( expr )"); }
             ;
 
-ifstmt_else :   ELSE { print_derivation("ifstmt_else", "ELSE"); }
+ifstmt_else :   ELSE { $$ = nterm::IfstmtElse::from_elseTkn($1);
+                       print_derivation("ifstmt_else", "ELSE");
+                     }
             ;
 
 
