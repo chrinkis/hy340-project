@@ -9,6 +9,9 @@ namespace nonterminal {
 
 class Lvalue;
 class Funcdef;
+class Call;
+class Objectdef;
+class Const;
 
 class Primary {
  private:
@@ -17,13 +20,13 @@ class Primary {
  public:
   static Primary from_lvalue(const Lvalue& lvalue);
 
-  static Primary from_call();
+  static Primary from_call(const Call& call);
 
-  static Primary from_objectdef();
+  static Primary from_objectdef(const Objectdef& objectdef);
 
   static Primary from_lParTkn_funcdef_rParTkn(const Funcdef& funcdef);
 
-  static Primary from_const();
+  static Primary from_const(const Const& constant);
 
  public:
   icode::Expr get_expr() const;

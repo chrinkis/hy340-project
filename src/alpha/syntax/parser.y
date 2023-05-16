@@ -236,16 +236,16 @@ assignexpr  :   lvalue "=" expr { $$ = nterm::Assignexpr::from_lvalue_assignTkn_
 primary     :   lvalue          { $$ = nterm::Primary::from_lvalue($1);
                                   print_derivation("primary", "lvalue");
                                 }
-            |   call            { $$ = nterm::Primary::from_call();
+            |   call            { $$ = nterm::Primary::from_call($1);
                                   print_derivation("primary", "call");
                                 }
-            |   objectdef       { $$ = nterm::Primary::from_objectdef();
+            |   objectdef       { $$ = nterm::Primary::from_objectdef($1);
                                   print_derivation("primary", "objectdef");
                                 }
             |   "(" funcdef ")" { $$ = nterm::Primary::from_lParTkn_funcdef_rParTkn($2);
                                   print_derivation("primary", "( funcdef )");
                                 }
-            |   const           { $$ = nterm::Primary::from_const();
+            |   const           { $$ = nterm::Primary::from_const($1);
                                   print_derivation("primary", "const");
                                 }
             ;
