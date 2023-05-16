@@ -525,7 +525,9 @@ loop_start  :   %empty { $$ = nterm::LoopStart::emptyTkn();
                        }
             ;
 
-loop_end    :   %empty { print_derivation("loop_end", "empty"); }
+loop_end    :   %empty { $$ = nterm::LoopEnd::emptyTkn();
+                         print_derivation("loop_end", "empty");
+                       }
             ;
 
 breakstmt   :   BREAK ";" { $$ = nterm::Breakstmt::from_breakTkn();
