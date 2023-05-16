@@ -109,6 +109,7 @@
 %type <nterm::Indexedelem> indexedelem
 %type <nterm::Lvalue>      lvalue
 %type <nterm::Member>      member
+%type <nterm::Objectdef>   objectdef
 %type <nterm::Primary>     primary
 %type <nterm::Term>        term
 
@@ -309,8 +310,12 @@ elist_opt   :   %empty             { print_derivation("elist_opt", "empty"); }
             |   "," expr elist_opt { print_derivation("elist_opt", ", expr elist_opt"); }
             ;
 
-objectdef   :   "[" elist "]"   { print_derivation("objectdef", "[ elist ]"); }
-            |   "[" indexed "]" { print_derivation("objectdef", "[ indexed ]"); }
+objectdef   :   "[" elist "]"   { $$ = nterm::Objectdef::from_lSqrBrackTkn_elist_rSqrBrackTkn($2);
+                                  print_derivation("objectdef", "[ elist ]");
+                                }
+            |   "[" indexed "]" { $$ = nterm::Objectdef::from_lSqrBrackTkn_indexed_rSqrBrackTkn($2);
+                                  print_derivation("objectdef", "[ indexed ]");
+                                }
             ;
 
 indexed     :   indexedelem indexed_opt { print_derivation("indexed", "indexedelem indexed_opt"); }
