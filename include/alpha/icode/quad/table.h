@@ -62,6 +62,9 @@ class Table {
 
   void patch_list(const Quad::Line& list_head, const Quad::Label& label);
 
+  Quad::Line merge_lists(const Quad::Line& list_head_a,
+                         const Quad::Line& list_head_b);
+
   friend std::ostream& operator<<(std::ostream& os, const Table& qt);
 };
 
