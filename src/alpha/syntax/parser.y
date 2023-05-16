@@ -414,7 +414,9 @@ loop_start  :   %empty { print_derivation("loop_start", "empty"); }
 loop_end    :   %empty { print_derivation("loop_end", "empty"); }
             ;
 
-breakstmt   :   BREAK ";" { print_derivation("breakstmt", "BREAK ;"); }
+breakstmt   :   BREAK ";" { $$ = nterm::Breakstmt::from_breakTkn();
+                            print_derivation("breakstmt", "BREAK ;");
+                          }
             ;
 
 continuestmt:   CONTINUE ";" { print_derivation("breakstmt", "CONTINUE ;"); }
