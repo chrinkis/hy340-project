@@ -108,6 +108,7 @@
 %type <nterm::ForstmtM>    forstmt_m
 %type <nterm::Funcdef>     funcdef
 %type <nterm::Funcprefix>  funcprefix
+%type <nterm::Indexed>     indexed
 %type <nterm::IndexedOpt>  indexed_opt
 %type <nterm::Indexedelem> indexedelem
 %type <nterm::Lvalue>      lvalue
@@ -327,7 +328,9 @@ objectdef   :   "[" elist "]"   { $$ = nterm::Objectdef::from_lSqrBrackTkn_elist
                                 }
             ;
 
-indexed     :   indexedelem indexed_opt { print_derivation("indexed", "indexedelem indexed_opt"); }
+indexed     :   indexedelem indexed_opt { $$ = nterm::Indexed::from_indexedElem_indexedOpt($1, $2);
+                                          print_derivation("indexed", "indexedelem indexed_opt");
+                                        }
             ;
 
 indexed_opt :   %empty                      { $$ = nterm::IndexedOpt::from_empty();

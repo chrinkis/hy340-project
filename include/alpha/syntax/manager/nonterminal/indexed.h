@@ -26,6 +26,7 @@ class Indexed {
 
  public:
   IndexedCollection get_indexed_list() const;
+  void set_indexed_list(const IndexedCollection& indexed_list);
 };
 
 }  // namespace nonterminal
