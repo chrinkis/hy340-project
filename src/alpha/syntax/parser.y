@@ -102,6 +102,7 @@
 %type <nterm::Assignexpr>  assignexpr
 %type <nterm::BlockClose>  block_close
 %type <nterm::BlockOpen>   block_open
+%type <nterm::Const>       const
 %type <nterm::Expr>        expr
 %type <nterm::Funcdef>     funcdef
 %type <nterm::Funcprefix>  funcprefix
@@ -352,12 +353,24 @@ funcbody_post   :   %empty { print_derivation("funcbody_post", "empty"); }
                 ;
 
 
-const       :   INTEGER { print_derivation("const", "INTEGER"); }
-            |   FLOAT   { print_derivation("const", "FLOAT"); }
-            |   STRING  { print_derivation("const", "STRING"); }
-            |   NIL     { print_derivation("const", "NIL"); }
-            |   TRUE    { print_derivation("const", "TRUE"); }
-            |   FALSE   { print_derivation("const", "FALSE"); }
+const       :   INTEGER { $$ = nterm::Const::from_integerTkn($1);
+                          print_derivation("const", "INTEGER");
+                        }
+            |   FLOAT   { $$ = nterm::Const::from_floatTkn($1);
+                          print_derivation("const", "FLOAT");
+                        }
+            |   STRING  { $$ = nterm::Const::from_stringTkn($1);
+                          print_derivation("const", "STRING");
+                        }
+            |   NIL     { $$ = nterm::Const::from_nilTkn();
+                          print_derivation("const", "NIL");
+                        }
+            |   TRUE    { $$ = nterm::Const::from_trueTkn();
+                          print_derivation("const", "TRUE");
+                        }
+            |   FALSE   { $$ = nterm::Const::from_falseTkn();
+                          print_derivation("const", "FALSE");
+                        }
             ;
 
 idlist      :   %empty               { print_derivation("idlist", "empty"); }
