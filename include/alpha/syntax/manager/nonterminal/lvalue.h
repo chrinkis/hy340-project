@@ -8,9 +8,12 @@ namespace syntax {
 namespace manager {
 namespace nonterminal {
 
+class Member;
+
 class Lvalue {
  private:
   using Identifier = terminal::Identifier;
+  using Symbol = symbol::Symbol;
 
  private:
   icode::Expr expr;
@@ -22,11 +25,14 @@ class Lvalue {
 
   static Lvalue from_doubleColonTkn_localIdTkn(const Identifier& identifier);
 
-  static Lvalue from_member();
+  static Lvalue from_member(const Member& member);
 
  public:
   icode::Expr get_expr() const;
   void set_expr(const icode::Expr& expr);
+
+ private:
+  void set_expr_from_symbol(const Symbol::SharedPtr& symbol);
 };
 
 }  // namespace nonterminal
