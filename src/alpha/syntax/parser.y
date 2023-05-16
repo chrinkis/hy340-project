@@ -109,6 +109,7 @@
 %type <nterm::Member>      member
 %type <nterm::Primary>     primary
 %type <nterm::Term>        term
+%type <nterm::WhilestmtWhile> whilestmt_while
 
 %start PROGRAM
 
@@ -387,7 +388,9 @@ ifstmt_else :   ELSE { print_derivation("ifstmt_else", "ELSE"); }
 whilestmt       :   whilestmt_while whilestmt_cond loop_stmt { print_derivation("whilestmt", "whilestmt_while whilestmt_cond loop_stmt"); }
                 ;
 
-whilestmt_while :   WHILE { print_derivation("whilestmt_while", "WHILE"); }
+whilestmt_while :   WHILE { $$ = nterm::WhilestmtWhile::from_whileTkn();
+                            print_derivation("whilestmt_while", "WHILE");
+                          }
                 ;
 
 whilestmt_cond  :   "(" expr ")" { print_derivation("whilestmt_cond", "( expr )"); }
