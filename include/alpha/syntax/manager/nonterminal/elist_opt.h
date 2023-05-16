@@ -15,7 +15,7 @@ class ElistOpt {
   using ExprCollection = std::vector<icode::Expr>;
 
  private:
-  ExprCollection expr_list;
+  ExprCollection icode_elist;
 
  public:
   static ElistOpt from_empty();
@@ -23,7 +23,8 @@ class ElistOpt {
                                               const ElistOpt& elist_opt);
 
  public:
-  ExprCollection get_expr_list() const;
+  ExprCollection get_icode_elist() const;
+  void set_icode_elist(const ExprCollection& icode_elist);
 };
 
 }  // namespace nonterminal

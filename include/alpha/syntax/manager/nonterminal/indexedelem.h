@@ -24,6 +24,7 @@ class Indexedelem {
 
  public:
   ExprPair get_icode_epair() const;
+  void set_icode_epair(ExprPair& icode_epair);
 };
 
 }  // namespace nonterminal
