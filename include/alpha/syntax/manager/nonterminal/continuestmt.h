@@ -16,7 +16,7 @@ class Continuestmt {
   Quad::Label continue_list_head;
 
  public:
-  static Continuestmt from_breakTkn();
+  static Continuestmt from_continueTkn();
 
  public:
   Quad::Label get_break_list_head() const;
