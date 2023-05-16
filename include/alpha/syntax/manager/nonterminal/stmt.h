@@ -19,6 +19,9 @@ class Stmt {
   Quad::Label contlist;
 
  public:
+  Stmt();
+
+ public:
   static Stmt from_expr_smclnTkn();
   static Stmt from_ifstmt();
   static Stmt from_whilestmt();
