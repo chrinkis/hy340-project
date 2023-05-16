@@ -424,7 +424,9 @@ ifstmt_else :   ELSE { $$ = nterm::IfstmtElse::from_elseTkn($1);
             ;
 
 
-whilestmt       :   whilestmt_while whilestmt_cond loop_stmt { print_derivation("whilestmt", "whilestmt_while whilestmt_cond loop_stmt"); }
+whilestmt       :   whilestmt_while whilestmt_cond loop_stmt { nterm::Whilestmt::whilestmtWhile_whilestmtCond_loopstmt($1, $2, $3);
+                                                               print_derivation("whilestmt", "whilestmt_while whilestmt_cond loop_stmt");
+                                                             }
                 ;
 
 whilestmt_while :   WHILE { print_derivation("whilestmt_while", "WHILE"); }
