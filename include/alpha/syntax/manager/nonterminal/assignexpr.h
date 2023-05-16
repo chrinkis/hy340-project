@@ -7,6 +7,7 @@ namespace syntax {
 namespace manager {
 namespace nonterminal {
 
+class Expr;
 class Lvalue;
 
 class Assignexpr {
@@ -14,7 +15,8 @@ class Assignexpr {
   icode::Expr expr;
 
  public:
-  static Assignexpr from_lvalue_assignTkn_expr(const Lvalue& lvalue);
+  static Assignexpr from_lvalue_assignTkn_expr(const Lvalue& lvalue,
+                                               const Expr& expr);
 
  public:
   icode::Expr get_expr() const;
