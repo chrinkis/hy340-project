@@ -13,7 +13,7 @@ IfstmtIf IfstmtIf::from_ifTkn_lParTkn_expr_rParTkn(const Expr& expr) {
       icode::Expr::for_const_num(quadTable.get_next_label() + 2));
 
   ifstmt_if.set_label(quadTable.get_next_label());
-  quadTable.emit_jump(icode::Expr::for_const_num(0));
+  quadTable.emit_jump(0);
 
   return ifstmt_if;
 }
