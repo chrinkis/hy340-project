@@ -35,7 +35,7 @@ class TableManager {
  private:
   Table table;
 
-  Function::SharedPtr current_function;
+  std::stack<Function::SharedPtr> current_function;
 
   Symbol::Scope current_scope;
   std::stack<Symbol::Scope> max_scope;

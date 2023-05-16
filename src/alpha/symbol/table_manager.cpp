@@ -213,7 +213,6 @@ Symbol::SharedPtr TableManager::start_function(
     const std::string& name,
     const Symbol::Location& location) {
   assert(this->can_add_function(name));
-  assert(!this->current_function);
 
   using Type = Symbol::Type;
 
@@ -222,11 +221,12 @@ Symbol::SharedPtr TableManager::start_function(
 
   Symbol::SharedPtr symbol = this->table.insert(function);
 
-  this->current_function = std::dynamic_pointer_cast<Function>(symbol);
+  auto current_function = std::dynamic_pointer_cast<Function>(symbol);
+  this->current_function.push(current_function);
   this->increase_scope();
   this->max_scope.push(current_scope);
 
-  assert(this->current_function);
+  assert(!this->current_function.empty());
 
   this->scope_space_manager.enter_scope_space();
 
@@ -234,17 +234,23 @@ Symbol::SharedPtr TableManager::start_function(
 }
 
 void TableManager::end_function() {
-  assert(!this->current_function);  // last arg didn't passed
+  assert(!this->current_function.empty());  // last arg didn't passed
   assert(this->max_scope.size() > 1 && this->max_scope.top() != 0);
 
   this->max_scope.pop();
+
+  this->current_function.top()->set_total_locals(
+      this->scope_space_manager.get_current_scope_offset());
+
+  this->scope_space_manager.exit_scope_space();
+  this->scope_space_manager.exit_scope_space();
 
   assert(this->max_scope.size() > 1 && this->max_scope.top() != 0 ||
          this->max_scope.size() == 1 && this->max_scope.top() == 0);
 }
 
 bool TableManager::can_add_argument(const std::string& name) const {
-  assert(this->current_function);
+  assert(!this->current_function.empty());
 
   return !IS_LIBRAY_FUNCTION(name) &&
          !this->table.lookup(name, this->current_scope, this->current_scope);
@@ -253,8 +259,9 @@ bool TableManager::can_add_argument(const std::string& name) const {
 void TableManager::add_argument(const std::string& name,
                                 const Symbol::Location& location) {
   assert(this->can_add_argument(name));
-  assert(this->current_function);
-  assert(this->current_function->get_type() == Symbol::Type::USER_FUNCTION);
+  assert(!this->current_function.empty());
+  assert(this->current_function.top()->get_type() ==
+         Symbol::Type::USER_FUNCTION);
 
   using Type = Symbol::Type;
 
@@ -263,14 +270,15 @@ void TableManager::add_argument(const std::string& name,
 
   assert(arg);
 
-  this->current_function->add_arg(arg);
+  this->current_function.top()->add_arg(arg);
 }
 
 void TableManager::end_argument_list() {
-  assert(this->current_function);
+  assert(!this->current_function.empty());
 
   this->current_scope--;
-  this->current_function = Function::SharedPtr();
+  this->current_function.pop();
+  this->scope_space_manager.enter_scope_space();
 }
 
 std::string TableManager::new_temp_variable_name() {

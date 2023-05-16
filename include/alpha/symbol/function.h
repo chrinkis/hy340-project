@@ -12,6 +12,7 @@ namespace symbol {
 class Function : public Symbol {
  public:
   using SharedPtr = std::shared_ptr<Function>;
+  using LocalCounter = unsigned;
 
  private:
   const std::string name;
@@ -21,6 +22,8 @@ class Function : public Symbol {
   std::vector<Symbol::SharedPtr> list_of_args;
   const Offset offset;
   const ScopeSpace scope_space;
+
+  LocalCounter total_locals;
 
  public:
   Function(const std::string& name,
@@ -46,6 +49,10 @@ class Function : public Symbol {
   Offset get_offset() const override;
 
   ScopeSpace get_space() const override;
+
+  LocalCounter get_total_locals() const;
+
+  void set_total_locals(const LocalCounter& total_locals);
 };
 
 }  // namespace symbol

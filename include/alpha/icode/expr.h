@@ -46,27 +46,34 @@ class Expr {
   std::optional<bool> bool_const;
 
  public:
-  // static Expr for_var(const Symbol::SharedPtr& symbol);
+  static Expr for_var(const Symbol::SharedPtr& symbol);
   static Expr for_program_func(const Symbol::SharedPtr& symbol);
-  // static Expr for_library_func(const Symbol::SharedPtr& symbol);
+  static Expr for_library_func(const Symbol::SharedPtr& symbol);
 
-  // static Expr for_table_item(const Symbol::SharedPtr& symbol,
-  //                            const SharedPtr& index);
+  static Expr for_table_item(const Expr& symbol_expr, const Expr& index);
 
-  // static Expr for_assign_expr(const SharedPtr& other);
-  // static Expr for_assign_expr(const Symbol::SharedPtr& symbol);
+  static Expr for_assign_expr(const Expr& other);
+  static Expr for_assign_expr(const Symbol::SharedPtr& symbol);
 
-  // static Expr for_const_num(double number);
-  // static Expr for_const_bool(bool value);
-  // static Expr for_const_string(const std::string& string);
+  static Expr for_arithm_expr(const Symbol::SharedPtr& symbol);
+  static Expr for_bool_expr(const Symbol::SharedPtr& symbol);
+
+  static Expr for_const_num(double number);
+  static Expr for_const_bool(bool value);
+  static Expr for_const_string(const std::string& string);
 
  public:
   Type get_type() const;
 
+  bool has_symbol() const;
   Symbol::SharedPtr get_symbol() const;
+
   SharedPtr get_index() const;
+
   double get_number_const() const;
+
   std::string get_string_const() const;
+
   bool get_bool_const() const;
 
  public:
