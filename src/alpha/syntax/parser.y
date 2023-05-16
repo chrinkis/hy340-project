@@ -105,6 +105,7 @@
 %type <nterm::ElistOpt>    elist_opt
 %type <nterm::Elist>       elist
 %type <nterm::Expr>        expr
+%type <nterm::ForstmtN>    forstmt_n
 %type <nterm::ForstmtM>    forstmt_m
 %type <nterm::Funcdef>     funcdef
 %type <nterm::Funcprefix>  funcprefix
@@ -459,7 +460,9 @@ forstmt     :   forstmt_pre forstmt_n elist ")" forstmt_n loop_stmt forstmt_n { 
 forstmt_pre :   FOR "(" elist ";" forstmt_m expr ";" { print_derivation("forstmt_pre", "FOR ( elist ; forstmt_m expr ;"); }
             ;
 
-forstmt_n   :   %empty { print_derivation("forstmt_n", "empty"); }
+forstmt_n   :   %empty { $$ = nterm::ForstmtN::from_empty();
+                         print_derivation("forstmt_n", "empty");
+                       }
             ;
 
 forstmt_m   :   %empty { $$ = nterm::ForstmtM::from_empty();
