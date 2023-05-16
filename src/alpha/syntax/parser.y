@@ -110,6 +110,7 @@
 %type <nterm::ForstmtM>    forstmt_m
 %type <nterm::Funcdef>     funcdef
 %type <nterm::Funcprefix>  funcprefix
+%type <nterm::Loopstmt>    loop_stmt
 %type <nterm::Indexed>     indexed
 %type <nterm::IndexedOpt>  indexed_opt
 %type <nterm::Indexedelem> indexedelem
@@ -473,7 +474,9 @@ forstmt_m   :   %empty { $$ = nterm::ForstmtM::from_empty();
                        }
             ;
 
-loop_stmt   :   loop_start stmt loop_end { print_derivation("loop_stmt", "loopstart stmt loopend"); }
+loop_stmt   :   loop_start stmt loop_end { $$ = nterm::Loopstmt::from_loopStart_stmt_loopEnd($2);
+                                           print_derivation("loop_stmt", "loopstart stmt loopend"); 
+                                         }
             ;
 
 loop_start  :   %empty { print_derivation("loop_start", "empty"); }

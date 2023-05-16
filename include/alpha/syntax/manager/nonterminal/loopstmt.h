@@ -18,7 +18,7 @@ class Loopstmt {
   Quad::Label contlist;
 
  public:
-  static Loopstmt from_stmt(const Stmt& stmt);
+  static Loopstmt from_loopStart_stmt_loopEnd(const Stmt& stmt);
 
  public:
   Quad::Label get_breaklist() const;
