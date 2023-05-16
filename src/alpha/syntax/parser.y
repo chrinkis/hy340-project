@@ -119,6 +119,7 @@
 %type <nterm::Member>      member
 %type <nterm::Objectdef>   objectdef
 %type <nterm::Primary>     primary
+%type <nterm::Stmt>        stmt
 %type <nterm::Term>        term
 %type <nterm::WhilestmtWhile> whilestmt_while
 %type <nterm::WhilestmtCond> whilestmt_cond
@@ -143,16 +144,36 @@ PROGRAM     :   %empty       { print_derivation("PROGRAM", "empty"); }
             |   stmt PROGRAM { print_derivation("PROGRAM", "stmt PROGRAM"); }
             ;
 
-stmt        :   expr ";"     { print_derivation("stmt", "expr ;"); }
-            |   ifstmt       { print_derivation("stmt", "ifstmt"); }
-            |   whilestmt    { print_derivation("stmt", "whilestmt"); }
-            |   forstmt      { print_derivation("stmt", "forstmt"); }
-            |   returnstmt   { print_derivation("stmt", "returnstmt"); }
-            |   breakstmt    { print_derivation("stmt", "breakstmt"); }
-            |   continuestmt { print_derivation("stmt", "continuestmt"); }
-            |   block        { print_derivation("stmt", "block"); }
-            |   funcdef      { print_derivation("stmt", "funcdef"); }
-            |   ";"          { print_derivation("stmt", ";"); }
+stmt        :   expr ";"     { $$ = nterm::Stmt::from_expr_smclnTkn();
+                               print_derivation("stmt", "expr ;");
+                             }
+            |   ifstmt       { $$ = nterm::Stmt::from_ifstmt();
+                               print_derivation("stmt", "ifstmt");
+                             }
+            |   whilestmt    { $$ = nterm::Stmt::from_whilestmt();
+                               print_derivation("stmt", "whilestmt");
+                             }
+            |   forstmt      { $$ = nterm::Stmt::from_forstmt();
+                               print_derivation("stmt", "forstmt");
+                             }
+            |   returnstmt   { $$ = nterm::Stmt::from_returnstmt();
+                               print_derivation("stmt", "returnstmt");
+                             }
+            |   breakstmt    { $$ = nterm::Stmt::from_breakstmt($1);
+                               print_derivation("stmt", "breakstmt");
+                             }
+            |   continuestmt { $$ = nterm::Stmt::from_continuestmt($1);
+                               print_derivation("stmt", "continuestmt");
+                             }
+            |   block        { $$ = nterm::Stmt::from_block();
+                               print_derivation("stmt", "block");
+                             }
+            |   funcdef      { $$ = nterm::Stmt::from_funcdef();
+                               print_derivation("stmt", "funcdef");
+                             }
+            |   ";"          { $$ = nterm::Stmt::from_smclnTkn();
+                               print_derivation("stmt", ";");
+                             }
             ;
 
 expr        :   assignexpr     { $$ = nterm::Expr::from_assignexpr();
