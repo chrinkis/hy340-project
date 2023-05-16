@@ -276,8 +276,12 @@ call        :   call "(" elist ")"            { nterm::Call::from_call_lParTkn_e
                                               }
             ;
 
-callsuffix  :   normcall   { print_derivation("callsuffix", "normcall"); }
-            |   methodcall { print_derivation("callsuffix", "methodcall"); }
+callsuffix  :   normcall   { $$ = nterm::Callsuffix::from_normcall($1);
+                             print_derivation("callsuffix", "normcall");
+                           }
+            |   methodcall { $$ = nterm::Callsuffix::from_methodcall($1);
+                             print_derivation("callsuffix", "methodcall");
+                           }
             ;
 
 normcall    :   "(" elist ")" { print_derivation("normcall", "( elist )"); }
