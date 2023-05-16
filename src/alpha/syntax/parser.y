@@ -432,7 +432,9 @@ whilestmt_while :   WHILE { print_derivation("whilestmt_while", "WHILE"); }
 whilestmt_cond  :   "(" expr ")" { print_derivation("whilestmt_cond", "( expr )"); }
                 ;
 
-forstmt     :   forstmt_pre forstmt_n elist ")" forstmt_n loop_stmt forstmt_n { print_derivation("forstmt", "forstmt_pre forstmt_n elist ) forstmt_n loop_stmt forstmt_n"); }
+forstmt     :   forstmt_pre forstmt_n elist ")" forstmt_n loop_stmt forstmt_n { nterm::Forstmt::forstmtPre_N_elist_rParTkn_N_loopstmt_N($1, $2, $5, $6, $7);
+                                                                                print_derivation("forstmt", "forstmt_pre forstmt_n elist ) forstmt_n loop_stmt forstmt_n"); 
+                                                                              }
             ;
 
 forstmt_pre :   FOR "(" elist ";" forstmt_m expr ";" { print_derivation("forstmt_pre", "FOR ( elist ; forstmt_m expr ;"); }
