@@ -11,12 +11,12 @@ namespace manager {
 namespace nonterminal {
 
 class Elist;
-class Normalcall;
+class Normcall;
 class Methodcall;
 
-class Callsufix {
+class Callsuffix {
  public:
-  using ExprCollection = std::vector<Expr>;
+  using ExprCollection = std::vector<icode::Expr>;
 
  private:
   ExprCollection elist;
@@ -24,12 +24,16 @@ class Callsufix {
   terminal::Identifier id;
 
  public:
-  static Callsufix from_normalcall(const Normalcall& normalcall);
-  static Callsufix from_methodcall(const Methodcall& methodcall);
+  static Callsuffix from_normcall(const Normcall& normcall);
+  static Callsuffix from_methodcall(const Methodcall& methodcall);
+
+ private:
+  Callsuffix(const terminal::Identifier id);
 
  public:
   ExprCollection get_elist() const;
   void set_elist(const ExprCollection& elist);
+  void add_to_elist(const icode::Expr& elist);
 
   bool is_method() const;
   bool set_method(bool is_method);

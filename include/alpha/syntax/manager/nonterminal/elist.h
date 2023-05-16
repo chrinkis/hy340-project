@@ -24,6 +24,7 @@ class Elist {
 
  public:
   ExprCollection get_icode_elist() const;
+  void set_icode_elist(const ExprCollection& icode_elist);
 };
 
 }  // namespace nonterminal
