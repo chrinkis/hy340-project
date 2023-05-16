@@ -424,7 +424,9 @@ funcbody_pre:   %empty { $$ = nterm::FuncbodyPre::emptyTkn();
                        }
             ;
 
-funcbody_post   :   %empty { print_derivation("funcbody_post", "empty"); }
+funcbody_post   :   %empty { $$ = nterm::FuncbodyPost::emptyTkn();
+                             print_derivation("funcbody_post", "empty");
+                           }
                 ;
 
 
