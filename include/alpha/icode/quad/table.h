@@ -27,23 +27,25 @@ class Table {
  public:
   void emit(const Quad& quad);
 
-  void emit_assign();
-  void emit_add();
-  void emit_sub();
-  void emit_mul();
-  void emit_div();
-  void emit_mod();
+  void emit_assign(const Expr& dest, const Expr& src);
+  void emit_add(const Expr& result, const Expr& op_a, const Expr& op_b);
+  void emit_sub(const Expr& result, const Expr& op_a, const Expr& op_b);
+  void emit_mul(const Expr& result, const Expr& op_a, const Expr& op_b);
+  void emit_div(const Expr& result, const Expr& op_a, const Expr& op_b);
+  void emit_mod(const Expr& result, const Expr& op_a, const Expr& op_b);
   void emit_uminus();
-  void emit_and();
-  void emit_or();
+  void emit_and(const Expr& result, const Expr& op_a, const Expr& op_b);
+  void emit_or(const Expr& result, const Expr& op_a, const Expr& op_b);
   void emit_not();
-  void emit_if_eq();
-  void emit_if_noteq();
-  void emit_if_lesseq();
-  void emit_if_greatereq();
-  void emit_if_less();
-  void emit_if_greater();
-  void emit_jump();
+  void emit_if_eq(const Expr& op_a, const Expr& op_b, const Expr& address);
+  void emit_if_noteq(const Expr& op_a, const Expr& op_b, const Expr& address);
+  void emit_if_lesseq(const Expr& op_a, const Expr& op_b, const Expr& address);
+  void emit_if_greatereq(const Expr& op_a,
+                         const Expr& op_b,
+                         const Expr& address);
+  void emit_if_less(const Expr& op_a, const Expr& op_b, const Expr& address);
+  void emit_if_greater(const Expr& op_a, const Expr& op_b, const Expr& address);
+  void emit_jump(const Expr& address);
   void emit_call();
   void emit_param();
   void emit_ret();
