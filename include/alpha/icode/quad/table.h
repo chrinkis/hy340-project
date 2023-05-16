@@ -31,20 +31,22 @@ class Table {
   void emit_assign(const Expr& dest, const Expr& src);
   void emit_add(const Expr& result, const Expr& op_a, const Expr& op_b);
   void emit_sub(const Expr& result, const Expr& op_a, const Expr& op_b);
-  void emit_mul();
-  void emit_div();
-  void emit_mod();
+  void emit_mul(const Expr& result, const Expr& op_a, const Expr& op_b);
+  void emit_div(const Expr& result, const Expr& op_a, const Expr& op_b);
+  void emit_mod(const Expr& result, const Expr& op_a, const Expr& op_b);
+  void emit_and(const Expr& result, const Expr& op_a, const Expr& op_b);
+  void emit_or(const Expr& result, const Expr& op_a, const Expr& op_b);
+  void emit_if_eq(const Expr& op_a, const Expr& op_b, const Expr& address);
+  void emit_if_noteq(const Expr& op_a, const Expr& op_b, const Expr& address);
+  void emit_if_lesseq(const Expr& op_a, const Expr& op_b, const Expr& address);
+  void emit_if_greatereq(const Expr& op_a,
+                         const Expr& op_b,
+                         const Expr& address);
+  void emit_if_less(const Expr& op_a, const Expr& op_b, const Expr& address);
+  void emit_if_greater(const Expr& op_a, const Expr& op_b, const Expr& address);
+  void emit_jump(const Expr& address);
   void emit_uminus(const Expr& result, const Expr& operand);
-  void emit_and();
-  void emit_or();
   void emit_not(const Expr& result, const Expr& operand);
-  void emit_if_eq();
-  void emit_if_noteq();
-  void emit_if_lesseq();
-  void emit_if_greatereq();
-  void emit_if_less();
-  void emit_if_greater();
-  void emit_jump();
   void emit_call(const Expr& expr);
   void emit_param(const Expr& expr);
   void emit_ret();

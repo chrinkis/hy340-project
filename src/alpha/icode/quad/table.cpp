@@ -18,15 +18,15 @@ void Table::emit_sub(const Expr& result, const Expr& op_a, const Expr& op_b) {
   ;
 }
 
-void Table::emit_mul() {
+void Table::emit_mul(const Expr& result, const Expr& op_a, const Expr& op_b) {
   ;
 }
 
-void Table::emit_div() {
+void Table::emit_div(const Expr& result, const Expr& op_a, const Expr& op_b) {
   ;
 }
 
-void Table::emit_mod() {
+void Table::emit_mod(const Expr& result, const Expr& op_a, const Expr& op_b) {
   ;
 }
 
@@ -34,11 +34,11 @@ void Table::emit_uminus(const Expr& result, const Expr& operand) {
   ;
 }
 
-void Table::emit_and() {
+void Table::emit_and(const Expr& result, const Expr& op_a, const Expr& op_b) {
   ;
 }
 
-void Table::emit_or() {
+void Table::emit_or(const Expr& result, const Expr& op_a, const Expr& op_b) {
   ;
 }
 
@@ -46,31 +46,43 @@ void Table::emit_not(const Expr& result, const Expr& operand) {
   ;
 }
 
-void Table::emit_if_eq() {
+void Table::emit_if_eq(const Expr& op_a,
+                       const Expr& op_b,
+                       const Expr& address) {
   ;
 }
 
-void Table::emit_if_noteq() {
+void Table::emit_if_noteq(const Expr& op_a,
+                          const Expr& op_b,
+                          const Expr& address) {
   ;
 }
 
-void Table::emit_if_lesseq() {
+void Table::emit_if_lesseq(const Expr& op_a,
+                           const Expr& op_b,
+                           const Expr& address) {
   ;
 }
 
-void Table::emit_if_greatereq() {
+void Table::emit_if_greatereq(const Expr& op_a,
+                              const Expr& op_b,
+                              const Expr& address) {
   ;
 }
 
-void Table::emit_if_less() {
+void Table::emit_if_less(const Expr& op_a,
+                         const Expr& op_b,
+                         const Expr& address) {
   ;
 }
 
-void Table::emit_if_greater() {
+void Table::emit_if_greater(const Expr& op_a,
+                            const Expr& op_b,
+                            const Expr& address) {
   ;
 }
 
-void Table::emit_jump() {
+void Table::emit_jump(const Expr& address) {
   ;
 }
 
