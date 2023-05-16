@@ -63,6 +63,8 @@ class Expr {
   static Expr for_const_bool(bool value);
   static Expr for_const_string(const std::string& string);
 
+  static Expr for_nil();
+
  public:
   Type get_type() const;
 
