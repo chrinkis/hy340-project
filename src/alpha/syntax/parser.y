@@ -433,7 +433,9 @@ ifstmt      :   ifstmt_if stmt        %expect 1 { nterm::Ifstmt::ifstmtIf_stmt($
                                                 }
             ;
 
-ifstmt_if   :   IF "(" expr ")" { print_derivation("ifstmt_if", "IF ( expr )"); }
+ifstmt_if   :   IF "(" expr ")" { $$ = nterm::IfstmtIf::from_ifTkn_lParTkn_expr_rParTkn($3);
+                                  print_derivation("ifstmt_if", "IF ( expr )"); 
+                                }
             ;
 
 ifstmt_else :   ELSE { $$ = nterm::IfstmtElse::from_elseTkn($1);
