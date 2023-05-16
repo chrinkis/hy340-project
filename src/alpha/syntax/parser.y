@@ -102,6 +102,7 @@
 %type <nterm::Assignexpr>  assignexpr
 %type <nterm::BlockClose>  block_close
 %type <nterm::BlockOpen>   block_open
+%type <nterm::Elist>       elist
 %type <nterm::Expr>        expr
 %type <nterm::Funcdef>     funcdef
 %type <nterm::Funcprefix>  funcprefix
@@ -295,8 +296,12 @@ methodcall  :   ".." IDENTIFIER "(" elist ")" { $$ = nterm::Methodcall::from_dou
                                               }
             ;
 
-elist       :   %empty         { print_derivation("elist", "empty"); }
-            |   expr elist_opt { print_derivation("elist", "expr elist_opt"); }
+elist       :   %empty         { $$ = nterm::Elist::from_empty();
+                                 print_derivation("elist", "empty");
+                               }
+            |   expr elist_opt { $$ = nterm::Elist::from_expr_elistOpt($1, $2);
+                                 print_derivation("elist", "expr elist_opt");
+                               }
             ;
 
 elist_opt   :   %empty             { print_derivation("elist_opt", "empty"); }
