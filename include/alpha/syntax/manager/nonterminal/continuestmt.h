@@ -19,6 +19,9 @@ class Continuestmt {
   static Continuestmt from_continueTkn();
 
  public:
+  Continuestmt();
+
+ public:
   Quad::Label get_break_list_head() const;
   void set_break_list_head(const Quad::Label& label);
 
