@@ -420,8 +420,12 @@ breakstmt   :   BREAK ";" { print_derivation("breakstmt", "BREAK ;"); }
 continuestmt:   CONTINUE ";" { print_derivation("breakstmt", "CONTINUE ;"); }
             ;
 
-returnstmt  :   RETURN ";"      { print_derivation("returnstmt", "RETURN ;"); }
-            |   RETURN expr ";" { print_derivation("returnstmt", "RETURN expr ;"); }
+returnstmt  :   RETURN ";"      { nterm::Returnstmt::returnTkn_semicolonTkn();
+                                  print_derivation("returnstmt", "RETURN ;");
+                                }
+            |   RETURN expr ";" { nterm::Returnstmt::returnTkn_expr_semicolonTkn($2);
+                                  print_derivation("returnstmt", "RETURN expr ;");
+                                }
             ;
 
 %%
