@@ -30,7 +30,7 @@ void Table::emit_mod(const Expr& result, const Expr& op_a, const Expr& op_b) {
   ;
 }
 
-void Table::emit_uminus() {
+void Table::emit_uminus(const Expr& result, const Expr& operand) {
   ;
 }
 
@@ -42,7 +42,7 @@ void Table::emit_or(const Expr& result, const Expr& op_a, const Expr& op_b) {
   ;
 }
 
-void Table::emit_not() {
+void Table::emit_not(const Expr& result, const Expr& operand) {
   ;
 }
 
@@ -86,11 +86,11 @@ void Table::emit_jump(const Expr& address) {
   ;
 }
 
-void Table::emit_call() {
+void emit_call(const Expr& expr) {
   ;
 }
 
-void Table::emit_param() {
+void emit_param(const Expr& expr) {
   ;
 }
 
@@ -98,7 +98,7 @@ void Table::emit_ret() {
   ;
 }
 
-void Table::emit_getretval() {
+void emit_getretval(const Expr& expr) {
   ;
 }
 
@@ -106,7 +106,7 @@ void Table::emit_funcstart() {
   ;
 }
 
-void Table::emit_funcend() {
+void Table::emit_funcend(const symbol::Symbol::SharedPtr& function) {
   ;
 }
 
@@ -118,7 +118,9 @@ void Table::emit_tablegetelem() {
   ;
 }
 
-void Table::emit_tablesetelem() {
+void Table::emit_tablesetelem(const Expr& table,
+                              const Expr& index,
+                              const Expr& val) {
   ;
 }
 
