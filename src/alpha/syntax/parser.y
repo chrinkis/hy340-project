@@ -113,6 +113,7 @@
 %type <nterm::Objectdef>   objectdef
 %type <nterm::Primary>     primary
 %type <nterm::Term>        term
+%type <nterm::WhilestmtCond> whilestmt_cond
 
 %start PROGRAM
 
@@ -429,7 +430,9 @@ whilestmt       :   whilestmt_while whilestmt_cond loop_stmt { print_derivation(
 whilestmt_while :   WHILE { print_derivation("whilestmt_while", "WHILE"); }
                 ;
 
-whilestmt_cond  :   "(" expr ")" { print_derivation("whilestmt_cond", "( expr )"); }
+whilestmt_cond  :   "(" expr ")" { $$ = nterm::WhilestmtCond::from_lParTkn_expr_rParTkn($2);
+                                   print_derivation("whilestmt_cond", "( expr )");
+                                 }
                 ;
 
 forstmt     :   forstmt_pre forstmt_n elist ")" forstmt_n loop_stmt forstmt_n { nterm::Forstmt::forstmtPre_N_elist_rParTkn_N_loopstmt_N($1, $2, $5, $6, $7);
