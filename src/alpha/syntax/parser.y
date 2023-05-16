@@ -265,9 +265,15 @@ member      :   lvalue "." IDENTIFIER { $$ = nterm::Member::from_lvalue_dotTkn_i
                                       }
             ;
 
-call        :   call "(" elist ")"            { print_derivation("call", "call ( elist )"); }
-            |   lvalue  callsuffix            { print_derivation("call", "lvalue callsuffix"); }
-            |   "(" funcdef ")" "(" elist ")" { print_derivation("call", "( funcdef ) ( elist )"); }
+call        :   call "(" elist ")"            { nterm::Call::from_call_lParTkn_elist_rParTkn($1, $3);
+                                                print_derivation("call", "call ( elist )");
+                                              }
+            |   lvalue  callsuffix            { nterm::Call::from_lvalue_callsuffix($1, $2);
+                                                print_derivation("call", "lvalue callsuffix");
+                                              }
+            |   "(" funcdef ")" "(" elist ")" { nterm::Call::from_lParTkn_funcdef_rParTkn_lParTkn_elist_rParTkn($2, $5);
+                                                print_derivation("call", "( funcdef ) ( elist )");
+                                              }
             ;
 
 callsuffix  :   normcall   { print_derivation("callsuffix", "normcall"); }

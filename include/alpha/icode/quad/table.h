@@ -45,10 +45,10 @@ class Table {
   void emit_if_less();
   void emit_if_greater();
   void emit_jump();
-  void emit_call();
-  void emit_param();
+  void emit_call(const Expr& expr);
+  void emit_param(const Expr& expr);
   void emit_ret();
-  void emit_getretval();
+  void emit_getretval(const Expr& expr);
   void emit_funcstart();
   void emit_funcend(const symbol::Symbol::SharedPtr& function);
   void emit_tablecreate();
