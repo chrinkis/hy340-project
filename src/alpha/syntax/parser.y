@@ -106,6 +106,7 @@
 %type <nterm::Expr>        expr
 %type <nterm::Funcdef>     funcdef
 %type <nterm::Funcprefix>  funcprefix
+%type <nterm::Indexedelem> indexedelem
 %type <nterm::Lvalue>      lvalue
 %type <nterm::Member>      member
 %type <nterm::Primary>     primary
@@ -319,7 +320,9 @@ indexed_opt :   %empty                      { print_derivation("indexed_opt", "e
             |   "," indexedelem indexed_opt { print_derivation("indexed_opt", ", indexedelem indexed_opt"); }
             ;
 
-indexedelem :   "{" expr ":" expr "}" { print_derivation("indexedelem", "{ expr : expr }"); }
+indexedelem :   "{" expr ":" expr "}" { $$ = nterm::Indexedelem::from_lCrlBrcktTkn_expr_dblClnTkn_expr_rCrlBrcktTkn($2, $4);
+                                        print_derivation("indexedelem", "{ expr : expr }");
+                                      }
             ;
 
 block       :   block_open block_body block_close { print_derivation("block", "block_open block_body block_close"); }
