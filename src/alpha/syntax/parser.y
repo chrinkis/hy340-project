@@ -497,7 +497,9 @@ loop_stmt   :   loop_start stmt loop_end { $$ = nterm::Loopstmt::from_loopStart_
                                          }
             ;
 
-loop_start  :   %empty { print_derivation("loop_start", "empty"); }
+loop_start  :   %empty { $$ = nterm::LoopStart::emptyTkn();
+                         print_derivation("loop_start", "empty");
+                       }
             ;
 
 loop_end    :   %empty { print_derivation("loop_end", "empty"); }
