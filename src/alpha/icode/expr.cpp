@@ -19,6 +19,10 @@ Expr::Type Expr::get_type() const {
   return this->type;
 }
 
+bool Expr::has_symbol() const {
+  return !!this->symbol;
+}
+
 Expr::Symbol::SharedPtr Expr::get_symbol() const {
   return this->symbol.value();
 }

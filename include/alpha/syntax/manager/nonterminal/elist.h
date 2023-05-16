@@ -1,7 +1,6 @@
 #pragma once
 
 #include <alpha/icode/expr.h>
-
 #include <vector>
 
 namespace alpha {
@@ -9,25 +8,22 @@ namespace syntax {
 namespace manager {
 namespace nonterminal {
 
-class Elist;
+class ElistOpt;
+class Expr;
 
-class Normcall {
+class Elist {
  public:
   using ExprCollection = std::vector<icode::Expr>;
 
  private:
-  ExprCollection elist;
-  bool method;
+  ExprCollection icode_elist;
 
  public:
-  static Normcall from_lParTkn_elist_rParTkn(const Elist& elist);
+  static Elist from_empty();
+  static Elist from_expr_elistOpt(const Expr& expr, const ElistOpt& elist_opt);
 
  public:
-  ExprCollection get_elist() const;
-  void set_elist(const ExprCollection& elist);
-
-  bool is_method() const;
-  bool set_method(bool is_method);
+  ExprCollection get_icode_elist() const;
 };
 
 }  // namespace nonterminal
