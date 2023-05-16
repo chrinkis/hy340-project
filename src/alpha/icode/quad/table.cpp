@@ -94,7 +94,7 @@ void Table::emit_funcstart() {
   ;
 }
 
-void Table::emit_funcend() {
+void Table::emit_funcend(const symbol::Symbol::SharedPtr& function) {
   ;
 }
 
