@@ -436,7 +436,9 @@ loop_end    :   %empty { print_derivation("loop_end", "empty"); }
 breakstmt   :   BREAK ";" { print_derivation("breakstmt", "BREAK ;"); }
             ;
 
-continuestmt:   CONTINUE ";" { print_derivation("breakstmt", "CONTINUE ;"); }
+continuestmt:   CONTINUE ";" { $$ = nterm::Continuestmt::from_continueTkn();
+                               print_derivation("breakstmt", "CONTINUE ;");
+                             }
             ;
 
 returnstmt  :   RETURN ";"      { print_derivation("returnstmt", "RETURN ;"); }
