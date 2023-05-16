@@ -103,6 +103,7 @@
 %type <nterm::BlockClose>  block_close
 %type <nterm::BlockOpen>   block_open
 %type <nterm::Expr>        expr
+%type <nterm::ForstmtM>    forstmt_m
 %type <nterm::Funcdef>     funcdef
 %type <nterm::Funcprefix>  funcprefix
 %type <nterm::Lvalue>      lvalue
@@ -402,7 +403,9 @@ forstmt_pre :   FOR "(" elist ";" forstmt_m expr ";" { print_derivation("forstmt
 forstmt_n   :   %empty { print_derivation("forstmt_n", "empty"); }
             ;
 
-forstmt_m   :   %empty { print_derivation("forstmt_n", "empty"); }
+forstmt_m   :   %empty { $$ = nterm::ForstmtM::from_empty();
+                         print_derivation("forstmt_n", "empty");
+                       }
             ;
 
 loop_stmt   :   loop_start stmt loop_end { print_derivation("loop_stmt", "loopstart stmt loopend"); }
