@@ -313,8 +313,12 @@ block_body  :   %empty { print_derivation("block_body", "empty"); }
             |   stmts  { print_derivation("block_body", "stmts"); }
             ;
 
-stmts       :   stmt       { print_derivation("stmts", "stmt"); }
-            |   stmts stmt { print_derivation("stmts", "stmts stmt"); }
+stmts       :   stmt       { $$ = nterm::Stmts::from_stmt($1);
+                             print_derivation("stmts", "stmt");
+                           }
+            |   stmts stmt { $$ = nterm::Stmts::from_stmts_stmt($1, $2);
+                             print_derivation("stmts", "stmts stmt");
+                           }
             ;
 
 block_close :   "}" { nterm::BlockClose::rightCurlyBracketTkn();
