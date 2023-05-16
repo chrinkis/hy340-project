@@ -12,7 +12,7 @@ class Indexed;
 
 class Objectdef {
  private:
-  icode::Expr exprj;
+  icode::Expr expr;
 
  public:
   Objectdef from_lSqrBrackTkn_elist_rSqrBrackTkn(const Elist& elist);

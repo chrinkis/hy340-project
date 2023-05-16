@@ -19,6 +19,9 @@ class Breakstmt {
   static Breakstmt from_breakTkn();
 
  public:
+  Breakstmt();
+
+ public:
   Quad::Label get_break_list_head() const;
   void set_break_list_head(const Quad::Label& label);
 
