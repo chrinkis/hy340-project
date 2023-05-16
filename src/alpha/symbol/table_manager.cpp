@@ -237,6 +237,12 @@ void TableManager::end_function() {
 
   this->max_scope.pop();
 
+  this->current_function.top()->set_total_locals(
+      this->scope_space_manager.get_current_scope_offset());
+
+  this->scope_space_manager.exit_scope_space();
+  this->scope_space_manager.exit_scope_space();
+
   assert(this->max_scope.size() > 1 && this->max_scope.top() != 0 ||
          this->max_scope.size() == 1 && this->max_scope.top() == 0);
 }
