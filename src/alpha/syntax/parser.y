@@ -251,16 +251,16 @@ lvalue      :   IDENTIFIER       { $$ = nterm::Lvalue::from_idTkn(terminal::Iden
                                  }
             ;
 
-member      :   lvalue "." IDENTIFIER { $$ = nterm::Member::from_lvalue_dotTkn_idTkn($1);
+member      :   lvalue "." IDENTIFIER { $$ = nterm::Member::from_lvalue_dotTkn_idTkn($1, terminal::Identifier($3, @3));
                                         print_derivation("member", "lvalue . IDENTIFIER");
                                       }
-            |   lvalue "[" expr "]"   { $$ = nterm::Member::from_lvalue_lSqrBrackTkn_expr_rSqrtBrackTkn($1);
+            |   lvalue "[" expr "]"   { $$ = nterm::Member::from_lvalue_lSqrBrackTkn_expr_rSqrtBrackTkn($1, $3);
                                         print_derivation("member", "lvalue [ expr ]");
                                       }
-            |   call "." IDENTIFIER   { $$ = nterm::Member::from_call_dotTkn_idTkn();
+            |   call "." IDENTIFIER   { $$ = nterm::Member::from_call_dotTkn_idTkn($1, terminal::Identifier($3, @3));
                                         print_derivation("member", "call . IDENTIFIER");
                                       }
-            |   call "[" expr "]"     { $$ = nterm::Member::from_call_lSqrBrackTkn_expr_rSqrtBrackTkn();
+            |   call "[" expr "]"     { $$ = nterm::Member::from_call_lSqrBrackTkn_expr_rSqrtBrackTkn($1, $3);
                                         print_derivation("member", "call [ expr ]");
                                       }
             ;
