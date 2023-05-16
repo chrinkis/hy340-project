@@ -102,7 +102,7 @@ void emit_getretval(const Expr& expr) {
   ;
 }
 
-void Table::emit_funcstart() {
+void Table::emit_funcstart(const std::string& name) {
   ;
 }
 

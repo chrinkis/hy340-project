@@ -228,6 +228,8 @@ Symbol::SharedPtr TableManager::start_function(
 
   assert(!this->current_function.empty());
 
+  this->scope_space_manager.enter_scope_space();
+
   return symbol;
 }
 

@@ -7,6 +7,7 @@
 #include <alpha/symbol/symbol.h>
 
 #include <ostream>
+#include <string>
 #include <vector>
 
 namespace alpha::icode::quad {
@@ -50,8 +51,8 @@ class Table {
   void emit_call(const Expr& expr);
   void emit_param(const Expr& expr);
   void emit_ret();
+  void emit_funcstart(const std::string& name);
   void emit_getretval(const Expr& expr);
-  void emit_funcstart();
   void emit_funcend(const symbol::Symbol::SharedPtr& function);
   void emit_tablecreate();
   void emit_tablegetelem();
