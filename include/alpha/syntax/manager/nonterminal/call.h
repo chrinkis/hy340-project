@@ -10,6 +10,7 @@ namespace nonterminal {
 class Elist;
 class Callsuffix;
 class Funcdef;
+class Lvalue;
 
 class Call {
  private:
@@ -19,7 +20,7 @@ class Call {
   static Call from_call_lParTkn_elist_rParTkn(const Call& call,
                                               const Elist& elist);
 
-  static Call from_lvalue_callsuffix(const Callsuffix& callsuffix);
+  static Call from_lvalue_callsuffix(Lvalue& lvalue, Callsuffix& callsuffix);
 
   static Call from_lParTkn_funcdef_rParTkn_lParTkn_elist_rParTkn(
       const Funcdef& funcdef,

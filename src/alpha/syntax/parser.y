@@ -102,14 +102,20 @@
 %type <nterm::Assignexpr>  assignexpr
 %type <nterm::BlockClose>  block_close
 %type <nterm::BlockOpen>   block_open
+%type <nterm::ElistOpt>    elist_opt
+%type <nterm::Elist>       elist
 %type <nterm::Expr>        expr
+%type <nterm::ForstmtM>    forstmt_m
 %type <nterm::Funcdef>     funcdef
 %type <nterm::Funcprefix>  funcprefix
 %type <nterm::IndexedOpt>  indexed_opt
+%type <nterm::Indexedelem> indexedelem
 %type <nterm::Lvalue>      lvalue
 %type <nterm::Member>      member
+%type <nterm::Objectdef>   objectdef
 %type <nterm::Primary>     primary
 %type <nterm::Term>        term
+%type <nterm::WhilestmtCond> whilestmt_cond
 
 %start PROGRAM
 
@@ -216,7 +222,7 @@ term        :   "(" expr ")"          { $$ = nterm::Term::from_lParTkn_expr_rPar
                                       }
             ;
 
-assignexpr  :   lvalue "=" expr { $$ = nterm::Assignexpr::from_lvalue_assignTkn_expr($1);
+assignexpr  :   lvalue "=" expr { $$ = nterm::Assignexpr::from_lvalue_assignTkn_expr($1, $3);
                                   print_derivation("assignexpr", "lvalue = expr");
                                 }
             ;
@@ -247,50 +253,78 @@ lvalue      :   IDENTIFIER       { $$ = nterm::Lvalue::from_idTkn(terminal::Iden
             |   "::" IDENTIFIER  { $$ = nterm::Lvalue::from_doubleColonTkn_localIdTkn(terminal::Identifier($2, @2));
                                    print_derivation("lvalue", ":: IDENTIFIER");
                                  }
-            |   member           { $$ = nterm::Lvalue::from_member();
+            |   member           { $$ = nterm::Lvalue::from_member($1);
                                    print_derivation("lvalue", "member");
                                  }
             ;
 
-member      :   lvalue "." IDENTIFIER { $$ = nterm::Member::from_lvalue_dotTkn_idTkn($1);
+member      :   lvalue "." IDENTIFIER { $$ = nterm::Member::from_lvalue_dotTkn_idTkn($1, terminal::Identifier($3, @3));
                                         print_derivation("member", "lvalue . IDENTIFIER");
                                       }
-            |   lvalue "[" expr "]"   { $$ = nterm::Member::from_lvalue_lSqrBrackTkn_expr_rSqrtBrackTkn($1);
+            |   lvalue "[" expr "]"   { $$ = nterm::Member::from_lvalue_lSqrBrackTkn_expr_rSqrtBrackTkn($1, $3);
                                         print_derivation("member", "lvalue [ expr ]");
                                       }
-            |   call "." IDENTIFIER   { $$ = nterm::Member::from_call_dotTkn_idTkn();
+            |   call "." IDENTIFIER   { $$ = nterm::Member::from_call_dotTkn_idTkn($1, terminal::Identifier($3, @3));
                                         print_derivation("member", "call . IDENTIFIER");
                                       }
-            |   call "[" expr "]"     { $$ = nterm::Member::from_call_lSqrBrackTkn_expr_rSqrtBrackTkn();
+            |   call "[" expr "]"     { $$ = nterm::Member::from_call_lSqrBrackTkn_expr_rSqrtBrackTkn($1, $3);
                                         print_derivation("member", "call [ expr ]");
                                       }
             ;
 
-call        :   call "(" elist ")"            { print_derivation("call", "call ( elist )"); }
-            |   lvalue  callsuffix            { print_derivation("call", "lvalue callsuffix"); }
-            |   "(" funcdef ")" "(" elist ")" { print_derivation("call", "( funcdef ) ( elist )"); }
+call        :   call "(" elist ")"            { nterm::Call::from_call_lParTkn_elist_rParTkn($1, $3);
+                                                print_derivation("call", "call ( elist )");
+                                              }
+            |   lvalue  callsuffix            { nterm::Call::from_lvalue_callsuffix($1, $2);
+                                                print_derivation("call", "lvalue callsuffix");
+                                              }
+            |   "(" funcdef ")" "(" elist ")" { nterm::Call::from_lParTkn_funcdef_rParTkn_lParTkn_elist_rParTkn($2, $5);
+                                                print_derivation("call", "( funcdef ) ( elist )");
+                                              }
             ;
 
-callsuffix  :   normcall   { print_derivation("callsuffix", "normcall"); }
-            |   methodcall { print_derivation("callsuffix", "methodcall"); }
+callsuffix  :   normcall   { $$ = nterm::Callsuffix::from_normcall($1);
+                             print_derivation("callsuffix", "normcall");
+                           }
+            |   methodcall { $$ = nterm::Callsuffix::from_methodcall($1);
+                             print_derivation("callsuffix", "methodcall");
+                           }
             ;
 
-normcall    :   "(" elist ")" { print_derivation("normcall", "( elist )"); }
+normcall    :   "(" elist ")" { $$ = nterm::Normcall::from_lParTkn_elist_rParTkn($2);
+                                print_derivation("normcall", "( elist )");
+                              }
             ;
 
-methodcall  :   ".." IDENTIFIER "(" elist ")" { print_derivation("methodcall", ".. IDENTIFIER ( elist )"); }
+methodcall  :   ".." IDENTIFIER "(" elist ")" { $$ = nterm::Methodcall::from_doubleDotTkn_identifier_lParTkn_elist_rParTkn(
+                                                                terminal::Identifier($2, @2), $4);
+                                                print_derivation("methodcall", ".. IDENTIFIER ( elist )"); 
+                                              }
             ;
 
-elist       :   %empty         { print_derivation("elist", "empty"); }
-            |   expr elist_opt { print_derivation("elist", "expr elist_opt"); }
+elist       :   %empty         { $$ = nterm::Elist::from_empty();
+                                 print_derivation("elist", "empty");
+                               }
+            |   expr elist_opt { $$ = nterm::Elist::from_expr_elistOpt($1, $2);
+                                 print_derivation("elist", "expr elist_opt");
+                               }
             ;
 
-elist_opt   :   %empty             { print_derivation("elist_opt", "empty"); }
-            |   "," expr elist_opt { print_derivation("elist_opt", ", expr elist_opt"); }
+elist_opt   :   %empty             { $$ = nterm::ElistOpt::from_empty();
+                                     print_derivation("elist_opt", "empty");
+                                   }
+            |   "," expr elist_opt { $$ = nterm::ElistOpt::from_commaTkn_expr_elistOpt($2, $3);
+                                     print_derivation("elist_opt", ", expr elist_opt");
+                                   }
+
             ;
 
-objectdef   :   "[" elist "]"   { print_derivation("objectdef", "[ elist ]"); }
-            |   "[" indexed "]" { print_derivation("objectdef", "[ indexed ]"); }
+objectdef   :   "[" elist "]"   { $$ = nterm::Objectdef::from_lSqrBrackTkn_elist_rSqrBrackTkn($2);
+                                  print_derivation("objectdef", "[ elist ]");
+                                }
+            |   "[" indexed "]" { $$ = nterm::Objectdef::from_lSqrBrackTkn_indexed_rSqrBrackTkn($2);
+                                  print_derivation("objectdef", "[ indexed ]");
+                                }
             ;
 
 indexed     :   indexedelem indexed_opt { print_derivation("indexed", "indexedelem indexed_opt"); }
@@ -304,7 +338,9 @@ indexed_opt :   %empty                      { $$ = nterm::IndexedOpt::from_empty
                                             }
             ;
 
-indexedelem :   "{" expr ":" expr "}" { print_derivation("indexedelem", "{ expr : expr }"); }
+indexedelem :   "{" expr ":" expr "}" { $$ = nterm::Indexedelem::from_lCrlBrcktTkn_expr_dblClnTkn_expr_rCrlBrcktTkn($2, $4);
+                                        print_derivation("indexedelem", "{ expr : expr }");
+                                      }
             ;
 
 block       :   block_open block_body block_close { print_derivation("block", "block_open block_body block_close"); }
@@ -318,8 +354,12 @@ block_body  :   %empty { print_derivation("block_body", "empty"); }
             |   stmts  { print_derivation("block_body", "stmts"); }
             ;
 
-stmts       :   stmt       { print_derivation("stmts", "stmt"); }
-            |   stmts stmt { print_derivation("stmts", "stmts stmt"); }
+stmts       :   stmt       { $$ = nterm::Stmts::from_stmt($1);
+                             print_derivation("stmts", "stmt");
+                           }
+            |   stmts stmt { $$ = nterm::Stmts::from_stmts_stmt($1, $2);
+                             print_derivation("stmts", "stmts stmt");
+                           }
             ;
 
 block_close :   "}" { nterm::BlockClose::rightCurlyBracketTkn();
@@ -378,27 +418,39 @@ idlist_opt  :   %empty                   { print_derivation("idlist_opt", "empty
             |   idlist_id "," idlist_opt { print_derivation("idlist_opt", "idlist_id , idlist_opt"); }
             ;
 
-ifstmt      :   ifstmt_if stmt        %expect 1 { print_derivation("ifstmt", "ifstmt_if stmt"); }
-            |   ifstmt_if stmt ifstmt_else stmt { print_derivation("ifstmt", "ifstmt_if stmt ifstmt_else stmt"); }
+ifstmt      :   ifstmt_if stmt        %expect 1 { nterm::Ifstmt::ifstmtIf_stmt($1, $2);
+                                                  print_derivation("ifstmt", "ifstmt_if stmt");
+                                                }
+            |   ifstmt_if stmt ifstmt_else stmt { nterm::Ifstmt::ifstmtIf_stmt($1, $2, $3, $4);
+                                                  print_derivation("ifstmt", "ifstmt_if stmt ifstmt_else stmt");
+                                                }
             ;
 
 ifstmt_if   :   IF "(" expr ")" { print_derivation("ifstmt_if", "IF ( expr )"); }
             ;
 
-ifstmt_else :   ELSE { print_derivation("ifstmt_else", "ELSE"); }
+ifstmt_else :   ELSE { $$ = nterm::IfstmtElse::from_elseTkn($1);
+                       print_derivation("ifstmt_else", "ELSE");
+                     }
             ;
 
 
-whilestmt       :   whilestmt_while whilestmt_cond loop_stmt { print_derivation("whilestmt", "whilestmt_while whilestmt_cond loop_stmt"); }
+whilestmt       :   whilestmt_while whilestmt_cond loop_stmt { nterm::Whilestmt::whilestmtWhile_whilestmtCond_loopstmt($1, $2, $3);
+                                                               print_derivation("whilestmt", "whilestmt_while whilestmt_cond loop_stmt");
+                                                             }
                 ;
 
 whilestmt_while :   WHILE { print_derivation("whilestmt_while", "WHILE"); }
                 ;
 
-whilestmt_cond  :   "(" expr ")" { print_derivation("whilestmt_cond", "( expr )"); }
+whilestmt_cond  :   "(" expr ")" { $$ = nterm::WhilestmtCond::from_lParTkn_expr_rParTkn($2);
+                                   print_derivation("whilestmt_cond", "( expr )");
+                                 }
                 ;
 
-forstmt     :   forstmt_pre forstmt_n elist ")" forstmt_n loop_stmt forstmt_n { print_derivation("forstmt", "forstmt_pre forstmt_n elist ) forstmt_n loop_stmt forstmt_n"); }
+forstmt     :   forstmt_pre forstmt_n elist ")" forstmt_n loop_stmt forstmt_n { nterm::Forstmt::forstmtPre_N_elist_rParTkn_N_loopstmt_N($1, $2, $5, $6, $7);
+                                                                                print_derivation("forstmt", "forstmt_pre forstmt_n elist ) forstmt_n loop_stmt forstmt_n"); 
+                                                                              }
             ;
 
 forstmt_pre :   FOR "(" elist ";" forstmt_m expr ";" { print_derivation("forstmt_pre", "FOR ( elist ; forstmt_m expr ;"); }
@@ -407,7 +459,9 @@ forstmt_pre :   FOR "(" elist ";" forstmt_m expr ";" { print_derivation("forstmt
 forstmt_n   :   %empty { print_derivation("forstmt_n", "empty"); }
             ;
 
-forstmt_m   :   %empty { print_derivation("forstmt_n", "empty"); }
+forstmt_m   :   %empty { $$ = nterm::ForstmtM::from_empty();
+                         print_derivation("forstmt_n", "empty");
+                       }
             ;
 
 loop_stmt   :   loop_start stmt loop_end { print_derivation("loop_stmt", "loopstart stmt loopend"); }
@@ -419,14 +473,22 @@ loop_start  :   %empty { print_derivation("loop_start", "empty"); }
 loop_end    :   %empty { print_derivation("loop_end", "empty"); }
             ;
 
-breakstmt   :   BREAK ";" { print_derivation("breakstmt", "BREAK ;"); }
+breakstmt   :   BREAK ";" { $$ = nterm::Breakstmt::from_breakTkn();
+                            print_derivation("breakstmt", "BREAK ;");
+                          }
             ;
 
-continuestmt:   CONTINUE ";" { print_derivation("breakstmt", "CONTINUE ;"); }
+continuestmt:   CONTINUE ";" { $$ = nterm::Continuestmt::from_continueTkn();
+                               print_derivation("breakstmt", "CONTINUE ;");
+                             }
             ;
 
-returnstmt  :   RETURN ";"      { print_derivation("returnstmt", "RETURN ;"); }
-            |   RETURN expr ";" { print_derivation("returnstmt", "RETURN expr ;"); }
+returnstmt  :   RETURN ";"      { nterm::Returnstmt::returnTkn_semicolonTkn();
+                                  print_derivation("returnstmt", "RETURN ;");
+                                }
+            |   RETURN expr ";" { nterm::Returnstmt::returnTkn_expr_semicolonTkn($2);
+                                  print_derivation("returnstmt", "RETURN expr ;");
+                                }
             ;
 
 %%
