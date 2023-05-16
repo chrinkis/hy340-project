@@ -60,6 +60,8 @@ class Table {
 
   void patch_label(const Quad::Line& line, const Quad::Label& label);
 
+  void patch_list(const Quad::Line& list_head, const Quad::Label& label);
+
   friend std::ostream& operator<<(std::ostream& os, const Table& qt);
 };
 
