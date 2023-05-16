@@ -398,7 +398,9 @@ funcbody    :   funcbody_pre block funcbody_post { nterm::Funcbody::block();
                                                  }
             ;
 
-funcbody_pre:   %empty { print_derivation("funcbody_pre", "empty"); }
+funcbody_pre:   %empty { $$ = nterm::FuncbodyPre::emptyTkn();
+                         print_derivation("funcbody_pre", "empty");
+                       }
             ;
 
 funcbody_post   :   %empty { print_derivation("funcbody_post", "empty"); }
