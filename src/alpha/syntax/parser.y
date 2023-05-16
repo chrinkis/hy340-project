@@ -284,7 +284,9 @@ callsuffix  :   normcall   { $$ = nterm::Callsuffix::from_normcall($1);
                            }
             ;
 
-normcall    :   "(" elist ")" { print_derivation("normcall", "( elist )"); }
+normcall    :   "(" elist ")" { $$ = nterm::Normcall::from_lParTkn_elist_rParTkn($2);
+                                print_derivation("normcall", "( elist )");
+                              }
             ;
 
 methodcall  :   ".." IDENTIFIER "(" elist ")" { $$ = nterm::Methodcall::from_doubleDotTkn_identifier_lParTkn_elist_rParTkn(

@@ -1,7 +1,6 @@
 #pragma once
 
-#include <alpha/syntax/manager/nonterminal/expr.h>
-#include <alpha/syntax/manager/terminal/identifier.h>
+#include <alpha/icode/expr.h>
 
 #include <vector>
 
@@ -14,12 +13,11 @@ class Elist;
 
 class Normcall {
  public:
-  using ExprCollection = std::vector<Expr>;
+  using ExprCollection = std::vector<icode::Expr>;
 
  private:
   ExprCollection elist;
   bool method;
-  terminal::Identifier id;
 
  public:
   static Normcall from_lParTkn_elist_rParTkn(const Elist& elist);
@@ -30,9 +28,6 @@ class Normcall {
 
   bool is_method() const;
   bool set_method(bool is_method);
-
-  terminal::Identifier get_id() const;
-  void set_id(const terminal::Identifier& id);
 };
 
 }  // namespace nonterminal
