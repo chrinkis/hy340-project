@@ -35,7 +35,7 @@ bool Callsuffix::is_method() const {
   return this->method;
 }
 
-bool Callsuffix::set_method(bool is_method) {
+void Callsuffix::set_method(bool is_method) {
   this->method = is_method;
 }
 

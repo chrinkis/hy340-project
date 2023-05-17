@@ -27,7 +27,7 @@ bool Methodcall::is_method() const {
   return this->method;
 }
 
-bool Methodcall::set_method(bool is_method) {
+void Methodcall::set_method(bool is_method) {
   this->method = is_method;
 }
 

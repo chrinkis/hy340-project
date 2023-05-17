@@ -36,7 +36,7 @@ class Callsuffix {
   void add_to_elist(const icode::Expr& elist);
 
   bool is_method() const;
-  bool set_method(bool is_method);
+  void set_method(bool is_method);
 
   terminal::Identifier get_id() const;
   void set_id(const terminal::Identifier& id);
