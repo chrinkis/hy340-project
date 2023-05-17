@@ -7,12 +7,6 @@ namespace nonterminal {
 
 class Funcbody {
  public:
-  using Counter = unsigned;
-
- private:
-  Counter total_locals;
-
- public:
   static void block();
 };
 
