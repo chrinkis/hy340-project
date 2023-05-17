@@ -64,7 +64,7 @@ class Table {
 
   void patch_list(const Quad::Line& list_head, const Quad::Label& label);
 
-  Quad& new_list(const Quad::Line& start);
+  Quad::Line new_list(const Quad::Line& start);
 
   Quad::Line merge_lists(const Quad::Line& list_head_a,
                          const Quad::Line& list_head_b);
