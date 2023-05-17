@@ -69,3 +69,11 @@ Member Member::from_call_lSqrBrackTkn_expr_rSqrtBrackTkn(const Call& call,
 
   return member;
 }
+
+alpha::icode::Expr Member::get_expr() const {
+  return this->expr;
+}
+
+void Member::set_expr(const icode::Expr& expr) {
+  this->expr = expr;
+}

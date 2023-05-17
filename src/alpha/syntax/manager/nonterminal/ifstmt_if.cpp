@@ -5,6 +5,8 @@
 
 using namespace alpha::syntax::manager::nonterminal;
 
+using Quad = alpha::icode::quad::Quad;
+
 IfstmtIf IfstmtIf::from_ifTkn_lParTkn_expr_rParTkn(const Expr& expr) {
   IfstmtIf ifstmt_if;
 
@@ -16,4 +18,12 @@ IfstmtIf IfstmtIf::from_ifTkn_lParTkn_expr_rParTkn(const Expr& expr) {
   quadTable.emit_jump(0);
 
   return ifstmt_if;
+}
+
+Quad::Label IfstmtIf::get_label() const {
+  return this->label;
+}
+
+void IfstmtIf::set_label(const Quad::Label& label) {
+  this->label = label;
 }

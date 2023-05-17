@@ -318,3 +318,11 @@ Expr Expr::from_term(const Term& term) {
 
   return expr;
 }
+
+alpha::icode::Expr Expr::get_expr() const {
+  return this->expr;
+}
+
+void Expr::set_expr(const icode::Expr& expr) {
+  this->expr = expr;
+}

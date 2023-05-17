@@ -48,3 +48,11 @@ Primary Primary::from_const(const Const& constant) {
 
   return primary;
 }
+
+alpha::icode::Expr Primary::get_expr() const {
+  return this->expr;
+}
+
+void Primary::set_expr(const icode::Expr& expr) {
+  this->expr = expr;
+}
