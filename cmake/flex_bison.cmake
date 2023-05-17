@@ -37,16 +37,47 @@ add_library(flex_and_bison
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/assignexpr.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/block_close.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/block_open.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/breakstmt.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/call.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/callsuffix.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/const.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/continuestmt.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/elist.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/elist_opt.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/expr.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/forstmt.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/forstmt_m.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/forstmt_n.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/forstmt_pre.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/funcargs.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/funcbody.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/funcbody_post.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/funcbody_pre.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/funcdef.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/funcprefix.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/idlist_id.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/ifstmt.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/ifstmt_else.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/ifstmt_if.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/indexed.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/indexed_opt.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/indexedelem.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/loop_end.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/loop_start.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/loopstmt.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/lvalue.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/member.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/methodcall.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/normalcall.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/objectdef.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/primary.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/returnstmt.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/stmt.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/stmts.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/term.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/whilestmt.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/whilestmt_cond.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/whilestmt_while.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/terminal/function.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/terminal/identifier.cpp
 )
