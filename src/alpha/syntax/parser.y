@@ -537,7 +537,7 @@ breakstmt   :   BREAK ";" { $$ = nterm::Breakstmt::from_breakTkn(@1);
                           }
             ;
 
-continuestmt:   CONTINUE ";" { $$ = nterm::Continuestmt::from_continueTkn();
+continuestmt:   CONTINUE ";" { $$ = nterm::Continuestmt::from_continueTkn(@1);
                                print_derivation("breakstmt", "CONTINUE ;");
                              }
             ;
