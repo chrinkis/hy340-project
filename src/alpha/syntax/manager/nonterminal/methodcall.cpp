@@ -1,5 +1,7 @@
 #include <alpha/syntax/manager/nonterminal/methodcall.h>
 
+#include <alpha/syntax/manager/nonterminal/elist.h>
+
 namespace alpha::syntax::manager::nonterminal {
 
 Methodcall::Methodcall() {}
@@ -9,7 +11,7 @@ Methodcall Methodcall::from_doubleDotTkn_identifier_lParTkn_elist_rParTkn(
     const Elist& elist) {
   Methodcall methodcall(id);
 
-  methodcall.set_elist(elist.get_list());
+  methodcall.set_elist(elist.get_icode_elist());
   methodcall.set_method(true);
 
   return methodcall;
