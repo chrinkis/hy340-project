@@ -33,6 +33,7 @@ add_library(flex_and_bison
     ${CMAKE_SOURCE_DIR}/src/alpha/symbol/variable.cpp
 
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/error.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/loop_counter.cpp
 
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/assignexpr.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/block_close.cpp

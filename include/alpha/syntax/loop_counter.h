@@ -21,6 +21,8 @@ class LoopCounter {
   std::stack<Counter> counter;
 
  public:
+  LoopCounter();
+
   void increase();
   void decrease();
   void store();
