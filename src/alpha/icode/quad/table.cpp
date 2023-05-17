@@ -1,123 +1,35 @@
 #include <alpha/icode/quad/table.h>
 
+#include <cassert>
+
 namespace alpha::icode::quad {
 
-void Table::emit_assign(const Expr& dest, const Expr& src) {
-  ;
-}
+void Table::emit(const Quad::Opcode& opcode,
+                 const ExprOpt& result,
+                 const ExprOpt& arg_a,
+                 const ExprOpt& arg_b,
+                 const QuadLabelOpt& address) {
+  Quad quad(opcode, this->get_next_label());
 
-void Table::emit_add(const Expr& result, const Expr& op_a, const Expr& op_b) {
-  ;
-}
+  if (result) {
+    quad.set_result(result.value());
+  }
 
-void Table::emit_sub(const Expr& result, const Expr& op_a, const Expr& op_b) {
-  ;
-}
+  if (arg_a) {
+    quad.set_arg1(arg_a.value());
+  }
 
-void Table::emit_mul(const Expr& result, const Expr& op_a, const Expr& op_b) {
-  ;
-}
+  if (arg_b) {
+    quad.set_arg2(arg_b.value());
+  }
 
-void Table::emit_div(const Expr& result, const Expr& op_a, const Expr& op_b) {
-  ;
-}
+  if (address) {
+    quad.set_label(address.value());
+  }
 
-void Table::emit_mod(const Expr& result, const Expr& op_a, const Expr& op_b) {
-  ;
-}
+  this->table.push_back(quad);
 
-void Table::emit_uminus(const Expr& result, const Expr& operand) {
-  ;
-}
-
-void Table::emit_and(const Expr& result, const Expr& op_a, const Expr& op_b) {
-  ;
-}
-
-void Table::emit_or(const Expr& result, const Expr& op_a, const Expr& op_b) {
-  ;
-}
-
-void Table::emit_not(const Expr& result, const Expr& operand) {
-  ;
-}
-
-void Table::emit_if_eq(const Expr& op_a,
-                       const Expr& op_b,
-                       const Expr& address) {
-  ;
-}
-
-void Table::emit_if_noteq(const Expr& op_a,
-                          const Expr& op_b,
-                          const Expr& address) {
-  ;
-}
-
-void Table::emit_if_lesseq(const Expr& op_a,
-                           const Expr& op_b,
-                           const Expr& address) {
-  ;
-}
-
-void Table::emit_if_greatereq(const Expr& op_a,
-                              const Expr& op_b,
-                              const Expr& address) {
-  ;
-}
-
-void Table::emit_if_less(const Expr& op_a,
-                         const Expr& op_b,
-                         const Expr& address) {
-  ;
-}
-
-void Table::emit_if_greater(const Expr& op_a,
-                            const Expr& op_b,
-                            const Expr& address) {
-  ;
-}
-
-void Table::emit_jump(const Expr& address) {
-  ;
-}
-
-void emit_call(const Expr& expr) {
-  ;
-}
-
-void emit_param(const Expr& expr) {
-  ;
-}
-
-void Table::emit_ret() {
-  ;
-}
-
-void emit_getretval(const Expr& expr) {
-  ;
-}
-
-void Table::emit_funcstart(const std::string& name) {
-  ;
-}
-
-void Table::emit_funcend(const symbol::Symbol::SharedPtr& function) {
-  ;
-}
-
-void Table::emit_tablecreate() {
-  ;
-}
-
-void Table::emit_tablegetelem() {
-  ;
-}
-
-void Table::emit_tablesetelem(const Expr& table,
-                              const Expr& index,
-                              const Expr& val) {
-  ;
+  assert(quad.get_line() == this->get_next_label() - 1);
 }
 
 Quad::Label Table::get_next_label() const {
