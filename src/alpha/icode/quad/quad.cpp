@@ -8,8 +8,8 @@ namespace alpha::icode::quad {
 
 std::string to_string(Quad::Opcode opcode);
 
-Quad::Quad(const Opcode& opcode, const Expr& result)
-    : opcode(opcode), result(result) {}
+Quad::Quad(const Opcode& opcode, const Line& line)
+    : opcode(opcode), line(line) {}
 
 Quad::Opcode Quad::get_opcode() const {
   return this->opcode;
@@ -19,16 +19,31 @@ Expr Quad::get_result() const {
   return this->result.value();
 }
 
+void Quad::set_result(const Expr& result) {
+  this->result = result;
+}
+
 Expr Quad::get_arg1() const {
   return this->arg1.value();
+}
+void Quad::set_arg1(const Expr& arg) {
+  this->arg1 = arg;
 }
 
 Expr Quad::get_arg2() const {
   return this->arg2.value();
 }
 
+void Quad::set_arg2(const Expr& arg) {
+  this->arg2 = arg;
+}
+
 Quad::Label Quad::get_label() const {
   return this->label.value();
+}
+
+void Quad::set_label(const Label& label) {
+  this->label = label;
 }
 
 Quad::Line Quad::get_line() const {
