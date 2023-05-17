@@ -173,3 +173,11 @@ Term Term::from_primary(const Primary& primary) {
 
   return term;
 }
+
+alpha::icode::Expr Term::get_expr() const {
+  return this->expr;
+}
+
+void Term::set_expr(const icode::Expr& expr) {
+  this->expr = expr;
+}

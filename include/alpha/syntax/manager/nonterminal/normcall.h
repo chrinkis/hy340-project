@@ -27,7 +27,7 @@ class Normcall {
   void set_elist(const ExprCollection& elist);
 
   bool is_method() const;
-  bool set_method(bool is_method);
+  void set_method(bool is_method);
 };
 
 }  // namespace nonterminal

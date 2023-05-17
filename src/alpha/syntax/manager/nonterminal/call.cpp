@@ -69,4 +69,12 @@ Call Call::from_lParTkn_funcdef_rParTkn_lParTkn_elist_rParTkn(
   return call;
 }
 
+icode::Expr Call::get_expr() const {
+  return this->expr;
+}
+
+void Call::set_expr(const icode::Expr& expr) {
+  this->expr = expr;
+}
+
 }  // namespace alpha::syntax::manager::nonterminal

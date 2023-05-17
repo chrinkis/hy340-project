@@ -42,3 +42,11 @@ Assignexpr Assignexpr::from_lvalue_assignTkn_expr(const Lvalue& lvalue,
 
   return assignexpr;
 }
+
+alpha::icode::Expr Assignexpr::get_expr() const {
+  return this->expr;
+}
+
+void Assignexpr::set_expr(const icode::Expr& expr) {
+  this->expr = expr;
+}
