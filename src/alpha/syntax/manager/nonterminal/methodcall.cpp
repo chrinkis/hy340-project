@@ -6,6 +6,8 @@ namespace alpha::syntax::manager::nonterminal {
 
 Methodcall::Methodcall() {}
 
+Methodcall::Methodcall(const terminal::Identifier& id) : id(id) {}
+
 Methodcall Methodcall::from_doubleDotTkn_identifier_lParTkn_elist_rParTkn(
     const terminal::Identifier& id,
     const Elist& elist) {
