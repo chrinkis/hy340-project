@@ -14,7 +14,7 @@ class Elist;
 
 class Methodcall {
  public:
-  using ExprCollection = std::vector<Expr>;
+  using ExprCollection = std::vector<icode::Expr>;
 
  private:
   ExprCollection elist;
@@ -23,6 +23,10 @@ class Methodcall {
 
  private:
   Methodcall(const terminal::Identifier& id);
+
+ public:
+  Methodcall();
+  Methodcall operator=(const Methodcall& other);
 
  public:
   static Methodcall from_doubleDotTkn_identifier_lParTkn_elist_rParTkn(
@@ -34,7 +38,7 @@ class Methodcall {
   void set_elist(const ExprCollection& elist);
 
   bool is_method() const;
-  bool set_method(bool is_method);
+  void set_method(bool is_method);
 
   terminal::Identifier get_id() const;
   void set_id(const terminal::Identifier& id);

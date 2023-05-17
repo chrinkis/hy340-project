@@ -1,7 +1,7 @@
 #pragma once
 
 #define quadTable (alpha::icode::quad::Table::get())
-#define emptyExpr (alpha::icode::quad::Table::EmptyExpr)
+#define emptyExpr (alpha::icode::quad::Table::EmptyExpr())
 
 #include <alpha/icode/expr.h>
 #include <alpha/icode/quad/quad.h>
@@ -22,8 +22,17 @@ class Table {
   using QuadLabelOpt = std::optional<Quad::Label>;
 
  public:
-  static const ExprOpt EmptyExpr;
-  static const QuadLabelOpt EmptyLabel;
+  static ExprOpt EmptyExpr() {
+    static ExprOpt expr_opt;
+
+    return expr_opt;
+  }
+
+  static const QuadLabelOpt EmptyLabel() {
+    static QuadLabelOpt quad_label_opt;
+
+    return quad_label_opt;
+  }
 
  public:
   static Table& get() {
@@ -37,10 +46,10 @@ class Table {
 
  public:
   void emit(const Quad::Opcode& opcode,
-            const ExprOpt& result = EmptyExpr,
-            const ExprOpt& arg_a = EmptyExpr,
-            const ExprOpt& arg_b = EmptyExpr,
-            const QuadLabelOpt& address = EmptyLabel);
+            const ExprOpt& result = EmptyExpr(),
+            const ExprOpt& arg_a = EmptyExpr(),
+            const ExprOpt& arg_b = EmptyExpr(),
+            const QuadLabelOpt& address = EmptyLabel());
 
   icode::Expr emit_if_table_item(const icode::Expr& expr);
 

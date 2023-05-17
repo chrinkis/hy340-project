@@ -15,8 +15,9 @@ class Objectdef {
   icode::Expr expr;
 
  public:
-  Objectdef from_lSqrBrackTkn_elist_rSqrBrackTkn(const Elist& elist);
-  Objectdef from_lSqrBrackTkn_indexed_rSqrBrackTkn(const Indexed& indexed);
+  static Objectdef from_lSqrBrackTkn_elist_rSqrBrackTkn(const Elist& elist);
+  static Objectdef from_lSqrBrackTkn_indexed_rSqrBrackTkn(
+      const Indexed& indexed);
 
  public:
   icode::Expr get_expr() const;

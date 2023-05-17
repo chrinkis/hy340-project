@@ -18,7 +18,10 @@ class Identifier {
   const Location location;
 
  public:
+  Identifier();
   Identifier(const std::string& name, const Location& location);
+
+  Identifier operator=(const Identifier& other);
 
  public:
   std::string get_name() const;

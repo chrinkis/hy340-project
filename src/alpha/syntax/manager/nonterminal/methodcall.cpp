@@ -1,6 +1,10 @@
 #include <alpha/syntax/manager/nonterminal/methodcall.h>
 
+#include <alpha/syntax/manager/nonterminal/elist.h>
+
 namespace alpha::syntax::manager::nonterminal {
+
+Methodcall::Methodcall() {}
 
 Methodcall::Methodcall(const terminal::Identifier& id) : id(id) {}
 
@@ -9,10 +13,14 @@ Methodcall Methodcall::from_doubleDotTkn_identifier_lParTkn_elist_rParTkn(
     const Elist& elist) {
   Methodcall methodcall(id);
 
-  methodcall.set_elist(elist.get_list());
+  methodcall.set_elist(elist.get_icode_elist());
   methodcall.set_method(true);
 
   return methodcall;
+}
+
+Methodcall Methodcall::operator=(const Methodcall& other) {
+  return Methodcall(other.id);
 }
 
 Methodcall::ExprCollection Methodcall::get_elist() const {
@@ -27,7 +35,7 @@ bool Methodcall::is_method() const {
   return this->method;
 }
 
-bool Methodcall::set_method(bool is_method) {
+void Methodcall::set_method(bool is_method) {
   this->method = is_method;
 }
 
