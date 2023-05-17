@@ -6,6 +6,7 @@
 #include <alpha/icode/quad/quad.h>
 #include <alpha/symbol/symbol.h>
 
+#include <optional>
 #include <ostream>
 #include <string>
 #include <vector>
@@ -15,6 +16,13 @@ namespace alpha::icode::quad {
 class Table {
  private:
   using Collection = std::vector<Quad>;
+
+  using ExprOpt = std::optional<Expr>;
+  using QuadLabelOpt = std::optional<Quad::Label>;
+
+ public:
+  static const ExprOpt EmptyExpr;
+  static const QuadLabelOpt EmptyLabel;
 
  public:
   static Table& get() {
@@ -27,36 +35,11 @@ class Table {
   Collection table;
 
  public:
-  void emit(const Quad& quad);
-
-  void emit_assign(const Expr& dest, const Expr& src);
-  void emit_add(const Expr& result, const Expr& op_a, const Expr& op_b);
-  void emit_sub(const Expr& result, const Expr& op_a, const Expr& op_b);
-  void emit_mul(const Expr& result, const Expr& op_a, const Expr& op_b);
-  void emit_div(const Expr& result, const Expr& op_a, const Expr& op_b);
-  void emit_mod(const Expr& result, const Expr& op_a, const Expr& op_b);
-  void emit_and(const Expr& result, const Expr& op_a, const Expr& op_b);
-  void emit_or(const Expr& result, const Expr& op_a, const Expr& op_b);
-  void emit_if_eq(const Expr& op_a, const Expr& op_b, const Expr& address);
-  void emit_if_noteq(const Expr& op_a, const Expr& op_b, const Expr& address);
-  void emit_if_lesseq(const Expr& op_a, const Expr& op_b, const Expr& address);
-  void emit_if_greatereq(const Expr& op_a,
-                         const Expr& op_b,
-                         const Expr& address);
-  void emit_if_less(const Expr& op_a, const Expr& op_b, const Expr& address);
-  void emit_if_greater(const Expr& op_a, const Expr& op_b, const Expr& address);
-  void emit_jump(const Expr& address);
-  void emit_uminus(const Expr& result, const Expr& operand);
-  void emit_not(const Expr& result, const Expr& operand);
-  void emit_call(const Expr& expr);
-  void emit_param(const Expr& expr);
-  void emit_ret();
-  void emit_funcstart(const std::string& name);
-  void emit_getretval(const Expr& expr);
-  void emit_funcend(const symbol::Symbol::SharedPtr& function);
-  void emit_tablecreate();
-  void emit_tablegetelem();
-  void emit_tablesetelem(const Expr& table, const Expr& index, const Expr& val);
+  void emit(const Quad::Opcode& opcode,
+            const ExprOpt& result = EmptyExpr,
+            const ExprOpt& arg_a = EmptyExpr,
+            const ExprOpt& arg_b = EmptyExpr,
+            const QuadLabelOpt& address = EmptyLabel);
 
   icode::Expr emit_if_table_item(const icode::Expr& expr);
 
@@ -66,7 +49,7 @@ class Table {
 
   void patch_list(const Quad::Line& list_head, const Quad::Label& label);
 
-  Quad& new_list(const Quad::Line& start);
+  Quad::Line new_list(const Quad::Line& start);
 
   Quad::Line merge_lists(const Quad::Line& list_head_a,
                          const Quad::Line& list_head_b);

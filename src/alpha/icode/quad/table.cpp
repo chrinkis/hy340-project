@@ -2,10 +2,6 @@
 
 namespace alpha::icode::quad {
 
-void Table::emit(const Quad& quad) {
-  this->table.push_back(quad);
-}
-
 void Table::emit_assign(const Expr& dest, const Expr& src) {
   ;
 }

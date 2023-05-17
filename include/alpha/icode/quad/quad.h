@@ -53,16 +53,21 @@ class Quad {
   std::optional<Line> line;
 
  public:
-  Quad(const Opcode& opcode,
-       const Expr& result);  // for function
+  Quad(const Opcode& opcode, const Line& line);
 
   Opcode get_opcode() const;
 
   Expr get_result() const;
+  void set_result(const Expr& result);
+
   Expr get_arg1() const;
+  void set_arg1(const Expr& arg);
+
   Expr get_arg2() const;
+  void set_arg2(const Expr& arg);
 
   Label get_label() const;
+  void set_label(const Label& label);
 
   Line get_line() const;
 
