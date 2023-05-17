@@ -49,6 +49,13 @@ Quad::Label Table::get_next_label() const {
   return this->table.size();
 }
 
+void Table::patch_label(const Quad::Line& line, const Quad::Label& label) {
+  assert(line < this->get_next_label() - 1);
+  assert(!this->table.at(line).get_label());
+
+  this->table.at(line).set_label(label);
+}
+
 std::ostream& operator<<(std::ostream& os, const Table& qt) {
   os << std::left;
 
