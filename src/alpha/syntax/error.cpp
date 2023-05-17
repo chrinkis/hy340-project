@@ -127,4 +127,14 @@ static std::string to_string(Operator op) {
   }
 }
 
+void invalid_use_of_break(
+    const alpha::syntax::Parser::location_type& location) {
+  error::print_semantic("invalid use of `break` statement", location);
+}
+
+void invalid_use_of_continue(
+    const alpha::syntax::Parser::location_type& location) {
+  error::print_semantic("invalid use of `continue` statement", location);
+}
+
 }  // namespace alpha::syntax::error
