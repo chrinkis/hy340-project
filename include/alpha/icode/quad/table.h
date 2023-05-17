@@ -27,8 +27,6 @@ class Table {
   Collection table;
 
  public:
-  void emit(const Quad& quad);
-
   void emit_assign(const Expr& dest, const Expr& src);
   void emit_add(const Expr& result, const Expr& op_a, const Expr& op_b);
   void emit_sub(const Expr& result, const Expr& op_a, const Expr& op_b);
