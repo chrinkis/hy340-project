@@ -473,7 +473,7 @@ idlist_opt  :   %empty                   { print_derivation("idlist_opt", "empty
 ifstmt      :   ifstmt_if stmt        %expect 1 { nterm::Ifstmt::ifstmtIf_stmt($1, $2);
                                                   print_derivation("ifstmt", "ifstmt_if stmt");
                                                 }
-            |   ifstmt_if stmt ifstmt_else stmt { nterm::Ifstmt::ifstmtIf_stmt($1, $2, $3, $4);
+            |   ifstmt_if stmt ifstmt_else stmt { nterm::Ifstmt::ifstmtIf_stmt_ifstmtElse_stmt($1, $2, $3, $4);
                                                   print_derivation("ifstmt", "ifstmt_if stmt ifstmt_else stmt");
                                                 }
             ;
