@@ -25,6 +25,10 @@ class Methodcall {
   Methodcall(const terminal::Identifier& id);
 
  public:
+  Methodcall();
+  Methodcall operator=(const Methodcall& other);
+
+ public:
   static Methodcall from_doubleDotTkn_identifier_lParTkn_elist_rParTkn(
       const terminal::Identifier& id,
       const Elist& elist);

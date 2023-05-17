@@ -31,6 +31,10 @@ class Callsuffix {
   Callsuffix(const terminal::Identifier id);
 
  public:
+  Callsuffix();
+  Callsuffix operator=(const Callsuffix& other);
+
+ public:
   ExprCollection get_elist() const;
   void set_elist(const ExprCollection& elist);
   void add_to_elist(const icode::Expr& elist);

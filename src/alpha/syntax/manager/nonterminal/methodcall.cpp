@@ -2,7 +2,7 @@
 
 namespace alpha::syntax::manager::nonterminal {
 
-Methodcall::Methodcall(const terminal::Identifier& id) : id(id) {}
+Methodcall::Methodcall() {}
 
 Methodcall Methodcall::from_doubleDotTkn_identifier_lParTkn_elist_rParTkn(
     const terminal::Identifier& id,
@@ -13,6 +13,10 @@ Methodcall Methodcall::from_doubleDotTkn_identifier_lParTkn_elist_rParTkn(
   methodcall.set_method(true);
 
   return methodcall;
+}
+
+Methodcall Methodcall::operator=(const Methodcall& other) {
+  return Methodcall(other.id);
 }
 
 Methodcall::ExprCollection Methodcall::get_elist() const {
