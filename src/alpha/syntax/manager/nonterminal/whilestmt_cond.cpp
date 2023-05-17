@@ -5,6 +5,7 @@
 #include <alpha/syntax/manager/nonterminal/expr.h>
 
 using namespace alpha::syntax::manager::nonterminal;
+using Opcode = alpha::icode::quad::Quad::Opcode;
 
 WhilestmtCond WhilestmtCond::from_lParTkn_expr_rParTkn(const Expr& expr) {
   WhilestmtCond whilestmt_cond;
@@ -12,11 +13,11 @@ WhilestmtCond WhilestmtCond::from_lParTkn_expr_rParTkn(const Expr& expr) {
   icode::Expr quad_expr = expr.get_expr();
   icode::Expr const_bool = icode::Expr::for_const_bool(true);
   Quad::Label label = quadTable.get_next_label() + 2;
-  quadTable.emit_if_eq(quad_expr, const_bool, label);
+  quadTable.emit(Opcode::IF_EQ, emptyExpr, quad_expr, const_bool, label);
 
   whilestmt_cond.set_quad_address(quadTable.get_next_label());
 
-  quadTable.emit_jump(0);
+  quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr, 0);
 
   return whilestmt_cond;
 }

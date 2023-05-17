@@ -5,6 +5,7 @@
 #include <alpha/syntax/loop_counter.h>
 
 using namespace alpha::syntax::manager::nonterminal;
+using Opcode = alpha::icode::quad::Quad::Opcode;
 
 Continuestmt::Continuestmt() : break_list_head(0), continue_list_head(0) {}
 
@@ -17,7 +18,7 @@ Continuestmt Continuestmt::from_continueTkn(const location& loc) {
   } else {
     continuestmt.break_list_head =
         quadTable.new_list(quadTable.get_next_label());
-    quadTable.emit_jump(0);
+    quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr, 0);
   }
 
   return continuestmt;

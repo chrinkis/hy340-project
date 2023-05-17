@@ -6,6 +6,7 @@
 #include <alpha/syntax/manager/nonterminal/term.h>
 
 using namespace alpha::syntax::manager::nonterminal;
+using Opcode = alpha::icode::quad::Quad::Opcode;
 
 Expr Expr::from_assignexpr() {
   Expr expr;
@@ -29,7 +30,8 @@ Expr Expr::from_expr_plusTkn_expr(const Expr& left, const Expr& right) {
   Expr expr;
 
   expr.set_expr(icode::Expr::for_arithm_expr(symTable.new_temp_variable()));
-  quadTable.emit_add(expr.get_expr(), left.get_expr(), right.get_expr());
+  quadTable.emit(Opcode::ADD, expr.get_expr(), left.get_expr(),
+                 right.get_expr());
 
   return expr;
 }
@@ -50,7 +52,8 @@ Expr Expr::from_expr_minusTkn_expr(const Expr& left, const Expr& right) {
   Expr expr;
 
   expr.set_expr(icode::Expr::for_arithm_expr(symTable.new_temp_variable()));
-  quadTable.emit_sub(expr.get_expr(), left.get_expr(), right.get_expr());
+  quadTable.emit(Opcode::SUB, expr.get_expr(), left.get_expr(),
+                 right.get_expr());
 
   return expr;
 }
@@ -71,7 +74,8 @@ Expr Expr::from_expr_starTkn_expr(const Expr& left, const Expr& right) {
   Expr expr;
 
   expr.set_expr(icode::Expr::for_arithm_expr(symTable.new_temp_variable()));
-  quadTable.emit_mul(expr.get_expr(), left.get_expr(), right.get_expr());
+  quadTable.emit(Opcode::MUL, expr.get_expr(), left.get_expr(),
+                 right.get_expr());
 
   return expr;
 }
@@ -92,7 +96,8 @@ Expr Expr::from_expr_divTkn_expr(const Expr& left, const Expr& right) {
   Expr expr;
 
   expr.set_expr(icode::Expr::for_arithm_expr(symTable.new_temp_variable()));
-  quadTable.emit_div(expr.get_expr(), left.get_expr(), right.get_expr());
+  quadTable.emit(Opcode::DIV, expr.get_expr(), left.get_expr(),
+                 right.get_expr());
 
   return expr;
 }
@@ -113,7 +118,8 @@ Expr Expr::from_expr_modTkn_expr(const Expr& left, const Expr& right) {
   Expr expr;
 
   expr.set_expr(icode::Expr::for_arithm_expr(symTable.new_temp_variable()));
-  quadTable.emit_mod(expr.get_expr(), left.get_expr(), right.get_expr());
+  quadTable.emit(Opcode::MOD, expr.get_expr(), left.get_expr(),
+                 right.get_expr());
 
   return expr;
 }
@@ -134,11 +140,17 @@ Expr Expr::from_expr_greaterTkn_expr(const Expr& left, const Expr& right) {
   Expr expr;
 
   expr.set_expr(icode::Expr::for_bool_expr(symTable.new_temp_variable()));
-  quadTable.emit_if_greater(left.get_expr(), right.get_expr(), expr.get_expr());
-  quadTable.emit_assign(expr.get_expr(), icode::Expr::for_const_bool(false));
-  quadTable.emit_jump(
-      icode::Expr::for_const_num(quadTable.get_next_label() + 2));
-  quadTable.emit_assign(expr.get_expr(), icode::Expr::for_const_bool(true));
+  quadTable.emit(Opcode::IF_GREATER, emptyExpr, left.get_expr(),
+                 right.get_expr(), quadTable.get_next_label() + 3);
+
+  quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
+                 icode::Expr::for_const_bool(false));
+
+  quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr,
+                 quadTable.get_next_label() + 2);
+
+  quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
+                 icode::Expr::for_const_bool(true));
 
   return expr;
 }
@@ -159,12 +171,17 @@ Expr Expr::from_expr_greaterEqTkn_expr(const Expr& left, const Expr& right) {
   Expr expr;
 
   expr.set_expr(icode::Expr::for_bool_expr(symTable.new_temp_variable()));
-  quadTable.emit_if_greatereq(left.get_expr(), right.get_expr(),
-                              expr.get_expr());
-  quadTable.emit_assign(expr.get_expr(), icode::Expr::for_const_bool(false));
-  quadTable.emit_jump(
-      icode::Expr::for_const_num(quadTable.get_next_label() + 2));
-  quadTable.emit_assign(expr.get_expr(), icode::Expr::for_const_bool(true));
+  quadTable.emit(Opcode::IF_GREATEREQ, emptyExpr, left.get_expr(),
+                 right.get_expr(), quadTable.get_next_label() + 3);
+
+  quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
+                 icode::Expr::for_const_bool(false));
+
+  quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr,
+                 quadTable.get_next_label() + 2);
+
+  quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
+                 icode::Expr::for_const_bool(true));
 
   return expr;
 }
@@ -185,11 +202,17 @@ Expr Expr::from_expr_lessTkn_expr(const Expr& left, const Expr& right) {
   Expr expr;
 
   expr.set_expr(icode::Expr::for_bool_expr(symTable.new_temp_variable()));
-  quadTable.emit_if_less(left.get_expr(), right.get_expr(), expr.get_expr());
-  quadTable.emit_assign(expr.get_expr(), icode::Expr::for_const_bool(false));
-  quadTable.emit_jump(
-      icode::Expr::for_const_num(quadTable.get_next_label() + 2));
-  quadTable.emit_assign(expr.get_expr(), icode::Expr::for_const_bool(true));
+  quadTable.emit(Opcode::IF_LESS, emptyExpr, left.get_expr(), right.get_expr(),
+                 quadTable.get_next_label() + 3);
+
+  quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
+                 icode::Expr::for_const_bool(false));
+
+  quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr,
+                 quadTable.get_next_label() + 2);
+
+  quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
+                 icode::Expr::for_const_bool(true));
 
   return expr;
 }
@@ -210,11 +233,17 @@ Expr Expr::from_expr_lessEqTkn_expr(const Expr& left, const Expr& right) {
   Expr expr;
 
   expr.set_expr(icode::Expr::for_bool_expr(symTable.new_temp_variable()));
-  quadTable.emit_if_lesseq(left.get_expr(), right.get_expr(), expr.get_expr());
-  quadTable.emit_assign(expr.get_expr(), icode::Expr::for_const_bool(false));
-  quadTable.emit_jump(
-      icode::Expr::for_const_num(quadTable.get_next_label() + 2));
-  quadTable.emit_assign(expr.get_expr(), icode::Expr::for_const_bool(true));
+  quadTable.emit(Opcode::IF_LESSEQ, emptyExpr, left.get_expr(),
+                 right.get_expr(), quadTable.get_next_label() + 3);
+
+  quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
+                 icode::Expr::for_const_bool(false));
+
+  quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr,
+                 quadTable.get_next_label() + 2);
+
+  quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
+                 icode::Expr::for_const_bool(true));
 
   return expr;
 }
@@ -235,11 +264,17 @@ Expr Expr::from_expr_equalsTkn_expr(const Expr& left, const Expr& right) {
   Expr expr;
 
   expr.set_expr(icode::Expr::for_bool_expr(symTable.new_temp_variable()));
-  quadTable.emit_if_greater(left.get_expr(), right.get_expr(), expr.get_expr());
-  quadTable.emit_if_eq(expr.get_expr(), icode::Expr::for_const_bool(false));
-  quadTable.emit_jump(
-      icode::Expr::for_const_num(quadTable.get_next_label() + 2));
-  quadTable.emit_assign(expr.get_expr(), icode::Expr::for_const_bool(true));
+  quadTable.emit(Opcode::IF_EQ, emptyExpr, left.get_expr(), right.get_expr(),
+                 quadTable.get_next_label() + 3);
+
+  quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
+                 icode::Expr::for_const_bool(false));
+
+  quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr,
+                 quadTable.get_next_label() + 2);
+
+  quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
+                 icode::Expr::for_const_bool(true));
 
   return expr;
 }
@@ -260,11 +295,17 @@ Expr Expr::from_expr_notEqualsTkn_expr(const Expr& left, const Expr& right) {
   Expr expr;
 
   expr.set_expr(icode::Expr::for_bool_expr(symTable.new_temp_variable()));
-  quadTable.emit_if_noteq(left.get_expr(), right.get_expr(), expr.get_expr());
-  quadTable.emit_assign(expr.get_expr(), icode::Expr::for_const_bool(false));
-  quadTable.emit_jump(
-      icode::Expr::for_const_num(quadTable.get_next_label() + 2));
-  quadTable.emit_assign(expr.get_expr(), icode::Expr::for_const_bool(true));
+  quadTable.emit(Opcode::IF_NOTEQ, emptyExpr, left.get_expr(), right.get_expr(),
+                 quadTable.get_next_label() + 3);
+
+  quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
+                 icode::Expr::for_const_bool(false));
+
+  quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr,
+                 quadTable.get_next_label() + 2);
+
+  quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
+                 icode::Expr::for_const_bool(true));
 
   return expr;
 }
@@ -285,7 +326,8 @@ Expr Expr::from_expr_andTkn_expr(const Expr& left, const Expr& right) {
   Expr expr;
 
   expr.set_expr(icode::Expr::for_bool_expr(symTable.new_temp_variable()));
-  quadTable.emit_and(expr.get_expr(), left.get_expr(), right.get_expr());
+  quadTable.emit(Opcode::AND, expr.get_expr(), left.get_expr(),
+                 right.get_expr());
 
   return expr;
 }
@@ -306,7 +348,8 @@ Expr Expr::from_expr_orTkn_expr(const Expr& left, const Expr& right) {
   Expr expr;
 
   expr.set_expr(icode::Expr::for_bool_expr(symTable.new_temp_variable()));
-  quadTable.emit_or(expr.get_expr(), left.get_expr(), right.get_expr());
+  quadTable.emit(Opcode::OR, expr.get_expr(), left.get_expr(),
+                 right.get_expr());
 
   return expr;
 }

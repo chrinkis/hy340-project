@@ -5,12 +5,13 @@
 using namespace alpha::syntax::manager::nonterminal;
 
 using Quad = alpha::icode::quad::Quad;
+using Opcode = alpha::icode::quad::Quad::Opcode;
 
 IfstmtElse IfstmtElse::from_elseTkn() {
   IfstmtElse ifstmt_else;
 
   ifstmt_else.set_quad_address(quadTable.get_next_label());
-  quadTable.emit_jump(0);
+  quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr, 0);
 
   return ifstmt_else;
 }

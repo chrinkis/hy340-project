@@ -5,6 +5,7 @@
 #include <alpha/syntax/error.h>
 
 using namespace alpha::syntax::manager::nonterminal;
+using Opcode = alpha::icode::quad::Quad::Opcode;
 
 Funcprefix Funcprefix::from_functionTkn(const terminal::Function& function) {
   Funcprefix funcprefix;
@@ -13,7 +14,7 @@ Funcprefix Funcprefix::from_functionTkn(const terminal::Function& function) {
 
   funcprefix.set_symbol(symbol);
   funcprefix.set_quad_label(quadTable.get_next_label());
-  quadTable.emit_funcstart(symbol->get_name());
+  quadTable.emit(Opcode::FUNCSTART, icode::Expr::for_program_func(symbol));
 
   return funcprefix;
 }
@@ -37,7 +38,7 @@ Funcprefix Funcprefix::from_functionTkn_identifierTkn(
   }
 
   funcprefix.set_quad_label(quadTable.get_next_label());
-  quadTable.emit_funcstart(symbol->get_name());
+  quadTable.emit(Opcode::FUNCSTART, icode::Expr::for_program_func(symbol));
 
   return funcprefix;
 }

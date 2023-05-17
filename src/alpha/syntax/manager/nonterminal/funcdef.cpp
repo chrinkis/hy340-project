@@ -3,6 +3,7 @@
 #include <alpha/icode/quad/table.h>
 
 using namespace alpha::syntax::manager::nonterminal;
+using Opcode = alpha::icode::quad::Quad::Opcode;
 
 using Symbol = alpha::symbol::Symbol;
 
@@ -11,7 +12,8 @@ Funcdef Funcdef::from_funcprefix_funcargs_funcbody(
   Funcdef funcdef;
 
   funcdef.set_symbol(funcprefix.get_symbol());
-  quadTable.emit_funcend(funcdef.get_symbol());
+  quadTable.emit(Opcode::FUNCEND,
+                 icode::Expr::for_program_func(funcdef.get_symbol()));
 
   return funcdef;
 }

@@ -8,6 +8,8 @@
 #include <alpha/syntax/manager/nonterminal/funcdef.h>
 #include <alpha/syntax/manager/nonterminal/lvalue.h>
 
+using Opcode = alpha::icode::quad::Quad::Opcode;
+
 namespace alpha::syntax::manager::nonterminal {
 
 static icode::Expr make_call(const icode::Expr& lv,
@@ -15,13 +17,13 @@ static icode::Expr make_call(const icode::Expr& lv,
   icode::Expr func = quadTable.emit_if_table_item(lv);
 
   for (icode::Expr param : elist) {
-    quadTable.emit_param(param);
+    quadTable.emit(Opcode::PARAM, emptyExpr, param);
   }
 
-  quadTable.emit_call(func);
+  quadTable.emit(Opcode::CALL, emptyExpr, func);
 
   icode::Expr result = icode::Expr::for_var(symTable.new_temp_variable());
-  quadTable.emit_getretval(result);
+  quadTable.emit(Opcode::GETRETVAL, result);
 
   return result;
 }
