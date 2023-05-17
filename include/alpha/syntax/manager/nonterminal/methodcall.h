@@ -14,7 +14,7 @@ class Elist;
 
 class Methodcall {
  public:
-  using ExprCollection = std::vector<Expr>;
+  using ExprCollection = std::vector<icode::Expr>;
 
  private:
   ExprCollection elist;
