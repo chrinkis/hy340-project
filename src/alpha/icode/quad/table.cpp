@@ -1,127 +1,98 @@
 #include <alpha/icode/quad/table.h>
 
+#include <alpha/symbol/table_manager.h>
+
+#include <cassert>
+
 namespace alpha::icode::quad {
 
-void Table::emit_assign(const Expr& dest, const Expr& src) {
-  ;
+void Table::emit(const Quad::Opcode& opcode,
+                 const ExprOpt& result,
+                 const ExprOpt& arg_a,
+                 const ExprOpt& arg_b,
+                 const QuadLabelOpt& address) {
+  Quad quad(opcode, this->get_next_label());
+
+  if (result) {
+    quad.set_result(result.value());
+  }
+
+  if (arg_a) {
+    quad.set_arg1(arg_a.value());
+  }
+
+  if (arg_b) {
+    quad.set_arg2(arg_b.value());
+  }
+
+  if (address) {
+    quad.set_label(address.value());
+  }
+
+  this->table.push_back(quad);
+
+  assert(quad.get_line() == this->get_next_label() - 1);
 }
 
-void Table::emit_add(const Expr& result, const Expr& op_a, const Expr& op_b) {
-  ;
-}
+icode::Expr Table::emit_if_table_item(const icode::Expr& expr) {
+  if (expr.get_type() != Expr::Type::TABLE_ITEM) {
+    return expr;
+  }
 
-void Table::emit_sub(const Expr& result, const Expr& op_a, const Expr& op_b) {
-  ;
-}
+  Expr result = Expr::for_var(symTable.new_temp_variable());
+  this->emit(Quad::Opcode::TABLEGETELEM, result, expr, *expr.get_index());
 
-void Table::emit_mul(const Expr& result, const Expr& op_a, const Expr& op_b) {
-  ;
-}
-
-void Table::emit_div(const Expr& result, const Expr& op_a, const Expr& op_b) {
-  ;
-}
-
-void Table::emit_mod(const Expr& result, const Expr& op_a, const Expr& op_b) {
-  ;
-}
-
-void Table::emit_uminus(const Expr& result, const Expr& operand) {
-  ;
-}
-
-void Table::emit_and(const Expr& result, const Expr& op_a, const Expr& op_b) {
-  ;
-}
-
-void Table::emit_or(const Expr& result, const Expr& op_a, const Expr& op_b) {
-  ;
-}
-
-void Table::emit_not(const Expr& result, const Expr& operand) {
-  ;
-}
-
-void Table::emit_if_eq(const Expr& op_a,
-                       const Expr& op_b,
-                       const Expr& address) {
-  ;
-}
-
-void Table::emit_if_noteq(const Expr& op_a,
-                          const Expr& op_b,
-                          const Expr& address) {
-  ;
-}
-
-void Table::emit_if_lesseq(const Expr& op_a,
-                           const Expr& op_b,
-                           const Expr& address) {
-  ;
-}
-
-void Table::emit_if_greatereq(const Expr& op_a,
-                              const Expr& op_b,
-                              const Expr& address) {
-  ;
-}
-
-void Table::emit_if_less(const Expr& op_a,
-                         const Expr& op_b,
-                         const Expr& address) {
-  ;
-}
-
-void Table::emit_if_greater(const Expr& op_a,
-                            const Expr& op_b,
-                            const Expr& address) {
-  ;
-}
-
-void Table::emit_jump(const Expr& address) {
-  ;
-}
-
-void emit_call(const Expr& expr) {
-  ;
-}
-
-void emit_param(const Expr& expr) {
-  ;
-}
-
-void Table::emit_ret() {
-  ;
-}
-
-void emit_getretval(const Expr& expr) {
-  ;
-}
-
-void Table::emit_funcstart(const std::string& name) {
-  ;
-}
-
-void Table::emit_funcend(const symbol::Symbol::SharedPtr& function) {
-  ;
-}
-
-void Table::emit_tablecreate() {
-  ;
-}
-
-void Table::emit_tablegetelem() {
-  ;
-}
-
-void Table::emit_tablesetelem(const Expr& table,
-                              const Expr& index,
-                              const Expr& val) {
-  ;
+  return result;
 }
 
 Quad::Label Table::get_next_label() const {
-  return 0;  // FIXME
+  return this->table.size();
+}
+
+void Table::patch_label(const Quad::Line& line, const Quad::Label& label) {
+  assert(line < this->get_next_label() - 1);
+  assert(!this->table.at(line).get_label());
+
+  this->table.at(line).set_label(label);
+}
+
+void Table::patch_list(const Quad::Line& list_head, const Quad::Label& label) {
+  Quad::Line current = list_head;
+
+  while (current) {
+    Quad::Line next = this->table.at(current).get_label();
+
+    this->table.at(current).set_label(label);
+
+    current = next;
+  }
+}
+
+Quad::Line Table::new_list(const Quad::Line& start) {
+  this->table.at(start).set_label(0);
+
+  return start;
+}
+
+Quad::Line Table::merge_lists(const Quad::Line& list_head_a,
+                              const Quad::Line& list_head_b) {
+  if (!list_head_a) {
+    return list_head_b;
+  }
+
+  if (!list_head_b) {
+    return list_head_a;
+  }
+
+  Quad::Line i = list_head_a;
+
+  while (this->table.at(i).get_label()) {
+    i = this->table.at(i).get_label();
+  }
+
+  this->table.at(i).set_label(list_head_b);
+
+  return list_head_a;
 }
 
 std::ostream& operator<<(std::ostream& os, const Table& qt) {
