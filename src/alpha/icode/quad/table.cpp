@@ -33,7 +33,7 @@ void Table::emit(const Quad::Opcode& opcode,
 }
 
 Quad::Label Table::get_next_label() const {
-  return 0;  // FIXME
+  return this->table.size();
 }
 
 std::ostream& operator<<(std::ostream& os, const Table& qt) {
