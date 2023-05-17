@@ -104,7 +104,7 @@
 %type <nterm::Call>             call
 %type <nterm::Callsuffix>       callsuffix
 %type <nterm::Const>            const
-%type <nterm::Continuestmt>     Continuestmt
+%type <nterm::Continuestmt>     continuestmt
 %type <nterm::Elist>            elist
 %type <nterm::ElistOpt>         elist_opt
 %type <nterm::Expr>             expr
@@ -426,12 +426,12 @@ funcbody    :   funcbody_pre block funcbody_post { nterm::Funcbody::block();
                                                  }
             ;
 
-funcbody_pre:   %empty { $$ = nterm::FuncbodyPre::emptyTkn();
+funcbody_pre:   %empty { nterm::FuncbodyPre::emptyTkn();
                          print_derivation("funcbody_pre", "empty");
                        }
             ;
 
-funcbody_post   :   %empty { $$ = nterm::FuncbodyPost::emptyTkn();
+funcbody_post   :   %empty { nterm::FuncbodyPost::emptyTkn();
                              print_derivation("funcbody_post", "empty");
                            }
                 ;
@@ -483,7 +483,7 @@ ifstmt_if   :   IF "(" expr ")" { $$ = nterm::IfstmtIf::from_ifTkn_lParTkn_expr_
                                 }
             ;
 
-ifstmt_else :   ELSE { $$ = nterm::IfstmtElse::from_elseTkn($1);
+ifstmt_else :   ELSE { $$ = nterm::IfstmtElse::from_elseTkn();
                        print_derivation("ifstmt_else", "ELSE");
                      }
             ;
@@ -529,12 +529,12 @@ loop_stmt   :   loop_start stmt loop_end { $$ = nterm::Loopstmt::from_loopStart_
                                          }
             ;
 
-loop_start  :   %empty { $$ = nterm::LoopStart::emptyTkn();
+loop_start  :   %empty { nterm::LoopStart::emptyTkn();
                          print_derivation("loop_start", "empty");
                        }
             ;
 
-loop_end    :   %empty { $$ = nterm::LoopEnd::emptyTkn();
+loop_end    :   %empty { nterm::LoopEnd::emptyTkn();
                          print_derivation("loop_end", "empty");
                        }
             ;
