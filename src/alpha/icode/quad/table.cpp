@@ -74,6 +74,27 @@ Quad::Line Table::new_list(const Quad::Line& start) {
   return start;
 }
 
+Quad::Line Table::merge_lists(const Quad::Line& list_head_a,
+                              const Quad::Line& list_head_b) {
+  if (!list_head_a) {
+    return list_head_b;
+  }
+
+  if (!list_head_b) {
+    return list_head_a;
+  }
+
+  Quad::Line i = list_head_a;
+
+  while (this->table.at(i).get_label()) {
+    i = this->table.at(i).get_label();
+  }
+
+  this->table.at(i).set_label(list_head_b);
+
+  return list_head_a;
+}
+
 std::ostream& operator<<(std::ostream& os, const Table& qt) {
   os << std::left;
 
