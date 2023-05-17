@@ -1,6 +1,7 @@
 #pragma once
 
 #define quadTable (alpha::icode::quad::Table::get())
+#define emptyExpr (alpha::icode::quad::Table::EmptyExpr)
 
 #include <alpha/icode/expr.h>
 #include <alpha/icode/quad/quad.h>

@@ -4,11 +4,12 @@
 #include <alpha/syntax/manager/nonterminal/expr.h>
 
 using namespace alpha::syntax::manager::nonterminal;
+using Opcode = alpha::icode::quad::Quad::Opcode;
 
 void Returnstmt::returnTkn_semicolonTkn() {
-  quadTable.emit_ret();
+  quadTable.emit(Opcode::RET);
 }
 
 void Returnstmt::returnTkn_expr_semicolonTkn(const Expr& expr) {
-  quadTable.emit_ret(expr.get_expr());
+  quadTable.emit(Opcode::RET, expr.get_expr());
 }

@@ -3,6 +3,7 @@
 #include <alpha/icode/quad/table.h>
 
 using namespace alpha::syntax::manager::nonterminal;
+using Opcode = alpha::icode::quad::Quad::Opcode;
 
 ForstmtN ForstmtN::from_empty() {
   ForstmtN forstmt_n;
@@ -10,7 +11,7 @@ ForstmtN ForstmtN::from_empty() {
   Quad::Label quad_address = quadTable.get_next_label();
   forstmt_n.set_quad_address(quad_address);
 
-  quadTable.emit_jump(0);
+  quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr, 0);
 
   return forstmt_n;
 }

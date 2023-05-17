@@ -5,6 +5,7 @@
 #include <alpha/syntax/manager/nonterminal/forstmt_m.h>
 
 using namespace alpha::syntax::manager::nonterminal;
+using Opcode = alpha::icode::quad::Quad::Opcode;
 
 ForstmtPre ForstmtPre::from_forTkn_lParTkn_elist_smclnTkn_M_expr_smclnTkn(
     const ForstmtM& M,
@@ -14,7 +15,8 @@ ForstmtPre ForstmtPre::from_forTkn_lParTkn_elist_smclnTkn_M_expr_smclnTkn(
   forstmt_pre.set_test(M.get_quad_address());
   forstmt_pre.set_enter(quadTable.get_next_label());
 
-  quadTable.emit_if_eq(expr.get_expr(), icode::Expr::for_const_bool(true), 0);
+  quadTable.emit(Opcode::IF_EQ, emptyExpr, expr.get_expr(),
+                 icode::Expr::for_const_bool(true), 0);
 
   return forstmt_pre;
 }

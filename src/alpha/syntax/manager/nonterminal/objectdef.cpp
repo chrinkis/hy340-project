@@ -7,18 +7,19 @@
 #include <alpha/syntax/manager/nonterminal/indexed.h>
 
 using namespace alpha::syntax::manager::nonterminal;
+using Opcode = alpha::icode::quad::Quad::Opcode;
 
 Objectdef Objectdef::from_lSqrBrackTkn_elist_rSqrBrackTkn(const Elist& elist) {
   Objectdef objectdef;
 
   auto temp_var = symTable.new_temp_variable();
   icode::Expr table = icode::Expr::for_new_table(temp_var);
-  quadTable.emit_tablecreate(table);
+  quadTable.emit(Opcode::TABLECREATE, table);
 
   int i = 0;
   for (auto current_expr : elist.get_icode_elist()) {
-    quadTable.emit_tablesetelem(table, icode::Expr::for_const_num(i++),
-                                current_expr);
+    quadTable.emit(Opcode::TABLESETELEM, current_expr, table,
+                   icode::Expr::for_const_num(i++));
   }
 
   objectdef.set_expr(table);
@@ -32,12 +33,12 @@ Objectdef Objectdef::from_lSqrBrackTkn_indexed_rSqrBrackTkn(
 
   auto temp_var = symTable.new_temp_variable();
   icode::Expr table = icode::Expr::for_new_table(temp_var);
-  quadTable.emit_tablecreate(table);
+  quadTable.emit(Opcode::TABLECREATE, table);
 
   for (auto pair : indexed.get_indexed_list()) {
     icode::Expr index = pair.first;
     icode::Expr value = pair.second;
-    quadTable.emit_tablesetelem(table, index, value);
+    quadTable.emit(Opcode::TABLESETELEM, value, table, index);
   }
 
   objectdef.set_expr(table);

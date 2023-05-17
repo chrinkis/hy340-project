@@ -7,6 +7,7 @@
 #include <alpha/syntax/manager/nonterminal/lvalue.h>
 
 using namespace alpha::syntax::manager::nonterminal;
+using Opcode = alpha::icode::quad::Quad::Opcode;
 
 Assignexpr Assignexpr::from_lvalue_assignTkn_expr(const Lvalue& lvalue,
                                                   const Expr& expr) {
@@ -23,7 +24,7 @@ Assignexpr Assignexpr::from_lvalue_assignTkn_expr(const Lvalue& lvalue,
     icode::Expr table = lvalue.get_expr();
     icode::Expr index = *lvalue.get_expr().get_index();
     icode::Expr value = expr.get_expr();
-    quadTable.emit_tablesetelem(table, index, value);
+    quadTable.emit(Opcode::TABLESETELEM, value, table, index);
 
     icode_expr = quadTable.emit_if_table_item(lvalue.get_expr());
     icode_expr = icode::Expr::for_assign_expr(icode_expr);
@@ -31,11 +32,11 @@ Assignexpr Assignexpr::from_lvalue_assignTkn_expr(const Lvalue& lvalue,
   } else {
     icode::Expr icode_rvalue = expr.get_expr();
     icode::Expr icode_lvalue = lvalue.get_expr();
-    quadTable.emit_assign(icode_rvalue, icode_lvalue);
+    quadTable.emit(Opcode::ASSIGN, icode_lvalue, icode_rvalue);
 
     auto temp_var = symTable.new_temp_variable();
     icode_expr = icode::Expr::for_assign_expr(temp_var);
-    quadTable.emit_assign(icode_lvalue, icode_expr);
+    quadTable.emit(Opcode::ASSIGN, icode_expr, icode_lvalue);
   }
 
   assignexpr.set_expr(icode_expr);
