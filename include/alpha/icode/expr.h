@@ -34,6 +34,8 @@ class Expr {
     CONST_STRING,
 
     NIL,
+
+    _NO_TYPE
   };
 
  private:
@@ -44,6 +46,9 @@ class Expr {
   std::optional<double> number_const;
   std::optional<std::string> string_const;
   std::optional<bool> bool_const;
+
+ public:
+  Expr();
 
  public:
   static Expr for_var(const Symbol::SharedPtr& symbol);
@@ -71,12 +76,16 @@ class Expr {
   bool has_symbol() const;
   Symbol::SharedPtr get_symbol() const;
 
+  bool has_index() const;
   SharedPtr get_index() const;
 
+  bool has_number_const() const;
   double get_number_const() const;
 
+  bool has_string_const() const;
   std::string get_string_const() const;
 
+  bool has_bool_const() const;
   bool get_bool_const() const;
 
  public:
