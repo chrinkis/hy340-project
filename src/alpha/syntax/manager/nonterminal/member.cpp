@@ -21,7 +21,7 @@ Member Member::from_lvalue_dotTkn_idTkn(const Lvalue& lvalue,
 
   Member member;
 
-  icode::Expr symbol_expr = quadTable.emit_iftableitem(lvalue.get_expr());
+  icode::Expr symbol_expr = quadTable.emit_if_table_item(lvalue.get_expr());
   icode::Expr index = icode::Expr::for_const_string(id.get_name());
 
   member.set_expr(icode::Expr::for_table_item(symbol_expr, index));
@@ -39,7 +39,7 @@ Member Member::from_lvalue_lSqrBrackTkn_expr_rSqrtBrackTkn(const Lvalue& lvalue,
 
   Member member;
 
-  icode::Expr symbol_expr = quadTable.emit_iftableitem(lvalue.get_expr());
+  icode::Expr symbol_expr = quadTable.emit_if_table_item(lvalue.get_expr());
   icode::Expr index = expr.get_expr();
 
   member.set_expr(icode::Expr::for_table_item(symbol_expr, index));
@@ -50,7 +50,7 @@ Member Member::from_lvalue_lSqrBrackTkn_expr_rSqrtBrackTkn(const Lvalue& lvalue,
 Member Member::from_call_dotTkn_idTkn(const Call& call, const Identifier& id) {
   Member member;
 
-  icode::Expr symbol_expr = quadTable.emit_iftableitem(call.get_expr());
+  icode::Expr symbol_expr = quadTable.emit_if_table_item(call.get_expr());
   icode::Expr index = icode::Expr::for_const_string(id.get_name());
 
   member.set_expr(icode::Expr::for_table_item(symbol_expr, index));
@@ -62,7 +62,7 @@ Member Member::from_call_lSqrBrackTkn_expr_rSqrtBrackTkn(const Call& call,
                                                          const Expr& expr) {
   Member member;
 
-  icode::Expr symbol_expr = quadTable.emit_iftableitem(call.get_expr());
+  icode::Expr symbol_expr = quadTable.emit_if_table_item(call.get_expr());
   icode::Expr index = expr.get_expr();
 
   member.set_expr(icode::Expr::for_table_item(symbol_expr, index));
