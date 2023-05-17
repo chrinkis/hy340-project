@@ -193,83 +193,29 @@ bool Expr::get_bool_const() const {
 std::ostream& operator<<(std::ostream& os, const Expr& expr) {
   switch (expr.type) {
     case Expr::Type::VAR:
-
-      os << expr.get_symbol()->get_name();
-
-      break;
-
     case Expr::Type::TABLE_ITEM:
-
-      os << expr.get_symbol()->get_name();
-
-      break;
-
     case Expr::Type::PROGRAM_FUNC:
-
-      os << expr.get_symbol()->get_name();
-
-      break;
-
     case Expr::Type::LIBRARY_FUNC:
-
-      os << expr.get_symbol()->get_name();
-
-      break;
-
     case Expr::Type::ARITHM_EXPR:
-
-      os << expr.get_symbol()->get_name();
-
-      break;
-
     case Expr::Type::BOOL_EXPR:
-
-      os << expr.get_symbol()->get_name();
-
-      break;
-
     case Expr::Type::ASSIGN_EXPR:
-
-      os << expr.get_symbol()->get_name();
-
-      break;
-
     case Expr::Type::NEW_TABLE:
-
-      if (expr.has_symbol()) {
-        os << expr.get_symbol()->get_name();
-      }
-
+      os << expr.get_symbol()->get_name();
       break;
-
     case Expr::Type::CONST_NUM:
-
       os << expr.get_number_const();
-
       break;
-
     case Expr::Type::CONST_BOOL:
-
       os << expr.get_bool_const();
-
       break;
-
     case Expr::Type::CONST_STRING:
-
       os << expr.get_string_const();
-
       break;
-
     case Expr::Type::NIL:
-
       os << "nil";
-
       break;
-
     case Expr::Type::_NO_TYPE:
-
       break;
-
     default:
       assert(0);
   }
