@@ -532,7 +532,7 @@ loop_end    :   %empty { $$ = nterm::LoopEnd::emptyTkn();
                        }
             ;
 
-breakstmt   :   BREAK ";" { $$ = nterm::Breakstmt::from_breakTkn();
+breakstmt   :   BREAK ";" { $$ = nterm::Breakstmt::from_breakTkn(@1);
                             print_derivation("breakstmt", "BREAK ;");
                           }
             ;
