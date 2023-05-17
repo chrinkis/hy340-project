@@ -1,5 +1,7 @@
 #include <alpha/icode/quad/table.h>
 
+#include <alpha/symbol/table_manager.h>
+
 #include <cassert>
 
 namespace alpha::icode::quad {
@@ -30,6 +32,17 @@ void Table::emit(const Quad::Opcode& opcode,
   this->table.push_back(quad);
 
   assert(quad.get_line() == this->get_next_label() - 1);
+}
+
+icode::Expr Table::emit_if_table_item(const icode::Expr& expr) {
+  if (expr.get_type() != Expr::Type::TABLE_ITEM) {
+    return expr;
+  }
+
+  Expr result = Expr::for_var(symTable.new_temp_variable());
+  this->emit(Quad::Opcode::TABLEGETELEM, result, expr, *expr.get_index());
+
+  return result;
 }
 
 Quad::Label Table::get_next_label() const {
