@@ -68,6 +68,12 @@ void Table::patch_list(const Quad::Line& list_head, const Quad::Label& label) {
   }
 }
 
+Quad::Line Table::new_list(const Quad::Line& start) {
+  this->table.at(start).set_label(0);
+
+  return start;
+}
+
 std::ostream& operator<<(std::ostream& os, const Table& qt) {
   os << std::left;
 
