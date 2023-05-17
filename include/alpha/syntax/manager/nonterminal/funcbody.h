@@ -14,10 +14,6 @@ class Funcbody {
 
  public:
   static void block();
-
- public:
-  Counter get_total_locals() const;
-  void set_total_locals(const Counter& total_locals);
 };
 
 }  // namespace nonterminal
