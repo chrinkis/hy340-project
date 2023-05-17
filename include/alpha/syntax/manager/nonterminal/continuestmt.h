@@ -1,6 +1,7 @@
 #pragma once
 
 #include <alpha/icode/quad/quad.h>
+#include "location.h"
 
 namespace alpha {
 namespace syntax {
@@ -16,7 +17,7 @@ class Continuestmt {
   Quad::Label continue_list_head;
 
  public:
-  static Continuestmt from_continueTkn();
+  static Continuestmt from_continueTkn(const location& loc);
 
  public:
   Continuestmt();

@@ -1,16 +1,24 @@
 #include <alpha/syntax/manager/nonterminal/continuestmt.h>
 
 #include <alpha/icode/quad/table.h>
+#include <alpha/syntax/error.h>
+#include <alpha/syntax/loop_counter.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 
 Continuestmt::Continuestmt() : break_list_head(0), continue_list_head(0) {}
 
-Continuestmt Continuestmt::from_continueTkn() {
+Continuestmt Continuestmt::from_continueTkn(const location& loc) {
   Continuestmt continuestmt;
 
-  continuestmt.break_list_head = quadTable.new_list(quadTable.get_next_label());
-  quadTable.emit_jump(0);
+  if (!loopCounter.is_in_loop()) {
+    error::invalid_use_of_continue(loc);
+
+  } else {
+    continuestmt.break_list_head =
+        quadTable.new_list(quadTable.get_next_label());
+    quadTable.emit_jump(0);
+  }
 
   return continuestmt;
 }
