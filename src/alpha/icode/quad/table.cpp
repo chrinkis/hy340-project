@@ -56,6 +56,18 @@ void Table::patch_label(const Quad::Line& line, const Quad::Label& label) {
   this->table.at(line).set_label(label);
 }
 
+void Table::patch_list(const Quad::Line& list_head, const Quad::Label& label) {
+  Quad::Line current = list_head;
+
+  while (current) {
+    Quad::Line next = this->table.at(current).get_label();
+
+    this->table.at(current).set_label(label);
+
+    current = next;
+  }
+}
+
 std::ostream& operator<<(std::ostream& os, const Table& qt) {
   os << std::left;
 
