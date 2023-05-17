@@ -58,4 +58,9 @@ void invalid_name_for_func_definition(
 void invalid_function_operation(Operator op,
                                 const alpha::symbol::Symbol::SharedPtr& symbol);
 
+void invalid_use_of_break(const alpha::syntax::Parser::location_type& location);
+
+void invalid_use_of_continue(
+    const alpha::syntax::Parser::location_type& location);
+
 }  // namespace alpha::syntax::error

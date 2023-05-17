@@ -1,6 +1,7 @@
 #pragma once
 
 #include <alpha/icode/quad/quad.h>
+#include <alpha/syntax/location.h>
 
 namespace alpha {
 namespace syntax {
@@ -16,7 +17,7 @@ class Breakstmt {
   Quad::Label continue_list_head;
 
  public:
-  static Breakstmt from_breakTkn();
+  static Breakstmt from_breakTkn(const location& loc);
 
  public:
   Breakstmt();
