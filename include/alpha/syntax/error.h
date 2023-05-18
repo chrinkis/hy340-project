@@ -2,6 +2,7 @@
 
 #include <alpha/syntax/parser.h>
 
+#include <alpha/icode/expr.h>
 #include <string>
 #include "alpha/symbol/symbol.h"
 
@@ -65,5 +66,9 @@ void invalid_use_of_continue(
 
 void invalid_use_of_return(
     const alpha::syntax::Parser::location_type& location);
+
+bool is_arithmetic(const icode::Expr& expr);
+
+void illegal_arithm_expr(Operator op, const icode::Expr& expr);
 
 }  // namespace alpha::syntax::error
