@@ -1,5 +1,7 @@
 #pragma once
 
+#include <alpha/syntax/location.h>
+
 namespace alpha {
 namespace syntax {
 namespace manager {
@@ -9,9 +11,10 @@ class Expr;
 
 class Returnstmt {
  public:
-  static void returnTkn_semicolonTkn();
+  static void returnTkn_semicolonTkn(const location& loc);
 
-  static void returnTkn_expr_semicolonTkn(const Expr& expr);
+  static void returnTkn_expr_semicolonTkn(const location& loc,
+                                          const Expr& expr);
 };
 
 }  // namespace nonterminal

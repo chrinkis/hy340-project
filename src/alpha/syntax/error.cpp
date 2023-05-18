@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <sstream>
 #include <string>
 
 #define ERROR_COLOR "\033[31m"
@@ -135,6 +136,41 @@ void invalid_use_of_break(
 void invalid_use_of_continue(
     const alpha::syntax::Parser::location_type& location) {
   error::print_semantic("invalid use of `continue` statement", location);
+}
+
+void invalid_use_of_return(
+    const alpha::syntax::Parser::location_type& location) {
+  error::print_semantic("invalid use of `return` statement", location);
+}
+
+bool is_arithmetic(const icode::Expr& expr) {
+  switch (expr.get_type()) {
+    case icode::Expr::Type::VAR:
+    case icode::Expr::Type::TABLE_ITEM:
+    case icode::Expr::Type::ARITHM_EXPR:
+    case icode::Expr::Type::ASSIGN_EXPR:
+    case icode::Expr::Type::CONST_NUM:
+    case icode::Expr::Type::_NO_TYPE:
+      return true;
+    case icode::Expr::Type::PROGRAM_FUNC:
+    case icode::Expr::Type::LIBRARY_FUNC:
+    case icode::Expr::Type::BOOL_EXPR:
+    case icode::Expr::Type::NEW_TABLE:
+    case icode::Expr::Type::CONST_BOOL:
+    case icode::Expr::Type::CONST_STRING:
+    case icode::Expr::Type::NIL:
+      return false;
+    default:
+      assert(0);
+  }
+}
+
+void illegal_arithm_expr(Operator op, const icode::Expr& expr) {
+  std::stringstream expr_sstream;
+  expr_sstream << expr;
+
+  print_semantic("cannot use `" + to_string(op) + "` with `" +
+                 expr_sstream.str() + "` as operand");
 }
 
 }  // namespace alpha::syntax::error
