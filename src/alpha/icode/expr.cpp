@@ -171,7 +171,7 @@ double Expr::get_number_const() const {
 }
 
 bool Expr::has_string_const() const {
-  return !!this->number_const;
+  return !!this->string_const;
 }
 
 std::string Expr::get_string_const() const {
