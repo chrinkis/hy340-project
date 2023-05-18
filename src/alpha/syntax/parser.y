@@ -100,6 +100,7 @@
 %token DOUBLE_DOT           ".."
 
 %type <nterm::Assignexpr>       assignexpr
+%type <nterm::BlockBody>        block_body
 %type <nterm::Breakstmt>        breakstmt
 %type <nterm::Call>             call
 %type <nterm::Callsuffix>       callsuffix
@@ -386,8 +387,12 @@ block_open  :   "{" { nterm::BlockOpen::leftCurlyBracketTkn();
                     }
             ;
 
-block_body  :   %empty { print_derivation("block_body", "empty"); }
-            |   stmts  { print_derivation("block_body", "stmts"); }
+block_body  :   %empty { $$ = nterm::BlockBody::from_empty();
+                         print_derivation("block_body", "empty");
+                       }
+            |   stmts  { $$ = nterm::BlockBody::from_stmts($1);
+                         print_derivation("block_body", "stmts");
+                       }
             ;
 
 stmts       :   stmt       { $$ = nterm::Stmts::from_stmt($1);
