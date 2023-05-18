@@ -242,6 +242,8 @@ void TableManager::end_function() {
   this->current_function.top()->set_total_locals(
       this->scope_space_manager.get_current_scope_offset());
 
+  this->current_function.pop();
+
   this->scope_space_manager.exit_scope_space();
   this->scope_space_manager.exit_scope_space();
 
@@ -277,7 +279,6 @@ void TableManager::end_argument_list() {
   assert(!this->current_function.empty());
 
   this->current_scope--;
-  this->current_function.pop();
   this->scope_space_manager.enter_scope_space();
 }
 
