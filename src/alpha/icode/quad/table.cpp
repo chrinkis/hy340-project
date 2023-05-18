@@ -3,6 +3,7 @@
 #include <alpha/symbol/table_manager.h>
 
 #include <cassert>
+#include <iomanip>
 
 namespace alpha::icode::quad {
 
@@ -97,6 +98,28 @@ Quad::Line Table::merge_lists(const Quad::Line& list_head_a,
 
 std::ostream& operator<<(std::ostream& os, const Table& qt) {
   os << std::left;
+
+  auto ident = [](int w = 26) { return std::setw(w); };
+
+  os << std::setw(10);
+  os << "Quad#";
+
+  os << ident();
+  os << "Opcode";
+
+  os << ident();
+  os << "Result";
+
+  os << ident();
+  os << "Arg1";
+
+  os << ident();
+  os << "Arg2";
+
+  os << ident();
+  os << "Label";
+
+  os << std::endl;
 
   for (auto quad : qt.table) {
     os << quad << std::endl;
