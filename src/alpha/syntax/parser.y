@@ -115,6 +115,7 @@
 %type <nterm::ForstmtPre>       forstmt_pre
 %type <nterm::Funcdef>          funcdef
 %type <nterm::Funcprefix>       funcprefix
+%type <nterm::Ifstmt>           ifstmt
 %type <nterm::IfstmtElse>       ifstmt_else
 %type <nterm::IfstmtIf>         ifstmt_if
 %type <nterm::Indexed>          indexed
@@ -478,10 +479,10 @@ idlist_opt  :   %empty                   { print_derivation("idlist_opt", "empty
             |   "," idlist_id idlist_opt { print_derivation("idlist_opt", ", idlist_id idlist_opt"); }
             ;
 
-ifstmt      :   ifstmt_if stmt        %expect 1 { nterm::Ifstmt::ifstmtIf_stmt($1, $2);
+ifstmt      :   ifstmt_if stmt        %expect 1 { $$ = nterm::Ifstmt::from_ifstmtIf_stmt($1, $2);
                                                   print_derivation("ifstmt", "ifstmt_if stmt");
                                                 }
-            |   ifstmt_if stmt ifstmt_else stmt { nterm::Ifstmt::ifstmtIf_stmt_ifstmtElse_stmt($1, $2, $3, $4);
+            |   ifstmt_if stmt ifstmt_else stmt { $$ = nterm::Ifstmt::from_ifstmtIf_stmt_ifstmtElse_stmt($1, $2, $3, $4);
                                                   print_derivation("ifstmt", "ifstmt_if stmt ifstmt_else stmt");
                                                 }
             ;
