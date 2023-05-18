@@ -9,6 +9,7 @@ namespace nonterminal {
 
 class Breakstmt;
 class Continuestmt;
+class Block;
 
 class Stmt {
  public:
@@ -29,7 +30,7 @@ class Stmt {
   static Stmt from_returnstmt();
   static Stmt from_breakstmt(const Breakstmt& breakstmt);
   static Stmt from_continuestmt(const Continuestmt& continuestmt);
-  static Stmt from_block();
+  static Stmt from_block(const Block& block);
   static Stmt from_funcdef();
   static Stmt from_smclnTkn();
 

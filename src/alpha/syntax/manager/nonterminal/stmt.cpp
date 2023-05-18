@@ -1,5 +1,6 @@
 #include <alpha/syntax/manager/nonterminal/stmt.h>
 
+#include <alpha/syntax/manager/nonterminal/block.h>
 #include <alpha/syntax/manager/nonterminal/breakstmt.h>
 #include <alpha/syntax/manager/nonterminal/continuestmt.h>
 
@@ -55,8 +56,11 @@ Stmt Stmt::from_continuestmt(const Continuestmt& continuestmt) {
   return stmt;
 }
 
-Stmt Stmt::from_block() {
+Stmt Stmt::from_block(const Block& block) {
   Stmt stmt;
+
+  stmt.set_breaklist(block.get_breaklist());
+  stmt.set_contlist(block.get_contlist());
 
   return stmt;
 }

@@ -174,7 +174,7 @@ stmt        :   expr ";"     { $$ = nterm::Stmt::from_expr_smclnTkn();
             |   continuestmt { $$ = nterm::Stmt::from_continuestmt($1);
                                print_derivation("stmt", "continuestmt");
                              }
-            |   block        { $$ = nterm::Stmt::from_block();
+            |   block        { $$ = nterm::Stmt::from_block($1);
                                print_derivation("stmt", "block");
                              }
             |   funcdef      { $$ = nterm::Stmt::from_funcdef();
