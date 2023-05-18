@@ -17,8 +17,7 @@ Continuestmt Continuestmt::from_continueTkn(const location& loc) {
     error::invalid_use_of_continue(loc);
 
   } else {
-    continuestmt.break_list_head =
-        quadTable.new_list(quadTable.get_next_label());
+    continuestmt.break_list_head = quadTable.get_next_label();
     quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr, 0);
   }
 

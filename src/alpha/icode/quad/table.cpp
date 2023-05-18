@@ -74,12 +74,6 @@ void Table::patch_list(const Quad::Line& list_head, const Quad::Label& label) {
   }
 }
 
-Quad::Line Table::new_list(const Quad::Line& start) {
-  this->table.at(start).set_label(0);
-
-  return start;
-}
-
 Quad::Line Table::merge_lists(const Quad::Line& list_head_a,
                               const Quad::Line& list_head_b) {
   if (!list_head_a) {

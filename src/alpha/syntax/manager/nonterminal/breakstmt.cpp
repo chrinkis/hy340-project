@@ -18,7 +18,7 @@ Breakstmt Breakstmt::from_breakTkn(const location& loc) {
     error::invalid_use_of_break(loc);
 
   } else {
-    breakstmt.break_list_head = quadTable.new_list(quadTable.get_next_label());
+    breakstmt.break_list_head = quadTable.get_next_label();
     quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr, 0);
   }
 
