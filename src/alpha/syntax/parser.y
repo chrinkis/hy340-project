@@ -467,7 +467,7 @@ idlist_id   :   IDENTIFIER { nterm::IdlistId::identifierTkn(terminal::Identifier
             ;
 
 idlist_opt  :   %empty                   { print_derivation("idlist_opt", "empty"); }
-            |   idlist_id "," idlist_opt { print_derivation("idlist_opt", "idlist_id , idlist_opt"); }
+            |   "," idlist_id idlist_opt { print_derivation("idlist_opt", ", idlist_id idlist_opt"); }
             ;
 
 ifstmt      :   ifstmt_if stmt        %expect 1 { nterm::Ifstmt::ifstmtIf_stmt($1, $2);
