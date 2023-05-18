@@ -1,0 +1,122 @@
+// Test funcdef
+/*
+z = x + y;
+
+function f(a, b) { return a+b; }
+function g()    { function h() {}}
+
+x = g;
+x = (function() {});
+*/
+
+// Test settabletest, gettabletest
+/* x = t.a.b.c;
+
+t.a.b = x;
+*/
+
+// TODO Lecture 10, slide 22
+
+//x = y = z;
+
+//x = p[a+b];
+
+//y = q.a = x;
+
+// Test function call
+
+//f(a);
+
+// x = f(y)(a,b);
+
+// sprite..move(dx,dy);
+
+// Test table creation
+//x = [-4, 13, 12.34, a+b];
+
+//t = [{"x" : 0}, {"y" : a+b}, {-1 : 0}];
+
+// Test fundef (again)
+
+// x = (function(a,b) { return a+b; });
+
+// (function() {})();
+
+// Test unary operators
+
+//a = x--;
+
+// a = t.x++;
+
+// ++x;
+
+// a = ++t.x;
+
+// a = --t.x.y;
+
+// Test arithmetic expressions
+
+// a = (x + y) - (z * w);
+
+
+// Test relational expressions
+
+// a = x>=y;
+
+// b = f() >= g();
+
+// Test boolean expressions
+
+// a = x or y and z;
+
+// Test if statements
+
+//if (x + y >= z - w) f(x,y,z);
+
+/* if (a or b) x = y;
+else y = x; */
+
+// Test loops
+
+/*
+while (x - y > z - w)
+    if(b)
+        break;
+    else
+        x = x - z;
+*/
+
+// for (i = 0;  i < N; ++i) print("*");
+
+// Test break and continue statements
+
+// The following produce a semantic error
+// funtion f(){break;}
+// funtion f(){continue;}
+// while(true) {function f() { break; }}
+// while(true) {function f() { continue; }}
+
+/*
+while (a) {
+
+    a = f(a);
+
+    if (a)
+        break;
+    else
+        continue;
+
+    continue;
+    break;
+}
+*/
+
+// Test return statement
+
+/*
+function f() {
+    return;
+    return local x;
+    return nil;
+}
+*/
