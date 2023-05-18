@@ -100,6 +100,7 @@
 %token DOUBLE_DOT           ".."
 
 %type <nterm::Assignexpr>       assignexpr
+%type <nterm::Block>            block
 %type <nterm::BlockBody>        block_body
 %type <nterm::Breakstmt>        breakstmt
 %type <nterm::Call>             call
@@ -380,7 +381,9 @@ indexedelem :   "{" expr ":" expr "}" { $$ = nterm::Indexedelem::from_lCrlBrcktT
                                       }
             ;
 
-block       :   block_open block_body block_close { print_derivation("block", "block_open block_body block_close"); }
+block       :   block_open block_body block_close { $$ = nterm::Block::from_blockOpen_blockBody_blockClose($2);
+                                                    print_derivation("block", "block_open block_body block_close");
+                                                  }
 
 block_open  :   "{" { nterm::BlockOpen::leftCurlyBracketTkn();
                       print_derivation("block_open", "{");
