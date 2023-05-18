@@ -56,7 +56,7 @@ Quad::Label Table::get_next_label() const {
 }
 
 void Table::patch_label(const Quad::Line& line, const Quad::Label& label) {
-  assert(line < this->get_next_label() - 1);
+  assert(line < this->get_next_label());
   assert(!this->table.at(line).get_label());
 
   this->table.at(line).set_label(label);
