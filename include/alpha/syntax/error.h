@@ -63,4 +63,7 @@ void invalid_use_of_break(const alpha::syntax::Parser::location_type& location);
 void invalid_use_of_continue(
     const alpha::syntax::Parser::location_type& location);
 
+void invalid_use_of_return(
+    const alpha::syntax::Parser::location_type& location);
+
 }  // namespace alpha::syntax::error

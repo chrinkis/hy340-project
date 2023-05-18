@@ -558,10 +558,10 @@ continuestmt:   CONTINUE ";" { $$ = nterm::Continuestmt::from_continueTkn(@1);
                              }
             ;
 
-returnstmt  :   RETURN ";"      { nterm::Returnstmt::returnTkn_semicolonTkn();
+returnstmt  :   RETURN ";"      { nterm::Returnstmt::returnTkn_semicolonTkn(@1);
                                   print_derivation("returnstmt", "RETURN ;");
                                 }
-            |   RETURN expr ";" { nterm::Returnstmt::returnTkn_expr_semicolonTkn($2);
+            |   RETURN expr ";" { nterm::Returnstmt::returnTkn_expr_semicolonTkn(@1, $2);
                                   print_derivation("returnstmt", "RETURN expr ;");
                                 }
             ;

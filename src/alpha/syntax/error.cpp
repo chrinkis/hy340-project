@@ -137,4 +137,9 @@ void invalid_use_of_continue(
   error::print_semantic("invalid use of `continue` statement", location);
 }
 
+void invalid_use_of_return(
+    const alpha::syntax::Parser::location_type& location) {
+  error::print_semantic("invalid use of `return` statement", location);
+}
+
 }  // namespace alpha::syntax::error
