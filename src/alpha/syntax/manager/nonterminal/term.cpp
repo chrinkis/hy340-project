@@ -52,6 +52,35 @@ Term Term::from_notTkn_expr(const Expr& expr) {
 Term Term::from_plusPlusTkn_lvalue(const Lvalue& lvalue) {
   if (lvalue.get_expr().has_symbol() &&
       lvalue.get_expr().get_symbol()->has_function_type()) {
+    error::invalid_function_operation(error::Operator::PLUS_PLUS_POST,
+                                      lvalue.get_expr().get_symbol());
+  }
+
+  Term term;
+
+  if (lvalue.get_expr().get_type() == icode::Expr::Type::TABLE_ITEM) {
+    term.set_expr(quadTable.emit_if_table_item(lvalue.get_expr()));
+
+    quadTable.emit(Opcode::ADD, term.get_expr(), term.get_expr(),
+                   icode::Expr::for_const_num(1));
+
+    quadTable.emit(Opcode::TABLESETELEM, term.get_expr(), lvalue.get_expr(),
+                   *lvalue.get_expr().get_index());
+  } else {
+    quadTable.emit(Opcode::ADD, lvalue.get_expr(), lvalue.get_expr(),
+                   icode::Expr::for_const_num(1));
+
+    term.set_expr(icode::Expr::for_arithm_expr(symTable.new_temp_variable()));
+
+    quadTable.emit(Opcode::ASSIGN, term.get_expr(), lvalue.get_expr());
+  }
+
+  return term;
+}
+
+Term Term::from_lvalue_plusPlusTkn(const Lvalue& lvalue) {
+  if (lvalue.get_expr().has_symbol() &&
+      lvalue.get_expr().get_symbol()->has_function_type()) {
     error::invalid_function_operation(error::Operator::PLUS_PLUS_PRE,
                                       lvalue.get_expr().get_symbol());
   }
@@ -79,10 +108,10 @@ Term Term::from_plusPlusTkn_lvalue(const Lvalue& lvalue) {
   return term;
 }
 
-Term Term::from_lvalue_plusPlusTkn(const Lvalue& lvalue) {
+Term Term::from_minusMinusTkn_lvalue(const Lvalue& lvalue) {
   if (lvalue.get_expr().has_symbol() &&
       lvalue.get_expr().get_symbol()->has_function_type()) {
-    error::invalid_function_operation(error::Operator::PLUS_PLUS_POST,
+    error::invalid_function_operation(error::Operator::MINUS_MINUS_POST,
                                       lvalue.get_expr().get_symbol());
   }
 
@@ -91,13 +120,13 @@ Term Term::from_lvalue_plusPlusTkn(const Lvalue& lvalue) {
   if (lvalue.get_expr().get_type() == icode::Expr::Type::TABLE_ITEM) {
     term.set_expr(quadTable.emit_if_table_item(lvalue.get_expr()));
 
-    quadTable.emit(Opcode::ADD, term.get_expr(), term.get_expr(),
+    quadTable.emit(Opcode::SUB, term.get_expr(), term.get_expr(),
                    icode::Expr::for_const_num(1));
 
     quadTable.emit(Opcode::TABLESETELEM, term.get_expr(), lvalue.get_expr(),
                    *lvalue.get_expr().get_index());
   } else {
-    quadTable.emit(Opcode::ADD, lvalue.get_expr(), lvalue.get_expr(),
+    quadTable.emit(Opcode::SUB, lvalue.get_expr(), lvalue.get_expr(),
                    icode::Expr::for_const_num(1));
 
     term.set_expr(icode::Expr::for_arithm_expr(symTable.new_temp_variable()));
@@ -108,7 +137,7 @@ Term Term::from_lvalue_plusPlusTkn(const Lvalue& lvalue) {
   return term;
 }
 
-Term Term::from_minusMinusTkn_lvalue(const Lvalue& lvalue) {
+Term Term::from_lvalue_minusMinusTkn(const Lvalue& lvalue) {
   if (lvalue.get_expr().has_symbol() &&
       lvalue.get_expr().get_symbol()->has_function_type()) {
     error::invalid_function_operation(error::Operator::MINUS_MINUS_PRE,
@@ -133,35 +162,6 @@ Term Term::from_minusMinusTkn_lvalue(const Lvalue& lvalue) {
 
     quadTable.emit(Opcode::SUB, lvalue.get_expr(), lvalue.get_expr(),
                    icode::Expr::for_const_num(1));
-  }
-
-  return term;
-}
-
-Term Term::from_lvalue_minusMinusTkn(const Lvalue& lvalue) {
-  if (lvalue.get_expr().has_symbol() &&
-      lvalue.get_expr().get_symbol()->has_function_type()) {
-    error::invalid_function_operation(error::Operator::MINUS_MINUS_POST,
-                                      lvalue.get_expr().get_symbol());
-  }
-
-  Term term;
-
-  if (lvalue.get_expr().get_type() == icode::Expr::Type::TABLE_ITEM) {
-    term.set_expr(quadTable.emit_if_table_item(lvalue.get_expr()));
-
-    quadTable.emit(Opcode::SUB, term.get_expr(), term.get_expr(),
-                   icode::Expr::for_const_num(1));
-
-    quadTable.emit(Opcode::TABLESETELEM, term.get_expr(), lvalue.get_expr(),
-                   *lvalue.get_expr().get_index());
-  } else {
-    quadTable.emit(Opcode::SUB, lvalue.get_expr(), lvalue.get_expr(),
-                   icode::Expr::for_const_num(1));
-
-    term.set_expr(icode::Expr::for_arithm_expr(symTable.new_temp_variable()));
-
-    quadTable.emit(Opcode::ASSIGN, term.get_expr(), lvalue.get_expr());
   }
 
   return term;

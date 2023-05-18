@@ -3,13 +3,16 @@
 #include <alpha/icode/quad/table.h>
 #include <alpha/symbol/table_manager.h>
 #include <alpha/syntax/error.h>
+#include <alpha/syntax/manager/nonterminal/assignexpr.h>
 #include <alpha/syntax/manager/nonterminal/term.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 using Opcode = alpha::icode::quad::Quad::Opcode;
 
-Expr Expr::from_assignexpr() {
+Expr Expr::from_assignexpr(const Assignexpr& assignexpr) {
   Expr expr;
+
+  expr.set_expr(assignexpr.get_expr());
 
   return expr;
 }

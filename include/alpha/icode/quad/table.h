@@ -45,6 +45,8 @@ class Table {
   Collection table;
 
  public:
+  Table();
+
   void emit(const Quad::Opcode& opcode,
             const ExprOpt& result = EmptyExpr(),
             const ExprOpt& arg_a = EmptyExpr(),
@@ -58,8 +60,6 @@ class Table {
   void patch_label(const Quad::Line& line, const Quad::Label& label);
 
   void patch_list(const Quad::Line& list_head, const Quad::Label& label);
-
-  Quad::Line new_list(const Quad::Line& start);
 
   Quad::Line merge_lists(const Quad::Line& list_head_a,
                          const Quad::Line& list_head_b);

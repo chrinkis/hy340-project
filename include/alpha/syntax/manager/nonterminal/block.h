@@ -7,12 +7,10 @@ namespace syntax {
 namespace manager {
 namespace nonterminal {
 
-class IfstmtIf;
-class IfstmtElse;
-class Stmt;
+class BlockBody;
 
-class Ifstmt {
- private:
+class Block {
+ public:
   using Quad = alpha::icode::quad::Quad;
 
  private:
@@ -20,12 +18,7 @@ class Ifstmt {
   Quad::Label contlist = 0;
 
  public:
-  static Ifstmt from_ifstmtIf_stmt(const IfstmtIf& ifstmt_if, const Stmt& stmt);
-  static Ifstmt from_ifstmtIf_stmt_ifstmtElse_stmt(
-      const IfstmtIf& ifstmt_if,
-      const Stmt& stmt1,
-      const IfstmtElse& ifstmt_else,
-      const Stmt& stmt2);
+  static Block from_blockOpen_blockBody_blockClose(const BlockBody& block_body);
 
  public:
   Quad::Label get_breaklist() const;

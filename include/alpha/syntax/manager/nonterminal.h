@@ -1,6 +1,8 @@
 #pragma once
 
 #include <alpha/syntax/manager/nonterminal/assignexpr.h>
+#include <alpha/syntax/manager/nonterminal/block.h>
+#include <alpha/syntax/manager/nonterminal/block_body.h>
 #include <alpha/syntax/manager/nonterminal/block_close.h>
 #include <alpha/syntax/manager/nonterminal/block_open.h>
 #include <alpha/syntax/manager/nonterminal/breakstmt.h>

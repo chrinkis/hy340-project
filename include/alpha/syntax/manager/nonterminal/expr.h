@@ -9,13 +9,14 @@ namespace nonterminal {
 
 class Expr;
 class Term;
+class Assignexpr;
 
 class Expr {
  private:
   icode::Expr expr;
 
  public:
-  static Expr from_assignexpr();
+  static Expr from_assignexpr(const Assignexpr& assignexpr);
 
   static Expr from_expr_plusTkn_expr(const Expr& left, const Expr& right);
 

@@ -171,7 +171,7 @@ double Expr::get_number_const() const {
 }
 
 bool Expr::has_string_const() const {
-  return !!this->number_const;
+  return !!this->string_const;
 }
 
 std::string Expr::get_string_const() const {
@@ -206,10 +206,10 @@ std::ostream& operator<<(std::ostream& os, const Expr& expr) {
       os << expr.get_number_const();
       break;
     case Expr::Type::CONST_BOOL:
-      os << expr.get_bool_const();
+      os << (expr.get_bool_const() ? "true" : "false");
       break;
     case Expr::Type::CONST_STRING:
-      os << expr.get_string_const();
+      os << "\"" + expr.get_string_const() + "\"";
       break;
     case Expr::Type::NIL:
       os << "nil";

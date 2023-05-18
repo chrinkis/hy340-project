@@ -20,7 +20,7 @@ Assignexpr Assignexpr::from_lvalue_assignTkn_expr(const Lvalue& lvalue,
   Assignexpr assignexpr;
   icode::Expr icode_expr;
 
-  if (assignexpr.get_expr().get_type() == icode::Expr::Type::TABLE_ITEM) {
+  if (lvalue.get_expr().get_type() == icode::Expr::Type::TABLE_ITEM) {
     icode::Expr table = lvalue.get_expr();
     icode::Expr index = *lvalue.get_expr().get_index();
     icode::Expr value = expr.get_expr();

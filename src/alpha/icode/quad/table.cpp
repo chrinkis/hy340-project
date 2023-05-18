@@ -7,6 +7,11 @@
 
 namespace alpha::icode::quad {
 
+Table::Table() {
+  this->emit(Quad::Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr,
+             this->get_next_label() + 1);
+}
+
 void Table::emit(const Quad::Opcode& opcode,
                  const ExprOpt& result,
                  const ExprOpt& arg_a,
@@ -51,7 +56,7 @@ Quad::Label Table::get_next_label() const {
 }
 
 void Table::patch_label(const Quad::Line& line, const Quad::Label& label) {
-  assert(line < this->get_next_label() - 1);
+  assert(line < this->get_next_label());
   assert(!this->table.at(line).get_label());
 
   this->table.at(line).set_label(label);
@@ -67,12 +72,6 @@ void Table::patch_list(const Quad::Line& list_head, const Quad::Label& label) {
 
     current = next;
   }
-}
-
-Quad::Line Table::new_list(const Quad::Line& start) {
-  this->table.at(start).set_label(0);
-
-  return start;
 }
 
 Quad::Line Table::merge_lists(const Quad::Line& list_head_a,

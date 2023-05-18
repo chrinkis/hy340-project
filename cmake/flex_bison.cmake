@@ -36,6 +36,8 @@ add_library(flex_and_bison
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/loop_counter.cpp
 
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/assignexpr.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/block.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/block_body.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/block_close.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/block_open.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/breakstmt.cpp

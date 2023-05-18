@@ -11,9 +11,6 @@ Identifier::Identifier() {}
 Identifier::Identifier(const std::string& name, const Location& location)
     : name(name), location(location) {}
 
-Identifier Identifier::operator=(const Identifier& other) {
-  return Identifier(other.name, other.location);
-}
 std::string Identifier::get_name() const {
   return this->name;
 }
