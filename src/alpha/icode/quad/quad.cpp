@@ -50,8 +50,13 @@ Quad::Line Quad::get_line() const {
   return this->line.value();
 }
 
+#define EMPTY_QUAD_FIELD "-"
+
 std::ostream& operator<<(std::ostream& os, const Quad& quad) {
   auto ident = [](int w = 26) { return std::setw(w); };
+
+  os << std::setw(10);
+  os << std::to_string(quad.get_line()) + ":";
 
   os << ident();
   os << to_string(quad.opcode);
@@ -59,21 +64,29 @@ std::ostream& operator<<(std::ostream& os, const Quad& quad) {
   os << ident();
   if (quad.result) {
     os << quad.result.value();
+  } else {
+    os << EMPTY_QUAD_FIELD;
   }
 
   os << ident();
   if (quad.arg1) {
     os << quad.arg1.value();
+  } else {
+    os << EMPTY_QUAD_FIELD;
   }
 
   os << ident();
   if (quad.arg2) {
     os << quad.arg2.value();
+  } else {
+    os << EMPTY_QUAD_FIELD;
   }
 
   os << ident();
   if (quad.label) {
     os << quad.label.value();
+  } else {
+    os << EMPTY_QUAD_FIELD;
   }
 
   // FIXME what to do with `quad.line`. Huh?
