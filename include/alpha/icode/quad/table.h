@@ -45,6 +45,8 @@ class Table {
   Collection table;
 
  public:
+  Table();
+
   void emit(const Quad::Opcode& opcode,
             const ExprOpt& result = EmptyExpr(),
             const ExprOpt& arg_a = EmptyExpr(),

@@ -7,6 +7,11 @@
 
 namespace alpha::icode::quad {
 
+Table::Table() {
+  this->emit(Quad::Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr,
+             this->get_next_label() + 1);
+}
+
 void Table::emit(const Quad::Opcode& opcode,
                  const ExprOpt& result,
                  const ExprOpt& arg_a,
