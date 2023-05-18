@@ -89,6 +89,8 @@ class TableManager {
 
   void end_argument_list();
 
+  bool is_in_func_def() const;
+
  private:
   std::string new_temp_variable_name();
 

@@ -282,6 +282,10 @@ void TableManager::end_argument_list() {
   this->scope_space_manager.enter_scope_space();
 }
 
+bool TableManager::is_in_func_def() const {
+  return !this->current_function.empty();
+}
+
 std::string TableManager::new_temp_variable_name() {
   return "$tmp_" + std::to_string(this->temp_var_counter++);
 }
