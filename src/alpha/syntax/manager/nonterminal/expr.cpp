@@ -271,18 +271,6 @@ Expr Expr::from_expr_notEqualsTkn_expr(const Expr& left, const Expr& right) {
 }
 
 Expr Expr::from_expr_andTkn_expr(const Expr& left, const Expr& right) {
-  if (left.get_expr().has_symbol() &&
-      left.get_expr().get_symbol()->has_function_type()) {
-    error::invalid_function_operation(error::Operator::AND,
-                                      left.get_expr().get_symbol());
-  }
-
-  if (right.get_expr().has_symbol() &&
-      right.get_expr().get_symbol()->has_function_type()) {
-    error::invalid_function_operation(error::Operator::AND,
-                                      right.get_expr().get_symbol());
-  }
-
   Expr expr;
 
   expr.set_expr(icode::Expr::for_bool_expr(symTable.new_temp_variable()));
@@ -293,18 +281,6 @@ Expr Expr::from_expr_andTkn_expr(const Expr& left, const Expr& right) {
 }
 
 Expr Expr::from_expr_orTkn_expr(const Expr& left, const Expr& right) {
-  if (left.get_expr().has_symbol() &&
-      left.get_expr().get_symbol()->has_function_type()) {
-    error::invalid_function_operation(error::Operator::OR,
-                                      left.get_expr().get_symbol());
-  }
-
-  if (right.get_expr().has_symbol() &&
-      right.get_expr().get_symbol()->has_function_type()) {
-    error::invalid_function_operation(error::Operator::OR,
-                                      right.get_expr().get_symbol());
-  }
-
   Expr expr;
 
   expr.set_expr(icode::Expr::for_bool_expr(symTable.new_temp_variable()));

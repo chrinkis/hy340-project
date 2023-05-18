@@ -33,10 +33,6 @@ Term Term::from_minusTkn_expr(const Expr& expr) {
 }
 
 Term Term::from_notTkn_expr(const Expr& expr) {
-  if (!error::is_arithmetic(expr.get_expr())) {
-    error::illegal_arithm_expr(error::Operator::NOT, expr.get_expr());
-  }
-
   Term term;
 
   term.set_expr(icode::Expr::for_bool_expr(symTable.new_temp_variable()));
