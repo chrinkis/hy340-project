@@ -3,6 +3,7 @@
 #include <alpha/syntax/manager/nonterminal/block.h>
 #include <alpha/syntax/manager/nonterminal/breakstmt.h>
 #include <alpha/syntax/manager/nonterminal/continuestmt.h>
+#include <alpha/syntax/manager/nonterminal/ifstmt.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 
@@ -14,8 +15,11 @@ Stmt Stmt::from_expr_smclnTkn() {
   return stmt;
 }
 
-Stmt Stmt::from_ifstmt() {
+Stmt Stmt::from_ifstmt(const Ifstmt& ifstmt) {
   Stmt stmt;
+
+  stmt.set_breaklist(ifstmt.get_breaklist());
+  stmt.set_contlist(ifstmt.get_contlist());
 
   return stmt;
 }

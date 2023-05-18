@@ -157,7 +157,7 @@ PROGRAM     :   %empty       { print_derivation("PROGRAM", "empty"); }
 stmt        :   expr ";"     { $$ = nterm::Stmt::from_expr_smclnTkn();
                                print_derivation("stmt", "expr ;");
                              }
-            |   ifstmt       { $$ = nterm::Stmt::from_ifstmt();
+            |   ifstmt       { $$ = nterm::Stmt::from_ifstmt($1);
                                print_derivation("stmt", "ifstmt");
                              }
             |   whilestmt    { $$ = nterm::Stmt::from_whilestmt();
