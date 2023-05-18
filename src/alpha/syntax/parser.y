@@ -183,7 +183,7 @@ stmt        :   expr ";"     { $$ = nterm::Stmt::from_expr_smclnTkn();
                              }
             ;
 
-expr        :   assignexpr     { $$ = nterm::Expr::from_assignexpr();
+expr        :   assignexpr     { $$ = nterm::Expr::from_assignexpr($1);
                                  print_derivation("expr", "assignexpr");
                                }
             |   expr "+" expr  { $$ = nterm::Expr::from_expr_plusTkn_expr($1, $3);
