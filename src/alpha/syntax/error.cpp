@@ -113,7 +113,7 @@ static std::string to_string(Operator op) {
     case Operator::UNARY_MINUS:
       return "-";
     case Operator::NOT:
-      return "!";
+      return "not";
     case Operator::PLUS_PLUS_PRE:
       return "++ (pre)";
     case Operator::PLUS_PLUS_POST:
