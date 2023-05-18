@@ -5,22 +5,21 @@
 
 namespace alpha::syntax::manager::nonterminal {
 
-Callsuffix::Callsuffix() {}
-
-Callsuffix Callsuffix::operator=(const Callsuffix& other) {
-  return Callsuffix(other.id);
-}
-
-Callsuffix::Callsuffix(const terminal::Identifier id) : id(id) {}
-
 Callsuffix Callsuffix::from_normcall(const Normcall& normalcall) {
   Callsuffix callsuffix;
+
+  callsuffix.set_elist(normalcall.get_elist());
+  callsuffix.set_method(normalcall.is_method());
 
   return callsuffix;
 }
 
 Callsuffix Callsuffix::from_methodcall(const Methodcall& methodcall) {
-  Callsuffix callsuffix(methodcall.get_id());
+  Callsuffix callsuffix;
+
+  callsuffix.set_id(methodcall.get_id());
+  callsuffix.set_elist(methodcall.get_elist());
+  callsuffix.set_method(methodcall.is_method());
 
   return callsuffix;
 }

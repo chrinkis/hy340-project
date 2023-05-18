@@ -4,23 +4,16 @@
 
 namespace alpha::syntax::manager::nonterminal {
 
-Methodcall::Methodcall() {}
-
-Methodcall::Methodcall(const terminal::Identifier& id) : id(id) {}
-
 Methodcall Methodcall::from_doubleDotTkn_identifier_lParTkn_elist_rParTkn(
     const terminal::Identifier& id,
     const Elist& elist) {
-  Methodcall methodcall(id);
+  Methodcall methodcall;
 
+  methodcall.set_id(id);
   methodcall.set_elist(elist.get_icode_elist());
   methodcall.set_method(true);
 
   return methodcall;
-}
-
-Methodcall Methodcall::operator=(const Methodcall& other) {
-  return Methodcall(other.id);
 }
 
 Methodcall::ExprCollection Methodcall::get_elist() const {

@@ -27,13 +27,6 @@ class Callsuffix {
   static Callsuffix from_normcall(const Normcall& normcall);
   static Callsuffix from_methodcall(const Methodcall& methodcall);
 
- private:
-  Callsuffix(const terminal::Identifier id);
-
- public:
-  Callsuffix();
-  Callsuffix operator=(const Callsuffix& other);
-
  public:
   ExprCollection get_elist() const;
   void set_elist(const ExprCollection& elist);
