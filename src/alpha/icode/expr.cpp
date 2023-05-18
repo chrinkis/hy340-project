@@ -209,7 +209,7 @@ std::ostream& operator<<(std::ostream& os, const Expr& expr) {
       os << expr.get_bool_const();
       break;
     case Expr::Type::CONST_STRING:
-      os << expr.get_string_const();
+      os << "\"" + expr.get_string_const() + "\"";
       break;
     case Expr::Type::NIL:
       os << "nil";
