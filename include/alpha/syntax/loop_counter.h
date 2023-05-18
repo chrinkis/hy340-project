@@ -8,7 +8,7 @@ namespace alpha::syntax {
 
 class LoopCounter {
  public:
-  static LoopCounter get() {
+  static LoopCounter& get() {
     static LoopCounter loop_counter;
 
     return loop_counter;
