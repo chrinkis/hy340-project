@@ -1,6 +1,7 @@
 #pragma once
 
 #include <alpha/icode/expr.h>
+#include <alpha/icode/quad/quad.h>
 
 namespace alpha {
 namespace syntax {
@@ -13,7 +14,13 @@ class Primary;
 
 class Term {
  private:
+  using QuadLabel = icode::quad::Quad::Label;
+
+ private:
   icode::Expr expr;
+
+  QuadLabel true_list_head = 0;
+  QuadLabel false_list_head = 0;
 
  public:
   static Term from_lParTkn_expr_rParTkn(const Expr& expr);
@@ -35,6 +42,12 @@ class Term {
  public:
   icode::Expr get_expr() const;
   void set_expr(const icode::Expr& expr);
+
+  QuadLabel get_true_list_head() const;
+  void set_true_list_head(const QuadLabel& head);
+
+  QuadLabel get_false_list_head() const;
+  void set_false_list_head(const QuadLabel& head);
 };
 
 }  // namespace nonterminal

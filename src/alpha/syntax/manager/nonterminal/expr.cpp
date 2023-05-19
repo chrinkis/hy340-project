@@ -378,6 +378,8 @@ Expr Expr::from_term(const Term& term) {
   Expr expr;
 
   expr.set_expr(term.get_expr());
+  expr.set_true_list_head(term.get_true_list_head());
+  expr.set_false_list_head(term.get_false_list_head());
 
   return expr;
 }

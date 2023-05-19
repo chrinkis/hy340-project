@@ -43,9 +43,8 @@ Term Term::from_notTkn_expr(const Expr& expr) {
   Term term;
 
   if (expr.get_expr().get_type() != icode::Expr::Type::CONST_BOOL) {
-    term.set_expr(icode::Expr::for_bool_expr(symTable.new_temp_variable()));
-    quadTable.emit(Opcode::NOT, term.get_expr(), expr.get_expr());
-
+    term.set_true_list_head(expr.get_false_list_head());
+    term.set_false_list_head(expr.get_true_list_head());
   } else {
     bool result = !expr.get_expr().get_bool_const();
 
@@ -183,4 +182,20 @@ alpha::icode::Expr Term::get_expr() const {
 
 void Term::set_expr(const icode::Expr& expr) {
   this->expr = expr;
+}
+
+Term::QuadLabel Term::get_true_list_head() const {
+  return this->true_list_head;
+}
+
+void Term::set_true_list_head(const QuadLabel& head) {
+  this->true_list_head = head;
+}
+
+Term::QuadLabel Term::get_false_list_head() const {
+  return this->false_list_head;
+}
+
+void Term::set_false_list_head(const QuadLabel& head) {
+  this->false_list_head = head;
 }
