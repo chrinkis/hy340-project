@@ -24,6 +24,12 @@
 - Things that were not implemented: None
 - Error message could be more descriptive
 
+### Phase III
+
+- The project was implemented according to the project guidelines
+- Things that were not implemented:
+  1. Short circuit evaluation
+
 ## Build
 
 Requirements:
@@ -40,11 +46,14 @@ Target `scanner` of cmake
 
 Target `parser` of cmake
 
-Alternatively, if `bash` is installed:
-- Command: `bash ./.scripts/build/compile.sh`
-- Output: `build/demo/parser`
+> *Note that this demo uses `stdin` for input.*
+> If you want to use a file, you could use bash redirections.
 
-> *Note that parser uses `stdin` for input.*
+### icode
+
+Target `icode` of cmake
+
+> *Note that this demo uses `stdin` for input.*
 > If you want to use a file, you could use bash redirections.
 
 ### Tests
