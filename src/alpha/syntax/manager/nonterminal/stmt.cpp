@@ -1,17 +1,22 @@
 #include <alpha/syntax/manager/nonterminal/stmt.h>
 
+#include <alpha/icode/quad/table.h>
 #include <alpha/symbol/table_manager.h>
 #include <alpha/syntax/manager/nonterminal/block.h>
 #include <alpha/syntax/manager/nonterminal/breakstmt.h>
 #include <alpha/syntax/manager/nonterminal/continuestmt.h>
+#include <alpha/syntax/manager/nonterminal/expr.h>
 #include <alpha/syntax/manager/nonterminal/ifstmt.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 
 Stmt::Stmt() : breaklist(0), contlist(0) {}
 
-Stmt Stmt::from_expr_smclnTkn() {
+Stmt Stmt::from_expr_smclnTkn(const Expr& expr) {
   Stmt stmt;
+
+  quadTable.emit_if_bool_expr(expr.get_expr(), expr.get_true_list_head(),
+                              expr.get_false_list_head());
 
   symTable.reset_temp_variables();
 

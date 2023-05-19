@@ -9,13 +9,18 @@ using Opcode = alpha::icode::quad::Quad::Opcode;
 
 ForstmtPre ForstmtPre::from_forTkn_lParTkn_elist_smclnTkn_M_expr_smclnTkn(
     const ForstmtM& M,
-    const Expr& expr) {
+    const Expr& _expr) {
   ForstmtPre forstmt_pre;
 
   forstmt_pre.set_test(M.get_quad_address());
+
+  auto expr =
+      quadTable.emit_if_bool_expr(_expr.get_expr(), _expr.get_true_list_head(),
+                                  _expr.get_false_list_head());
+
   forstmt_pre.set_enter(quadTable.get_next_label());
 
-  quadTable.emit(Opcode::IF_EQ, emptyExpr, expr.get_expr(),
+  quadTable.emit(Opcode::IF_EQ, emptyExpr, expr,
                  icode::Expr::for_const_bool(true), 0);
 
   return forstmt_pre;

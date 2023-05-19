@@ -10,7 +10,9 @@ using Opcode = alpha::icode::quad::Quad::Opcode;
 WhilestmtCond WhilestmtCond::from_lParTkn_expr_rParTkn(const Expr& expr) {
   WhilestmtCond whilestmt_cond;
 
-  icode::Expr quad_expr = expr.get_expr();
+  icode::Expr quad_expr = quadTable.emit_if_bool_expr(
+      expr.get_expr(), expr.get_true_list_head(), expr.get_false_list_head());
+
   icode::Expr const_bool = icode::Expr::for_const_bool(true);
   Quad::Label label = quadTable.get_next_label() + 2;
   quadTable.emit(Opcode::IF_EQ, emptyExpr, quad_expr, const_bool, label);

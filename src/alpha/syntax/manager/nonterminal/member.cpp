@@ -40,7 +40,8 @@ Member Member::from_lvalue_lSqrBrackTkn_expr_rSqrtBrackTkn(const Lvalue& lvalue,
   Member member;
 
   icode::Expr symbol_expr = quadTable.emit_if_table_item(lvalue.get_expr());
-  icode::Expr index = expr.get_expr();
+  icode::Expr index = quadTable.emit_if_bool_expr(
+      expr.get_expr(), expr.get_true_list_head(), expr.get_false_list_head());
 
   member.set_expr(icode::Expr::for_table_item(symbol_expr, index));
 
@@ -63,7 +64,8 @@ Member Member::from_call_lSqrBrackTkn_expr_rSqrtBrackTkn(const Call& call,
   Member member;
 
   icode::Expr symbol_expr = quadTable.emit_if_table_item(call.get_expr());
-  icode::Expr index = expr.get_expr();
+  icode::Expr index = quadTable.emit_if_bool_expr(
+      expr.get_expr(), expr.get_true_list_head(), expr.get_false_list_head());
 
   member.set_expr(icode::Expr::for_table_item(symbol_expr, index));
 

@@ -23,15 +23,19 @@ Assignexpr Assignexpr::from_lvalue_assignTkn_expr(const Lvalue& lvalue,
   if (lvalue.get_expr().get_type() == icode::Expr::Type::TABLE_ITEM) {
     icode::Expr table = lvalue.get_expr();
     icode::Expr index = *lvalue.get_expr().get_index();
-    icode::Expr value = expr.get_expr();
+    icode::Expr value = quadTable.emit_if_bool_expr(
+        expr.get_expr(), expr.get_true_list_head(), expr.get_false_list_head());
+
     quadTable.emit(Opcode::TABLESETELEM, value, table, index);
 
     icode_expr = quadTable.emit_if_table_item(lvalue.get_expr());
     icode_expr = icode::Expr::for_assign_expr(icode_expr);
 
   } else {
-    icode::Expr icode_rvalue = expr.get_expr();
+    icode::Expr icode_rvalue = quadTable.emit_if_bool_expr(
+        expr.get_expr(), expr.get_true_list_head(), expr.get_false_list_head());
     icode::Expr icode_lvalue = lvalue.get_expr();
+
     quadTable.emit(Opcode::ASSIGN, icode_lvalue, icode_rvalue);
 
     auto temp_var = symTable.new_temp_variable();

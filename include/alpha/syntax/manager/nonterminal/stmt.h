@@ -11,6 +11,7 @@ class Breakstmt;
 class Continuestmt;
 class Block;
 class Ifstmt;
+class Expr;
 
 class Stmt {
  public:
@@ -24,7 +25,7 @@ class Stmt {
   Stmt();
 
  public:
-  static Stmt from_expr_smclnTkn();
+  static Stmt from_expr_smclnTkn(const Expr& expr);
   static Stmt from_ifstmt(const Ifstmt& ifstmt);
   static Stmt from_whilestmt();
   static Stmt from_forstmt();

@@ -15,6 +15,8 @@ Term Term::from_lParTkn_expr_rParTkn(const Expr& expr) {
   Term term;
 
   term.set_expr(expr.get_expr());
+  term.set_true_list_head(expr.get_true_list_head());
+  term.set_false_list_head(expr.get_false_list_head());
 
   return term;
 }
@@ -36,6 +38,9 @@ Term Term::from_minusTkn_expr(const Expr& expr) {
     term.set_expr(icode::Expr::for_const_num(result));
   }
 
+  term.set_true_list_head(expr.get_true_list_head());
+  term.set_false_list_head(expr.get_false_list_head());
+
   return term;
 }
 
@@ -45,11 +50,16 @@ Term Term::from_notTkn_expr(const Expr& expr) {
   if (expr.get_expr().get_type() != icode::Expr::Type::CONST_BOOL) {
     term.set_true_list_head(expr.get_false_list_head());
     term.set_false_list_head(expr.get_true_list_head());
+
+    term.set_expr(expr.get_expr());
   } else {
     bool result = !expr.get_expr().get_bool_const();
 
     term.set_expr(icode::Expr::for_const_bool(result));
   }
+
+  term.set_true_list_head(expr.get_true_list_head());
+  term.set_false_list_head(expr.get_false_list_head());
 
   return term;
 }

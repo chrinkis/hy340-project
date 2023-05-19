@@ -8,10 +8,14 @@ using namespace alpha::syntax::manager::nonterminal;
 using Quad = alpha::icode::quad::Quad;
 using Opcode = alpha::icode::quad::Quad::Opcode;
 
-IfstmtIf IfstmtIf::from_ifTkn_lParTkn_expr_rParTkn(const Expr& expr) {
+IfstmtIf IfstmtIf::from_ifTkn_lParTkn_expr_rParTkn(const Expr& _expr) {
   IfstmtIf ifstmt_if;
 
-  quadTable.emit(Opcode::IF_EQ, emptyExpr, expr.get_expr(),
+  auto expr =
+      quadTable.emit_if_bool_expr(_expr.get_expr(), _expr.get_true_list_head(),
+                                  _expr.get_false_list_head());
+
+  quadTable.emit(Opcode::IF_EQ, emptyExpr, expr,
                  icode::Expr::for_const_bool(true),
                  quadTable.get_next_label() + 2);
 

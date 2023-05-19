@@ -1,5 +1,6 @@
 #include <alpha/syntax/manager/nonterminal/elist.h>
 
+#include <alpha/icode/quad/table.h>
 #include <alpha/syntax/manager/nonterminal/elist_opt.h>
 #include <alpha/syntax/manager/nonterminal/expr.h>
 
@@ -11,11 +12,15 @@ Elist Elist::from_empty() {
   return elist;
 }
 
-Elist Elist::from_expr_elistOpt(const Expr& expr, const ElistOpt& elist_opt) {
+Elist Elist::from_expr_elistOpt(const Expr& _expr, const ElistOpt& elist_opt) {
   Elist elist;
 
+  auto expr =
+      quadTable.emit_if_bool_expr(_expr.get_expr(), _expr.get_true_list_head(),
+                                  _expr.get_false_list_head());
+
   Elist::ExprCollection icode_elist = elist_opt.get_icode_elist();
-  icode_elist.insert(icode_elist.begin(), expr.get_expr());
+  icode_elist.insert(icode_elist.begin(), expr);
 
   elist.set_icode_elist(icode_elist);
 
