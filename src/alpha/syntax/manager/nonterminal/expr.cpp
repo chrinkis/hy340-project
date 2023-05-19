@@ -167,18 +167,12 @@ Expr Expr::from_expr_greaterTkn_expr(const Expr& left, const Expr& right) {
   Expr expr;
 
   if (!HAVE_CONST_NUM_TYPE(left, right)) {
-    expr.set_expr(icode::Expr::for_bool_expr(symTable.new_temp_variable()));
+    expr.set_true_list_head(quadTable.get_next_label());
     quadTable.emit(Opcode::IF_GREATER, emptyExpr, left.get_expr(),
-                   right.get_expr(), quadTable.get_next_label() + 3);
+                   right.get_expr(), 0);
 
-    quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
-                   icode::Expr::for_const_bool(false));
-
-    quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr,
-                   quadTable.get_next_label() + 2);
-
-    quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
-                   icode::Expr::for_const_bool(true));
+    expr.set_false_list_head(quadTable.get_next_label());
+    quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr, 0);
 
   } else {
     bool result = left.get_expr().get_number_const() >
@@ -203,19 +197,12 @@ Expr Expr::from_expr_greaterEqTkn_expr(const Expr& left, const Expr& right) {
   Expr expr;
 
   if (!HAVE_CONST_NUM_TYPE(left, right)) {
-    expr.set_expr(icode::Expr::for_bool_expr(symTable.new_temp_variable()));
+    expr.set_true_list_head(quadTable.get_next_label());
     quadTable.emit(Opcode::IF_GREATEREQ, emptyExpr, left.get_expr(),
-                   right.get_expr(), quadTable.get_next_label() + 3);
+                   right.get_expr(), 0);
 
-    quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
-                   icode::Expr::for_const_bool(false));
-
-    quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr,
-                   quadTable.get_next_label() + 2);
-
-    quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
-                   icode::Expr::for_const_bool(true));
-
+    expr.set_false_list_head(quadTable.get_next_label());
+    quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr, 0);
   } else {
     bool result = left.get_expr().get_number_const() >=
                   right.get_expr().get_number_const();
@@ -238,19 +225,12 @@ Expr Expr::from_expr_lessTkn_expr(const Expr& left, const Expr& right) {
   Expr expr;
 
   if (!HAVE_CONST_NUM_TYPE(left, right)) {
-    expr.set_expr(icode::Expr::for_bool_expr(symTable.new_temp_variable()));
+    expr.set_true_list_head(quadTable.get_next_label());
     quadTable.emit(Opcode::IF_LESS, emptyExpr, left.get_expr(),
-                   right.get_expr(), quadTable.get_next_label() + 3);
+                   right.get_expr(), 0);
 
-    quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
-                   icode::Expr::for_const_bool(false));
-
-    quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr,
-                   quadTable.get_next_label() + 2);
-
-    quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
-                   icode::Expr::for_const_bool(true));
-
+    expr.set_false_list_head(quadTable.get_next_label());
+    quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr, 0);
   } else {
     bool result = left.get_expr().get_number_const() <
                   right.get_expr().get_number_const();
@@ -273,19 +253,12 @@ Expr Expr::from_expr_lessEqTkn_expr(const Expr& left, const Expr& right) {
   Expr expr;
 
   if (!HAVE_CONST_NUM_TYPE(left, right)) {
-    expr.set_expr(icode::Expr::for_bool_expr(symTable.new_temp_variable()));
+    expr.set_true_list_head(quadTable.get_next_label());
     quadTable.emit(Opcode::IF_LESSEQ, emptyExpr, left.get_expr(),
-                   right.get_expr(), quadTable.get_next_label() + 3);
+                   right.get_expr(), 0);
 
-    quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
-                   icode::Expr::for_const_bool(false));
-
-    quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr,
-                   quadTable.get_next_label() + 2);
-
-    quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
-                   icode::Expr::for_const_bool(true));
-
+    expr.set_false_list_head(quadTable.get_next_label());
+    quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr, 0);
   } else {
     bool result = left.get_expr().get_number_const() <=
                   right.get_expr().get_number_const();
@@ -299,18 +272,12 @@ Expr Expr::from_expr_lessEqTkn_expr(const Expr& left, const Expr& right) {
 Expr Expr::from_expr_equalsTkn_expr(const Expr& left, const Expr& right) {
   Expr expr;
 
-  expr.set_expr(icode::Expr::for_bool_expr(symTable.new_temp_variable()));
+  expr.set_true_list_head(quadTable.get_next_label());
   quadTable.emit(Opcode::IF_EQ, emptyExpr, left.get_expr(), right.get_expr(),
-                 quadTable.get_next_label() + 3);
+                 0);
 
-  quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
-                 icode::Expr::for_const_bool(false));
-
-  quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr,
-                 quadTable.get_next_label() + 2);
-
-  quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
-                 icode::Expr::for_const_bool(true));
+  expr.set_false_list_head(quadTable.get_next_label());
+  quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr, 0);
 
   return expr;
 }
@@ -318,18 +285,12 @@ Expr Expr::from_expr_equalsTkn_expr(const Expr& left, const Expr& right) {
 Expr Expr::from_expr_notEqualsTkn_expr(const Expr& left, const Expr& right) {
   Expr expr;
 
-  expr.set_expr(icode::Expr::for_bool_expr(symTable.new_temp_variable()));
+  expr.set_true_list_head(quadTable.get_next_label());
   quadTable.emit(Opcode::IF_NOTEQ, emptyExpr, left.get_expr(), right.get_expr(),
-                 quadTable.get_next_label() + 3);
+                 0);
 
-  quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
-                 icode::Expr::for_const_bool(false));
-
-  quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr,
-                 quadTable.get_next_label() + 2);
-
-  quadTable.emit(Opcode::ASSIGN, expr.get_expr(),
-                 icode::Expr::for_const_bool(true));
+  expr.set_false_list_head(quadTable.get_next_label());
+  quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr, 0);
 
   return expr;
 }
