@@ -6,6 +6,7 @@
 #include <alpha/syntax/error.h>
 #include <alpha/syntax/parser.h>
 
+#include <fstream>
 #include <iostream>
 
 #define HAS_SYNTAX_ERROR (alpha::syntax::error::found)
@@ -25,7 +26,9 @@ int main() {
   std::cout << symTable << std::endl;
 
   if (!HAS_LEX_ERROR && !HAS_SYNTAX_ERROR) {
-    std::cout << quadTable << std::endl;
+    std::ofstream s_quads_txt("quads.txt");
+    s_quads_txt << quadTable << std::endl;
+    s_quads_txt.close();
   }
 
   return 0;
