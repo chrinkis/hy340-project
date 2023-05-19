@@ -12,11 +12,9 @@ namespace nonterminal {
 
 class Funcprefix {
  public:
-  using Quad = icode::quad::Quad;
   using Symbol = symbol::Symbol;
 
  private:
-  Quad::Label quad_label;
   Symbol::SharedPtr symbol;
 
  public:
@@ -26,9 +24,6 @@ class Funcprefix {
       const terminal::Identifier& identifier);
 
  public:
-  Quad::Label get_quad_label() const;
-  void set_quad_label(const Quad::Label& quad_label);
-
   Symbol::SharedPtr get_symbol() const;
   void set_symbol(const Symbol::SharedPtr& symbol);
 };

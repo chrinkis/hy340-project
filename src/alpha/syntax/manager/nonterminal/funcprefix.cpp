@@ -14,7 +14,6 @@ Funcprefix Funcprefix::from_functionTkn(const terminal::Function& function) {
                                         quadTable.get_next_label());
 
   funcprefix.set_symbol(symbol);
-  funcprefix.set_quad_label(quadTable.get_next_label());
   quadTable.emit(Opcode::FUNCSTART, icode::Expr::for_program_func(symbol));
 
   return funcprefix;
@@ -40,18 +39,9 @@ Funcprefix Funcprefix::from_functionTkn_identifierTkn(
     funcprefix.set_symbol(symbol);
   }
 
-  funcprefix.set_quad_label(quadTable.get_next_label());
   quadTable.emit(Opcode::FUNCSTART, icode::Expr::for_program_func(symbol));
 
   return funcprefix;
-}
-
-Funcprefix::Quad::Label Funcprefix::get_quad_label() const {
-  return this->quad_label;
-}
-
-void Funcprefix::set_quad_label(const Quad::Label& quad_label) {
-  this->quad_label = quad_label;
 }
 
 Funcprefix::Symbol::SharedPtr Funcprefix::get_symbol() const {
