@@ -4,6 +4,7 @@
 
 #include <cassert>
 #include <iomanip>
+#include <ranges>
 
 namespace alpha::icode::quad {
 
@@ -120,7 +121,7 @@ std::ostream& operator<<(std::ostream& os, const Table& qt) {
 
   os << std::endl;
 
-  for (auto quad : qt.table) {
+  for (auto quad : qt.table | std::views::drop(1)) {
     os << quad << std::endl;
   }
 
