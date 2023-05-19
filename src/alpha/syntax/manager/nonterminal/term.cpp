@@ -26,7 +26,7 @@ Term Term::from_minusTkn_expr(const Expr& expr) {
 
   Term term;
 
-  if (!expr.get_expr().has_number_const()) {
+  if (expr.get_expr().get_type() != icode::Expr::Type::CONST_NUM) {
     term.set_expr(icode::Expr::for_arithm_expr(symTable.new_temp_variable()));
     quadTable.emit(Opcode::UMINUS, term.get_expr(), expr.get_expr());
 
@@ -42,7 +42,7 @@ Term Term::from_minusTkn_expr(const Expr& expr) {
 Term Term::from_notTkn_expr(const Expr& expr) {
   Term term;
 
-  if (!expr.get_expr().has_bool_const()) {
+  if (expr.get_expr().get_type() != icode::Expr::Type::CONST_BOOL) {
     term.set_expr(icode::Expr::for_bool_expr(symTable.new_temp_variable()));
     quadTable.emit(Opcode::NOT, term.get_expr(), expr.get_expr());
 
