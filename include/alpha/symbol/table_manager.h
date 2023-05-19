@@ -76,10 +76,12 @@ class TableManager {
 
   bool can_add_function(const std::string& name) const;
 
-  Symbol::SharedPtr start_function(const Symbol::Location& location);
+  Symbol::SharedPtr start_function(const Symbol::Location& location,
+                                   const Function::Iaddress& iaddress);
 
   Symbol::SharedPtr start_function(const std::string& name,
-                                   const Symbol::Location& location);
+                                   const Symbol::Location& location,
+                                   const Function::Iaddress& iaddress);
 
   void end_function();
 

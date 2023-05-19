@@ -203,21 +203,25 @@ bool TableManager::can_add_function(const std::string& name) const {
 }
 
 Symbol::SharedPtr TableManager::start_function(
-    const Symbol::Location& location) {
+    const Symbol::Location& location,
+    const Function::Iaddress& iaddress) {
   static unsigned int counter = 0;
 
-  return this->start_function("$fn_" + std::to_string(counter++), location);
+  return this->start_function("$fn_" + std::to_string(counter++), location,
+                              iaddress);
 }
 
 Symbol::SharedPtr TableManager::start_function(
     const std::string& name,
-    const Symbol::Location& location) {
+    const Symbol::Location& location,
+    const Function::Iaddress& iaddress) {
   assert(this->can_add_function(name));
 
   using Type = Symbol::Type;
 
   Function function =
       FUNCTION(name, this->current_scope, location, Type::USER_FUNCTION);
+  function.set_iaddress(iaddress);
 
   Symbol::SharedPtr symbol = this->table.insert(function);
 

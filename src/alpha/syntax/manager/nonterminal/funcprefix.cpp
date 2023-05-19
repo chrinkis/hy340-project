@@ -10,7 +10,8 @@ using Opcode = alpha::icode::quad::Quad::Opcode;
 Funcprefix Funcprefix::from_functionTkn(const terminal::Function& function) {
   Funcprefix funcprefix;
 
-  auto symbol = symTable.start_function(function.get_location());
+  auto symbol = symTable.start_function(function.get_location(),
+                                        quadTable.get_next_label());
 
   funcprefix.set_symbol(symbol);
   funcprefix.set_quad_label(quadTable.get_next_label());
@@ -28,11 +29,13 @@ Funcprefix Funcprefix::from_functionTkn_identifierTkn(
   if (!symTable.can_add_function(id.get_name())) {
     error::invalid_name_for_func_definition(id.get_name(), id.get_location());
 
-    symbol = symTable.start_function(id.get_location());
+    symbol =
+        symTable.start_function(id.get_location(), quadTable.get_next_label());
 
     funcprefix.set_symbol(symbol);
   } else {
-    symbol = symTable.start_function(id.get_name(), id.get_location());
+    symbol = symTable.start_function(id.get_name(), id.get_location(),
+                                     quadTable.get_next_label());
 
     funcprefix.set_symbol(symbol);
   }
