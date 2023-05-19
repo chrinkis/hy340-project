@@ -6,13 +6,13 @@
 #include <alpha/syntax/manager/nonterminal/assignexpr.h>
 #include <alpha/syntax/manager/nonterminal/term.h>
 
-#define HAVE_CONST_NUM_TYPE(expr1, expr2)                          \
-  (expr1.get_expr().get_type() == icode::Expr::Type::CONST_NUM) && \
-      (expr2.get_expr().get_type() == icode::Expr::Type::CONST_NUM)
+#define HAVE_CONST_NUM_TYPE(expr1, expr2)                           \
+  ((expr1.get_expr().get_type() == icode::Expr::Type::CONST_NUM) && \
+   (expr2.get_expr().get_type() == icode::Expr::Type::CONST_NUM))
 
-#define HAVE_CONST_BOOL_TYPE(expr1, expr2)                          \
-  (expr1.get_expr().get_type() == icode::Expr::Type::CONST_BOOL) && \
-      (expr2.get_expr().get_type() == icode::Expr::Type::CONST_BOOL)
+#define HAVE_CONST_BOOL_TYPE(expr1, expr2)                           \
+  ((expr1.get_expr().get_type() == icode::Expr::Type::CONST_BOOL) && \
+   (expr2.get_expr().get_type() == icode::Expr::Type::CONST_BOOL))
 
 using namespace alpha::syntax::manager::nonterminal;
 using Opcode = alpha::icode::quad::Quad::Opcode;
