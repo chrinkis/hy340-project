@@ -8,12 +8,16 @@
 
 namespace alpha::lex::error {
 
+bool found = false;  // TODO find better solution
+
 void print(const std::string& message,
            const alpha::syntax::Parser::location_type& location) {
   std::cerr << ERROR_COLOR << "lexicographic error, " << message << " at ("
             << "line: " << location.begin.line
             << ", column: " << location.begin.column << ")" << std::endl
             << DEFAULT_COLOR;
+
+  found = true;
 }
 
 }  // namespace alpha::lex::error
