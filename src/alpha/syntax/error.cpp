@@ -10,6 +10,8 @@
 
 namespace alpha::syntax::error {
 
+bool found = false;  // TODO find better solution
+
 static std::string to_string(Operator op);
 
 void print(const std::string& message,
@@ -18,6 +20,8 @@ void print(const std::string& message,
             << "line: " << location.begin.line
             << ", column: " << location.begin.column << ")" << std::endl
             << DEFAULT_COLOR;
+
+  found = true;
 }
 
 static void print_semantic(
@@ -27,11 +31,15 @@ static void print_semantic(
             << "line: " << location.begin.line
             << ", column: " << location.begin.column << ")" << std::endl
             << DEFAULT_COLOR;
+
+  found = true;
 }
 
 static void print_semantic(const std::string& message) {
   std::cerr << ERROR_COLOR << "semantic error, " << message << std::endl
             << DEFAULT_COLOR;
+
+  found = true;
 }
 
 void undefined_refference_to_global_var(

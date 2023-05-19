@@ -8,6 +8,8 @@
 
 namespace alpha::syntax::error {
 
+extern bool found;  // TODO find better solution
+
 enum class Operator {
   ASSIGN,
   PLUS,
