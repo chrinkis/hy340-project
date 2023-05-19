@@ -67,3 +67,11 @@ Function::LocalCounter Function::get_total_locals() const {
 void Function::set_total_locals(const LocalCounter& total_locals) {
   this->total_locals = total_locals;
 }
+
+Function::Iaddress Function::get_iaddress() {
+  return this->iaddress;
+}
+
+void Function::set_iaddress(const Iaddress& iaddress) {
+  this->iaddress = iaddress;
+}
