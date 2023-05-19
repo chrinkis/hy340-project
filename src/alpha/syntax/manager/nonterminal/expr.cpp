@@ -340,10 +340,10 @@ Expr Expr::from_expr_andTkn_exprM_expr(const Expr& left,
   Expr expr;
 
   if (!HAVE_CONST_BOOL_TYPE(left, right)) {
-    expr.set_expr(icode::Expr::for_bool_expr(symTable.new_temp_variable()));
-    quadTable.emit(Opcode::AND, expr.get_expr(), left.get_expr(),
-                   right.get_expr());
-
+    quadTable.patch_list(left.true_list_head, expr_m.get_quad_label());
+    expr.set_true_list_head(right.get_true_list_head());
+    expr.set_false_list_head(quadTable.merge_lists(
+        left.get_false_list_head(), right.get_false_list_head()));
   } else {
     bool result =
         left.get_expr().get_bool_const() && right.get_expr().get_bool_const();
@@ -360,10 +360,10 @@ Expr Expr::from_expr_orTkn_exprM_expr(const Expr& left,
   Expr expr;
 
   if (!HAVE_CONST_BOOL_TYPE(left, right)) {
-    expr.set_expr(icode::Expr::for_bool_expr(symTable.new_temp_variable()));
-    quadTable.emit(Opcode::OR, expr.get_expr(), left.get_expr(),
-                   right.get_expr());
-
+    quadTable.patch_list(left.false_list_head, expr_m.get_quad_label());
+    expr.set_true_list_head(quadTable.merge_lists(left.get_true_list_head(),
+                                                  right.get_true_list_head()));
+    expr.set_false_list_head(right.false_list_head);
   } else {
     bool result =
         left.get_expr().get_bool_const() || right.get_expr().get_bool_const();
