@@ -13,6 +13,7 @@
 #include <alpha/syntax/manager/nonterminal/elist.h>
 #include <alpha/syntax/manager/nonterminal/elist_opt.h>
 #include <alpha/syntax/manager/nonterminal/expr.h>
+#include <alpha/syntax/manager/nonterminal/expr_m.h>
 #include <alpha/syntax/manager/nonterminal/forstmt.h>
 #include <alpha/syntax/manager/nonterminal/forstmt_m.h>
 #include <alpha/syntax/manager/nonterminal/forstmt_n.h>

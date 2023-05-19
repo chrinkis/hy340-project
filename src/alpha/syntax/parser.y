@@ -110,6 +110,7 @@
 %type <nterm::Elist>            elist
 %type <nterm::ElistOpt>         elist_opt
 %type <nterm::Expr>             expr
+%type <nterm::ExprM>            expr_m
 %type <nterm::ForstmtM>         forstmt_m
 %type <nterm::ForstmtN>         forstmt_n
 %type <nterm::ForstmtPre>       forstmt_pre
@@ -186,51 +187,56 @@ stmt        :   expr ";"     { $$ = nterm::Stmt::from_expr_smclnTkn();
                              }
             ;
 
-expr        :   assignexpr     { $$ = nterm::Expr::from_assignexpr($1);
-                                 print_derivation("expr", "assignexpr");
-                               }
-            |   expr "+" expr  { $$ = nterm::Expr::from_expr_plusTkn_expr($1, $3);
-                                 print_derivation("expr", "expr + expr");
-                               }
-            |   expr "-" expr  { $$ = nterm::Expr::from_expr_minusTkn_expr($1, $3);
-                                 print_derivation("expr", "expr - expr");
-                               }
-            |   expr "*" expr  { $$ = nterm::Expr::from_expr_starTkn_expr($1, $3);
-                                 print_derivation("expr", "expr * expr");
-                               }
-            |   expr "/" expr  { $$ = nterm::Expr::from_expr_divTkn_expr($1, $3);
-                                 print_derivation("expr", "expr / expr");
-                               }
-            |   expr "%" expr  { $$ = nterm::Expr::from_expr_modTkn_expr($1, $3);
-                                 print_derivation("expr", "expr % expr");
-                               }
-            |   expr ">" expr  { $$ = nterm::Expr::from_expr_greaterTkn_expr($1, $3);
-                                 print_derivation("expr", "expr > expr");
-                               }
-            |   expr ">=" expr { $$ = nterm::Expr::from_expr_greaterEqTkn_expr($1, $3);
-                                 print_derivation("expr", "expr >= expr");
-                               }
-            |   expr "<" expr  { $$ = nterm::Expr::from_expr_lessTkn_expr($1, $3);
-                                 print_derivation("expr", "expr < expr");
-                               }
-            |   expr "<=" expr { $$ = nterm::Expr::from_expr_lessEqTkn_expr($1, $3);
-                                 print_derivation("expr", "expr <= expr");
-                               }
-            |   expr "==" expr { $$ = nterm::Expr::from_expr_equalsTkn_expr($1, $3);
-                                 print_derivation("expr", "expr == expr");
-                               }
-            |   expr "!=" expr { $$ = nterm::Expr::from_expr_notEqualsTkn_expr($1, $3);
-                                 print_derivation("expr", "expr != expr");
-                               }
-            |   expr AND expr  { $$ = nterm::Expr::from_expr_andTkn_expr($1, $3);
-                                 print_derivation("expr", "expr AND expr");
-                               }
-            |   expr OR expr   { $$ = nterm::Expr::from_expr_orTkn_expr($1, $3);
-                                 print_derivation("expr", "expr OR expr");
-                               }
-            |   term           { $$ = nterm::Expr::from_term($1);
-                                 print_derivation("expr", "term");
-                               }
+expr_m      :   %empty { $$ = nterm::ExprM::from_empty();
+                         print_derivation("expr_m", "empty");
+                       }
+            ;
+
+expr        :   assignexpr           { $$ = nterm::Expr::from_assignexpr($1);
+                                       print_derivation("expr", "assignexpr");
+                                     }
+            |   expr "+" expr        { $$ = nterm::Expr::from_expr_plusTkn_expr($1, $3);
+                                       print_derivation("expr", "expr + expr");
+                                     }
+            |   expr "-" expr        { $$ = nterm::Expr::from_expr_minusTkn_expr($1, $3);
+                                       print_derivation("expr", "expr - expr");
+                                     }
+            |   expr "*" expr        { $$ = nterm::Expr::from_expr_starTkn_expr($1, $3);
+                                       print_derivation("expr", "expr * expr");
+                                     }
+            |   expr "/" expr        { $$ = nterm::Expr::from_expr_divTkn_expr($1, $3);
+                                       print_derivation("expr", "expr / expr");
+                                     }
+            |   expr "%" expr        { $$ = nterm::Expr::from_expr_modTkn_expr($1, $3);
+                                       print_derivation("expr", "expr % expr");
+                                     }
+            |   expr ">" expr        { $$ = nterm::Expr::from_expr_greaterTkn_expr($1, $3);
+                                       print_derivation("expr", "expr > expr");
+                                     }
+            |   expr ">=" expr       { $$ = nterm::Expr::from_expr_greaterEqTkn_expr($1, $3);
+                                       print_derivation("expr", "expr >= expr");
+                                     }
+            |   expr "<" expr        { $$ = nterm::Expr::from_expr_lessTkn_expr($1, $3);
+                                       print_derivation("expr", "expr < expr");
+                                     }
+            |   expr "<=" expr       { $$ = nterm::Expr::from_expr_lessEqTkn_expr($1, $3);
+                                       print_derivation("expr", "expr <= expr");
+                                     }
+            |   expr "==" expr       { $$ = nterm::Expr::from_expr_equalsTkn_expr($1, $3);
+                                       print_derivation("expr", "expr == expr");
+                                     }
+            |   expr "!=" expr       { $$ = nterm::Expr::from_expr_notEqualsTkn_expr($1, $3);
+                                       print_derivation("expr", "expr != expr");
+                                     }
+            |   expr AND expr_m expr { $$ = nterm::Expr::from_expr_andTkn_exprM_expr($1, $3, $4);
+                                       print_derivation("expr", "expr AND expr_m expr");
+                                     }
+            |   expr OR expr_m expr  { $$ = nterm::Expr::from_expr_orTkn_exprM_expr($1, $3, $4);
+                                       print_derivation("expr", "expr OR expr_m expr");
+                                     }
+            |   term                 { $$ = nterm::Expr::from_term($1);
+                                       print_derivation("expr", "term");
+                                     }
             ;
 
 term        :   "(" expr ")"          { $$ = nterm::Term::from_lParTkn_expr_rParTkn($2);

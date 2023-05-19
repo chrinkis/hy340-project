@@ -48,6 +48,7 @@ add_library(flex_and_bison
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/elist.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/elist_opt.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/expr.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/expr_m.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/forstmt.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/forstmt_m.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/forstmt_n.cpp

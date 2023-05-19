@@ -334,7 +334,9 @@ Expr Expr::from_expr_notEqualsTkn_expr(const Expr& left, const Expr& right) {
   return expr;
 }
 
-Expr Expr::from_expr_andTkn_expr(const Expr& left, const Expr& right) {
+Expr Expr::from_expr_andTkn_exprM_expr(const Expr& left,
+                                       const ExprM& expr_m,
+                                       const Expr& right) {
   Expr expr;
 
   if (!HAVE_CONST_BOOL_TYPE(left, right)) {
@@ -352,7 +354,9 @@ Expr Expr::from_expr_andTkn_expr(const Expr& left, const Expr& right) {
   return expr;
 }
 
-Expr Expr::from_expr_orTkn_expr(const Expr& left, const Expr& right) {
+Expr Expr::from_expr_orTkn_exprM_expr(const Expr& left,
+                                      const ExprM& expr_m,
+                                      const Expr& right) {
   Expr expr;
 
   if (!HAVE_CONST_BOOL_TYPE(left, right)) {

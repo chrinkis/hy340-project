@@ -9,6 +9,7 @@ namespace manager {
 namespace nonterminal {
 
 class Expr;
+class ExprM;
 class Term;
 class Assignexpr;
 
@@ -47,9 +48,13 @@ class Expr {
 
   static Expr from_expr_notEqualsTkn_expr(const Expr& left, const Expr& right);
 
-  static Expr from_expr_andTkn_expr(const Expr& left, const Expr& right);
+  static Expr from_expr_andTkn_exprM_expr(const Expr& left,
+                                          const ExprM& expr_m,
+                                          const Expr& right);
 
-  static Expr from_expr_orTkn_expr(const Expr& left, const Expr& right);
+  static Expr from_expr_orTkn_exprM_expr(const Expr& left,
+                                         const ExprM& expr_m,
+                                         const Expr& right);
 
   static Expr from_term(const Term& term);
 
