@@ -297,14 +297,6 @@ Expr Expr::from_expr_lessEqTkn_expr(const Expr& left, const Expr& right) {
 }
 
 Expr Expr::from_expr_equalsTkn_expr(const Expr& left, const Expr& right) {
-  if (!error::is_arithmetic(left.get_expr())) {
-    error::illegal_arithm_expr(error::Operator::EQUAL, left.get_expr());
-  }
-
-  if (!error::is_arithmetic(right.get_expr())) {
-    error::illegal_arithm_expr(error::Operator::EQUAL, right.get_expr());
-  }
-
   Expr expr;
 
   expr.set_expr(icode::Expr::for_bool_expr(symTable.new_temp_variable()));
@@ -324,14 +316,6 @@ Expr Expr::from_expr_equalsTkn_expr(const Expr& left, const Expr& right) {
 }
 
 Expr Expr::from_expr_notEqualsTkn_expr(const Expr& left, const Expr& right) {
-  if (!error::is_arithmetic(left.get_expr())) {
-    error::illegal_arithm_expr(error::Operator::NOT_EQUAL, left.get_expr());
-  }
-
-  if (!error::is_arithmetic(right.get_expr())) {
-    error::illegal_arithm_expr(error::Operator::NOT_EQUAL, right.get_expr());
-  }
-
   Expr expr;
 
   expr.set_expr(icode::Expr::for_bool_expr(symTable.new_temp_variable()));
