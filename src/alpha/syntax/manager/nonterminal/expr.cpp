@@ -385,3 +385,19 @@ alpha::icode::Expr Expr::get_expr() const {
 void Expr::set_expr(const icode::Expr& expr) {
   this->expr = expr;
 }
+
+Expr::QuadLabel Expr::get_true_list_head() const {
+  return this->true_list_head;
+}
+
+void Expr::set_true_list_head(const QuadLabel& head) {
+  this->true_list_head = head;
+}
+
+Expr::QuadLabel Expr::get_false_list_head() const {
+  return this->false_list_head;
+}
+
+void Expr::set_false_list_head(const QuadLabel& head) {
+  this->false_list_head = head;
+}
