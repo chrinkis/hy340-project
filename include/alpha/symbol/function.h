@@ -13,6 +13,7 @@ class Function : public Symbol {
  public:
   using SharedPtr = std::shared_ptr<Function>;
   using LocalCounter = unsigned;
+  using Iaddress = unsigned;
 
  private:
   const std::string name;
@@ -22,6 +23,7 @@ class Function : public Symbol {
   std::vector<Symbol::SharedPtr> list_of_args;
   const Offset offset;
   const ScopeSpace scope_space;
+  Iaddress iaddress = 0;
 
   LocalCounter total_locals;
 
@@ -53,6 +55,10 @@ class Function : public Symbol {
   LocalCounter get_total_locals() const;
 
   void set_total_locals(const LocalCounter& total_locals);
+
+  Iaddress get_iaddress();
+
+  void set_iaddress(const Iaddress& iaddress);
 };
 
 }  // namespace symbol
