@@ -52,6 +52,26 @@ icode::Expr Table::emit_if_table_item(const icode::Expr& expr) {
   return result;
 }
 
+icode::Expr Table::emit_if_bool_expr(const icode::Expr& expr,
+                                     Quad::Label true_list_head,
+                                     Quad::Label false_list_head) {
+  if (expr.get_type() != icode::Expr::Type::BOOL_EXPR) {
+    return expr;
+  }
+  auto t0 = icode::Expr::for_var(symTable.new_temp_variable());
+
+  this->patch_list(true_list_head, quadTable.get_next_label());
+  this->emit(Quad::Opcode::ASSIGN, t0, icode::Expr::for_const_bool(true));
+
+  this->emit(Quad::Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr,
+             quadTable.get_next_label() + 2);
+
+  this->patch_list(false_list_head, quadTable.get_next_label());
+  this->emit(Quad::Opcode::ASSIGN, t0, icode::Expr::for_const_bool(false));
+
+  return t0;
+}
+
 Quad::Label Table::get_next_label() const {
   return this->table.size();
 }

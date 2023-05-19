@@ -55,6 +55,10 @@ class Table {
 
   icode::Expr emit_if_table_item(const icode::Expr& expr);
 
+  icode::Expr emit_if_bool_expr(const icode::Expr& expr,
+                                Quad::Label true_list_head,
+                                Quad::Label false_list_head);
+
   Quad::Label get_next_label() const;
 
   void patch_label(const Quad::Line& line, const Quad::Label& label);
