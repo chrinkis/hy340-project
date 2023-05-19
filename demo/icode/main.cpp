@@ -4,6 +4,7 @@
 #include <alpha/symbol/table_manager.h>
 #include <alpha/syntax/parser.h>
 
+#include <fstream>
 #include <iostream>
 
 using Scanner = alpha::lex::Scanner;
@@ -18,7 +19,10 @@ int main() {
   parser.parse();
 
   std::cout << symTable << std::endl;
-  std::cout << quadTable << std::endl;
+
+  std::ofstream s_quads_txt("quads.txt");
+  s_quads_txt << quadTable << std::endl;
+  s_quads_txt.close();
 
   return 0;
 }
