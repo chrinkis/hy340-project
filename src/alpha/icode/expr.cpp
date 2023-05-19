@@ -92,11 +92,10 @@ Expr Expr::for_arithm_expr(const Symbol::SharedPtr& symbol) {
   return expr;
 }
 
-Expr Expr::for_bool_expr(const Symbol::SharedPtr& symbol) {
+Expr Expr::for_bool_expr() {
   Expr expr;
 
   expr.type = Type::BOOL_EXPR;
-  expr.symbol = symbol;
 
   return expr;
 }
@@ -197,7 +196,6 @@ std::ostream& operator<<(std::ostream& os, const Expr& expr) {
     case Expr::Type::PROGRAM_FUNC:
     case Expr::Type::LIBRARY_FUNC:
     case Expr::Type::ARITHM_EXPR:
-    case Expr::Type::BOOL_EXPR:
     case Expr::Type::ASSIGN_EXPR:
     case Expr::Type::NEW_TABLE:
       os << expr.get_symbol()->get_name();
@@ -214,6 +212,7 @@ std::ostream& operator<<(std::ostream& os, const Expr& expr) {
     case Expr::Type::NIL:
       os << "nil";
       break;
+    case Expr::Type::BOOL_EXPR:  // FIXME move to assert(0)
     case Expr::Type::_NO_TYPE:
       break;
     default:

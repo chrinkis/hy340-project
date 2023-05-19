@@ -174,6 +174,7 @@ Expr Expr::from_expr_greaterTkn_expr(const Expr& left, const Expr& right) {
     expr.set_false_list_head(quadTable.get_next_label());
     quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr, 0);
 
+    expr.set_expr(icode::Expr::for_bool_expr());
   } else {
     bool result = left.get_expr().get_number_const() >
                   right.get_expr().get_number_const();
@@ -203,6 +204,8 @@ Expr Expr::from_expr_greaterEqTkn_expr(const Expr& left, const Expr& right) {
 
     expr.set_false_list_head(quadTable.get_next_label());
     quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr, 0);
+
+    expr.set_expr(icode::Expr::for_bool_expr());
   } else {
     bool result = left.get_expr().get_number_const() >=
                   right.get_expr().get_number_const();
@@ -231,6 +234,8 @@ Expr Expr::from_expr_lessTkn_expr(const Expr& left, const Expr& right) {
 
     expr.set_false_list_head(quadTable.get_next_label());
     quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr, 0);
+
+    expr.set_expr(icode::Expr::for_bool_expr());
   } else {
     bool result = left.get_expr().get_number_const() <
                   right.get_expr().get_number_const();
@@ -259,6 +264,8 @@ Expr Expr::from_expr_lessEqTkn_expr(const Expr& left, const Expr& right) {
 
     expr.set_false_list_head(quadTable.get_next_label());
     quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr, 0);
+
+    expr.set_expr(icode::Expr::for_bool_expr());
   } else {
     bool result = left.get_expr().get_number_const() <=
                   right.get_expr().get_number_const();
@@ -279,6 +286,8 @@ Expr Expr::from_expr_equalsTkn_expr(const Expr& left, const Expr& right) {
   expr.set_false_list_head(quadTable.get_next_label());
   quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr, 0);
 
+  expr.set_expr(icode::Expr::for_bool_expr());
+
   return expr;
 }
 
@@ -291,6 +300,8 @@ Expr Expr::from_expr_notEqualsTkn_expr(const Expr& left, const Expr& right) {
 
   expr.set_false_list_head(quadTable.get_next_label());
   quadTable.emit(Opcode::JUMP, emptyExpr, emptyExpr, emptyExpr, 0);
+
+  expr.set_expr(icode::Expr::for_bool_expr());
 
   return expr;
 }
@@ -305,6 +316,8 @@ Expr Expr::from_expr_andTkn_exprM_expr(const Expr& left,
     expr.set_true_list_head(right.get_true_list_head());
     expr.set_false_list_head(quadTable.merge_lists(
         left.get_false_list_head(), right.get_false_list_head()));
+
+    expr.set_expr(icode::Expr::for_bool_expr());
   } else {
     bool result =
         left.get_expr().get_bool_const() && right.get_expr().get_bool_const();
@@ -331,6 +344,8 @@ Expr Expr::from_expr_orTkn_exprM_expr(const Expr& left,
 
     expr.set_expr(icode::Expr::for_const_bool(result));
   }
+
+  expr.set_expr(icode::Expr::for_bool_expr());
 
   return expr;
 }
