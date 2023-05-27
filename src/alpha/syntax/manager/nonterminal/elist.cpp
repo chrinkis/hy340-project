@@ -15,7 +15,7 @@ Elist Elist::from_expr_elistOpt(const Expr& expr, const ElistOpt& elist_opt) {
   Elist elist;
 
   Elist::ExprCollection icode_elist = elist_opt.get_icode_elist();
-  icode_elist.insert(icode_elist.begin(), expr.get_expr());
+  icode_elist.push_back(expr.get_expr());
 
   elist.set_icode_elist(icode_elist);
 
