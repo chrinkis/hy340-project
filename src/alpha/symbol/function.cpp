@@ -3,6 +3,8 @@
 #include <alpha/symbol/symbol.h>
 
 #include <cassert>
+#include <iomanip>
+#include <sstream>
 
 using namespace alpha::symbol;
 
@@ -44,6 +46,22 @@ Symbol::Type Function::get_type() const {
 
 Function* Function::clone() const {
   return new Function(*this);
+}
+
+std::string Function::to_string() const {
+  auto ident = [](int w = 16) { return std::setw(w); };
+
+  std::stringstream os;
+
+  os << Symbol::to_string() << std::left;
+
+  os << ident() << "locals: " + std::to_string(this->get_total_locals());
+
+  os << ident() << "args: " + std::to_string(this->list_of_args.size());
+
+  os << ident() << "iaddr: " + std::to_string(this->get_iaddress());
+
+  return os.str();
 }
 
 void Function::add_arg(const Symbol::SharedPtr& arg) {
