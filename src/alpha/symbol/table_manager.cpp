@@ -17,9 +17,8 @@
            this->scope_space_manager.get_current_scope_offset(), \
            this->scope_space_manager.get_current_scope_space())
 
-#define FUNCTION(name, scope, location, type)                    \
-  Function(name, scope, location, type,                          \
-           this->scope_space_manager.get_current_scope_offset(), \
+#define FUNCTION(name, scope, location, type) \
+  Function(name, scope, location, type, 0,    \
            this->scope_space_manager.get_current_scope_space())
 
 const std::unordered_set<std::string>& GET_LIBRARY_FUNCTIONS() {
@@ -154,8 +153,12 @@ Symbol::SharedPtr TableManager::add_variable(const std::string& name,
 
   Type type = this->current_scope ? Type::LOCAL : Type::GLOBAL;
 
-  return this->table.insert(
-      VARIABLE(name, this->current_scope, location, type));
+  auto result =
+      this->table.insert(VARIABLE(name, this->current_scope, location, type));
+
+  this->scope_space_manager.increase_current_scope_offset();
+
+  return result;
 }
 
 bool TableManager::can_add_local_variable(const std::string& name) const {
@@ -172,8 +175,12 @@ Symbol::SharedPtr TableManager::add_local_variable(
 
   Type type = this->current_scope ? Type::LOCAL : Type::GLOBAL;
 
-  return this->table.insert(
-      VARIABLE(name, this->current_scope, location, type));
+  auto result =
+      this->table.insert(VARIABLE(name, this->current_scope, location, type));
+
+  this->scope_space_manager.increase_current_scope_offset();
+
+  return result;
 }
 
 Symbol::SharedPtr TableManager::new_temp_variable() {
@@ -186,8 +193,12 @@ Symbol::SharedPtr TableManager::new_temp_variable() {
 
     Type type = this->current_scope ? Type::LOCAL : Type::GLOBAL;
 
-    return this->table.insert(
+    auto result = this->table.insert(
         VARIABLE(temp_name, this->current_scope, Symbol::Location(), type));
+
+    this->scope_space_manager.increase_current_scope_offset();
+
+    return result;
   }
 
   return result->symbol;
@@ -273,6 +284,8 @@ void TableManager::add_argument(const std::string& name,
 
   Symbol::SharedPtr arg = this->table.insert(
       VARIABLE(name, this->current_scope, location, Type::FORMAL));
+
+  this->scope_space_manager.increase_current_scope_offset();
 
   assert(arg);
 
