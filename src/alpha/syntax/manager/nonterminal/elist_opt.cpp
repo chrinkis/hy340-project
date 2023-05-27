@@ -16,7 +16,7 @@ ElistOpt ElistOpt::from_commaTkn_expr_elistOpt(const Expr& expr,
   ElistOpt elist_opt_returning;
 
   ElistOpt::ExprCollection icode_elist = elist_opt.get_icode_elist();
-  icode_elist.insert(icode_elist.begin(), expr.get_expr());
+  icode_elist.push_back(expr.get_expr());
 
   elist_opt_returning.set_icode_elist(icode_elist);
 
