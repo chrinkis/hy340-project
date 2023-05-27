@@ -52,6 +52,8 @@ class Function : public Symbol {
 
   ScopeSpace get_space() const override;
 
+  std::string to_string() const override;
+
   LocalCounter get_total_locals() const;
 
   void set_total_locals(const LocalCounter& total_locals);
