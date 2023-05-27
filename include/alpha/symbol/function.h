@@ -56,7 +56,7 @@ class Function : public Symbol {
 
   void set_total_locals(const LocalCounter& total_locals);
 
-  Iaddress get_iaddress();
+  Iaddress get_iaddress() const;
 
   void set_iaddress(const Iaddress& iaddress);
 };
