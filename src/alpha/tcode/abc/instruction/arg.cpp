@@ -2,6 +2,7 @@
 
 #include <alpha/tcode/abc/consts/consts.h>
 #include <utils/warnings.h>
+#include <cassert>
 
 namespace alpha::tcode::abc::instruction {
 
@@ -33,4 +34,18 @@ unsigned Arg::get_value() const {
   return this->value;
 }
 
+Arg::Type Arg::type_of_var(const symbol::Symbol& symbol) {
+  switch (symbol.get_type()) {
+    case symbol::Symbol::Type::GLOBAL:
+      return Type::GLOBAL;
+    case symbol::Symbol::Type::LOCAL:
+      return Type::LOCAL;
+    case symbol::Symbol::Type::FORMAL:
+      return Type::FORMAL;
+    case symbol::Symbol::Type::USER_FUNCTION:
+    case symbol::Symbol::Type::LIBRARY_FUNCTION:
+    default:
+      assert(0);
+  }
+}
 }  // namespace alpha::tcode::abc::instruction
