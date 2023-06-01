@@ -28,7 +28,7 @@ class Arg {
   Arg(const Type& type, unsigned value);
 
  public:
-  Arg(const Arg& type);
+  Arg(const Arg& arg);
 
   static Arg from_expr(const icode::Expr& expr);
   static Arg from_number(const double number);
