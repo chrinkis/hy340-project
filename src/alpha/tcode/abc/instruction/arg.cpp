@@ -13,7 +13,62 @@ Arg::Arg(const Type& type, unsigned value) : type(type), value(value) {}
 Arg::Arg(const Arg& arg) : type(arg.get_type()), value(arg.get_value()) {}
 
 Arg Arg::from_expr(const icode::Expr& expr) {
-  WARN_EMPTY_FUNC_IMPL(Arg::for_ret_val());
+  Type type;
+  unsigned value;
+
+  switch (expr.get_type()) {
+    case icode::Expr::Type::VAR:
+    case icode::Expr::Type::TABLE_ITEM:
+    case icode::Expr::Type::ARITHM_EXPR:
+    case icode::Expr::Type::BOOL_EXPR:
+    case icode::Expr::Type::NEW_TABLE:
+      assert(expr.has_symbol());
+      value = expr.get_symbol()->get_offset();
+      type = Arg::type_of_var(*expr.get_symbol());
+      break;
+
+    case icode::Expr::Type::CONST_BOOL:
+      assert(expr.has_bool_const());
+      value = expr.get_bool_const();
+      type = Type::BOOL;
+      break;
+
+    case icode::Expr::Type::CONST_STRING:
+      assert(expr.has_string_const());
+      value = tcodeConsts.string(expr.get_string_const());
+      type = Type::STRING;
+      break;
+
+    case icode::Expr::Type::CONST_NUM:
+      assert(expr.has_number_const());
+      value = tcodeConsts.number(expr.get_number_const());
+      type = Type::NUMBER;
+      break;
+
+    case icode::Expr::Type::NIL:
+      value = 0;
+      type = Type::NIL;
+      break;
+
+    case icode::Expr::Type::PROGRAM_FUNC:
+      assert(expr.has_symbol());
+      value = Arg::value_of_program_func(*expr.get_symbol());
+      type = Type::USER_FUNC;
+      break;
+
+    case icode::Expr::Type::LIBRARY_FUNC:
+      assert(expr.has_symbol());
+      value = tcodeConsts.lib_func_name(expr.get_symbol()->get_name());
+      type = Type::LIB_FUNC;
+      break;
+
+    case icode::Expr::Type::ASSIGN_EXPR:
+    case icode::Expr::Type::_NO_TYPE:
+    default:
+      assert(0);
+  }
+
+  return Arg(type, value);
 }
 
 Arg Arg::from_number(const double number) {
