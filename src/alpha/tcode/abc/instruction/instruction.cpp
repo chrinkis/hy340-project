@@ -114,7 +114,7 @@ Instruction::Instruction(const icode::quad::Quad& quad) {
       this->init_as_jump(quad);
       break;
     case Quad::Opcode::CALL:
-      FIXME
+      this->init_with_one_arg(Opcode::CALL, quad);
       break;
     case Quad::Opcode::PARAM:
       this->init_with_one_arg(Opcode::PUSH_ARG, quad);
