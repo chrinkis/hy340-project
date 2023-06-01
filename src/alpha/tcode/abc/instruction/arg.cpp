@@ -20,7 +20,7 @@ Arg Arg::from_number(double number) {
   WARN_EMPTY_FUNC_IMPL(Arg::for_ret_val());
 }
 
-Arg Arg::from_string(const std::string& string) {
+Arg Arg::from_bool(const bool boolean) {
   WARN_EMPTY_FUNC_IMPL(Arg::for_ret_val());
 }
 

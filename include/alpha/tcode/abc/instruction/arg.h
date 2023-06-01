@@ -32,7 +32,7 @@ class Arg {
 
   static Arg from_expr(const icode::Expr& expr);
   static Arg from_number(double number);
-  static Arg from_string(const std::string& string);
+  static Arg from_bool(const bool boolean);
   static Arg for_ret_val();
 
   Type get_type() const;
