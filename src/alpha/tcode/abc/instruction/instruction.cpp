@@ -44,7 +44,7 @@ Instruction::Instruction(const icode::quad::Quad& quad) {
       this->init_as_binary(Opcode::MOD, quad);
       break;
     case Quad::Opcode::UMINUS:
-      FIXME
+      this->init_as_unary(Opcode::UMINUS, quad);
       break;
     case Quad::Opcode::AND:
       FIXME
