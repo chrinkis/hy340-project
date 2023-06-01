@@ -3,7 +3,7 @@
 namespace alpha::tcode::abc::instruction {
 
 enum class Opcode {
-  assign,
+  ASSIGN,
   ADD,
   SUB,
   MUL,
