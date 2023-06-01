@@ -131,7 +131,7 @@ Instruction::Instruction(const icode::quad::Quad& quad) {
       this->init_as_binary(Opcode::TABLE_GET_ELEM, quad);
       break;
     case Quad::Opcode::TABLESETELEM:
-      FIXME
+      this->init_as_binary(Opcode::TABLE_SET_ELEM, quad);
       break;
   }
 
