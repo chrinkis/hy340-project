@@ -1,5 +1,6 @@
 #include <alpha/tcode/abc/instruction/arg.h>
 
+#include <alpha/tcode/abc/consts/consts.h>
 #include <utils/warnings.h>
 
 namespace alpha::tcode::abc::instruction {
@@ -13,7 +14,7 @@ Arg Arg::from_expr(const icode::Expr& expr) {
 }
 
 Arg Arg::from_number(const double number) {
-  WARN_EMPTY_FUNC_IMPL(Arg::for_ret_val());
+  return Arg(Type::NUMBER, tcodeConsts.number(number));
 }
 
 Arg Arg::from_bool(const bool boolean) {
