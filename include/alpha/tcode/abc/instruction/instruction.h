@@ -21,6 +21,9 @@ class Instruction {
 
   SrcLine src_line;
 
+ private:
+  void init_as_binary(const Opcode& opcode, const icode::quad::Quad& quad);
+
  public:
   Instruction(const icode::quad::Quad& quad);
 
