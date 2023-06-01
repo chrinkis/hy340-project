@@ -4,13 +4,9 @@
 
 namespace alpha::tcode::abc::instruction {
 
-Arg::Arg(const Type& type, unsigned value) {
-  WARN_EMPTY_FUNC_IMPL();
-}
+Arg::Arg(const Type& type, unsigned value) : type(type), value(value) {}
 
-Arg::Arg(const Arg& type) {
-  WARN_EMPTY_FUNC_IMPL();
-}
+Arg::Arg(const Arg& arg) : type(arg.get_type()), value(arg.get_value()) {}
 
 Arg Arg::from_expr(const icode::Expr& expr) {
   WARN_EMPTY_FUNC_IMPL(Arg::for_ret_val());
