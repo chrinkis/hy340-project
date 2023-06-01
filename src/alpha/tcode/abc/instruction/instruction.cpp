@@ -5,7 +5,7 @@
 namespace alpha::tcode::abc::instruction {
 
 Instruction::Instruction(const icode::quad::Quad& quad)
-    : result(quad.get_result()) {
+    : result(Arg::for_ret_val()) {
   WARN_EMPTY_FUNC_IMPL();
 }
 
