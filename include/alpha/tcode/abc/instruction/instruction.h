@@ -22,9 +22,12 @@ class Instruction {
   SrcLine src_line;
 
  private:
+  void init_result_from_label(const icode::quad::Quad& quad);
+
   void init_as_unary(const Opcode& opcode, const icode::quad::Quad& quad);
   void init_as_binary(const Opcode& opcode, const icode::quad::Quad& quad);
   void init_as_relational(const Opcode& opcode, const icode::quad::Quad& quad);
+  void init_as_jump(const icode::quad::Quad& quad);
 
  public:
   Instruction(const icode::quad::Quad& quad);

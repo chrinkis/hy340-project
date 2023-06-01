@@ -4,6 +4,14 @@
 
 namespace alpha::tcode::abc::instruction {
 
+void Instruction::init_result_from_label(const icode::quad::Quad& quad) {
+  if (quad.get_label() < quad.get_line()) {
+    FIXME
+  } else {
+    FIXME
+  }
+}
+
 void Instruction::init_as_unary(const Opcode& opcode,
                                 const icode::quad::Quad& quad) {
   this->opcode = opcode;
@@ -25,14 +33,15 @@ void Instruction::init_as_relational(const Opcode& opcode,
                                      const icode::quad::Quad& quad) {
   this->opcode = opcode;
 
+  this->init_result_from_label(quad);
   this->arg_a = Arg::from_expr(quad.get_arg1());
   this->arg_b = Arg::from_expr(quad.get_arg2());
+}
 
-  if (quad.get_label() < quad.get_line()) {
-    FIXME
-  } else {
-    FIXME
-  }
+void Instruction::init_as_jump(const icode::quad::Quad& quad) {
+  this->opcode = Opcode::JUMP;
+
+  this->init_result_from_label(quad);
 }
 
 Instruction::Instruction(const icode::quad::Quad& quad) {
@@ -88,7 +97,7 @@ Instruction::Instruction(const icode::quad::Quad& quad) {
       this->init_as_relational(Opcode::JGT, quad);
       break;
     case Quad::Opcode::JUMP:
-      FIXME
+      this->init_as_jump(quad);
       break;
     case Quad::Opcode::CALL:
       FIXME
