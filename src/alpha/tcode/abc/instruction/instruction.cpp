@@ -21,6 +21,20 @@ void Instruction::init_as_binary(const Opcode& opcode,
   this->arg_b = Arg::from_expr(quad.get_arg2());
 }
 
+void Instruction::init_as_relational(const Opcode& opcode,
+                                     const icode::quad::Quad& quad) {
+  this->opcode = opcode;
+
+  this->arg_a = Arg::from_expr(quad.get_arg1());
+  this->arg_b = Arg::from_expr(quad.get_arg2());
+
+  if (quad.get_label() < quad.get_line()) {
+    FIXME
+  } else {
+    FIXME
+  }
+}
+
 Instruction::Instruction(const icode::quad::Quad& quad) {
   using Quad = icode::quad::Quad;
 
@@ -56,22 +70,22 @@ Instruction::Instruction(const icode::quad::Quad& quad) {
       this->init_as_unary(Opcode::NOT, quad);
       break;
     case Quad::Opcode::IF_EQ:
-      FIXME
+      this->init_as_relational(Opcode::JEQ, quad);
       break;
     case Quad::Opcode::IF_NOTEQ:
-      FIXME
+      this->init_as_relational(Opcode::JNE, quad);
       break;
     case Quad::Opcode::IF_LESSEQ:
-      FIXME
+      this->init_as_relational(Opcode::JLE, quad);
       break;
     case Quad::Opcode::IF_GREATEREQ:
-      FIXME
+      this->init_as_relational(Opcode::JGE, quad);
       break;
     case Quad::Opcode::IF_LESS:
-      FIXME
+      this->init_as_relational(Opcode::JLT, quad);
       break;
     case Quad::Opcode::IF_GREATER:
-      FIXME
+      this->init_as_relational(Opcode::JGT, quad);
       break;
     case Quad::Opcode::JUMP:
       FIXME

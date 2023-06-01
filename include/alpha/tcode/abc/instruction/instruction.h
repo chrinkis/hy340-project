@@ -24,6 +24,7 @@ class Instruction {
  private:
   void init_as_unary(const Opcode& opcode, const icode::quad::Quad& quad);
   void init_as_binary(const Opcode& opcode, const icode::quad::Quad& quad);
+  void init_as_relational(const Opcode& opcode, const icode::quad::Quad& quad);
 
  public:
   Instruction(const icode::quad::Quad& quad);
