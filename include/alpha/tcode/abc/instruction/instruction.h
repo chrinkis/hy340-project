@@ -15,7 +15,7 @@ class Instruction {
  private:
   Opcode opcode;
 
-  Arg result;
+  std::optional<Arg> result;
   std::optional<Arg> arg_a;
   std::optional<Arg> arg_b;
 
@@ -26,7 +26,7 @@ class Instruction {
 
   Opcode get_opcode() const;
 
-  Arg get_result() const;
+  std::optional<Arg> get_result() const;
   std::optional<Arg> get_arg_a() const;
   std::optional<Arg> get_arg_b() const;
 
