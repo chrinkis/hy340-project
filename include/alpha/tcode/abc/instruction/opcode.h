@@ -13,6 +13,7 @@ enum class Opcode {
   AND,
   OR,
   NOT,
+  JUMP,
   JEQ,
   JNE,
   JLE,
