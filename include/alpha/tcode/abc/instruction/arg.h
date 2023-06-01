@@ -24,8 +24,16 @@ class Arg {
   Type type;
   unsigned value;
 
+ private:
+  Arg(const Type& type, unsigned value);
+
  public:
-  Arg(const icode::Expr& expr);
+  Arg(const Arg& type);
+
+  static Arg from_expr(const icode::Expr& expr);
+  static Arg from_number(double number);
+  static Arg from_string(const std::string& string);
+  static Arg for_ret_val();
 
   Type get_type() const;
   unsigned get_value() const;
