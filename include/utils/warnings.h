@@ -16,3 +16,13 @@
               << "\033[0m" << std::endl;                                       \
     __VA_OPT__(return __VA_ARGS__;)                                            \
   }
+
+#define FIXME                                                    \
+  {                                                              \
+    _Pragma("message(\"Unfixed `FIXME`\")");                     \
+    std::cout << std::endl                                       \
+              << RUNTIME_WARNING_COLOR << "***"                  \
+              << "[Runtime source code warning] Unfixed `FIXME`" \
+              << "***"                                           \
+              << "\033[0m" << std::endl;                         \
+  }
