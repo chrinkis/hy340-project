@@ -22,7 +22,7 @@ Arg Arg::from_bool(const bool boolean) {
 }
 
 Arg Arg::for_ret_val() {
-  WARN_EMPTY_FUNC_IMPL(Arg(Arg::Type::NIL, 0));
+  return Arg(Type::RET_VAL, 0);
 }
 
 Arg::Type Arg::get_type() const {
