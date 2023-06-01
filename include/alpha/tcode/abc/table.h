@@ -30,6 +30,8 @@ class Table {
 
  public:
   void parse_quad_table();
+
+  Instruction::SrcLine get_next_label() const;
 };
 
 }  // namespace alpha::tcode::abc
