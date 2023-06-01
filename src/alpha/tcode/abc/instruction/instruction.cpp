@@ -58,6 +58,13 @@ void Instruction::init_with_one_arg(const Opcode& opcode,
   this->arg_a = Arg::from_expr(quad.get_arg1());
 }
 
+void Instruction::init_as_get_ret_val(const icode::quad::Quad& quad) {
+  this->opcode = Opcode::ASSIGN;
+
+  this->result = Arg::from_expr(quad.get_result());
+  this->arg_a = Arg::for_ret_val();
+}
+
 Instruction::Instruction(const icode::quad::Quad& quad) {
   using Quad = icode::quad::Quad;
 
@@ -123,7 +130,7 @@ Instruction::Instruction(const icode::quad::Quad& quad) {
       FIXME
       break;
     case Quad::Opcode::GETRETVAL:
-      FIXME
+      this->init_as_get_ret_val(quad);
       break;
     case Quad::Opcode::FUNCSTART:
       FIXME
