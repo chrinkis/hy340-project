@@ -51,6 +51,13 @@ void Instruction::init_as_jump(const icode::quad::Quad& quad) {
   this->init_result_from_label(quad);
 }
 
+void Instruction::init_with_one_arg(const Opcode& opcode,
+                                    const icode::quad::Quad& quad) {
+  this->opcode = opcode;
+
+  this->arg_a = Arg::from_expr(quad.get_arg1());
+}
+
 Instruction::Instruction(const icode::quad::Quad& quad) {
   using Quad = icode::quad::Quad;
 
@@ -110,7 +117,7 @@ Instruction::Instruction(const icode::quad::Quad& quad) {
       FIXME
       break;
     case Quad::Opcode::PARAM:
-      FIXME
+      this->init_with_one_arg(Opcode::PUSH_ARG, quad);
       break;
     case Quad::Opcode::RET:
       FIXME

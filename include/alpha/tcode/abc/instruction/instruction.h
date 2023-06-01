@@ -28,6 +28,7 @@ class Instruction {
   void init_as_unary(const Opcode& opcode, const icode::quad::Quad& quad);
   void init_as_binary(const Opcode& opcode, const icode::quad::Quad& quad);
   void init_as_relational(const Opcode& opcode, const icode::quad::Quad& quad);
+  void init_with_one_arg(const Opcode& opcode, const icode::quad::Quad& quad);
   void init_as_jump(const icode::quad::Quad& quad);
 
  public:
