@@ -18,7 +18,7 @@ Arg Arg::from_number(const double number) {
 }
 
 Arg Arg::from_bool(const bool boolean) {
-  WARN_EMPTY_FUNC_IMPL(Arg::for_ret_val());
+  return Arg(Type::BOOL, boolean);
 }
 
 Arg Arg::for_ret_val() {
