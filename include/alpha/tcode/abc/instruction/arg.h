@@ -31,7 +31,7 @@ class Arg {
   Arg(const Arg& type);
 
   static Arg from_expr(const icode::Expr& expr);
-  static Arg from_number(double number);
+  static Arg from_number(const double number);
   static Arg from_bool(const bool boolean);
   static Arg for_ret_val();
 
