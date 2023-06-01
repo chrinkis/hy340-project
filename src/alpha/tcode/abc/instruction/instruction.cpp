@@ -4,6 +4,14 @@
 
 namespace alpha::tcode::abc::instruction {
 
+void Instruction::init_as_unary(const Opcode& opcode,
+                                const icode::quad::Quad& quad) {
+  this->opcode = opcode;
+
+  this->result = Arg::from_expr(quad.get_result());
+  this->arg_a = Arg::from_expr(quad.get_arg1());
+}
+
 void Instruction::init_as_binary(const Opcode& opcode,
                                  const icode::quad::Quad& quad) {
   this->opcode = opcode;
@@ -18,7 +26,7 @@ Instruction::Instruction(const icode::quad::Quad& quad) {
 
   switch (quad.get_opcode()) {
     case Quad::Opcode::ASSIGN:
-      FIXME
+      this->init_as_unary(Opcode::ASSIGN, quad);
       break;
     case Quad::Opcode::ADD:
       this->init_as_binary(Opcode::ADD, quad);
