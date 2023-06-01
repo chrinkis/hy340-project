@@ -83,6 +83,14 @@ add_library(flex_and_bison
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/nonterminal/whilestmt_while.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/terminal/function.cpp
     ${CMAKE_SOURCE_DIR}/src/alpha/syntax/manager/terminal/identifier.cpp
+
+    ${CMAKE_SOURCE_DIR}/src/alpha/tcode/abc/consts/consts.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/tcode/abc/consts/user_func.cpp
+
+    ${CMAKE_SOURCE_DIR}/src/alpha/tcode/abc/instruction/arg.cpp
+    ${CMAKE_SOURCE_DIR}/src/alpha/tcode/abc/instruction/instruction.cpp
+
+    ${CMAKE_SOURCE_DIR}/src/alpha/tcode/abc/table.cpp
 )
 
 # WARNING: all file of of lib `flex_and_bison` have direct
