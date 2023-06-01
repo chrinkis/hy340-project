@@ -24,6 +24,7 @@ class Instruction {
  private:
   void init_result_from_label(const icode::quad::Quad& quad);
 
+  void init_as_nullary(const Opcode& opcode, const icode::quad::Quad& quad);
   void init_as_unary(const Opcode& opcode, const icode::quad::Quad& quad);
   void init_as_binary(const Opcode& opcode, const icode::quad::Quad& quad);
   void init_as_relational(const Opcode& opcode, const icode::quad::Quad& quad);

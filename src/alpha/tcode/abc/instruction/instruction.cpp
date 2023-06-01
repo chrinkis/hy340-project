@@ -12,6 +12,13 @@ void Instruction::init_result_from_label(const icode::quad::Quad& quad) {
   }
 }
 
+void Instruction::init_as_nullary(const Opcode& opcode,
+                                  const icode::quad::Quad& quad) {
+  this->opcode = opcode;
+
+  this->result = Arg::from_expr(quad.get_result());
+}
+
 void Instruction::init_as_unary(const Opcode& opcode,
                                 const icode::quad::Quad& quad) {
   this->opcode = opcode;
@@ -118,7 +125,7 @@ Instruction::Instruction(const icode::quad::Quad& quad) {
       FIXME
       break;
     case Quad::Opcode::TABLECREATE:
-      FIXME
+      this->init_as_nullary(Opcode::NEW_TABLE, quad);
       break;
     case Quad::Opcode::TABLEGETELEM:
       FIXME
