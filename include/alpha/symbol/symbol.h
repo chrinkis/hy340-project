@@ -32,6 +32,8 @@ class Symbol {
   };
 
  public:
+  virtual ~Symbol() {}
+
   virtual std::string get_name() const = 0;
 
   virtual Scope get_scope() const = 0;
