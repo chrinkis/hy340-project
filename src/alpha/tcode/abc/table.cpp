@@ -11,7 +11,16 @@
 #define BinaryInstruction(opcode, quad) \
   (Instruction::construct_binary(this->get_next_label(), opcode, quad))
 
+#define InstructionWithTwoArgs(opcode, quad) \
+  (Instruction::construct_with_two_args(this->get_next_label(), opcode, quad))
+
 namespace alpha::tcode::abc {
+
+void Table::init_instruction_result_from_quad_label(
+    Instruction& instruction,
+    const icode::quad::Quad& quad) {
+  WARN_EMPTY_FUNC_IMPL()
+}
 
 void Table::handle_quad_as_nullary(const instruction::Opcode& opcode,
                                    const icode::quad::Quad& quad) {
@@ -47,7 +56,12 @@ void Table::handle_quad_as_binary(const instruction::Opcode& opcode,
 
 void Table::handle_quad_as_relational(const instruction::Opcode& opcode,
                                       const icode::quad::Quad& quad) {
-  WARN_EMPTY_FUNC_IMPL()
+  Instruction instruction = InstructionWithTwoArgs(opcode, quad);
+  this->init_instruction_result_from_quad_label(instruction, quad);
+
+  this->iaddr_to_taddr_map.insert(quad.get_line(), instruction.get_src_line());
+
+  this->emit(instruction);
 }
 
 void Table::handle_quad_as_get_ret_val(const icode::quad::Quad& quad) {

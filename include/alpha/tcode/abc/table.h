@@ -32,6 +32,9 @@ class Table {
  private:
   void emit(const Instruction& instruction);
 
+  void init_instruction_result_from_quad_label(Instruction& instruction,
+                                               const icode::quad::Quad& quad);
+
   void handle_quad(const icode::quad::Quad& quad);
 
   void handle_quad_as_nullary(const instruction::Opcode& opcode,
