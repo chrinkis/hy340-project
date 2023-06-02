@@ -22,7 +22,32 @@ class Instruction {
   SrcLine src_line;
 
  public:
-  Instruction(const icode::quad::Quad& quad);
+  static Instruction construct_nullary(const SrcLine& src_line,
+                                       const Opcode& opcode,
+                                       const icode::quad::Quad& quad);
+
+  static Instruction construct_unary(const SrcLine& src_line,
+                                     const Opcode& opcode,
+                                     const icode::quad::Quad& quad);
+
+  static Instruction construct_binary(const SrcLine& src_line,
+                                      const Opcode& opcode,
+                                      const icode::quad::Quad& quad);
+
+  static Instruction construct_with_two_args(const SrcLine& src_line,
+                                             const Opcode& opcode,
+                                             const icode::quad::Quad& quad);
+
+  static Instruction construct_with_one_arg(const SrcLine& src_line,
+                                            const Opcode& opcode,
+                                            const icode::quad::Quad& quad);
+
+  static Instruction construct_get_ret_val(const SrcLine& src_line,
+                                           const icode::quad::Quad& quad);
+
+ public:
+  Instruction(const SrcLine& src_line, const Opcode& opcode);
+  Instruction(const Instruction& instruction);
 
   Opcode get_opcode() const;
 
