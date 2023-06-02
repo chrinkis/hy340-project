@@ -8,6 +8,9 @@
 #define UnaryInstruction(opcode, quad) \
   (Instruction::construct_unary(this->get_next_label(), opcode, quad))
 
+#define UnaryVoidInstruction(opcode, quad) \
+  (Instruction::construct_with_one_arg(this->get_next_label(), opcode, quad))
+
 #define BinaryInstruction(opcode, quad) \
   (Instruction::construct_binary(this->get_next_label(), opcode, quad))
 
@@ -44,7 +47,12 @@ void Table::handle_quad_as_unary(const instruction::Opcode& opcode,
 
 void Table::handle_quad_as_unary_void(const instruction::Opcode& opcode,
                                       const icode::quad::Quad& quad) {
-  WARN_EMPTY_FUNC_IMPL()
+  Instruction instruction = UnaryVoidInstruction(opcode, quad);
+
+  this->iaddr_to_taddr_map.insert(
+      {quad.get_line(), instruction.get_src_line()});
+
+  this->emit(instruction);
 }
 
 void Table::handle_quad_as_binary(const instruction::Opcode& opcode,
