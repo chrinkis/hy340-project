@@ -2,6 +2,9 @@
 
 #include <utils/warnings.h>
 
+#define BinaryInstruction(opcode, quad) \
+  (Instruction::construct_binary(this->get_next_label(), opcode, quad))
+
 namespace alpha::tcode::abc {
 
 void Table::handle_quad_as_nullary(const instruction::Opcode& opcode,
@@ -21,7 +24,11 @@ void Table::handle_quad_as_unary_void(const instruction::Opcode& opcode,
 
 void Table::handle_quad_as_binary(const instruction::Opcode& opcode,
                                   const icode::quad::Quad& quad) {
-  WARN_EMPTY_FUNC_IMPL()
+  Instruction instruction = BinaryInstruction(opcode, quad);
+
+  this->iaddr_to_taddr_map.insert(quad.get_line(), instruction.get_src_line());
+
+  this->emit(instruction);
 }
 
 void Table::handle_quad_as_relational(const instruction::Opcode& opcode,

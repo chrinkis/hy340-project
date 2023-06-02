@@ -5,6 +5,7 @@
 #include <alpha/tcode/abc/instruction/instruction.h>
 #include <alpha/tcode/abc/instruction/opcode.h>
 
+#include <map>
 #include <vector>
 
 namespace alpha::tcode::abc {
@@ -25,6 +26,8 @@ class Table {
 
  private:
   Collection table;
+
+  std::map<icode::quad::Quad::Line, Instruction::SrcLine> iaddr_to_taddr_map;
 
  private:
   void emit(const Instruction& instruction);
