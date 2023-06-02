@@ -54,6 +54,8 @@ class Table {
 
   void handle_quad_as_get_ret_val(const icode::quad::Quad& quad);
 
+  void handle_quad_as_jump(const icode::quad::Quad& quad);
+
  public:
   void parse_quad_table();
 

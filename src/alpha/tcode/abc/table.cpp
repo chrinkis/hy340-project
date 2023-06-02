@@ -86,6 +86,16 @@ void Table::handle_quad_as_get_ret_val(const icode::quad::Quad& quad) {
   this->emit(instruction);
 }
 
+void Table::handle_quad_as_jump(const icode::quad::Quad& quad) {
+  Instruction instruction(this->get_next_label(), instruction::Opcode::JUMP);
+  this->init_instruction_result_from_quad_label(instruction, quad);
+
+  this->iaddr_to_taddr_map.insert(
+      {quad.get_line(), instruction.get_src_line()});
+
+  this->emit(instruction);
+}
+
 void Table::handle_quad(const icode::quad::Quad& quad) {
   using Quad = icode::quad::Quad;
   using Opcode = instruction::Opcode;
@@ -140,7 +150,7 @@ void Table::handle_quad(const icode::quad::Quad& quad) {
       this->handle_quad_as_relational(Opcode::JGT, quad);
       break;
     case Quad::Opcode::JUMP:
-      FIXME
+      this->handle_quad_as_jump(quad);
       break;
     case Quad::Opcode::CALL:
       this->handle_quad_as_unary_void(Opcode::CALL, quad);
