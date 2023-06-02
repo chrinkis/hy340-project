@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-#define ITERATOR(collection) decltype(collection)::iterator
+#define ITERATOR_TYPE(collection) decltype(collection)::iterator
 
 #define INDEX(iterator, collection, element)                         \
   (((iterator) = std::find((collection).begin(), (collection).end(), \
@@ -12,7 +12,7 @@
 
 #define RETURN_INDEX_OF(collection, element)                  \
   {                                                           \
-    ITERATOR(collection) it;                                  \
+    ITERATOR_TYPE(collection) it;                             \
     Consts::Index index = INDEX(it, (collection), (element)); \
                                                               \
     if (index == (collection).size()) {                       \
