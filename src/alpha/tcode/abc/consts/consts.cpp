@@ -1,6 +1,27 @@
 #include <alpha/tcode/abc/consts/consts.h>
 
 #include <utils/warnings.h>
+#include <algorithm>
+
+#define ITERATOR(collection) decltype(collection)::iterator
+
+#define INDEX(iterator, collection, element)                         \
+  (((iterator) = std::find((collection).begin(), (collection).end(), \
+                           (element))) != (collection).end()         \
+       ? std::distance((collection).begin(), (iterator))             \
+       : (collection).size());
+
+#define RETURN_INDEX_OF(collection, element)                  \
+  {                                                           \
+    ITERATOR(collection) it;                                  \
+    Consts::Index index = INDEX(it, (collection), (element)); \
+                                                              \
+    if (index == (collection).size()) {                       \
+      (collection).push_back(element);                        \
+    }                                                         \
+                                                              \
+    return index;                                             \
+  }
 
 namespace alpha::tcode::abc::consts {
 
