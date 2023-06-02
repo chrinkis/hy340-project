@@ -22,6 +22,9 @@ class UserFunc {
   Address get_address() const;
   const std::string& get_id() const;
   LocalSize get_local_size() const;
+
+ public:
+  bool operator==(const UserFunc& user_func) const;
 };
 
 }  // namespace alpha::tcode::abc::consts

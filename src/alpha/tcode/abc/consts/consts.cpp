@@ -1,23 +1,43 @@
 #include <alpha/tcode/abc/consts/consts.h>
 
-#include <utils/warnings.h>
+#include <algorithm>
+
+#define ITERATOR_TYPE(collection) decltype(collection)::iterator
+
+#define FIND_ELEMENT(collection, element) \
+  (std::find((collection).begin(), (collection).end(), (element)))
+
+#define INDEX(collection, iterator) \
+  (std::distance((collection).begin(), (iterator)))
+
+#define RETURN_INDEX_OF(element, collection)                              \
+  {                                                                       \
+    ITERATOR_TYPE(collection) it = FIND_ELEMENT((collection), (element)); \
+    Consts::Index index = INDEX((collection), it);                        \
+                                                                          \
+    if (index == (collection).size()) {                                   \
+      (collection).push_back(element);                                    \
+    }                                                                     \
+                                                                          \
+    return index;                                                         \
+  }
 
 namespace alpha::tcode::abc::consts {
 
 Consts::Index Consts::number(double number) {
-  WARN_EMPTY_FUNC_IMPL(0);
+  RETURN_INDEX_OF(number, this->num_collection);
 }
 
 Consts::Index Consts::string(const std::string& string) {
-  WARN_EMPTY_FUNC_IMPL(0);
+  RETURN_INDEX_OF(string, this->str_collection);
 }
 
 Consts::Index Consts::lib_func_name(const std::string& lib_func_name) {
-  WARN_EMPTY_FUNC_IMPL(0);
+  RETURN_INDEX_OF(lib_func_name, this->lib_func_name_collection);
 }
 
 Consts::Index Consts::user_func(const UserFunc& user_func) {
-  WARN_EMPTY_FUNC_IMPL(0);
+  RETURN_INDEX_OF(user_func, this->user_func_collection);
 }
 
 const Consts::NumCollection& Consts::get_numbers() const {
