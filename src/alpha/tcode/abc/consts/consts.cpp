@@ -4,10 +4,6 @@
 
 #define ITERATOR_TYPE(collection) decltype(collection)::iterator
 
-#define HAS_ELEMENT(collection, element)                             \
-  (std::find((collection).begin(), (collection).end(), (element)) != \
-   (collection).end())
-
 #define FIND_ELEMENT(collection, element) \
   (std::find((collection).begin(), (collection).end(), (element)))
 
