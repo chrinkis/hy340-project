@@ -1,6 +1,7 @@
 #pragma once
 
 #include <alpha/icode/expr.h>
+#include <alpha/symbol/symbol.h>
 
 namespace alpha::tcode::abc::instruction {
 
@@ -28,7 +29,7 @@ class Arg {
   Arg(const Type& type, unsigned value);
 
  public:
-  Arg(const Arg& type);
+  Arg(const Arg& arg);
 
   static Arg from_expr(const icode::Expr& expr);
   static Arg from_number(const double number);
@@ -37,6 +38,10 @@ class Arg {
 
   Type get_type() const;
   unsigned get_value() const;
+
+ private:
+  static Type type_of_var(const symbol::Symbol& symbol);
+  static unsigned value_of_program_func(const symbol::Symbol& symbol);
 };
 
 }  // namespace alpha::tcode::abc::instruction
