@@ -10,7 +10,7 @@
        ? std::distance((collection).begin(), (iterator))             \
        : (collection).size());
 
-#define RETURN_INDEX_OF(collection, element)                  \
+#define RETURN_INDEX_OF(element, collection)                  \
   {                                                           \
     ITERATOR_TYPE(collection) it;                             \
     Consts::Index index = INDEX(it, (collection), (element)); \
@@ -25,19 +25,19 @@
 namespace alpha::tcode::abc::consts {
 
 Consts::Index Consts::number(double number) {
-  RETURN_INDEX_OF(this->num_collection, number);
+  RETURN_INDEX_OF(number, this->num_collection);
 }
 
 Consts::Index Consts::string(const std::string& string) {
-  RETURN_INDEX_OF(this->str_collection, string);
+  RETURN_INDEX_OF(string, this->str_collection);
 }
 
 Consts::Index Consts::lib_func_name(const std::string& lib_func_name) {
-  RETURN_INDEX_OF(this->lib_func_name_collection, lib_func_name);
+  RETURN_INDEX_OF(lib_func_name, this->lib_func_name_collection);
 }
 
 Consts::Index Consts::user_func(const UserFunc& user_func) {
-  RETURN_INDEX_OF(this->user_func_collection, user_func);
+  RETURN_INDEX_OF(user_func, this->user_func_collection);
 }
 
 const Consts::NumCollection& Consts::get_numbers() const {
