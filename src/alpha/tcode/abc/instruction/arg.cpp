@@ -3,6 +3,7 @@
 #include <alpha/symbol/function.h>
 #include <alpha/tcode/abc/consts/consts.h>
 #include <alpha/tcode/abc/consts/user_func.h>
+#include <utils/warnings.h>
 
 #include <cassert>
 
@@ -111,6 +112,7 @@ unsigned Arg::value_of_program_func(const symbol::Symbol& symbol) {
       dynamic_cast<const symbol::Function*>(&symbol);
   assert(function);
 
+  FIXME;
   consts::UserFunc user_func(function->get_iaddress(), function->get_name(),
                              function->get_total_locals());
 
