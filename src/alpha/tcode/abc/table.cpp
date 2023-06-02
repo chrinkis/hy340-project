@@ -26,7 +26,8 @@ void Table::handle_quad_as_nullary(const instruction::Opcode& opcode,
                                    const icode::quad::Quad& quad) {
   Instruction instruction = NullaryInstruction(opcode, quad);
 
-  this->iaddr_to_taddr_map.insert(quad.get_line(), instruction.get_src_line());
+  this->iaddr_to_taddr_map.insert(
+      {quad.get_line(), instruction.get_src_line()});
 
   this->emit(instruction);
 }
@@ -35,7 +36,8 @@ void Table::handle_quad_as_unary(const instruction::Opcode& opcode,
                                  const icode::quad::Quad& quad) {
   Instruction instruction = UnaryInstruction(opcode, quad);
 
-  this->iaddr_to_taddr_map.insert(quad.get_line(), instruction.get_src_line());
+  this->iaddr_to_taddr_map.insert(
+      {quad.get_line(), instruction.get_src_line()});
 
   this->emit(instruction);
 }
@@ -49,7 +51,8 @@ void Table::handle_quad_as_binary(const instruction::Opcode& opcode,
                                   const icode::quad::Quad& quad) {
   Instruction instruction = BinaryInstruction(opcode, quad);
 
-  this->iaddr_to_taddr_map.insert(quad.get_line(), instruction.get_src_line());
+  this->iaddr_to_taddr_map.insert(
+      {quad.get_line(), instruction.get_src_line()});
 
   this->emit(instruction);
 }
@@ -59,7 +62,8 @@ void Table::handle_quad_as_relational(const instruction::Opcode& opcode,
   Instruction instruction = InstructionWithTwoArgs(opcode, quad);
   this->init_instruction_result_from_quad_label(instruction, quad);
 
-  this->iaddr_to_taddr_map.insert(quad.get_line(), instruction.get_src_line());
+  this->iaddr_to_taddr_map.insert(
+      {quad.get_line(), instruction.get_src_line()});
 
   this->emit(instruction);
 }
