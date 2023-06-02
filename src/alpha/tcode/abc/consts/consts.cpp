@@ -1,6 +1,5 @@
 #include <alpha/tcode/abc/consts/consts.h>
 
-#include <utils/warnings.h>
 #include <algorithm>
 
 #define ITERATOR(collection) decltype(collection)::iterator
@@ -26,19 +25,19 @@
 namespace alpha::tcode::abc::consts {
 
 Consts::Index Consts::number(double number) {
-  WARN_EMPTY_FUNC_IMPL(0);
+  RETURN_INDEX_OF(this->num_collection, number);
 }
 
 Consts::Index Consts::string(const std::string& string) {
-  WARN_EMPTY_FUNC_IMPL(0);
+  RETURN_INDEX_OF(this->str_collection, string);
 }
 
 Consts::Index Consts::lib_func_name(const std::string& lib_func_name) {
-  WARN_EMPTY_FUNC_IMPL(0);
+  RETURN_INDEX_OF(this->lib_func_name_collection, lib_func_name);
 }
 
 Consts::Index Consts::user_func(const UserFunc& user_func) {
-  WARN_EMPTY_FUNC_IMPL(0);
+  RETURN_INDEX_OF(this->user_func_collection, user_func);
 }
 
 const Consts::NumCollection& Consts::get_numbers() const {
