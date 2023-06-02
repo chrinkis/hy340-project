@@ -4,22 +4,26 @@
 
 #define ITERATOR_TYPE(collection) decltype(collection)::iterator
 
-#define INDEX(iterator, collection, element)                         \
-  (((iterator) = std::find((collection).begin(), (collection).end(), \
-                           (element))) != (collection).end()         \
-       ? std::distance((collection).begin(), (iterator))             \
-       : (collection).size());
+#define HAS_ELEMENT(collection, element)                             \
+  (std::find((collection).begin(), (collection).end(), (element)) != \
+   (collection).end())
 
-#define RETURN_INDEX_OF(element, collection)                  \
-  {                                                           \
-    ITERATOR_TYPE(collection) it;                             \
-    Consts::Index index = INDEX(it, (collection), (element)); \
-                                                              \
-    if (index == (collection).size()) {                       \
-      (collection).push_back(element);                        \
-    }                                                         \
-                                                              \
-    return index;                                             \
+#define FIND_ELEMENT(collection, element) \
+  (std::find((collection).begin(), (collection).end(), (element)))
+
+#define INDEX(collection, iterator) \
+  (std::distance((collection).begin(), (iterator)))
+
+#define RETURN_INDEX_OF(element, collection)                              \
+  {                                                                       \
+    ITERATOR_TYPE(collection) it = FIND_ELEMENT((collection), (element)); \
+    Consts::Index index = INDEX((collection), it);                        \
+                                                                          \
+    if (index == (collection).size()) {                                   \
+      (collection).push_back(element);                                    \
+    }                                                                     \
+                                                                          \
+    return index;                                                         \
   }
 
 namespace alpha::tcode::abc::consts {
