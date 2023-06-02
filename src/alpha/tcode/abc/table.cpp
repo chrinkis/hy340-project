@@ -77,7 +77,13 @@ void Table::handle_quad_as_relational(const instruction::Opcode& opcode,
 }
 
 void Table::handle_quad_as_get_ret_val(const icode::quad::Quad& quad) {
-  WARN_EMPTY_FUNC_IMPL()
+  Instruction instruction =
+      Instruction::construct_get_ret_val(this->get_next_label(), quad);
+
+  this->iaddr_to_taddr_map.insert(
+      {quad.get_line(), instruction.get_src_line()});
+
+  this->emit(instruction);
 }
 
 void Table::handle_quad(const icode::quad::Quad& quad) {
