@@ -21,19 +21,33 @@ class Instruction {
 
   SrcLine src_line;
 
- private:
-  void init_result_from_label(const icode::quad::Quad& quad);
+ public:
+  static Instruction construct_nullary(const SrcLine& src_line,
+                                       const Opcode& opcode,
+                                       const icode::quad::Quad& quad);
 
-  void init_as_nullary(const Opcode& opcode, const icode::quad::Quad& quad);
-  void init_as_unary(const Opcode& opcode, const icode::quad::Quad& quad);
-  void init_as_binary(const Opcode& opcode, const icode::quad::Quad& quad);
-  void init_as_relational(const Opcode& opcode, const icode::quad::Quad& quad);
-  void init_with_one_arg(const Opcode& opcode, const icode::quad::Quad& quad);
-  void init_as_jump(const icode::quad::Quad& quad);
-  void init_as_get_ret_val(const icode::quad::Quad& quad);
+  static Instruction construct_unary(const SrcLine& src_line,
+                                     const Opcode& opcode,
+                                     const icode::quad::Quad& quad);
+
+  static Instruction construct_binary(const SrcLine& src_line,
+                                      const Opcode& opcode,
+                                      const icode::quad::Quad& quad);
+
+  static Instruction construct_with_two_args(const SrcLine& src_line,
+                                             const Opcode& opcode,
+                                             const icode::quad::Quad& quad);
+
+  static Instruction construct_with_one_arg(const SrcLine& src_line,
+                                            const Opcode& opcode,
+                                            const icode::quad::Quad& quad);
+
+  static Instruction construct_get_ret_val(const SrcLine& src_line,
+                                           const icode::quad::Quad& quad);
 
  public:
-  Instruction(const icode::quad::Quad& quad);
+  Instruction(const SrcLine& src_line, const Opcode& opcode);
+  Instruction(const Instruction& instruction);
 
   Opcode get_opcode() const;
 
