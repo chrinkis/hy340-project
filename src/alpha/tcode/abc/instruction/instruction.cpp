@@ -83,6 +83,10 @@ std::optional<Arg> Instruction::get_result() const {
   return this->result;
 }
 
+void Instruction::set_result(const Arg& arg) {
+  this->result = arg;
+}
+
 std::optional<Arg> Instruction::get_arg_a() const {
   return this->arg_a;
 }

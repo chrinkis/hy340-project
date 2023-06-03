@@ -111,7 +111,15 @@ void Table::handle_quad_as_func_enter(const icode::quad::Quad& quad) {
 }
 
 void Table::handle_quad_as_func_exit(const icode::quad::Quad& quad) {
-  WARN_EMPTY_FUNC_IMPL();
+  for (auto& line : this->most_recent_funcstart.return_list.top()) {
+    // this->table.at(line).set_result(this->get_next_label());
+    FIXME  // ^^^
+  }
+
+  this->most_recent_funcstart.taddr.pop();
+  this->most_recent_funcstart.return_list.pop();
+
+  this->handle_quad_as_nullary(instruction::Opcode::FUNC_EXIT, quad);
 }
 
 void Table::handle_quad(const icode::quad::Quad& quad) {

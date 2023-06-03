@@ -52,7 +52,10 @@ class Instruction {
   Opcode get_opcode() const;
 
   std::optional<Arg> get_result() const;
+  void set_result(const Arg& arg);
+
   std::optional<Arg> get_arg_a() const;
+
   std::optional<Arg> get_arg_b() const;
 
   SrcLine get_src_line() const;
