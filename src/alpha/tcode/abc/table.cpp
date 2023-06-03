@@ -96,6 +96,24 @@ void Table::handle_quad_as_jump(const icode::quad::Quad& quad) {
   this->emit(instruction);
 }
 
+void Table::handle_quad_as_ret(const icode::quad::Quad& quad) {
+  WARN_EMPTY_FUNC_IMPL();
+}
+
+void Table::handle_quad_as_func_enter(const icode::quad::Quad& quad) {
+  using Opcode = instruction::Opcode;
+
+  this->most_recent_funcstart.taddr.push(
+      this->get_next_label());  // Why do we need it?
+  this->most_recent_funcstart.return_list.emplace();
+
+  this->handle_quad_as_nullary(Opcode::FUNC_ENTER, quad);
+}
+
+void Table::handle_quad_as_func_exit(const icode::quad::Quad& quad) {
+  WARN_EMPTY_FUNC_IMPL();
+}
+
 void Table::handle_quad(const icode::quad::Quad& quad) {
   using Quad = icode::quad::Quad;
   using Opcode = instruction::Opcode;
@@ -159,16 +177,16 @@ void Table::handle_quad(const icode::quad::Quad& quad) {
       this->handle_quad_as_unary_void(Opcode::PUSH_ARG, quad);
       break;
     case Quad::Opcode::RET:
-      FIXME
+      this->handle_quad_as_ret(quad);
       break;
     case Quad::Opcode::GETRETVAL:
       this->handle_quad_as_get_ret_val(quad);
       break;
     case Quad::Opcode::FUNCSTART:
-      FIXME
+      this->handle_quad_as_func_enter(quad);
       break;
     case Quad::Opcode::FUNCEND:
-      FIXME
+      this->handle_quad_as_func_exit(quad);
       break;
     case Quad::Opcode::TABLECREATE:
       this->handle_quad_as_nullary(Opcode::NEW_TABLE, quad);
