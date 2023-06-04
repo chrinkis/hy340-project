@@ -26,6 +26,7 @@ class Arg {
     USER_FUNC = 8,
     LIB_FUNC = 9,
     RET_VAL = 10,
+    EMPTY = 11,
   };
 
   using Mapper = std::function<InstrSrcLine(const icode::quad::Quad::Line)>;
@@ -38,6 +39,7 @@ class Arg {
   Arg(const Type& type, unsigned value);
 
  public:
+  Arg();
   Arg(const Arg& arg);
 
   static Arg from_expr(const icode::Expr& expr, const Mapper& icode_to_tcode);

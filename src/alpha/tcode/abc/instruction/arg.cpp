@@ -11,6 +11,8 @@ namespace alpha::tcode::abc::instruction {
 
 Arg::Arg(const Type& type, unsigned value) : type(type), value(value) {}
 
+Arg::Arg() : type(Type::EMPTY), value(0){};
+
 Arg::Arg(const Arg& arg) : type(arg.get_type()), value(arg.get_value()) {}
 
 Arg Arg::from_expr(const icode::Expr& expr, const Mapper& icode_to_tcode) {
