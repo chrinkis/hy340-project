@@ -112,9 +112,10 @@ void Table::handle_quad_as_func_enter(const icode::quad::Quad& quad) {
 }
 
 void Table::handle_quad_as_func_exit(const icode::quad::Quad& quad) {
+  using Arg = instruction::Arg;
+
   for (auto& line : this->most_recent_return_list.top()) {
-    // this->table.at(line).set_result(this->get_next_label());
-    FIXME  // ^^^
+    this->table.at(line).set_result(Arg::for_label(this->get_next_label()));
   }
 
   this->most_recent_return_list.pop();
