@@ -28,13 +28,13 @@ int main() {
 
   std::cout << symTable << std::endl;
 
-  if (!HAS_LEX_ERROR && !HAS_SYNTAX_ERROR) {
-    std::ofstream s_quads_txt("quads.txt");
-    s_quads_txt << quadTable << std::endl;
-    s_quads_txt.close();
-
+  if (HAS_LEX_ERROR || HAS_SYNTAX_ERROR) {
     return 1;
   }
+
+  std::ofstream s_quads_txt("quads.txt");
+  s_quads_txt << quadTable << std::endl;
+  s_quads_txt.close();
 
   tcodeTable.parse_quad_table(quadTable);
 
