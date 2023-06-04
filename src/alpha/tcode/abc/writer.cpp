@@ -5,6 +5,7 @@
 
 #include <cassert>
 
+#include <utils/enums.h>
 #include <utils/warnings.h>
 
 #define MAGIC_NUMBER 340200501
@@ -67,7 +68,7 @@ void Writer::write_char_text(const char value) {
 }
 
 void Writer::write_byte_text(const byte& value) {
-  WRITE_TEXT(value);
+  WRITE_TEXT(static_cast<int>(value));
 }
 
 void Writer::write_avm_file() {
@@ -189,8 +190,7 @@ void Writer::write_instruction(const Instruction& instruction) {
 }
 
 void Writer::write_opcode(const Opcode& opcode) {
-  FIXME;
-  WRITE_BYTE(static_cast<byte>(opcode));
+  WRITE_BYTE(static_cast<byte>(utils::enums::to_underlying_value(opcode)));
 }
 
 void Writer::write_operand(const Arg& arg) {
@@ -202,8 +202,7 @@ void Writer::write_operand(const Arg& arg) {
 }
 
 void Writer::write_type(const Type& type) {
-  FIXME;
-  WRITE_BYTE(static_cast<byte>(type));
+  WRITE_BYTE(static_cast<byte>(utils::enums::to_underlying_value(type)));
 }
 
 void Writer::write_value(const unsigned value) {

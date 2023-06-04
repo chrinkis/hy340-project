@@ -14,7 +14,7 @@ class Arg {
   using InstrSrcLine = unsigned;
 
  public:
-  enum class Type {
+  enum class Type : char {
     LABEL = 0,
     GLOBAL = 1,
     FORMAL = 2,
