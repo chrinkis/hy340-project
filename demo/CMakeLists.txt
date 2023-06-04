@@ -19,3 +19,10 @@ add_executable(icode
 
     $<TARGET_OBJECTS:flex_and_bison>
 )
+
+# For target tcode
+add_executable(tcode
+    tcode/main.cpp
+
+    $<TARGET_OBJECTS:flex_and_bison>
+)
