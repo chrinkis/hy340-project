@@ -4,6 +4,9 @@
 
 #include <cassert>
 
+#define MAP_IADDR_WITH_NEXT_TADDR(iaddr) \
+  { this->iaddr_to_taddr_map.insert({iaddr, this->get_next_label()}); }
+
 #define ICODE_TO_TCODE_MAPPER \
   [this](auto iaddr) { return this->iaddr_to_taddr_map.at(iaddr); }
 
@@ -48,8 +51,7 @@ void Table::handle_quad_as_nullary(const instruction::Opcode& opcode,
                                    const icode::quad::Quad& quad) {
   Instruction instruction = NullaryInstruction(opcode, quad);
 
-  this->iaddr_to_taddr_map.insert(
-      {quad.get_line(), instruction.get_src_line()});
+  MAP_IADDR_WITH_NEXT_TADDR(quad.get_line());
 
   this->emit(instruction);
 }
@@ -58,8 +60,7 @@ void Table::handle_quad_as_unary(const instruction::Opcode& opcode,
                                  const icode::quad::Quad& quad) {
   Instruction instruction = UnaryInstruction(opcode, quad);
 
-  this->iaddr_to_taddr_map.insert(
-      {quad.get_line(), instruction.get_src_line()});
+  MAP_IADDR_WITH_NEXT_TADDR(quad.get_line());
 
   this->emit(instruction);
 }
@@ -68,8 +69,7 @@ void Table::handle_quad_as_unary_void(const instruction::Opcode& opcode,
                                       const icode::quad::Quad& quad) {
   Instruction instruction = UnaryVoidInstruction(opcode, quad);
 
-  this->iaddr_to_taddr_map.insert(
-      {quad.get_line(), instruction.get_src_line()});
+  MAP_IADDR_WITH_NEXT_TADDR(quad.get_line());
 
   this->emit(instruction);
 }
@@ -78,8 +78,7 @@ void Table::handle_quad_as_binary(const instruction::Opcode& opcode,
                                   const icode::quad::Quad& quad) {
   Instruction instruction = BinaryInstruction(opcode, quad);
 
-  this->iaddr_to_taddr_map.insert(
-      {quad.get_line(), instruction.get_src_line()});
+  MAP_IADDR_WITH_NEXT_TADDR(quad.get_line());
 
   this->emit(instruction);
 }
@@ -89,8 +88,7 @@ void Table::handle_quad_as_relational(const instruction::Opcode& opcode,
   Instruction instruction = InstructionWithTwoArgs(opcode, quad);
   this->init_instruction_result_from_quad_label(instruction, quad);
 
-  this->iaddr_to_taddr_map.insert(
-      {quad.get_line(), instruction.get_src_line()});
+  MAP_IADDR_WITH_NEXT_TADDR(quad.get_line());
 
   this->emit(instruction);
 }
@@ -99,8 +97,7 @@ void Table::handle_quad_as_get_ret_val(const icode::quad::Quad& quad) {
   Instruction instruction = Instruction::construct_get_ret_val(
       ICODE_TO_TCODE_MAPPER, this->get_next_label(), quad);
 
-  this->iaddr_to_taddr_map.insert(
-      {quad.get_line(), instruction.get_src_line()});
+  MAP_IADDR_WITH_NEXT_TADDR(quad.get_line());
 
   this->emit(instruction);
 }
@@ -109,8 +106,7 @@ void Table::handle_quad_as_jump(const icode::quad::Quad& quad) {
   Instruction instruction(this->get_next_label(), instruction::Opcode::JUMP);
   this->init_instruction_result_from_quad_label(instruction, quad);
 
-  this->iaddr_to_taddr_map.insert(
-      {quad.get_line(), instruction.get_src_line()});
+  MAP_IADDR_WITH_NEXT_TADDR(quad.get_line());
 
   this->emit(instruction);
 }
@@ -119,8 +115,7 @@ void Table::handle_quad_as_ret(const icode::quad::Quad& quad) {
   Instruction instruction = Instruction::construct_for_return(
       ICODE_TO_TCODE_MAPPER, this->get_next_label(), quad);
 
-  this->iaddr_to_taddr_map.insert(
-      {quad.get_line(), instruction.get_src_line()});
+  MAP_IADDR_WITH_NEXT_TADDR(quad.get_line());
 
   this->emit(instruction);
   this->emit(Instruction(this->get_next_label(), instruction::Opcode::JUMP));
