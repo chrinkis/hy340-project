@@ -25,6 +25,7 @@ Arg Arg::from_expr(const icode::Expr& expr, const Mapper& icode_to_tcode) {
     case icode::Expr::Type::ARITHM_EXPR:
     case icode::Expr::Type::BOOL_EXPR:
     case icode::Expr::Type::NEW_TABLE:
+    case icode::Expr::Type::ASSIGN_EXPR:
       assert(expr.has_symbol());
       value = expr.get_symbol()->get_offset();
       type = Arg::type_of_var(*expr.get_symbol());
@@ -65,7 +66,6 @@ Arg Arg::from_expr(const icode::Expr& expr, const Mapper& icode_to_tcode) {
       type = Type::LIB_FUNC;
       break;
 
-    case icode::Expr::Type::ASSIGN_EXPR:
     case icode::Expr::Type::_NO_TYPE:
     default:
       assert(0);
