@@ -8,6 +8,7 @@
 
 #include <map>
 #include <stack>
+#include <utility>
 #include <vector>
 
 namespace alpha::tcode::abc {
@@ -31,6 +32,9 @@ class Table {
 
   std::map<icode::quad::Quad::Line, Instruction::SrcLine> iaddr_to_taddr_map;
   std::map<symbol::Symbol::SharedPtr, Instruction::SrcLine> func_to_taddr_map;
+
+  std::vector<std::pair<Instruction::SrcLine, icode::quad::Quad::Line>>
+      incomplete_jumps;
 
   std::stack<std::vector<Instruction::SrcLine>> most_recent_return_list;
 

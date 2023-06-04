@@ -22,7 +22,16 @@ namespace alpha::tcode::abc {
 void Table::init_instruction_result_from_quad_label(
     Instruction& instruction,
     const icode::quad::Quad& quad) {
-  WARN_EMPTY_FUNC_IMPL()
+  using Arg = instruction::Arg;
+
+  if (quad.get_label() >= quad.get_line()) {
+    this->incomplete_jumps.emplace_back(instruction.get_src_line(),
+                                        quad.get_label());
+    return;
+  }
+
+  instruction.set_result(
+      Arg::for_label(this->iaddr_to_taddr_map.at(quad.get_label())));
 }
 
 void Table::handle_quad_as_nullary(const instruction::Opcode& opcode,
