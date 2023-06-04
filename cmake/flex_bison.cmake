@@ -91,6 +91,8 @@ add_library(flex_and_bison
     ${CMAKE_SOURCE_DIR}/src/alpha/tcode/abc/instruction/instruction.cpp
 
     ${CMAKE_SOURCE_DIR}/src/alpha/tcode/abc/table.cpp
+
+    ${CMAKE_SOURCE_DIR}/src/alpha/tcode/abc/writer.cpp
 )
 
 # WARNING: all file of of lib `flex_and_bison` have direct
