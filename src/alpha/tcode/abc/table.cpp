@@ -3,6 +3,7 @@
 #include <utils/warnings.h>
 
 #include <cassert>
+#include <ranges>
 
 #define MAP_IADDR_WITH_NEXT_TADDR(iaddr) \
   { this->iaddr_to_taddr_map.insert({iaddr, this->get_next_label()}); }
@@ -230,7 +231,7 @@ void Table::handle_quad(const icode::quad::Quad& quad) {
 void Table::parse_quad_table(const icode::quad::Table& quad_table) {
   using Arg = instruction::Arg;
 
-  for (const auto& quad : quad_table) {
+  for (const auto& quad : quad_table | std::views::drop(1)) {
     this->handle_quad(quad);
   }
 
