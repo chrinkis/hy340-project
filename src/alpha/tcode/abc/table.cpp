@@ -49,73 +49,73 @@ void Table::init_instruction_result_from_quad_label(
 
 void Table::handle_quad_as_nullary(const instruction::Opcode& opcode,
                                    const icode::quad::Quad& quad) {
-  Instruction instruction = NullaryInstruction(opcode, quad);
-
   MAP_IADDR_WITH_NEXT_TADDR(quad.get_line());
+
+  Instruction instruction = NullaryInstruction(opcode, quad);
 
   this->emit(instruction);
 }
 
 void Table::handle_quad_as_unary(const instruction::Opcode& opcode,
                                  const icode::quad::Quad& quad) {
-  Instruction instruction = UnaryInstruction(opcode, quad);
-
   MAP_IADDR_WITH_NEXT_TADDR(quad.get_line());
+
+  Instruction instruction = UnaryInstruction(opcode, quad);
 
   this->emit(instruction);
 }
 
 void Table::handle_quad_as_unary_void(const instruction::Opcode& opcode,
                                       const icode::quad::Quad& quad) {
-  Instruction instruction = UnaryVoidInstruction(opcode, quad);
-
   MAP_IADDR_WITH_NEXT_TADDR(quad.get_line());
+
+  Instruction instruction = UnaryVoidInstruction(opcode, quad);
 
   this->emit(instruction);
 }
 
 void Table::handle_quad_as_binary(const instruction::Opcode& opcode,
                                   const icode::quad::Quad& quad) {
-  Instruction instruction = BinaryInstruction(opcode, quad);
-
   MAP_IADDR_WITH_NEXT_TADDR(quad.get_line());
+
+  Instruction instruction = BinaryInstruction(opcode, quad);
 
   this->emit(instruction);
 }
 
 void Table::handle_quad_as_relational(const instruction::Opcode& opcode,
                                       const icode::quad::Quad& quad) {
+  MAP_IADDR_WITH_NEXT_TADDR(quad.get_line());
+
   Instruction instruction = InstructionWithTwoArgs(opcode, quad);
   this->init_instruction_result_from_quad_label(instruction, quad);
-
-  MAP_IADDR_WITH_NEXT_TADDR(quad.get_line());
 
   this->emit(instruction);
 }
 
 void Table::handle_quad_as_get_ret_val(const icode::quad::Quad& quad) {
+  MAP_IADDR_WITH_NEXT_TADDR(quad.get_line());
+
   Instruction instruction = Instruction::construct_get_ret_val(
       ICODE_TO_TCODE_MAPPER, this->get_next_label(), quad);
-
-  MAP_IADDR_WITH_NEXT_TADDR(quad.get_line());
 
   this->emit(instruction);
 }
 
 void Table::handle_quad_as_jump(const icode::quad::Quad& quad) {
+  MAP_IADDR_WITH_NEXT_TADDR(quad.get_line());
+
   Instruction instruction(this->get_next_label(), instruction::Opcode::JUMP);
   this->init_instruction_result_from_quad_label(instruction, quad);
-
-  MAP_IADDR_WITH_NEXT_TADDR(quad.get_line());
 
   this->emit(instruction);
 }
 
 void Table::handle_quad_as_ret(const icode::quad::Quad& quad) {
+  MAP_IADDR_WITH_NEXT_TADDR(quad.get_line());
+
   Instruction instruction = Instruction::construct_for_return(
       ICODE_TO_TCODE_MAPPER, this->get_next_label(), quad);
-
-  MAP_IADDR_WITH_NEXT_TADDR(quad.get_line());
 
   this->emit(instruction);
   this->emit(Instruction(this->get_next_label(), instruction::Opcode::JUMP));
