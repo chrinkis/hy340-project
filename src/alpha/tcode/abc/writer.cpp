@@ -13,7 +13,7 @@
 #define WRITE_BINARY(value) \
   this->ofs.write(reinterpret_cast<const char*>(&(value)), sizeof(value))
 
-#define WRITE_TEXT(value) this->ofs << (value) << " "
+#define WRITE_TEXT(value) this->ofs << (value) << std::endl;
 
 #define GET_FILE_TYPE (this->get_file_type())
 
@@ -64,7 +64,11 @@ void Writer::write_unsigned_text(const unsigned value) {
 }
 
 void Writer::write_char_text(const char value) {
-  WRITE_TEXT(value);
+  if (value == '\0') {
+    WRITE_TEXT("'\\0'");
+  } else {
+    WRITE_TEXT(value);
+  }
 }
 
 void Writer::write_byte_text(const byte& value) {
@@ -187,6 +191,9 @@ void Writer::write_instruction(const Instruction& instruction) {
 
   auto arg_b = instruction.get_arg_b();
   this->write_operand(arg_b);
+
+  this->ofs << std::endl;
+  FIXME  // ^^^^^^^
 }
 
 void Writer::write_opcode(const Opcode& opcode) {
