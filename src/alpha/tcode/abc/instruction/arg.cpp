@@ -80,6 +80,10 @@ Arg Arg::from_bool(const bool boolean) {
   return Arg(Type::BOOL, boolean);
 }
 
+Arg Arg::for_label(const InstrSrcLine& instr_src_line) {
+  return Arg(Type::LABEL, instr_src_line);
+}
+
 Arg Arg::for_ret_val() {
   return Arg(Type::RET_VAL, 0);
 }
