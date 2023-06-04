@@ -97,7 +97,14 @@ void Table::handle_quad_as_jump(const icode::quad::Quad& quad) {
 }
 
 void Table::handle_quad_as_ret(const icode::quad::Quad& quad) {
-  WARN_EMPTY_FUNC_IMPL();
+  Instruction instruction =
+      Instruction::construct_for_return(this->get_next_label(), quad);
+
+  this->iaddr_to_taddr_map.insert(
+      {quad.get_line(), instruction.get_src_line()});
+
+  this->emit(instruction);
+  this->emit(Instruction(this->get_next_label(), instruction::Opcode::JUMP));
 }
 
 void Table::handle_quad_as_func_enter(const icode::quad::Quad& quad) {

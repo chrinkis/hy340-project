@@ -75,6 +75,16 @@ Instruction Instruction::construct_get_ret_val(const SrcLine& src_line,
   return instruction;
 }
 
+Instruction Instruction::construct_for_return(const SrcLine& src_line,
+                                              const icode::quad::Quad& quad) {
+  Instruction instruction(src_line, Opcode::ASSIGN);
+
+  instruction.result = Arg::for_ret_val();
+  instruction.arg_a = Arg::from_expr(quad.get_arg1());
+
+  return instruction;
+}
+
 Opcode Instruction::get_opcode() const {
   return this->opcode;
 }

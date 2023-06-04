@@ -45,6 +45,9 @@ class Instruction {
   static Instruction construct_get_ret_val(const SrcLine& src_line,
                                            const icode::quad::Quad& quad);
 
+  static Instruction construct_for_return(const SrcLine& src_line,
+                                          const icode::quad::Quad& quad);
+
  public:
   Instruction(const SrcLine& src_line, const Opcode& opcode);
   Instruction(const Instruction& instruction);
