@@ -7,6 +7,10 @@ namespace alpha::tcode::abc::instruction {
 
 class Arg {
  public:
+  // FIXME
+  using InstrSrcLine = unsigned;
+
+ public:
   enum class Type {
     LABEL = 0,
     GLOBAL = 1,
@@ -34,6 +38,7 @@ class Arg {
   static Arg from_expr(const icode::Expr& expr);
   static Arg from_number(const double number);
   static Arg from_bool(const bool boolean);
+  static Arg for_label(const InstrSrcLine& instr_src_line);
   static Arg for_ret_val();
 
   Type get_type() const;
