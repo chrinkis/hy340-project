@@ -239,6 +239,9 @@ void Table::parse_quad_table(const icode::quad::Table& quad_table) {
     this->handle_quad(quad);
   }
 
+  MAP_IADDR_WITH_NEXT_TADDR(quad_table.get_next_label());
+  this->emit(Instruction(this->get_next_label(), instruction::Opcode::NOP));
+
   for (const auto& pair : incomplete_jumps) {
     const auto& src = pair.first;
     const auto& dest = this->iaddr_to_taddr_map.at(pair.second);
