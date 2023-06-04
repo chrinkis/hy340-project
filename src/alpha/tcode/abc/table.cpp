@@ -225,8 +225,19 @@ void Table::handle_quad(const icode::quad::Quad& quad) {
   }
 }
 
-void Table::parse_quad_table() {
-  WARN_EMPTY_FUNC_IMPL();
+void Table::parse_quad_table(const icode::quad::Table& quad_table) {
+  using Arg = instruction::Arg;
+
+  for (const auto& quad : quad_table) {
+    this->handle_quad(quad);
+  }
+
+  for (const auto& pair : incomplete_jumps) {
+    const auto& src = pair.first;
+    const auto& dest = this->iaddr_to_taddr_map.at(pair.second);
+
+    this->table.at(src).set_result(Arg::for_label(dest));
+  }
 }
 
 void Table::emit(const Instruction& instruction) {

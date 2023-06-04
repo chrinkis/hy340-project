@@ -2,6 +2,7 @@
 
 #define tcodeTable (alpha::tcode::abc::Table::get())
 
+#include <alpha/icode/quad/table.h>
 #include <alpha/symbol/function.h>
 #include <alpha/tcode/abc/instruction/instruction.h>
 #include <alpha/tcode/abc/instruction/opcode.h>
@@ -72,7 +73,7 @@ class Table {
   void handle_quad_as_func_exit(const icode::quad::Quad& quad);
 
  public:
-  void parse_quad_table();
+  void parse_quad_table(const icode::quad::Table& quad_table);
 
   Instruction::SrcLine get_next_label() const;
 };

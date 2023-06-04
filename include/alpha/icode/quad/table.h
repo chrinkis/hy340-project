@@ -65,6 +65,12 @@ class Table {
                          const Quad::Line& list_head_b);
 
   friend std::ostream& operator<<(std::ostream& os, const Table& qt);
+
+ public: /* Iterators */
+  using ConstIterator = Collection::const_iterator;
+
+  ConstIterator begin() const;
+  ConstIterator end() const;
 };
 
 }  // namespace alpha::icode::quad
