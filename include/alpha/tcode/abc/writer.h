@@ -86,8 +86,8 @@ class Writer {
   void write(const string& file_name, const StreamOptions& options);
 
  public:
-  void write_binary(string file_name);
-  void write_text(string file_name);
+  void write_binary(const string& file_name);
+  void write_text(const string& file_name);
 };
 
 }  // namespace alpha::tcode::abc

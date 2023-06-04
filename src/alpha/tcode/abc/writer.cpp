@@ -221,12 +221,12 @@ void Writer::write(const string& file_name, const StreamOptions& options) {
   this->ofs.close();
 }
 
-void Writer::write_binary(string file_name) {
+void Writer::write_binary(const string& file_name) {
   this->file_type = FileType::BINARY;
   this->write(file_name, std::ios::out | std::ios::binary);
 }
 
-void Writer::write_text(string file_name) {
+void Writer::write_text(const string& file_name) {
   this->file_type = FileType::TEXT;
   this->write(file_name, std::ios::out);
 }
