@@ -103,21 +103,21 @@ void Table::handle_quad_as_ret(const icode::quad::Quad& quad) {
 void Table::handle_quad_as_func_enter(const icode::quad::Quad& quad) {
   using Opcode = instruction::Opcode;
 
-  this->most_recent_funcstart.taddr.push(
-      this->get_next_label());  // Why do we need it?
-  this->most_recent_funcstart.return_list.emplace();
+  this->func_to_taddr_map.insert(
+      {quad.get_result().get_symbol(), this->get_next_label()});
+
+  this->most_recent_return_list.emplace();
 
   this->handle_quad_as_nullary(Opcode::FUNC_ENTER, quad);
 }
 
 void Table::handle_quad_as_func_exit(const icode::quad::Quad& quad) {
-  for (auto& line : this->most_recent_funcstart.return_list.top()) {
+  for (auto& line : this->most_recent_return_list.top()) {
     // this->table.at(line).set_result(this->get_next_label());
     FIXME  // ^^^
   }
 
-  this->most_recent_funcstart.taddr.pop();
-  this->most_recent_funcstart.return_list.pop();
+  this->most_recent_return_list.pop();
 
   this->handle_quad_as_nullary(instruction::Opcode::FUNC_EXIT, quad);
 }

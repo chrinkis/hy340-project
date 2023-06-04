@@ -2,6 +2,7 @@
 
 #define tcodeTable (alpha::tcode::abc::Table::get())
 
+#include <alpha/symbol/function.h>
 #include <alpha/tcode/abc/instruction/instruction.h>
 #include <alpha/tcode/abc/instruction/opcode.h>
 
@@ -29,11 +30,9 @@ class Table {
   Collection table;
 
   std::map<icode::quad::Quad::Line, Instruction::SrcLine> iaddr_to_taddr_map;
+  std::map<symbol::Symbol::SharedPtr, Instruction::SrcLine> func_to_taddr_map;
 
-  struct {
-    std::stack<Instruction::SrcLine> taddr;
-    std::stack<std::vector<Instruction::SrcLine>> return_list;
-  } most_recent_funcstart;
+  std::stack<std::vector<Instruction::SrcLine>> most_recent_return_list;
 
  private:
   void emit(const Instruction& instruction);
