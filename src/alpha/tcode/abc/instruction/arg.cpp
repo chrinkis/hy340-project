@@ -13,7 +13,7 @@ Arg::Arg(const Type& type, unsigned value) : type(type), value(value) {}
 
 Arg::Arg(const Arg& arg) : type(arg.get_type()), value(arg.get_value()) {}
 
-Arg Arg::from_expr(const icode::Expr& expr) {
+Arg Arg::from_expr(const icode::Expr& expr, const Mapper& icode_to_tcode) {
   Type type;
   unsigned value;
 
@@ -53,7 +53,7 @@ Arg Arg::from_expr(const icode::Expr& expr) {
 
     case icode::Expr::Type::PROGRAM_FUNC:
       assert(expr.has_symbol());
-      value = Arg::value_of_program_func(*expr.get_symbol());
+      value = Arg::value_of_program_func(*expr.get_symbol(), icode_to_tcode);
       type = Type::USER_FUNC;
       break;
 
@@ -111,13 +111,15 @@ Arg::Type Arg::type_of_var(const symbol::Symbol& symbol) {
   }
 }
 
-unsigned Arg::value_of_program_func(const symbol::Symbol& symbol) {
+unsigned Arg::value_of_program_func(const symbol::Symbol& symbol,
+                                    const Mapper& icode_to_tcode) {
   const symbol::Function* function =
       dynamic_cast<const symbol::Function*>(&symbol);
   assert(function);
 
-  FIXME;
-  consts::UserFunc user_func(function->get_iaddress(), function->get_name(),
+  auto taddr = icode_to_tcode(function->get_iaddress());
+
+  consts::UserFunc user_func(taddr, function->get_name(),
                              function->get_total_locals());
 
   return tcodeConsts.user_func(user_func);

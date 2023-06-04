@@ -4,20 +4,28 @@
 
 #include <cassert>
 
-#define NullaryInstruction(opcode, quad) \
-  (Instruction::construct_nullary(this->get_next_label(), opcode, quad))
+#define ICODE_TO_TCODE_MAPPER \
+  [this](auto iaddr) { return this->iaddr_to_taddr_map.at(iaddr); }
 
-#define UnaryInstruction(opcode, quad) \
-  (Instruction::construct_unary(this->get_next_label(), opcode, quad))
+#define NullaryInstruction(opcode, quad)                 \
+  (Instruction::construct_nullary(ICODE_TO_TCODE_MAPPER, \
+                                  this->get_next_label(), opcode, quad))
 
-#define UnaryVoidInstruction(opcode, quad) \
-  (Instruction::construct_with_one_arg(this->get_next_label(), opcode, quad))
+#define UnaryInstruction(opcode, quad)                                         \
+  (Instruction::construct_unary(ICODE_TO_TCODE_MAPPER, this->get_next_label(), \
+                                opcode, quad))
 
-#define BinaryInstruction(opcode, quad) \
-  (Instruction::construct_binary(this->get_next_label(), opcode, quad))
+#define UnaryVoidInstruction(opcode, quad)                    \
+  (Instruction::construct_with_one_arg(ICODE_TO_TCODE_MAPPER, \
+                                       this->get_next_label(), opcode, quad))
 
-#define InstructionWithTwoArgs(opcode, quad) \
-  (Instruction::construct_with_two_args(this->get_next_label(), opcode, quad))
+#define BinaryInstruction(opcode, quad)                 \
+  (Instruction::construct_binary(ICODE_TO_TCODE_MAPPER, \
+                                 this->get_next_label(), opcode, quad))
+
+#define InstructionWithTwoArgs(opcode, quad)                   \
+  (Instruction::construct_with_two_args(ICODE_TO_TCODE_MAPPER, \
+                                        this->get_next_label(), opcode, quad))
 
 namespace alpha::tcode::abc {
 
@@ -88,8 +96,8 @@ void Table::handle_quad_as_relational(const instruction::Opcode& opcode,
 }
 
 void Table::handle_quad_as_get_ret_val(const icode::quad::Quad& quad) {
-  Instruction instruction =
-      Instruction::construct_get_ret_val(this->get_next_label(), quad);
+  Instruction instruction = Instruction::construct_get_ret_val(
+      ICODE_TO_TCODE_MAPPER, this->get_next_label(), quad);
 
   this->iaddr_to_taddr_map.insert(
       {quad.get_line(), instruction.get_src_line()});
@@ -108,8 +116,8 @@ void Table::handle_quad_as_jump(const icode::quad::Quad& quad) {
 }
 
 void Table::handle_quad_as_ret(const icode::quad::Quad& quad) {
-  Instruction instruction =
-      Instruction::construct_for_return(this->get_next_label(), quad);
+  Instruction instruction = Instruction::construct_for_return(
+      ICODE_TO_TCODE_MAPPER, this->get_next_label(), quad);
 
   this->iaddr_to_taddr_map.insert(
       {quad.get_line(), instruction.get_src_line()});
