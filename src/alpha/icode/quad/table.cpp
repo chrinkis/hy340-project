@@ -96,6 +96,14 @@ Quad::Line Table::merge_lists(const Quad::Line& list_head_a,
   return list_head_a;
 }
 
+Table::ConstIterator Table::begin() const {
+  return this->table.begin();
+}
+
+Table::ConstIterator Table::end() const {
+  return this->table.end();
+}
+
 std::ostream& operator<<(std::ostream& os, const Table& qt) {
   os << std::left;
 

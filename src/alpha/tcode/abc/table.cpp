@@ -2,6 +2,8 @@
 
 #include <utils/warnings.h>
 
+#include <cassert>
+
 #define NullaryInstruction(opcode, quad) \
   (Instruction::construct_nullary(this->get_next_label(), opcode, quad))
 
@@ -22,7 +24,16 @@ namespace alpha::tcode::abc {
 void Table::init_instruction_result_from_quad_label(
     Instruction& instruction,
     const icode::quad::Quad& quad) {
-  WARN_EMPTY_FUNC_IMPL()
+  using Arg = instruction::Arg;
+
+  if (quad.get_label() >= quad.get_line()) {
+    this->incomplete_jumps.emplace_back(instruction.get_src_line(),
+                                        quad.get_label());
+    return;
+  }
+
+  instruction.set_result(
+      Arg::for_label(this->iaddr_to_taddr_map.at(quad.get_label())));
 }
 
 void Table::handle_quad_as_nullary(const instruction::Opcode& opcode,
@@ -96,6 +107,40 @@ void Table::handle_quad_as_jump(const icode::quad::Quad& quad) {
   this->emit(instruction);
 }
 
+void Table::handle_quad_as_ret(const icode::quad::Quad& quad) {
+  Instruction instruction =
+      Instruction::construct_for_return(this->get_next_label(), quad);
+
+  this->iaddr_to_taddr_map.insert(
+      {quad.get_line(), instruction.get_src_line()});
+
+  this->emit(instruction);
+  this->emit(Instruction(this->get_next_label(), instruction::Opcode::JUMP));
+}
+
+void Table::handle_quad_as_func_enter(const icode::quad::Quad& quad) {
+  using Opcode = instruction::Opcode;
+
+  this->func_to_taddr_map.insert(
+      {quad.get_result().get_symbol(), this->get_next_label()});
+
+  this->most_recent_return_list.emplace();
+
+  this->handle_quad_as_nullary(Opcode::FUNC_ENTER, quad);
+}
+
+void Table::handle_quad_as_func_exit(const icode::quad::Quad& quad) {
+  using Arg = instruction::Arg;
+
+  for (auto& line : this->most_recent_return_list.top()) {
+    this->table.at(line).set_result(Arg::for_label(this->get_next_label()));
+  }
+
+  this->most_recent_return_list.pop();
+
+  this->handle_quad_as_nullary(instruction::Opcode::FUNC_EXIT, quad);
+}
+
 void Table::handle_quad(const icode::quad::Quad& quad) {
   using Quad = icode::quad::Quad;
   using Opcode = instruction::Opcode;
@@ -159,16 +204,16 @@ void Table::handle_quad(const icode::quad::Quad& quad) {
       this->handle_quad_as_unary_void(Opcode::PUSH_ARG, quad);
       break;
     case Quad::Opcode::RET:
-      FIXME
+      this->handle_quad_as_ret(quad);
       break;
     case Quad::Opcode::GETRETVAL:
       this->handle_quad_as_get_ret_val(quad);
       break;
     case Quad::Opcode::FUNCSTART:
-      FIXME
+      this->handle_quad_as_func_enter(quad);
       break;
     case Quad::Opcode::FUNCEND:
-      FIXME
+      this->handle_quad_as_func_exit(quad);
       break;
     case Quad::Opcode::TABLECREATE:
       this->handle_quad_as_nullary(Opcode::NEW_TABLE, quad);
@@ -182,12 +227,25 @@ void Table::handle_quad(const icode::quad::Quad& quad) {
   }
 }
 
-void Table::parse_quad_table() {
-  WARN_EMPTY_FUNC_IMPL();
+void Table::parse_quad_table(const icode::quad::Table& quad_table) {
+  using Arg = instruction::Arg;
+
+  for (const auto& quad : quad_table) {
+    this->handle_quad(quad);
+  }
+
+  for (const auto& pair : incomplete_jumps) {
+    const auto& src = pair.first;
+    const auto& dest = this->iaddr_to_taddr_map.at(pair.second);
+
+    this->table.at(src).set_result(Arg::for_label(dest));
+  }
 }
 
 void Table::emit(const Instruction& instruction) {
-  WARN_EMPTY_FUNC_IMPL();
+  assert(instruction.get_src_line() == this->get_next_label());
+
+  this->table.push_back(instruction);
 }
 
 Table::Instruction::SrcLine Table::get_next_label() const {
