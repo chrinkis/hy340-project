@@ -8,7 +8,11 @@ Instruction::Instruction(const SrcLine& src_line, const Opcode& opcode)
     : src_line(src_line), opcode(opcode) {}
 
 Instruction::Instruction(const Instruction& other)
-    : src_line(other.src_line), opcode(other.opcode) {}
+    : src_line(other.src_line),
+      opcode(other.opcode),
+      result(other.result),
+      arg_a(other.arg_a),
+      arg_b(other.arg_b) {}
 
 Instruction Instruction::construct_nullary(const Arg::Mapper& icode_to_tcode,
                                            const SrcLine& src_line,
