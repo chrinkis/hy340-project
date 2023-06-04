@@ -22,30 +22,37 @@ class Instruction {
   SrcLine src_line;
 
  public:
-  static Instruction construct_nullary(const SrcLine& src_line,
+  static Instruction construct_nullary(const Arg::Mapper& icode_to_tcode,
+                                       const SrcLine& src_line,
                                        const Opcode& opcode,
                                        const icode::quad::Quad& quad);
 
-  static Instruction construct_unary(const SrcLine& src_line,
+  static Instruction construct_unary(const Arg::Mapper& icode_to_tcode,
+                                     const SrcLine& src_line,
                                      const Opcode& opcode,
                                      const icode::quad::Quad& quad);
 
-  static Instruction construct_binary(const SrcLine& src_line,
+  static Instruction construct_binary(const Arg::Mapper& icode_to_tcode,
+                                      const SrcLine& src_line,
                                       const Opcode& opcode,
                                       const icode::quad::Quad& quad);
 
-  static Instruction construct_with_two_args(const SrcLine& src_line,
+  static Instruction construct_with_two_args(const Arg::Mapper& icode_to_tcode,
+                                             const SrcLine& src_line,
                                              const Opcode& opcode,
                                              const icode::quad::Quad& quad);
 
-  static Instruction construct_with_one_arg(const SrcLine& src_line,
+  static Instruction construct_with_one_arg(const Arg::Mapper& icode_to_tcode,
+                                            const SrcLine& src_line,
                                             const Opcode& opcode,
                                             const icode::quad::Quad& quad);
 
-  static Instruction construct_get_ret_val(const SrcLine& src_line,
+  static Instruction construct_get_ret_val(const Arg::Mapper& icode_to_tcode,
+                                           const SrcLine& src_line,
                                            const icode::quad::Quad& quad);
 
-  static Instruction construct_for_return(const SrcLine& src_line,
+  static Instruction construct_for_return(const Arg::Mapper& icode_to_tcode,
+                                          const SrcLine& src_line,
                                           const icode::quad::Quad& quad);
 
  public:

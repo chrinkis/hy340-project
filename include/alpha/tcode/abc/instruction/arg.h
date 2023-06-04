@@ -1,7 +1,10 @@
 #pragma once
 
 #include <alpha/icode/expr.h>
+#include <alpha/icode/quad/quad.h>
 #include <alpha/symbol/symbol.h>
+
+#include <functional>
 
 namespace alpha::tcode::abc::instruction {
 
@@ -25,6 +28,8 @@ class Arg {
     RET_VAL = 10,
   };
 
+  using Mapper = std::function<InstrSrcLine(const icode::quad::Quad::Line)>;
+
  private:
   Type type;
   unsigned value;
@@ -35,7 +40,7 @@ class Arg {
  public:
   Arg(const Arg& arg);
 
-  static Arg from_expr(const icode::Expr& expr);
+  static Arg from_expr(const icode::Expr& expr, const Mapper& icode_to_tcode);
   static Arg from_number(const double number);
   static Arg from_bool(const bool boolean);
   static Arg for_label(const InstrSrcLine& instr_src_line);
@@ -46,7 +51,8 @@ class Arg {
 
  private:
   static Type type_of_var(const symbol::Symbol& symbol);
-  static unsigned value_of_program_func(const symbol::Symbol& symbol);
+  static unsigned value_of_program_func(const symbol::Symbol& symbol,
+                                        const Mapper& icode_to_tcode);
 };
 
 }  // namespace alpha::tcode::abc::instruction

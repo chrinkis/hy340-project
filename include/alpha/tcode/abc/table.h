@@ -32,7 +32,6 @@ class Table {
   Collection table;
 
   std::map<icode::quad::Quad::Line, Instruction::SrcLine> iaddr_to_taddr_map;
-  std::map<symbol::Symbol::SharedPtr, Instruction::SrcLine> func_to_taddr_map;
 
   std::vector<std::pair<Instruction::SrcLine, icode::quad::Quad::Line>>
       incomplete_jumps;
