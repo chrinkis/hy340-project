@@ -124,9 +124,6 @@ void Table::handle_quad_as_ret(const icode::quad::Quad& quad) {
 void Table::handle_quad_as_func_enter(const icode::quad::Quad& quad) {
   using Opcode = instruction::Opcode;
 
-  this->func_to_taddr_map.insert(
-      {quad.get_result().get_symbol(), this->get_next_label()});
-
   this->most_recent_return_list.emplace();
 
   this->handle_quad_as_nullary(Opcode::FUNC_ENTER, quad);
