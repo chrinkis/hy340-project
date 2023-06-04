@@ -2,7 +2,7 @@
 
 namespace alpha::tcode::abc::instruction {
 
-enum class Opcode {
+enum class Opcode : char {
   ASSIGN,
   ADD,
   SUB,
