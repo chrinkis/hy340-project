@@ -4,8 +4,6 @@
 #include <alpha/tcode/abc/instruction/arg.h>
 #include <alpha/tcode/abc/instruction/opcode.h>
 
-#include <optional>
-
 namespace alpha::tcode::abc::instruction {
 
 class Instruction {
@@ -15,9 +13,9 @@ class Instruction {
  private:
   Opcode opcode;
 
-  std::optional<Arg> result;
-  std::optional<Arg> arg_a;
-  std::optional<Arg> arg_b;
+  Arg result;
+  Arg arg_a;
+  Arg arg_b;
 
   SrcLine src_line;
 
@@ -61,12 +59,12 @@ class Instruction {
 
   Opcode get_opcode() const;
 
-  std::optional<Arg> get_result() const;
+  Arg get_result() const;
   void set_result(const Arg& arg);
 
-  std::optional<Arg> get_arg_a() const;
+  Arg get_arg_a() const;
 
-  std::optional<Arg> get_arg_b() const;
+  Arg get_arg_b() const;
 
   SrcLine get_src_line() const;
 };

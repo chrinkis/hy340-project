@@ -98,7 +98,7 @@ Opcode Instruction::get_opcode() const {
   return this->opcode;
 }
 
-std::optional<Arg> Instruction::get_result() const {
+Arg Instruction::get_result() const {
   return this->result;
 }
 
@@ -106,11 +106,11 @@ void Instruction::set_result(const Arg& arg) {
   this->result = arg;
 }
 
-std::optional<Arg> Instruction::get_arg_a() const {
+Arg Instruction::get_arg_a() const {
   return this->arg_a;
 }
 
-std::optional<Arg> Instruction::get_arg_b() const {
+Arg Instruction::get_arg_b() const {
   return this->arg_b;
 }
 

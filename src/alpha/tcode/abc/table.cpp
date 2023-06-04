@@ -228,6 +228,10 @@ void Table::handle_quad(const icode::quad::Quad& quad) {
   }
 }
 
+unsigned Table::get_size() const {
+  return this->table.size();
+}
+
 void Table::parse_quad_table(const icode::quad::Table& quad_table) {
   using Arg = instruction::Arg;
 
@@ -251,6 +255,14 @@ void Table::emit(const Instruction& instruction) {
 
 Table::Instruction::SrcLine Table::get_next_label() const {
   return this->table.size();
+}
+
+Table::ConstIterator Table::begin() const {
+  return this->table.begin();
+}
+
+Table::ConstIterator Table::end() const {
+  return this->table.end();
 }
 
 }  // namespace alpha::tcode::abc
