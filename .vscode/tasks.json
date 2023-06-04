@@ -46,6 +46,22 @@
             ]
         },
         {
+            "label": "tcode: build",
+            "type": "shell",
+            "command": "cd build && make tcode",
+            "dependsOn": [
+                "cmake"
+            ]
+        },
+        {
+            "label": "tcode: run",
+            "type": "shell",
+            "command": "cd build && demo/tcode",
+            "dependsOn": [
+                "tcode: build"
+            ]
+        },
+        {
             "label": "icode: build",
             "type": "shell",
             "command": "cd build && make icode",
