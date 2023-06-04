@@ -6,6 +6,7 @@
 #include <alpha/syntax/error.h>
 #include <alpha/syntax/parser.h>
 #include <alpha/tcode/abc/table.h>
+#include <alpha/tcode/abc/writer.h>
 
 #include <fstream>
 #include <iostream>
@@ -16,6 +17,7 @@
 using Scanner = alpha::lex::Scanner;
 using Parser = alpha::syntax::Parser;
 using Table = alpha::symbol::Table;
+using Writer = alpha::tcode::abc::Writer;
 
 int main() {
   Scanner scanner(std::cin);
@@ -35,6 +37,11 @@ int main() {
   }
 
   tcodeTable.parse_quad_table(quadTable);
+
+  Writer writer;
+
+  writer.write_text("tcode.txt");
+  writer.write_binary("tcode.abc");
 
   return 0;
 }
