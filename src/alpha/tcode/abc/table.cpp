@@ -227,6 +227,10 @@ void Table::handle_quad(const icode::quad::Quad& quad) {
   }
 }
 
+unsigned Table::get_size() const {
+  return this->table.size();
+}
+
 void Table::parse_quad_table(const icode::quad::Table& quad_table) {
   using Arg = instruction::Arg;
 
