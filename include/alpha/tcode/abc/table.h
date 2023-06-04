@@ -77,6 +77,12 @@ class Table {
   void parse_quad_table(const icode::quad::Table& quad_table);
 
   Instruction::SrcLine get_next_label() const;
+
+ public: /* Iterators */
+  using ConstIterator = Collection::const_iterator;
+
+  ConstIterator begin() const;
+  ConstIterator end() const;
 };
 
 }  // namespace alpha::tcode::abc

@@ -256,4 +256,12 @@ Table::Instruction::SrcLine Table::get_next_label() const {
   return this->table.size();
 }
 
+Table::ConstIterator Table::begin() const {
+  return this->table.begin();
+}
+
+Table::ConstIterator Table::end() const {
+  return this->table.end();
+}
+
 }  // namespace alpha::tcode::abc
