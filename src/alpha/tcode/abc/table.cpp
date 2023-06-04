@@ -2,6 +2,8 @@
 
 #include <utils/warnings.h>
 
+#include <cassert>
+
 #define NullaryInstruction(opcode, quad) \
   (Instruction::construct_nullary(this->get_next_label(), opcode, quad))
 
@@ -241,7 +243,9 @@ void Table::parse_quad_table(const icode::quad::Table& quad_table) {
 }
 
 void Table::emit(const Instruction& instruction) {
-  WARN_EMPTY_FUNC_IMPL();
+  assert(instruction.get_src_line() == this->get_next_label());
+
+  this->table.push_back(instruction);
 }
 
 Table::Instruction::SrcLine Table::get_next_label() const {
