@@ -29,7 +29,7 @@ class Cpu {
     mem::Cell retval;
     MemStack::Index top;
     MemStack::Index topsp;
-  } register;
+  } registers;
 
  private:
   bool execution_finished;
