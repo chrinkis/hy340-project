@@ -27,7 +27,6 @@ include(flex_bison)
 
 # Add cmakes from subdirs
 add_subdirectory(src)
-add_subdirectory(demo)
 if (NOT skip_tests)
     add_subdirectory(test)
 endif()
