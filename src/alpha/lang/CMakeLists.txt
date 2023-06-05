@@ -14,7 +14,6 @@ file(MAKE_DIRECTORY
     ${CMAKE_BINARY_DIR}/src/alpha/lang/lex
 )
 
-
 # Bison
 find_package(BISON 3.7.5)
 
