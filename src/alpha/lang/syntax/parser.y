@@ -26,7 +26,7 @@
 %parse-param { alpha::symbol::Table &symbol_table }
 
 %locations
-%define api.location.include {<alpha/syntax/location.h>}
+%define api.location.include {<alpha/lang/syntax/location.h>}
 
 %define parse.error verbose
 
