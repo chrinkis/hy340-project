@@ -4,6 +4,7 @@
 #include <alpha/vm/abc/instruction/instruction.h>
 #include <alpha/vm/arch/mem/cell.h>
 #include <alpha/vm/arch/mem/code/table.h>
+#include <alpha/vm/arch/mem/consts/consts.h>
 #include <alpha/vm/arch/mem/stack/stack.h>
 #include <alpha/vm/runtime/table/table.h>
 
@@ -17,6 +18,7 @@ class Cpu {
   using AbcInstruction = abc::instruction::Instruction;
   using AbcArg = abc::instruction::Arg;
   using CodeTable = mem::code::Table;
+  using ConstTable = mem::consts::Consts;
 
  public:
   // FIXME: should this be private?
@@ -36,7 +38,11 @@ class Cpu {
 
   unsigned total_actuals;
 
+  MemStack& memory_stack;
+  ConstTable& const_table;
+
  public:
+  Cpu(MemStack& memory_stack, ConstTable& const_table);
   void execute_cycle();
 
  private:
