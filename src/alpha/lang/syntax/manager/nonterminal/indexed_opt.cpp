@@ -1,6 +1,6 @@
-#include <alpha/syntax/manager/nonterminal/indexed_opt.h>
+#include <alpha/lang/syntax/manager/nonterminal/indexed_opt.h>
 
-#include <alpha/syntax/manager/nonterminal/indexedelem.h>
+#include <alpha/lang/syntax/manager/nonterminal/indexedelem.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 

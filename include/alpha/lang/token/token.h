@@ -1,6 +1,6 @@
 #pragma once
 
-#include <alpha/syntax/parser.h>
+#include <alpha/lang/syntax/parser.h>
 #include <string>
 
 namespace alpha {

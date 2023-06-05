@@ -1,9 +1,9 @@
 #pragma once
 
-#include <alpha/icode/quad/quad.h>
-#include <alpha/symbol/symbol.h>
-#include <alpha/syntax/manager/terminal/function.h>
-#include <alpha/syntax/manager/terminal/identifier.h>
+#include <alpha/lang/icode/quad/quad.h>
+#include <alpha/lang/symbol/symbol.h>
+#include <alpha/lang/syntax/manager/terminal/function.h>
+#include <alpha/lang/syntax/manager/terminal/identifier.h>
 
 namespace alpha {
 namespace syntax {

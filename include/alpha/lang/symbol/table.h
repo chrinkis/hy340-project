@@ -1,8 +1,8 @@
 #pragma once
 
-#include <alpha/symbol/table_entry.h>
+#include <alpha/lang/symbol/table_entry.h>
 
-#include <alpha/symbol/symbol.h>
+#include <alpha/lang/symbol/symbol.h>
 
 #include <optional>
 #include <ostream>

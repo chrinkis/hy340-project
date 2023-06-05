@@ -1,6 +1,6 @@
 #pragma once
 
-#include <alpha/symbol/symbol.h>
+#include <alpha/lang/symbol/symbol.h>
 #include <cassert>
 
 namespace alpha {

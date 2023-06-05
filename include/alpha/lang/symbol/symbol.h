@@ -1,6 +1,6 @@
 #pragma once
 
-#include <alpha/syntax/location.h>
+#include <alpha/lang/syntax/location.h>
 
 #include <memory>
 #include <ostream>

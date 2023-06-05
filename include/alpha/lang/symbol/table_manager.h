@@ -2,10 +2,10 @@
 
 #define symTable (alpha::symbol::TableManager::get())
 
-#include <alpha/symbol/function.h>
-#include <alpha/symbol/scope_space_manager.h>
-#include <alpha/symbol/symbol.h>
-#include <alpha/symbol/table.h>
+#include <alpha/lang/symbol/function.h>
+#include <alpha/lang/symbol/scope_space_manager.h>
+#include <alpha/lang/symbol/symbol.h>
+#include <alpha/lang/symbol/table.h>
 
 #include <optional>
 #include <ostream>

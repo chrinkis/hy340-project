@@ -1,8 +1,8 @@
-#include <alpha/tcode/abc/instruction/arg.h>
+#include <alpha/lang/tcode/abc/instruction/arg.h>
 
-#include <alpha/symbol/function.h>
-#include <alpha/tcode/abc/consts/consts.h>
-#include <alpha/tcode/abc/consts/user_func.h>
+#include <alpha/lang/symbol/function.h>
+#include <alpha/lang/tcode/abc/consts/consts.h>
+#include <alpha/lang/tcode/abc/consts/user_func.h>
 #include <utils/warnings.h>
 
 #include <cassert>

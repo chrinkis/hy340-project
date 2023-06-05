@@ -1,8 +1,8 @@
 #pragma once
 
-#include <alpha/icode/quad/quad.h>
-#include <alpha/tcode/abc/instruction/arg.h>
-#include <alpha/tcode/abc/instruction/opcode.h>
+#include <alpha/lang/icode/quad/quad.h>
+#include <alpha/lang/tcode/abc/instruction/arg.h>
+#include <alpha/lang/tcode/abc/instruction/opcode.h>
 
 namespace alpha::tcode::abc::instruction {
 

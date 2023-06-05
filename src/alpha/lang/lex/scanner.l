@@ -1,11 +1,11 @@
 %{
-#include <alpha/lex/scanner.h>
+#include <alpha/lang/lex/scanner.h>
 
-#include <alpha/syntax/parser.h>
+#include <alpha/lang/syntax/parser.h>
 
-#include <alpha/token/token.h>
-#include <alpha/lex/status.h>
-#include <alpha/lex/error.h>
+#include <alpha/lang/token/token.h>
+#include <alpha/lang/lex/status.h>
+#include <alpha/lang/lex/error.h>
 
 #include <iostream>
 #include <string>

@@ -1,4 +1,4 @@
-#include <alpha/symbol/scope_space_manager.h>
+#include <alpha/lang/symbol/scope_space_manager.h>
 
 #include <cassert>
 

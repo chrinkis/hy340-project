@@ -1,7 +1,7 @@
-#include <alpha/symbol/table_manager.h>
+#include <alpha/lang/symbol/table_manager.h>
 
-#include <alpha/symbol/function.h>
-#include <alpha/symbol/variable.h>
+#include <alpha/lang/symbol/function.h>
+#include <alpha/lang/symbol/variable.h>
 
 #include <cassert>
 #include <memory>

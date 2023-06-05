@@ -1,7 +1,7 @@
-#include <alpha/syntax/manager/nonterminal/elist.h>
+#include <alpha/lang/syntax/manager/nonterminal/elist.h>
 
-#include <alpha/syntax/manager/nonterminal/elist_opt.h>
-#include <alpha/syntax/manager/nonterminal/expr.h>
+#include <alpha/lang/syntax/manager/nonterminal/elist_opt.h>
+#include <alpha/lang/syntax/manager/nonterminal/expr.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 

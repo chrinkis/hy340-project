@@ -1,7 +1,7 @@
-#include <alpha/syntax/manager/nonterminal/callsuffix.h>
+#include <alpha/lang/syntax/manager/nonterminal/callsuffix.h>
 
-#include <alpha/syntax/manager/nonterminal/methodcall.h>
-#include <alpha/syntax/manager/nonterminal/normcall.h>
+#include <alpha/lang/syntax/manager/nonterminal/methodcall.h>
+#include <alpha/lang/syntax/manager/nonterminal/normcall.h>
 
 namespace alpha::syntax::manager::nonterminal {
 

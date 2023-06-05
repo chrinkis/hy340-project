@@ -1,6 +1,6 @@
-#include <alpha/symbol/variable.h>
+#include <alpha/lang/symbol/variable.h>
 
-#include <alpha/symbol/symbol.h>
+#include <alpha/lang/symbol/symbol.h>
 
 #include <cassert>
 

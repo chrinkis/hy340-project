@@ -1,12 +1,12 @@
-#include <alpha/syntax/manager/nonterminal/term.h>
+#include <alpha/lang/syntax/manager/nonterminal/term.h>
 
-#include <alpha/icode/quad/table.h>
-#include <alpha/symbol/table_manager.h>
-#include <alpha/syntax/manager/nonterminal/expr.h>
-#include <alpha/syntax/manager/nonterminal/lvalue.h>
-#include <alpha/syntax/manager/nonterminal/primary.h>
+#include <alpha/lang/icode/quad/table.h>
+#include <alpha/lang/symbol/table_manager.h>
+#include <alpha/lang/syntax/manager/nonterminal/expr.h>
+#include <alpha/lang/syntax/manager/nonterminal/lvalue.h>
+#include <alpha/lang/syntax/manager/nonterminal/primary.h>
 
-#include <alpha/syntax/error.h>
+#include <alpha/lang/syntax/error.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 using Opcode = alpha::icode::quad::Quad::Opcode;

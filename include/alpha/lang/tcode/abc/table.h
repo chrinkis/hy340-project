@@ -2,10 +2,10 @@
 
 #define tcodeTable (alpha::tcode::abc::Table::get())
 
-#include <alpha/icode/quad/table.h>
-#include <alpha/symbol/function.h>
-#include <alpha/tcode/abc/instruction/instruction.h>
-#include <alpha/tcode/abc/instruction/opcode.h>
+#include <alpha/lang/icode/quad/table.h>
+#include <alpha/lang/symbol/function.h>
+#include <alpha/lang/tcode/abc/instruction/instruction.h>
+#include <alpha/lang/tcode/abc/instruction/opcode.h>
 
 #include <map>
 #include <stack>

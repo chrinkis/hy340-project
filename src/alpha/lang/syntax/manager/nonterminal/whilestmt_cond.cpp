@@ -1,8 +1,8 @@
-#include <alpha/syntax/manager/nonterminal/whilestmt_cond.h>
+#include <alpha/lang/syntax/manager/nonterminal/whilestmt_cond.h>
 
-#include <alpha/icode/expr.h>
-#include <alpha/icode/quad/table.h>
-#include <alpha/syntax/manager/nonterminal/expr.h>
+#include <alpha/lang/icode/expr.h>
+#include <alpha/lang/icode/quad/table.h>
+#include <alpha/lang/syntax/manager/nonterminal/expr.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 using Opcode = alpha::icode::quad::Quad::Opcode;

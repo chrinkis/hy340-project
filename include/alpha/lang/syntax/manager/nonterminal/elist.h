@@ -1,6 +1,6 @@
 #pragma once
 
-#include <alpha/icode/expr.h>
+#include <alpha/lang/icode/expr.h>
 #include <vector>
 
 namespace alpha {

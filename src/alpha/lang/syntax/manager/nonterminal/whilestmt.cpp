@@ -1,9 +1,9 @@
-#include <alpha/syntax/manager/nonterminal/whilestmt.h>
+#include <alpha/lang/syntax/manager/nonterminal/whilestmt.h>
 
-#include <alpha/icode/quad/table.h>
-#include <alpha/syntax/manager/nonterminal/loopstmt.h>
-#include <alpha/syntax/manager/nonterminal/whilestmt_cond.h>
-#include <alpha/syntax/manager/nonterminal/whilestmt_while.h>
+#include <alpha/lang/icode/quad/table.h>
+#include <alpha/lang/syntax/manager/nonterminal/loopstmt.h>
+#include <alpha/lang/syntax/manager/nonterminal/whilestmt_cond.h>
+#include <alpha/lang/syntax/manager/nonterminal/whilestmt_while.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 using Opcode = alpha::icode::quad::Quad::Opcode;

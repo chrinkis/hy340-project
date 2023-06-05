@@ -1,6 +1,6 @@
-#include <alpha/syntax/manager/nonterminal/normcall.h>
+#include <alpha/lang/syntax/manager/nonterminal/normcall.h>
 
-#include <alpha/syntax/manager/nonterminal/elist.h>
+#include <alpha/lang/syntax/manager/nonterminal/elist.h>
 
 namespace alpha::syntax::manager::nonterminal {
 

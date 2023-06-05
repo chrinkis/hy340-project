@@ -1,11 +1,11 @@
-#include <alpha/syntax/manager/nonterminal/member.h>
+#include <alpha/lang/syntax/manager/nonterminal/member.h>
 
-#include <alpha/icode/expr.h>
-#include <alpha/icode/quad/table.h>
-#include <alpha/syntax/error.h>
-#include <alpha/syntax/manager/nonterminal/call.h>
-#include <alpha/syntax/manager/nonterminal/expr.h>
-#include <alpha/syntax/manager/nonterminal/lvalue.h>
+#include <alpha/lang/icode/expr.h>
+#include <alpha/lang/icode/quad/table.h>
+#include <alpha/lang/syntax/error.h>
+#include <alpha/lang/syntax/manager/nonterminal/call.h>
+#include <alpha/lang/syntax/manager/nonterminal/expr.h>
+#include <alpha/lang/syntax/manager/nonterminal/lvalue.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 

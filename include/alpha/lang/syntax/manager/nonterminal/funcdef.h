@@ -1,8 +1,8 @@
 #pragma once
 
-#include <alpha/syntax/manager/nonterminal/funcprefix.h>
+#include <alpha/lang/syntax/manager/nonterminal/funcprefix.h>
 
-#include <alpha/symbol/symbol.h>
+#include <alpha/lang/symbol/symbol.h>
 
 namespace alpha {
 namespace syntax {

@@ -1,9 +1,9 @@
 #pragma once
 
-#include <alpha/symbol/symbol.h>
-#include <alpha/syntax/parser.h>
+#include <alpha/lang/symbol/symbol.h>
+#include <alpha/lang/syntax/parser.h>
 
-#include <alpha/icode/expr.h>
+#include <alpha/lang/icode/expr.h>
 #include <string>
 
 namespace alpha::syntax::error {

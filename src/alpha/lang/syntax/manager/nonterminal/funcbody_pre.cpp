@@ -1,6 +1,6 @@
-#include <alpha/syntax/manager/nonterminal/funcbody_pre.h>
+#include <alpha/lang/syntax/manager/nonterminal/funcbody_pre.h>
 
-#include <alpha/syntax/loop_counter.h>
+#include <alpha/lang/syntax/loop_counter.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 

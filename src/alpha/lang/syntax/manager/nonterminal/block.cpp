@@ -1,6 +1,6 @@
-#include <alpha/syntax/manager/nonterminal/block.h>
+#include <alpha/lang/syntax/manager/nonterminal/block.h>
 
-#include <alpha/syntax/manager/nonterminal/block_body.h>
+#include <alpha/lang/syntax/manager/nonterminal/block_body.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 

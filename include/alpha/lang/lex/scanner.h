@@ -4,9 +4,9 @@
 #include <FlexLexer.h>
 #endif
 
-#include <alpha/lex/status.h>
-#include <alpha/syntax/parser.h>
-#include <alpha/token/token.h>
+#include <alpha/lang/lex/status.h>
+#include <alpha/lang/syntax/parser.h>
+#include <alpha/lang/token/token.h>
 
 #include <istream>
 #include <stack>

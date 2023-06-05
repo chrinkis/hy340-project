@@ -1,9 +1,9 @@
-#include <alpha/syntax/manager/nonterminal/lvalue.h>
+#include <alpha/lang/syntax/manager/nonterminal/lvalue.h>
 
-#include <alpha/icode/expr.h>
-#include <alpha/symbol/table_manager.h>
-#include <alpha/syntax/error.h>
-#include <alpha/syntax/manager/nonterminal/member.h>
+#include <alpha/lang/icode/expr.h>
+#include <alpha/lang/symbol/table_manager.h>
+#include <alpha/lang/syntax/error.h>
+#include <alpha/lang/syntax/manager/nonterminal/member.h>
 
 #include <cassert>
 

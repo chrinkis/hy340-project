@@ -1,4 +1,4 @@
-#include <alpha/symbol/symbol.h>
+#include <alpha/lang/symbol/symbol.h>
 
 #include <assert.h>
 #include <iomanip>

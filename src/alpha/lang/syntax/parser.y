@@ -13,10 +13,10 @@
     }
     }
 
-    #include <alpha/symbol/table.h>
+    #include <alpha/lang/symbol/table.h>
 
-    #include <alpha/syntax/manager/nonterminal.h>
-    #include <alpha/syntax/manager/terminal.h>
+    #include <alpha/lang/syntax/manager/nonterminal.h>
+    #include <alpha/lang/syntax/manager/terminal.h>
 
     namespace nterm = alpha::syntax::manager::nonterminal;
     namespace terminal = alpha::syntax::manager::terminal;
@@ -34,9 +34,9 @@
     #include <iostream>
     #include <cassert>
 
-    #include <alpha/lex/scanner.h>
-    #include <alpha/symbol/table.h>
-    #include <alpha/syntax/error.h>
+    #include <alpha/lang/lex/scanner.h>
+    #include <alpha/lang/symbol/table.h>
+    #include <alpha/lang/syntax/error.h>
 
     #undef yylex
     #define yylex scanner.alpha_yylex

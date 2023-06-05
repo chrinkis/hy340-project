@@ -1,12 +1,12 @@
-#include <alpha/icode/quad/table.h>
-#include <alpha/lex/error.h>
-#include <alpha/lex/scanner.h>
-#include <alpha/symbol/table.h>
-#include <alpha/symbol/table_manager.h>
-#include <alpha/syntax/error.h>
-#include <alpha/syntax/parser.h>
-#include <alpha/tcode/abc/table.h>
-#include <alpha/tcode/abc/writer.h>
+#include <alpha/lang/icode/quad/table.h>
+#include <alpha/lang/lex/error.h>
+#include <alpha/lang/lex/scanner.h>
+#include <alpha/lang/symbol/table.h>
+#include <alpha/lang/symbol/table_manager.h>
+#include <alpha/lang/syntax/error.h>
+#include <alpha/lang/syntax/parser.h>
+#include <alpha/lang/tcode/abc/table.h>
+#include <alpha/lang/tcode/abc/writer.h>
 
 #include <fstream>
 #include <iostream>

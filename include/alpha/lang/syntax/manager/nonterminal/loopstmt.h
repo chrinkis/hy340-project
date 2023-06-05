@@ -1,6 +1,6 @@
 #pragma once
 
-#include <alpha/icode/quad/quad.h>
+#include <alpha/lang/icode/quad/quad.h>
 
 namespace alpha {
 namespace syntax {

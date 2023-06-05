@@ -1,8 +1,8 @@
-#include <alpha/syntax/manager/nonterminal/forstmt_pre.h>
+#include <alpha/lang/syntax/manager/nonterminal/forstmt_pre.h>
 
-#include <alpha/icode/quad/table.h>
-#include <alpha/syntax/manager/nonterminal/expr.h>
-#include <alpha/syntax/manager/nonterminal/forstmt_m.h>
+#include <alpha/lang/icode/quad/table.h>
+#include <alpha/lang/syntax/manager/nonterminal/expr.h>
+#include <alpha/lang/syntax/manager/nonterminal/forstmt_m.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 using Opcode = alpha::icode::quad::Quad::Opcode;

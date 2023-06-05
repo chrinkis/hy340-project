@@ -1,11 +1,11 @@
-#include <alpha/syntax/manager/nonterminal/primary.h>
+#include <alpha/lang/syntax/manager/nonterminal/primary.h>
 
-#include <alpha/icode/quad/table.h>
-#include <alpha/syntax/manager/nonterminal/call.h>
-#include <alpha/syntax/manager/nonterminal/const.h>
-#include <alpha/syntax/manager/nonterminal/funcdef.h>
-#include <alpha/syntax/manager/nonterminal/lvalue.h>
-#include <alpha/syntax/manager/nonterminal/objectdef.h>
+#include <alpha/lang/icode/quad/table.h>
+#include <alpha/lang/syntax/manager/nonterminal/call.h>
+#include <alpha/lang/syntax/manager/nonterminal/const.h>
+#include <alpha/lang/syntax/manager/nonterminal/funcdef.h>
+#include <alpha/lang/syntax/manager/nonterminal/lvalue.h>
+#include <alpha/lang/syntax/manager/nonterminal/objectdef.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 

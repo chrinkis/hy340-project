@@ -1,7 +1,7 @@
-#include <alpha/syntax/manager/nonterminal/ifstmt_if.h>
+#include <alpha/lang/syntax/manager/nonterminal/ifstmt_if.h>
 
-#include <alpha/icode/quad/table.h>
-#include <alpha/syntax/manager/nonterminal/expr.h>
+#include <alpha/lang/icode/quad/table.h>
+#include <alpha/lang/syntax/manager/nonterminal/expr.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 

@@ -1,10 +1,10 @@
-#include <alpha/syntax/manager/nonterminal/expr.h>
+#include <alpha/lang/syntax/manager/nonterminal/expr.h>
 
-#include <alpha/icode/quad/table.h>
-#include <alpha/symbol/table_manager.h>
-#include <alpha/syntax/error.h>
-#include <alpha/syntax/manager/nonterminal/assignexpr.h>
-#include <alpha/syntax/manager/nonterminal/term.h>
+#include <alpha/lang/icode/quad/table.h>
+#include <alpha/lang/symbol/table_manager.h>
+#include <alpha/lang/syntax/error.h>
+#include <alpha/lang/syntax/manager/nonterminal/assignexpr.h>
+#include <alpha/lang/syntax/manager/nonterminal/term.h>
 
 #define HAVE_CONST_NUM_TYPE(expr1, expr2)                           \
   ((expr1.get_expr().get_type() == icode::Expr::Type::CONST_NUM) && \

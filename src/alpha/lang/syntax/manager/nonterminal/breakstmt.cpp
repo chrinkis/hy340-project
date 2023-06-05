@@ -1,8 +1,8 @@
-#include <alpha/syntax/manager/nonterminal/breakstmt.h>
+#include <alpha/lang/syntax/manager/nonterminal/breakstmt.h>
 
-#include <alpha/icode/quad/table.h>
-#include <alpha/syntax/error.h>
-#include <alpha/syntax/loop_counter.h>
+#include <alpha/lang/icode/quad/table.h>
+#include <alpha/lang/syntax/error.h>
+#include <alpha/lang/syntax/loop_counter.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 using Opcode = alpha::icode::quad::Quad::Opcode;

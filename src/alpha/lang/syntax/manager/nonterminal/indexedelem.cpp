@@ -1,6 +1,6 @@
-#include <alpha/syntax/manager/nonterminal/indexedelem.h>
+#include <alpha/lang/syntax/manager/nonterminal/indexedelem.h>
 
-#include <alpha/syntax/manager/nonterminal/expr.h>
+#include <alpha/lang/syntax/manager/nonterminal/expr.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 

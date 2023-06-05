@@ -1,10 +1,10 @@
-#include <alpha/syntax/manager/nonterminal/forstmt.h>
+#include <alpha/lang/syntax/manager/nonterminal/forstmt.h>
 
-#include <alpha/syntax/manager/nonterminal/forstmt_n.h>
-#include <alpha/syntax/manager/nonterminal/forstmt_pre.h>
-#include <alpha/syntax/manager/nonterminal/loopstmt.h>
+#include <alpha/lang/syntax/manager/nonterminal/forstmt_n.h>
+#include <alpha/lang/syntax/manager/nonterminal/forstmt_pre.h>
+#include <alpha/lang/syntax/manager/nonterminal/loopstmt.h>
 
-#include <alpha/icode/quad/table.h>
+#include <alpha/lang/icode/quad/table.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 

@@ -1,7 +1,7 @@
-#include <alpha/tcode/abc/writer.h>
+#include <alpha/lang/tcode/abc/writer.h>
 
-#include <alpha/tcode/abc/consts/consts.h>
-#include <alpha/tcode/abc/table.h>
+#include <alpha/lang/tcode/abc/consts/consts.h>
+#include <alpha/lang/tcode/abc/table.h>
 
 #include <cassert>
 

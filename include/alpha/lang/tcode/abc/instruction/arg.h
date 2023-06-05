@@ -1,8 +1,8 @@
 #pragma once
 
-#include <alpha/icode/expr.h>
-#include <alpha/icode/quad/quad.h>
-#include <alpha/symbol/symbol.h>
+#include <alpha/lang/icode/expr.h>
+#include <alpha/lang/icode/quad/quad.h>
+#include <alpha/lang/symbol/symbol.h>
 
 #include <functional>
 

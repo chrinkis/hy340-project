@@ -1,4 +1,4 @@
-#include <alpha/lex/error.h>
+#include <alpha/lang/lex/error.h>
 
 #include <iostream>
 #include <string>

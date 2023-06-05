@@ -1,7 +1,7 @@
-#include <alpha/syntax/manager/nonterminal/idlist_id.h>
+#include <alpha/lang/syntax/manager/nonterminal/idlist_id.h>
 
-#include <alpha/symbol/table_manager.h>
-#include <alpha/syntax/error.h>
+#include <alpha/lang/symbol/table_manager.h>
+#include <alpha/lang/syntax/error.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 

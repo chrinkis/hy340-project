@@ -1,7 +1,7 @@
-#include <alpha/syntax/manager/nonterminal/stmts.h>
+#include <alpha/lang/syntax/manager/nonterminal/stmts.h>
 
-#include <alpha/icode/quad/table.h>
-#include <alpha/syntax/manager/nonterminal/stmt.h>
+#include <alpha/lang/icode/quad/table.h>
+#include <alpha/lang/syntax/manager/nonterminal/stmt.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 using Quad = alpha::icode::quad::Quad;

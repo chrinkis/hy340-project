@@ -1,10 +1,10 @@
-#include <alpha/syntax/manager/nonterminal/stmt.h>
+#include <alpha/lang/syntax/manager/nonterminal/stmt.h>
 
-#include <alpha/symbol/table_manager.h>
-#include <alpha/syntax/manager/nonterminal/block.h>
-#include <alpha/syntax/manager/nonterminal/breakstmt.h>
-#include <alpha/syntax/manager/nonterminal/continuestmt.h>
-#include <alpha/syntax/manager/nonterminal/ifstmt.h>
+#include <alpha/lang/symbol/table_manager.h>
+#include <alpha/lang/syntax/manager/nonterminal/block.h>
+#include <alpha/lang/syntax/manager/nonterminal/breakstmt.h>
+#include <alpha/lang/syntax/manager/nonterminal/continuestmt.h>
+#include <alpha/lang/syntax/manager/nonterminal/ifstmt.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 

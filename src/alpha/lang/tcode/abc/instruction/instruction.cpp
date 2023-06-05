@@ -1,4 +1,4 @@
-#include <alpha/tcode/abc/instruction/instruction.h>
+#include <alpha/lang/tcode/abc/instruction/instruction.h>
 
 #include <utils/warnings.h>
 

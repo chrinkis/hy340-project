@@ -1,4 +1,4 @@
-#include <alpha/syntax/manager/nonterminal/const.h>
+#include <alpha/lang/syntax/manager/nonterminal/const.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 

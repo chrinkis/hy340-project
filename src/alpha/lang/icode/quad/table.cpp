@@ -1,6 +1,6 @@
-#include <alpha/icode/quad/table.h>
+#include <alpha/lang/icode/quad/table.h>
 
-#include <alpha/symbol/table_manager.h>
+#include <alpha/lang/symbol/table_manager.h>
 
 #include <cassert>
 #include <iomanip>

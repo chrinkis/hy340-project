@@ -1,10 +1,10 @@
-#include <alpha/syntax/manager/nonterminal/objectdef.h>
+#include <alpha/lang/syntax/manager/nonterminal/objectdef.h>
 
-#include <alpha/icode/expr.h>
-#include <alpha/icode/quad/table.h>
-#include <alpha/symbol/table_manager.h>
-#include <alpha/syntax/manager/nonterminal/elist.h>
-#include <alpha/syntax/manager/nonterminal/indexed.h>
+#include <alpha/lang/icode/expr.h>
+#include <alpha/lang/icode/quad/table.h>
+#include <alpha/lang/symbol/table_manager.h>
+#include <alpha/lang/syntax/manager/nonterminal/elist.h>
+#include <alpha/lang/syntax/manager/nonterminal/indexed.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 using Opcode = alpha::icode::quad::Quad::Opcode;

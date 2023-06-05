@@ -1,6 +1,6 @@
-#include <alpha/syntax/manager/nonterminal/loopstmt.h>
+#include <alpha/lang/syntax/manager/nonterminal/loopstmt.h>
 
-#include <alpha/syntax/manager/nonterminal/stmt.h>
+#include <alpha/lang/syntax/manager/nonterminal/stmt.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 

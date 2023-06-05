@@ -1,7 +1,7 @@
 #pragma once
 
-#include <alpha/icode/quad/quad.h>
-#include <alpha/syntax/location.h>
+#include <alpha/lang/icode/quad/quad.h>
+#include <alpha/lang/syntax/location.h>
 
 namespace alpha {
 namespace syntax {

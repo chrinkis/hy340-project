@@ -1,4 +1,4 @@
-#include <alpha/token/token.h>
+#include <alpha/lang/token/token.h>
 
 using namespace alpha::token;
 

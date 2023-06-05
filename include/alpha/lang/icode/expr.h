@@ -2,7 +2,7 @@
 
 // TODO where this file belongs in the structure?
 
-#include <alpha/symbol/symbol.h>
+#include <alpha/lang/symbol/symbol.h>
 
 #include <memory>
 #include <optional>

@@ -1,4 +1,4 @@
-#include <alpha/tcode/abc/table.h>
+#include <alpha/lang/tcode/abc/table.h>
 
 #include <utils/warnings.h>
 

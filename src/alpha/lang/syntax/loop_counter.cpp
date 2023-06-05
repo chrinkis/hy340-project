@@ -1,4 +1,4 @@
-#include <alpha/syntax/loop_counter.h>
+#include <alpha/lang/syntax/loop_counter.h>
 
 #include <cassert>
 

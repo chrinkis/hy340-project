@@ -1,6 +1,6 @@
-#include <alpha/symbol/function.h>
+#include <alpha/lang/symbol/function.h>
 
-#include <alpha/symbol/symbol.h>
+#include <alpha/lang/symbol/symbol.h>
 
 #include <cassert>
 #include <iomanip>

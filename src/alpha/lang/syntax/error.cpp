@@ -1,4 +1,4 @@
-#include <alpha/syntax/error.h>
+#include <alpha/lang/syntax/error.h>
 
 #include <cassert>
 #include <iostream>

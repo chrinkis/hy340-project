@@ -1,6 +1,6 @@
-#include <alpha/syntax/manager/nonterminal/ifstmt_else.h>
+#include <alpha/lang/syntax/manager/nonterminal/ifstmt_else.h>
 
-#include <alpha/icode/quad/table.h>
+#include <alpha/lang/icode/quad/table.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 

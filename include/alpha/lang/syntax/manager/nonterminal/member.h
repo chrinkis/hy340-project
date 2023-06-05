@@ -1,7 +1,7 @@
 #pragma once
 
-#include <alpha/icode/expr.h>
-#include <alpha/syntax/manager/terminal/identifier.h>
+#include <alpha/lang/icode/expr.h>
+#include <alpha/lang/syntax/manager/terminal/identifier.h>
 
 namespace alpha {
 namespace syntax {

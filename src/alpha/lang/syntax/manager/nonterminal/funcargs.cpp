@@ -1,6 +1,6 @@
-#include <alpha/syntax/manager/nonterminal/funcargs.h>
+#include <alpha/lang/syntax/manager/nonterminal/funcargs.h>
 
-#include <alpha/symbol/table_manager.h>
+#include <alpha/lang/symbol/table_manager.h>
 
 using namespace alpha::syntax::manager::nonterminal;
 

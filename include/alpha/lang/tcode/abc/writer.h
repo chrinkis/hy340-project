@@ -1,9 +1,9 @@
 #pragma once
 
-#include <alpha/tcode/abc/consts/user_func.h>
-#include <alpha/tcode/abc/instruction/arg.h>
-#include <alpha/tcode/abc/instruction/instruction.h>
-#include <alpha/tcode/abc/instruction/opcode.h>
+#include <alpha/lang/tcode/abc/consts/user_func.h>
+#include <alpha/lang/tcode/abc/instruction/arg.h>
+#include <alpha/lang/tcode/abc/instruction/instruction.h>
+#include <alpha/lang/tcode/abc/instruction/opcode.h>
 
 #include <fstream>
 #include <string>
