@@ -1,10 +1,10 @@
 #pragma once
 
+#include <alpha/symbol/symbol.h>
 #include <alpha/syntax/parser.h>
 
 #include <alpha/icode/expr.h>
 #include <string>
-#include "alpha/symbol/symbol.h"
 
 namespace alpha::syntax::error {
 

@@ -1,7 +1,7 @@
 #include <alpha/vm/arch/cpu/cpu.h>
+#include <alpha/vm/arch/mem/consts/consts.h>
 
 #include <utils/warnings.h>
-#include "alpha/vm/arch/mem/consts/consts.h"
 
 namespace alpha::vm::arch::cpu {
 
