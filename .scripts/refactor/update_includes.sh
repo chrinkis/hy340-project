@@ -2,14 +2,11 @@
 
 shopt -s globstar
 
-OLD="\(#include <alpha\)\/\([^'lang'].*>\)"
+OLD="\(#include <alpha\)\/\(.*>\)"
 NEW="\1\/lang\/\2"
 
-for FILE in ./include/**/*.h; do
-    sed -i "s+${OLD}+${NEW}+g" include/**/*.h
-done
+sed -i "s+${OLD}+${NEW}+" include/**/*.h
 
-for FILE in ./src/**/*.cpp; do
-    sed -i "s+${OLD}+${NEW}+g" include/**/*.h
-done
-
+sed -i "s+${OLD}+${NEW}+" src/**/*.cpp
+sed -i "s+${OLD}+${NEW}+" src/**/*.y
+sed -i "s+${OLD}+${NEW}+" src/**/*.l
