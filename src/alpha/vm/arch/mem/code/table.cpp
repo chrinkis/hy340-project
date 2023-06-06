@@ -1,19 +1,21 @@
 #include <alpha/vm/arch/mem/code/table.h>
 
-#include <utils/warnings.h>
+#include <cassert>
 
 namespace alpha::vm::arch::mem::code {
 
 void Table::emit(const Instruction& instruction) {
-  WARN_EMPTY_FUNC_IMPL();
+  assert(instruction.get_src_line() == this->get_next_label());
+
+  this->table.push_back(instruction);
 }
 
 size_t Table::get_size() const {
-  WARN_EMPTY_FUNC_IMPL(0);
+  return this->table.size();
 }
 
 Table::Instruction::SrcLine Table::get_next_label() const {
-  WARN_EMPTY_FUNC_IMPL(0);
+  return this->get_size();
 }
 
 Table::ConstIterator Table::begin() const {
