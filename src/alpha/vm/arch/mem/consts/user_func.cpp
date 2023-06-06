@@ -6,9 +6,8 @@ namespace alpha::vm::arch::mem::consts {
 
 UserFunc::UserFunc(const Address& address,
                    const std::string& id,
-                   const LocalSize& local_size) {
-  WARN_EMPTY_FUNC_IMPL();
-}
+                   const LocalSize& local_size)
+    : address(address), id(id), local_size(local_size) {}
 
 UserFunc::Address UserFunc::get_address() const {
   return this->address;
@@ -23,7 +22,8 @@ UserFunc::LocalSize UserFunc::get_local_size() const {
 }
 
 bool UserFunc::operator==(const UserFunc& user_func) const {
-  WARN_EMPTY_FUNC_IMPL(false);
+  return (this->address == user_func.address) && (this->id == user_func.id) &&
+         (this->local_size == user_func.local_size);
 }
 
 }  // namespace alpha::vm::arch::mem::consts
