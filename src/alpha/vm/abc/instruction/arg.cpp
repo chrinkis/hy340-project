@@ -1,27 +1,19 @@
 #include <alpha/vm/abc/instruction/arg.h>
 
-#include <utils/warnings.h>
-
 namespace alpha::vm::abc::instruction {
 
-Arg::Arg() {
-  WARN_EMPTY_FUNC_IMPL();
-}
+Arg::Arg() : type(Type::EMPTY), value(0){};
 
-Arg::Arg(const Type& type, unsigned value) {
-  WARN_EMPTY_FUNC_IMPL();
-}
+Arg::Arg(const Type& type, unsigned value) : type(type), value(value) {}
 
-Arg::Arg(const Arg& arg) {
-  WARN_EMPTY_FUNC_IMPL();
-}
+Arg::Arg(const Arg& arg) : type(arg.type), value(arg.value) {}
 
 Arg::Type Arg::get_type() const {
-  WARN_EMPTY_FUNC_IMPL(Type::EMPTY);
+  return this->type;
 }
 
 unsigned Arg::get_value() const {
-  WARN_EMPTY_FUNC_IMPL(0);
+  return this->value;
 }
 
 }  // namespace alpha::vm::abc::instruction
