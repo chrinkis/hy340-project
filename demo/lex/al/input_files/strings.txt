@@ -1,8 +1,0 @@
-"this is a string"
-"this	is	string	with	tabs"
-"this\tis\ta\tstring\twith\ttab (escape char)"
-"this is a string with \" quotes\", cool right? (escape_char)"
-"this is a string  with 
-new line"
-"this is a string with\nnew line (escape char)"
-"this is a string with a slash \\ (escape char)"

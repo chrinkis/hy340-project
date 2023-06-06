@@ -18,16 +18,8 @@ project(hy340-project)
 # Cpp version
 set(CMAKE_CXX_STANDARD 20)
 
-# Add `include` directory
-include_directories(${CMAKE_SOURCE_DIR}/include)
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
-
-# Add Flex and Bison
-include(flex_bison)
-
 # Add cmakes from subdirs
 add_subdirectory(src)
-add_subdirectory(demo)
 if (NOT skip_tests)
     add_subdirectory(test)
 endif()
