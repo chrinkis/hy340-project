@@ -6,7 +6,9 @@
 namespace alpha::vm::arch::cpu {
 
 Cpu::Cpu(MemStack& memory_stack, ConstTable& const_table)
-    : memory_stack(memory_stack), const_table(const_table) {}
+    : memory_stack(memory_stack), const_table(const_table) {
+  WARN_EMPTY_FUNC_IMPL();
+}
 
 void Cpu::execute_cycle() {
   WARN_EMPTY_FUNC_IMPL();
