@@ -29,7 +29,7 @@ class Cell {
                std::string,            // string
                bool,                   // boolean
                runtime::table::Table,  // table
-               consts::Consts::Index,  // func_index
+               consts::UserFunc,       // user_func
                std::string>            // lib_func
       data;
 
@@ -51,7 +51,7 @@ class Cell {
   static Cell for_string(const std::string& string);
   static Cell for_boolean(bool boolean);
   static Cell for_table(const runtime::table::Table& table);
-  static Cell for_func_index(const consts::Consts::Index& index);
+  static Cell for_user_func(const consts::UserFunc& user_func);
   static Cell for_lib_func(const std::string& func_name);
   static Cell for_nil();
 
@@ -62,7 +62,7 @@ class Cell {
   std::string get_string() const;
   bool get_boolean() const;
   runtime::table::Table get_table() const;
-  const consts::Consts::Index get_func_index() const;
+  consts::UserFunc get_user_func() const;
   std::string get_lib_func() const;
 };
 

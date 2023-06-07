@@ -48,7 +48,7 @@ Cell Cell::for_table(const runtime::table::Table& table) {
   WARN_EMPTY_FUNC_IMPL(Cell());
 }
 
-Cell Cell::for_func_index(const consts::Consts::Index& index) {
+Cell Cell::for_user_func(const consts::UserFunc& user_func) {
   WARN_EMPTY_FUNC_IMPL(Cell());
 }
 
@@ -84,8 +84,8 @@ runtime::table::Table Cell::get_table() const {
   WARN_EMPTY_FUNC_IMPL(runtime::table::Table());
 }
 
-const consts::Consts::Index Cell::get_func_index() const {
-  WARN_EMPTY_FUNC_IMPL(0);
+consts::UserFunc Cell::get_user_func() const {
+  WARN_EMPTY_FUNC_IMPL(consts::UserFunc(0, "", 0));
 }
 
 std::string Cell::get_lib_func() const {
