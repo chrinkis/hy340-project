@@ -106,7 +106,7 @@ void Writer::write_total(const unsigned total) {
 }
 
 void Writer::write_string(const string& str) {
-  unsigned size = str.size() + 1;  // include '\0'
+  unsigned size = str.size();  // don't include '\0'
   this->write_size(size);
 
   for (auto str_char : str) {
