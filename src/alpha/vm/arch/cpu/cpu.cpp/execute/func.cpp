@@ -1,5 +1,6 @@
 #include <alpha/vm/arch/cpu/cpu.h>
 
+#include <alpha/vm/arch/mem/consts/user_func.h>
 #include <alpha/vm/runtime/messages/error.h>
 
 #include <utils/warnings.h>
@@ -62,7 +63,20 @@ void Cpu::execute_pushargs(const AbcInstruction& instr) {
 }
 
 void Cpu::execute_funcenter(const AbcInstruction& instr) {
-  WARN_EMPTY_FUNC_IMPL();
+  mem::Cell& cell_as_func =
+      this->translate_arg_to_cell(instr.get_result(), this->registers.arg_a);
+
+  FIXME;  // add missing assert
+
+  mem::consts::UserFunc func =
+      this->const_table.user_func_at(cell_as_func.get_func_index());
+
+  assert(this->pc == func.get_address());
+
+  /* callee actions: */
+  this->total_actuals = 0;
+  this->registers.topsp = this->registers.top;
+  this->registers.top -= func.get_local_size();
 }
 
 void Cpu::execute_funcexit(const AbcInstruction& instr) {
