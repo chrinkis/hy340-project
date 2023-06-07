@@ -44,7 +44,84 @@ void Cpu::execute_cycle() {
 }
 
 void Cpu::execute_instruction(const AbcInstruction& instr) {
-  WARN_EMPTY_FUNC_IMPL();
+  switch (instr.get_opcode()) {
+    case abc::instruction::Opcode::ASSIGN:
+      this->execute_assign(instr);
+      break;
+    case abc::instruction::Opcode::ADD:
+      this->execute_add(instr);
+      break;
+    case abc::instruction::Opcode::SUB:
+      this->execute_sub(instr);
+      break;
+    case abc::instruction::Opcode::MUL:
+      this->execute_mul(instr);
+      break;
+    case abc::instruction::Opcode::DIV:
+      this->execute_div(instr);
+      break;
+    case abc::instruction::Opcode::MOD:
+      this->execute_mod(instr);
+      break;
+    case abc::instruction::Opcode::UMINUS:
+      this->execute_umninus(instr);
+      break;
+    case abc::instruction::Opcode::CALL:
+      this->execute_call(instr);
+      break;
+      break;
+    case abc::instruction::Opcode::FUNC_ENTER:
+      this->execute_funcenter(instr);
+      break;
+    case abc::instruction::Opcode::FUNC_EXIT:
+      this->execute_funcexit(instr);
+      break;
+    case abc::instruction::Opcode::AND:
+      this->execute_and(instr);
+      break;
+    case abc::instruction::Opcode::OR:
+      this->execute_or(instr);
+      break;
+    case abc::instruction::Opcode::NOT:
+      this->execute_not(instr);
+      break;
+    case abc::instruction::Opcode::JUMP:
+      this->execute_jump(instr);
+      break;
+    case abc::instruction::Opcode::JEQ:
+      this->execute_jeq(instr);
+      break;
+    case abc::instruction::Opcode::JNE:
+      this->execute_jne(instr);
+      break;
+    case abc::instruction::Opcode::JGT:
+      this->execute_jgt(instr);
+      break;
+    case abc::instruction::Opcode::JLT:
+      this->execute_jlt(instr);
+      break;
+    case abc::instruction::Opcode::JGE:
+      this->execute_jge(instr);
+      break;
+    case abc::instruction::Opcode::JLE:
+      this->execute_jle(instr);
+      break;
+    case abc::instruction::Opcode::NEW_TABLE:
+      this->execute_newtable(instr);
+      break;
+    case abc::instruction::Opcode::TABLE_GET_ELEM:
+      this->execute_tablegetelem(instr);
+      break;
+    case abc::instruction::Opcode::TABLE_SET_ELEM:
+      this->execute_tablesetelem(instr);
+      break;
+    case abc::instruction::Opcode::PUSH_ARG:
+      this->execute_pushargs(instr);
+      break;
+    case abc::instruction::Opcode::NOP:
+      this->execute_nop(instr);
+      break;
+  }
 }
 
 void Cpu::execute_assign(const AbcInstruction& instr) {
