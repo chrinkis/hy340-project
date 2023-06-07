@@ -7,6 +7,10 @@
 
 #include <cassert>
 
+#define SAVED_TOPSP_OFFSET +1
+#define SAVED_TOP_OFFSET +2
+#define SAVED_PC_OFFSET +3
+
 namespace alpha::vm::arch::cpu {
 
 void Cpu::execute_call(const AbcInstruction& instr) {
@@ -80,7 +84,20 @@ void Cpu::execute_funcenter(const AbcInstruction& instr) {
 }
 
 void Cpu::execute_funcexit(const AbcInstruction& instr) {
-  WARN_EMPTY_FUNC_IMPL();
+  auto old_top = this->registers.top;
+
+  this->registers.top =
+      this->get_enviroment_value(this->registers.topsp + SAVED_TOP_OFFSET);
+
+  this->pc =
+      this->get_enviroment_value(this->registers.topsp + SAVED_PC_OFFSET);
+
+  this->registers.topsp =
+      this->get_enviroment_value(this->registers.topsp + SAVED_TOPSP_OFFSET);
+
+  while (++old_top <= this->registers.top) {  // MUST skip the firest
+    this->memory_stack[old_top].clear();
+  }
 }
 
 }  // namespace alpha::vm::arch::cpu
