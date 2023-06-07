@@ -1,4 +1,5 @@
 #include <alpha/vm/arch/cpu/cpu.h>
+
 #include <alpha/vm/arch/mem/consts/consts.h>
 
 #include <utils/warnings.h>
