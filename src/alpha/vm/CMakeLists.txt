@@ -5,7 +5,14 @@ add_executable(vm
     abc/instruction/arg.cpp
     abc/instruction/instruction.cpp
 
-    arch/cpu/cpu.cpp
+    arch/cpu.cpp/execute/arithm.cpp
+    arch/cpu.cpp/execute/bool.cpp
+    arch/cpu.cpp/execute/etc.cpp
+    arch/cpu.cpp/execute/func.cpp
+    arch/cpu.cpp/execute/jumps.cpp
+    arch/cpu.cpp/execute/table.cpp
+
+    arch/cpu.cpp/behaviour.cpp
 
     arch/mem/cell.cpp
 
