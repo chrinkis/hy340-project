@@ -168,7 +168,30 @@ void Cpu::push_table_arg(const runtime::table::Table& table) {
 }
 
 void Cpu::call_functor(const runtime::table::Table& table) {
-  WARN_EMPTY_FUNC_IMPL();
+  this->registers.result = mem::Cell::for_string("()");
+
+  auto f = this->table_get_elem(table, this->registers.result);
+
+  if (!f) {
+    runtime::messages::error("in calling table: no `()` element found!");
+    FIXME;  // should `this->execution_finished = true;` here?
+
+  } else if (f->get_type() == mem::Cell::Type::TABLE) {
+    this->call_functor(f->get_table());
+
+  } else if (f->get_type() == mem::Cell::Type::USER_FUNC) {
+    this->push_table_arg(table);
+    this->call_save_enviroment();
+    this->pc = f->get_func_val();
+
+    assert(this->pc < this->code_table.get_size());
+    assert(this->code_table.at(this->pc).get_opcode() ==
+           abc::instruction::Opcode::FUNC_ENTER);
+
+  } else {
+    runtime::messages::error("in calling table: illegal `()` element value!");
+    FIXME;  // should `this->execution_finished = true;` here?
+  }
 }
 
 std::optional<mem::Cell> table_get_elem(const runtime::table::Table& table,
