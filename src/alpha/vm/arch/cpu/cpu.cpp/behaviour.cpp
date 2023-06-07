@@ -226,7 +226,16 @@ void Cpu::decrease_top() {
 }
 
 unsigned Cpu::get_enviroment_value(const MemStack::Index& index) {
-  WARN_EMPTY_FUNC_IMPL(0);
+  assert(this->memory_stack[index].get_type() == mem::Cell::Type::NUMBER);
+  FIXME;  // ^^^ `=` or `==` (see page 23 in lecture for vm)
+
+  unsigned val = (unsigned)this->memory_stack[index].get_number();
+  FIXME;  // ^^^ use c-style cast?
+
+  assert(this->memory_stack[index].get_number() == (double)val);
+  FIXME;  // ^^^ use c-style cast?
+
+  return val;
 }
 
 void Cpu::push_enviroment_value(unsigned value) {
