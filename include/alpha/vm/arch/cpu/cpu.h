@@ -40,9 +40,10 @@ class Cpu {
 
   MemStack& memory_stack;
   ConstTable& const_table;
+  CodeTable& code_table;
 
  public:
-  Cpu(MemStack& memory_stack, ConstTable& const_table);
+  Cpu(MemStack& memory_stack, ConstTable& const_table, CodeTable& code_table);
   void execute_cycle();
 
  private:
