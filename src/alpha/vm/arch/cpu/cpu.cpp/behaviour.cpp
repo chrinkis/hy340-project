@@ -1,6 +1,7 @@
 #include <alpha/vm/arch/cpu/cpu.h>
 
 #include <alpha/vm/arch/mem/consts/consts.h>
+#include <alpha/vm/runtime/messages/error.h>
 
 #include <utils/warnings.h>
 
@@ -133,7 +134,21 @@ mem::Cell& Cpu::translate_arg_to_cell(const AbcArg& arg, mem::Cell& reg) {
 }
 
 void Cpu::assign(mem::Cell& lval, const mem::Cell& rval) {
-  WARN_EMPTY_FUNC_IMPL();
+  FIXME;  // check if they are the same cells
+
+  FIXME;  // check if they are the same tables
+
+  if (rval.get_type() == mem::Cell::Type::UNDEF) {
+    runtime::messages::warning("assign from `undef` content!");
+  }
+
+  lval = rval;
+
+  if (lval.get_type() == mem::Cell::Type::STRING) {
+    FIXME;  // Nothing to do, right?
+  } else if (lval.get_type() == mem::Cell::Type::TABLE) {
+    lval.get_table()->increase_counter();
+  }
 }
 
 void Cpu::call_save_enviroment() {
