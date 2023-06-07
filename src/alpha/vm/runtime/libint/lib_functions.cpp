@@ -16,4 +16,8 @@ void LibFunctions::call(const std::string& func_name) {
   WARN_EMPTY_FUNC_IMPL();
 }
 
+bool LibFunctions::supports_lib_func(const std::string& func_name) const {
+  WARN_EMPTY_FUNC_IMPL(true);
+}
+
 }  // namespace alpha::vm::runtime::libint
