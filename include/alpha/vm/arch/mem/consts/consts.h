@@ -10,9 +10,10 @@
 namespace alpha::vm::arch::mem::consts {
 
 class Consts {
- private:
+ public:
   using Index = unsigned;
 
+ private:
   using NumCollection = std::vector<double>;
   using StrCollection = std::vector<std::string>;
   using LibFuncNameCollection = std::vector<std::string>;

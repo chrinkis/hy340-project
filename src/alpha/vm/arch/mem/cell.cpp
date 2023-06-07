@@ -48,7 +48,7 @@ Cell Cell::for_table(const runtime::table::Table& table) {
   WARN_EMPTY_FUNC_IMPL(Cell());
 }
 
-Cell Cell::for_func_val(unsigned func_no) {
+Cell Cell::for_func_index(const consts::Consts::Index& index) {
   WARN_EMPTY_FUNC_IMPL(Cell());
 }
 
@@ -84,7 +84,7 @@ runtime::table::Table Cell::get_table() const {
   WARN_EMPTY_FUNC_IMPL(runtime::table::Table());
 }
 
-unsigned Cell::get_func_val() const {
+const consts::Consts::Index Cell::get_func_index() const {
   WARN_EMPTY_FUNC_IMPL(0);
 }
 

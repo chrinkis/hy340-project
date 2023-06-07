@@ -1,5 +1,6 @@
 #pragma once
 
+#include <alpha/vm/arch/mem/consts/consts.h>
 #include <alpha/vm/runtime/table/table.h>
 
 #include <memory>
@@ -28,7 +29,7 @@ class Cell {
                std::string,            // string
                bool,                   // boolean
                runtime::table::Table,  // table
-               unsigned,               // func_val
+               consts::Consts::Index,  // func_index
                std::string>            // lib_func
       data;
 
@@ -50,7 +51,7 @@ class Cell {
   static Cell for_string(const std::string& string);
   static Cell for_boolean(bool boolean);
   static Cell for_table(const runtime::table::Table& table);
-  static Cell for_func_val(unsigned func_no);
+  static Cell for_func_index(const consts::Consts::Index& index);
   static Cell for_lib_func(const std::string& func_name);
   static Cell for_nil();
 
@@ -61,7 +62,7 @@ class Cell {
   std::string get_string() const;
   bool get_boolean() const;
   runtime::table::Table get_table() const;
-  unsigned get_func_val() const;
+  const consts::Consts::Index get_func_index() const;
   std::string get_lib_func() const;
 };
 
