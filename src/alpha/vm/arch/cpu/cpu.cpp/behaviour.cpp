@@ -220,6 +220,11 @@ unsigned Cpu::get_enviroment_value(const MemStack::Index& index) {
   WARN_EMPTY_FUNC_IMPL(0);
 }
 
+void Cpu::push_enviroment_value(unsigned value) {
+  this->memory_stack[this->registers.top] = mem::Cell::for_number(value);
+  this->decrease_top();
+}
+
 unsigned get_total_actuals_from_stack() {
   WARN_EMPTY_FUNC_IMPL(0);
 }

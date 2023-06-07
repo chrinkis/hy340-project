@@ -110,6 +110,7 @@ class Cpu {
 
   void decrease_top();
   unsigned get_enviroment_value(const MemStack::Index& index);
+  void push_enviroment_value(unsigned value);
 
   unsigned get_total_actuals_from_stack();
 
