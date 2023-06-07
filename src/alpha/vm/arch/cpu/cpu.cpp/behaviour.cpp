@@ -206,7 +206,14 @@ void Cpu::table_set_elem(runtime::table::Table& table,
 }
 
 void Cpu::decrease_top() {
-  WARN_EMPTY_FUNC_IMPL();
+  if (!this->registers.top) {
+    runtime::messages::error("stack overflow");
+    this->execution_finished = true;
+
+    return;
+  }
+
+  this->registers.top--;
 }
 
 unsigned Cpu::get_enviroment_value(const MemStack::Index& index) {
