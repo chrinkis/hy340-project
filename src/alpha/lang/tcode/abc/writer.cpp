@@ -106,7 +106,7 @@ void Writer::write_total(const unsigned total) {
 }
 
 void Writer::write_string(const string& str) {
-  unsigned size = str.size() + 1;  // include '\0'
+  unsigned size = str.size();  // don't include '\0'
   this->write_size(size);
 
   for (auto str_char : str) {
@@ -191,9 +191,6 @@ void Writer::write_instruction(const Instruction& instruction) {
 
   auto arg_b = instruction.get_arg_b();
   this->write_operand(arg_b);
-
-  this->ofs << std::endl;
-  FIXME  // ^^^^^^^
 }
 
 void Writer::write_opcode(const Opcode& opcode) {
