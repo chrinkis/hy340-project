@@ -47,6 +47,8 @@ class Cpu {
   void execute_cycle();
 
  private:
+  void execute_instruction(const AbcInstruction& instr);
+
   void execute_assign(const AbcInstruction& instr);
 
   void execute_arithmetic(const AbcInstruction& instr);

@@ -4,6 +4,8 @@
 
 #include <utils/warnings.h>
 
+#include <cassert>
+
 namespace alpha::vm::arch::cpu {
 
 Cpu::Cpu(MemStack& memory_stack, ConstTable& const_table, CodeTable& code_table)
@@ -14,6 +16,34 @@ Cpu::Cpu(MemStack& memory_stack, ConstTable& const_table, CodeTable& code_table)
 }
 
 void Cpu::execute_cycle() {
+  if (this->execution_finished) {
+    return;
+  }
+
+  if (this->pc == this->code_table.get_size()) {
+    this->execution_finished = true;
+    return;
+  }
+
+  assert(this->pc < this->code_table.get_size());
+
+  AbcInstruction instr = this->code_table.at(this->pc);
+
+  FIXME;  // assert opcode of instr is in range
+
+  if (instr.get_src_line()) {
+    this->current_line = instr.get_src_line();
+    FIXME;  // at dev time, src line doesn't store line of quad
+  }
+
+  auto old_pc = this->pc;
+  this->execute_instruction(instr);
+  if (this->pc == old_pc) {
+    this->pc++;
+  }
+}
+
+void Cpu::execute_instruction(const AbcInstruction& instr) {
   WARN_EMPTY_FUNC_IMPL();
 }
 

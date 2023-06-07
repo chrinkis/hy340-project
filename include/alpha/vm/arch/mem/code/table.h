@@ -27,6 +27,8 @@ class Table {
 
   Instruction::SrcLine get_next_label() const;
 
+  const Instruction& at(const Index& index);
+
  public: /* Iterators */
   using ConstIterator = Collection::const_iterator;
 
