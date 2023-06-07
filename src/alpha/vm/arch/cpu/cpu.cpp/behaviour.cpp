@@ -190,7 +190,8 @@ void Cpu::call_functor(const runtime::table::Table& table) {
   } else if (f->get_type() == mem::Cell::Type::USER_FUNC) {
     this->push_table_arg(table);
     this->call_save_enviroment();
-    this->pc = f->get_func_val();
+    this->pc =
+        this->const_table.user_func_at(f->get_func_index()).get_address();
 
     assert(this->pc < this->code_table.get_size());
     assert(this->code_table.at(this->pc).get_opcode() ==

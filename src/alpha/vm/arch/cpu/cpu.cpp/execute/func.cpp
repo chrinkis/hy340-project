@@ -19,7 +19,8 @@ void Cpu::execute_call(const AbcInstruction& instr) {
       using Opcode = abc::instruction::Opcode;
 
       this->call_save_enviroment();
-      this->pc = func.get_func_val();
+      this->pc =
+          this->const_table.user_func_at(func.get_func_index()).get_address();
 
       assert(this->pc < this->code_table.get_size());
       assert(this->code_table.at(this->pc).get_opcode() == Opcode::FUNC_ENTER);
