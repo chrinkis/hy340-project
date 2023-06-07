@@ -24,8 +24,7 @@ void Cpu::execute_call(const AbcInstruction& instr) {
       using Opcode = abc::instruction::Opcode;
 
       this->call_save_enviroment();
-      this->pc =
-          this->const_table.user_func_at(func.get_func_index()).get_address();
+      this->pc = func.get_user_func().get_address();
 
       assert(this->pc < this->code_table.get_size());
       assert(this->code_table.at(this->pc).get_opcode() == Opcode::FUNC_ENTER);
@@ -72,8 +71,7 @@ void Cpu::execute_funcenter(const AbcInstruction& instr) {
 
   FIXME;  // add missing assert
 
-  mem::consts::UserFunc func =
-      this->const_table.user_func_at(cell_as_func.get_func_index());
+  mem::consts::UserFunc func = cell_as_func.get_user_func();
 
   assert(this->pc == func.get_address());
 
