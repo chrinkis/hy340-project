@@ -75,7 +75,7 @@ void Cpu::execute_instruction(const AbcInstruction& instr) {
       this->execute_funcenter(instr);
       break;
     case abc::instruction::Opcode::FUNC_EXIT:
-      this->execute_funcexit(instr);
+      this->execute_funcexit();
       break;
     case abc::instruction::Opcode::AND:
       this->execute_and(instr);
@@ -164,7 +164,23 @@ void Cpu::call_save_enviroment() {
 }
 
 void Cpu::call_lib_func(const std::string& lib_func_name) {
-  WARN_EMPTY_FUNC_IMPL();
+  if (!this->lib_functions.supports_lib_func(lib_func_name)) {
+    runtime::messages::error("unsupported lib func `" + lib_func_name +
+                             "` called!");
+    this->execution_finished = true;
+
+    return;
+  }
+
+  this->call_save_enviroment();
+  this->registers.topsp = this->registers.top;
+  this->total_actuals = 0;
+
+  this->lib_functions.call(lib_func_name);
+
+  if (!this->execution_finished) {
+    this->execute_funcexit();
+  }
 }
 
 void Cpu::call_lib_functor(const runtime::table::Table& table) {

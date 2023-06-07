@@ -81,7 +81,7 @@ void Cpu::execute_funcenter(const AbcInstruction& instr) {
   this->registers.top -= func.get_local_size();
 }
 
-void Cpu::execute_funcexit(const AbcInstruction& instr) {
+void Cpu::execute_funcexit() {
   auto old_top = this->registers.top;
 
   this->registers.top =

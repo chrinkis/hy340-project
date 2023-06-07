@@ -6,6 +6,7 @@
 #include <alpha/vm/arch/mem/code/table.h>
 #include <alpha/vm/arch/mem/consts/consts.h>
 #include <alpha/vm/arch/mem/stack/stack.h>
+#include <alpha/vm/runtime/libint/lib_functions.h>
 #include <alpha/vm/runtime/table/table.h>
 
 #include <optional>
@@ -19,6 +20,7 @@ class Cpu {
   using AbcArg = abc::instruction::Arg;
   using CodeTable = mem::code::Table;
   using ConstTable = mem::consts::Consts;
+  using LibFunctions = runtime::libint::LibFunctions;
 
  public:
   // FIXME: should this be private?
@@ -41,6 +43,8 @@ class Cpu {
   MemStack& memory_stack;
   ConstTable& const_table;
   CodeTable& code_table;
+
+  LibFunctions lib_functions;
 
  public:
   Cpu(MemStack& memory_stack, ConstTable& const_table, CodeTable& code_table);
@@ -79,7 +83,7 @@ class Cpu {
   void execute_call(const AbcInstruction& instr);
   void execute_pushargs(const AbcInstruction& instr);
   void execute_funcenter(const AbcInstruction& instr);
-  void execute_funcexit(const AbcInstruction& instr);
+  void execute_funcexit();
 
   void execute_newtable(const AbcInstruction& instr);
   void execute_tablegetelem(const AbcInstruction& instr);
