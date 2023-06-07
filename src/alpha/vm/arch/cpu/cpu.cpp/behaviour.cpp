@@ -121,6 +121,8 @@ void Cpu::execute_instruction(const AbcInstruction& instr) {
     case abc::instruction::Opcode::NOP:
       this->execute_nop(instr);
       break;
+    default:
+      assert(0);
   }
 }
 
