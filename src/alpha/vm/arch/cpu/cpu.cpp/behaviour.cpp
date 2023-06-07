@@ -70,7 +70,6 @@ void Cpu::execute_instruction(const AbcInstruction& instr) {
     case abc::instruction::Opcode::CALL:
       this->execute_call(instr);
       break;
-      break;
     case abc::instruction::Opcode::FUNC_ENTER:
       this->execute_funcenter(instr);
       break;
