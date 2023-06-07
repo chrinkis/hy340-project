@@ -152,7 +152,15 @@ void Cpu::assign(mem::Cell& lval, const mem::Cell& rval) {
 }
 
 void Cpu::call_save_enviroment() {
-  WARN_EMPTY_FUNC_IMPL();
+  using Opcode = abc::instruction::Opcode;
+
+  this->push_enviroment_value(this->total_actuals);
+
+  assert(this->code_table.at(this->pc).get_opcode() == Opcode::CALL);
+
+  this->push_enviroment_value(this->pc + 1);
+  this->push_enviroment_value(this->registers.top + this->total_actuals + 2);
+  this->push_enviroment_value(this->registers.topsp);
 }
 
 void Cpu::call_lib_func(const std::string& lib_func_name) {
