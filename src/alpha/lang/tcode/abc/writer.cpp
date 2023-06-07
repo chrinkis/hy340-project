@@ -191,9 +191,6 @@ void Writer::write_instruction(const Instruction& instruction) {
 
   auto arg_b = instruction.get_arg_b();
   this->write_operand(arg_b);
-
-  this->ofs << std::endl;
-  FIXME  // ^^^^^^^
 }
 
 void Writer::write_opcode(const Opcode& opcode) {
