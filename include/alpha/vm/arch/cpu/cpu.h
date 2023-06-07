@@ -88,8 +88,8 @@ class Cpu {
   void execute_nop(const AbcInstruction& instr);
 
  private:
-  mem::Cell translate_arg_to_cell(const AbcArg& arg);
-  mem::Cell translate_arg_to_cell(const AbcArg& arg, mem::Cell& reg);
+  mem::Cell& translate_arg_to_cell(const AbcArg& arg);
+  mem::Cell& translate_arg_to_cell(const AbcArg& arg, mem::Cell& reg);
 
   void assign(mem::Cell& lval, const mem::Cell& rval);
 

@@ -124,12 +124,12 @@ void Cpu::execute_instruction(const AbcInstruction& instr) {
   }
 }
 
-mem::Cell Cpu::translate_arg_to_cell(const AbcArg& arg) {
-  WARN_EMPTY_FUNC_IMPL(mem::Cell());
+mem::Cell& Cpu::translate_arg_to_cell(const AbcArg& arg) {
+  WARN_EMPTY_FUNC_IMPL(this->memory_stack[0]);
 }
 
-mem::Cell Cpu::translate_arg_to_cell(const AbcArg& arg, mem::Cell& reg) {
-  WARN_EMPTY_FUNC_IMPL(mem::Cell());
+mem::Cell& Cpu::translate_arg_to_cell(const AbcArg& arg, mem::Cell& reg) {
+  WARN_EMPTY_FUNC_IMPL(reg);
 }
 
 void Cpu::assign(mem::Cell& lval, const mem::Cell& rval) {
