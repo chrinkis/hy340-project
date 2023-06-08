@@ -36,6 +36,10 @@ class Parser {
 
   ConstTable& const_table;
   InstructionTable& instruction_table;
+  struct {
+    unsigned max;
+    bool exists;
+  } global_offset;
 
  public:
   Parser(ConstTable& const_table, InstructionTable& instruction_table);
@@ -105,6 +109,7 @@ class Parser {
 
  public:
   void parse(std::string file_name);
+  unsigned get_total_globals() const;
 };
 
 }  // namespace vm::parser
