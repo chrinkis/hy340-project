@@ -569,7 +569,7 @@ returnstmt  :   RETURN ";"      { nterm::Returnstmt::returnTkn_semicolonTkn(@1);
 %%
 
 static void print_derivation(const std::string& non_final, const std::string& final) {
-    std::cout << non_final << "\t\t -> \t" << final << std::endl;
+    // std::cout << non_final << "\t\t -> \t" << final << std::endl;
 }
 
 void alpha::syntax::Parser::error(const location_type &l, const std::string &err_message) {
