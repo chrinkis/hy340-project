@@ -13,8 +13,8 @@ class Breakstmt {
   using Quad = icode::quad::Quad;
 
  private:
-  Quad::Label break_list_head;
-  Quad::Label continue_list_head;
+  Quad::Label break_list_head = 0;
+  Quad::Label continue_list_head = 0;
 
  public:
   static Breakstmt from_breakTkn(const location& loc);

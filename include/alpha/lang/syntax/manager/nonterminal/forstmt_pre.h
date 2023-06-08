@@ -15,8 +15,8 @@ class ForstmtPre {
   using Quad = alpha::icode::quad::Quad;
 
  private:
-  Quad::Label test;
-  Quad::Label enter;
+  Quad::Label test = 0;
+  Quad::Label enter = 0;
 
  public:
   static ForstmtPre from_forTkn_lParTkn_elist_smclnTkn_M_expr_smclnTkn(
