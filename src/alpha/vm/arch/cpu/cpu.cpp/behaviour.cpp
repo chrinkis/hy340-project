@@ -130,11 +130,75 @@ void Cpu::execute_instruction(const AbcInstruction& instr) {
 }
 
 mem::Cell& Cpu::translate_arg_to_cell(const AbcArg& arg) {
-  WARN_EMPTY_FUNC_IMPL(this->memory_stack[0]);
+  auto stack_size = this->memory_stack.get_size();
+  const auto& topsp = this->registers.topsp;
+
+  switch (arg.get_type()) {
+    case abc::instruction::Arg::Type::GLOBAL: {
+      return this->memory_stack[stack_size - 1 - arg.get_value()];
+    }
+    case abc::instruction::Arg::Type::LOCAL: {
+      return this->memory_stack[topsp - arg.get_value()];
+    }
+    case abc::instruction::Arg::Type::FORMAL: {
+      return this->memory_stack[topsp + STACK_ENV_SIZE + 1 + arg.get_value()];
+    }
+    case abc::instruction::Arg::Type::RET_VAL: {
+      return this->registers.retval;
+    }
+    case abc::instruction::Arg::Type::NUMBER:
+    case abc::instruction::Arg::Type::STRING:
+    case abc::instruction::Arg::Type::BOOL:
+    case abc::instruction::Arg::Type::NIL:
+    case abc::instruction::Arg::Type::USER_FUNC:
+    case abc::instruction::Arg::Type::LIB_FUNC:
+    case abc::instruction::Arg::Type::LABEL:
+    case abc::instruction::Arg::Type::EMPTY:
+    default:
+      assert(0);
+  }
 }
 
 mem::Cell& Cpu::translate_arg_to_cell(const AbcArg& arg, mem::Cell& reg) {
-  WARN_EMPTY_FUNC_IMPL(reg);
+#define RETURN_WITH(value) \
+  {                        \
+    reg = value;           \
+    return reg;            \
+  }
+
+  switch (arg.get_type()) {
+    case abc::instruction::Arg::Type::NUMBER: {
+      RETURN_WITH(mem::Cell::for_number(arg.get_value()));
+    }
+    case abc::instruction::Arg::Type::STRING: {
+      RETURN_WITH(
+          mem::Cell::for_string(this->const_table.string_at(arg.get_value())));
+    }
+    case abc::instruction::Arg::Type::BOOL: {
+      RETURN_WITH(mem::Cell::for_boolean(arg.get_value()));
+    }
+    case abc::instruction::Arg::Type::NIL: {
+      RETURN_WITH(mem::Cell::for_nil());
+    }
+    case abc::instruction::Arg::Type::USER_FUNC: {
+      RETURN_WITH(mem::Cell::for_user_func(
+          this->const_table.user_func_at(arg.get_value())));
+    }
+    case abc::instruction::Arg::Type::LIB_FUNC: {
+      RETURN_WITH(mem::Cell::for_lib_func(
+          this->const_table.lib_func_name_at(arg.get_value())));
+    }
+    case abc::instruction::Arg::Type::GLOBAL:
+    case abc::instruction::Arg::Type::LOCAL:
+    case abc::instruction::Arg::Type::FORMAL:
+    case abc::instruction::Arg::Type::RET_VAL:
+    case abc::instruction::Arg::Type::LABEL:
+    case abc::instruction::Arg::Type::EMPTY:
+    default:
+      assert(0);
+  }
+
+#undef RETURN_WITH
 }
 
 void Cpu::assign(mem::Cell& lval, const mem::Cell& rval) {
