@@ -23,6 +23,8 @@ add_executable(vm
 
     arch/mem/stack/stack.cpp
 
+    parser/parser.cpp
+
     runtime/libint/lib_functions.cpp
 
     runtime/messages/error.cpp
