@@ -8,6 +8,8 @@
 #include <alpha/lang/tcode/abc/table.h>
 #include <alpha/lang/tcode/abc/writer.h>
 
+#include <utils/warnings.h>
+
 #include <fstream>
 #include <iostream>
 
@@ -26,13 +28,17 @@ int main() {
 
   parser.parse();
 
-  std::cout << symTable << std::endl;
+  std::ofstream s_sym_table_txt("symTable.txt");
+  FIXME;  // ensure file oppened
+  s_sym_table_txt << symTable << std::endl;
+  s_sym_table_txt.close();
 
   if (HAS_LEX_ERROR || HAS_SYNTAX_ERROR) {
     return 1;
   }
 
   std::ofstream s_quads_txt("quads.txt");
+  FIXME;  // ensure file oppened
   s_quads_txt << quadTable << std::endl;
   s_quads_txt.close();
 
@@ -45,7 +51,10 @@ int main() {
     writer.write_binary("tcode.abc");
   } catch (std::runtime_error e) {
     std::cerr << e.what() << std::endl;
+    return 2;
   }
+
+  std::cout << "Compiled succesfully!" << std::endl;
 
   return 0;
 }
