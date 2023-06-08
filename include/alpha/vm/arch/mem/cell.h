@@ -37,9 +37,6 @@ class Cell {
 
   Variant data;
 
- private:
-  Cell(const Type& type);
-
  public:
   Cell();
   Cell(const Cell& cell);

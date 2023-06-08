@@ -4,9 +4,6 @@
 
 namespace alpha::vm::arch::mem {
 
-Cell::Cell(const Type& type) {
-  WARN_EMPTY_FUNC_IMPL();
-}
 
 Cell::Cell() {
   WARN_EMPTY_FUNC_IMPL();
