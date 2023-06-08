@@ -58,7 +58,8 @@ class Cpu {
 
   void execute_arithmetic(
       const AbcInstruction& instr,
-      const std::function<double(double, double)>& do_operation);
+      const std::function<double(double, double)>& do_operation,
+      bool extra_division_checks = false);
 
   void execute_add(const AbcInstruction& instr);
   void execute_sub(const AbcInstruction& instr);
