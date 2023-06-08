@@ -77,7 +77,11 @@ class Cpu {
 
   void execute_jump(const AbcInstruction& instr);
 
-  void execute_cmp_jump(const AbcInstruction& instr);
+  void execute_cmp_jump(
+      const AbcInstruction& instr,
+      const std::function<bool(const mem::Cell&,
+                               const mem::Cell&) noexcept(false)>& compare);
+
   void execute_jeq(const AbcInstruction& instr);
   void execute_jne(const AbcInstruction& instr);
   void execute_jle(const AbcInstruction& instr);
