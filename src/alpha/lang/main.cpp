@@ -40,8 +40,12 @@ int main() {
 
   Writer writer;
 
-  writer.write_text("tcode.txt");
-  writer.write_binary("tcode.abc");
+  try {
+    writer.write_text("tcode.txt");
+    writer.write_binary("tcode.abc");
+  } catch (std::runtime_error e) {
+    std::cerr << e.what() << std::endl;
+  }
 
   return 0;
 }

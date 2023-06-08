@@ -8,12 +8,26 @@
 #include <utils/enums.h>
 #include <utils/warnings.h>
 
+#define CANNOT_OPEN_FILE std::runtime_error("Cannot open file to write");
+
+#define CHECK_WRITE_FAILURE                     \
+  if (!this->ofs.good()) {                      \
+    std::runtime_error("Failed to write file"); \
+  }
+
 #define MAGIC_NUMBER 340200501
 
-#define WRITE_BINARY(value) \
-  this->ofs.write(reinterpret_cast<const char*>(&(value)), sizeof(value))
+#define WRITE_BINARY(value)                                                  \
+  {                                                                          \
+    this->ofs.write(reinterpret_cast<const char*>(&(value)), sizeof(value)); \
+    CHECK_WRITE_FAILURE;                                                     \
+  }
 
-#define WRITE_TEXT(value) this->ofs << (value) << std::endl;
+#define WRITE_TEXT(value)              \
+  {                                    \
+    this->ofs << (value) << std::endl; \
+    CHECK_WRITE_FAILURE;               \
+  }
 
 #define GET_FILE_TYPE (this->get_file_type())
 
@@ -216,8 +230,9 @@ void Writer::write_value(const unsigned value) {
 void Writer::write(const string& file_name, const StreamOptions& options) {
   this->ofs.open(file_name, options);
 
-  FIXME;  // Handle stream failure
-  assert(ofs);
+  if (ofs.fail()) {
+    throw CANNOT_OPEN_FILE;
+  }
 
   this->write_avm_file();
 
