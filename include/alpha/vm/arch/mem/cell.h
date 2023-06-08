@@ -26,7 +26,8 @@ class Cell {
  private:
   Type type;
 
-  std::variant<double,                 // number
+  std::variant<std::monostate,         // empty (nil/undef/uninitialized)
+               double,                 // number
                std::string,            // string
                bool,                   // boolean
                runtime::table::Table,  // table
