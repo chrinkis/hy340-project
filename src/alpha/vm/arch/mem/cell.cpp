@@ -17,7 +17,7 @@
 
 namespace alpha::vm::arch::mem {
 
-Cell::Cell() : type(Type::UNINITIALIZED), data(std::monostate()) {}
+Cell::Cell() : type(Type::UNDEF), data(std::monostate()) {}
 
 Cell::Cell(const Cell& cell) : type(cell.type), data(cell.data) {}
 
@@ -56,7 +56,6 @@ std::string Cell::to_string() const {
       return "nil";
 
     case Type::UNDEF:
-    case Type::UNINITIALIZED:
       assert(0);
   }
 }
@@ -81,19 +80,17 @@ bool Cell::to_bool() const {
     case Type::UNDEF:
       return false;
 
-    case Type::UNINITIALIZED:
       assert(0);
   }
 }
 
 void Cell::clear() {
-  assert(this->type != Type::UNINITIALIZED);
 
   if (this->type == Type::TABLE) {
     this->get_table()->deccrease_counter();
   }
 
-  *this = Cell::for_undef();
+  *this = Cell();
 }
 
 Cell Cell::for_number(double number) {
@@ -198,7 +195,6 @@ std::string Cell::get_type_as_string() const {
     case Type::UNDEF:
       return "undef";
 
-    case Type::UNINITIALIZED:
     default:
       assert(0);
   }
