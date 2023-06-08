@@ -9,6 +9,7 @@
 #include <alpha/vm/runtime/libint/lib_functions.h>
 #include <alpha/vm/runtime/table/table.h>
 
+#include <functional>
 #include <optional>
 
 namespace alpha::vm::arch::cpu {
@@ -55,7 +56,10 @@ class Cpu {
 
   void execute_assign(const AbcInstruction& instr);
 
-  void execute_arithmetic(const AbcInstruction& instr);
+  void execute_arithmetic(
+      const AbcInstruction& instr,
+      const std::function<double(double, double)>& do_operation);
+
   void execute_add(const AbcInstruction& instr);
   void execute_sub(const AbcInstruction& instr);
   void execute_mul(const AbcInstruction& instr);

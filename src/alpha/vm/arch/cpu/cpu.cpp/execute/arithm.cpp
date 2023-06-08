@@ -4,7 +4,9 @@
 
 namespace alpha::vm::arch::cpu {
 
-void Cpu::execute_arithmetic(const AbcInstruction& instr) {
+void Cpu::execute_arithmetic(
+    const AbcInstruction& instr,
+    const std::function<double(double, double)>& do_operation) {
   WARN_EMPTY_FUNC_IMPL();
 }
 
