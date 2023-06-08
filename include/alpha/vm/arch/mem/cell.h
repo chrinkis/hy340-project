@@ -29,7 +29,6 @@ class Cell {
     LIB_FUNC = 5,
     NIL = 6,
     UNDEF = 7,
-    UNINITIALIZED = 8
   };
 
  private:
