@@ -93,7 +93,7 @@ Instruction Instruction::construct_for_return(const Arg::Mapper& icode_to_tcode,
   Instruction instruction(src_line, Opcode::ASSIGN);
 
   instruction.result = Arg::for_ret_val();
-  instruction.arg_a = Arg::from_expr(quad.get_arg1(), icode_to_tcode);
+  instruction.arg_a = Arg::from_expr(quad.get_result(), icode_to_tcode);
 
   return instruction;
 }
