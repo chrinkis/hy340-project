@@ -259,11 +259,11 @@ void Cpu::push_enviroment_value(unsigned value) {
   this->decrease_top();
 }
 
-unsigned get_total_actuals_from_stack() {
+unsigned Cpu::get_total_actuals_from_stack() {
   WARN_EMPTY_FUNC_IMPL(0);
 }
 
-mem::Cell& get_actual_from_stack_at(unsigned i) {
+mem::Cell& Cpu::get_actual_from_stack_at(unsigned i) {
   WARN_EMPTY_FUNC_IMPL(*(new mem::Cell));
 }
 
