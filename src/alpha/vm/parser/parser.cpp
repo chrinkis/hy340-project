@@ -108,7 +108,9 @@ using ArgType = alpha::vm::abc::instruction::Arg::Type;
 using UserFunc = alpha::vm::arch::mem::consts::UserFunc;
 
 Parser::Parser(ConstTable& const_table, InstructionTable& instruction_table)
-    : const_table(const_table), instruction_table(instruction_table) {}
+    : const_table(const_table),
+      instruction_table(instruction_table),
+      global_offset(0, false) {}
 
 Parser::FileType Parser::get_file_type() const {
   return this->file_type;
@@ -306,7 +308,15 @@ Opcode Parser::read_opcode() {
 }
 
 Arg Parser::read_arg() {
-  return Arg(this->read_type(), this->read_value());
+  Arg arg(this->read_type(), this->read_value());
+
+  if (arg.get_type() == ArgType::GLOBAL) {
+    this->global_offset.exists = true;
+    this->global_offset.max =
+        std::max(this->global_offset.max, arg.get_value());
+  }
+
+  return arg;
 }
 
 ArgType Parser::read_type_binary() {
@@ -346,6 +356,10 @@ void Parser::parse(std::string file_name) {
 
   this->read_avm_file();
   this->ifs.close();
+}
+
+unsigned Parser::get_total_globals() const {
+  return this->global_offset.exists ? this->global_offset.max + 1 : 0;
 }
 
 }  // namespace vm::parser
