@@ -78,7 +78,10 @@ bool Cell::to_bool() const {
       return true;
 
     case Type::NIL:
+      return false;
+
     case Type::UNDEF:
+      assert(0);
       return false;
 
     default:
