@@ -6,8 +6,10 @@
 #include <alpha/vm/arch/mem/code/table.h>
 #include <alpha/vm/arch/mem/consts/consts.h>
 #include <alpha/vm/arch/mem/stack/stack.h>
+#include <alpha/vm/runtime/libint/lib_functions.h>
 #include <alpha/vm/runtime/table/table.h>
 
+#include <functional>
 #include <optional>
 
 namespace alpha::vm::arch::cpu {
@@ -19,6 +21,7 @@ class Cpu {
   using AbcArg = abc::instruction::Arg;
   using CodeTable = mem::code::Table;
   using ConstTable = mem::consts::Consts;
+  using LibFunctions = runtime::libint::LibFunctions;
 
  public:
   // FIXME: should this be private?
@@ -40,15 +43,24 @@ class Cpu {
 
   MemStack& memory_stack;
   ConstTable& const_table;
+  CodeTable& code_table;
+
+  LibFunctions lib_functions;
 
  public:
-  Cpu(MemStack& memory_stack, ConstTable& const_table);
+  Cpu(MemStack& memory_stack, ConstTable& const_table, CodeTable& code_table);
   void execute_cycle();
 
  private:
+  void execute_instruction(const AbcInstruction& instr);
+
   void execute_assign(const AbcInstruction& instr);
 
-  void execute_arithmetic(const AbcInstruction& instr);
+  void execute_arithmetic(
+      const AbcInstruction& instr,
+      const std::function<double(double, double)>& do_operation,
+      bool extra_division_checks = false);
+
   void execute_add(const AbcInstruction& instr);
   void execute_sub(const AbcInstruction& instr);
   void execute_mul(const AbcInstruction& instr);
@@ -57,7 +69,9 @@ class Cpu {
 
   void execute_umninus(const AbcInstruction& instr);
 
-  void execute_boolean(const AbcInstruction& instr);
+  void execute_boolean(const AbcInstruction& instr,
+                       const std::function<bool(bool, bool)>& do_operation);
+
   void execute_and(const AbcInstruction& instr);
   void execute_or(const AbcInstruction& instr);
 
@@ -65,7 +79,11 @@ class Cpu {
 
   void execute_jump(const AbcInstruction& instr);
 
-  void execute_cmp_jump(const AbcInstruction& instr);
+  void execute_cmp_jump(
+      const AbcInstruction& instr,
+      const std::function<bool(const mem::Cell&,
+                               const mem::Cell&) noexcept(false)>& compare);
+
   void execute_jeq(const AbcInstruction& instr);
   void execute_jne(const AbcInstruction& instr);
   void execute_jle(const AbcInstruction& instr);
@@ -76,7 +94,7 @@ class Cpu {
   void execute_call(const AbcInstruction& instr);
   void execute_pushargs(const AbcInstruction& instr);
   void execute_funcenter(const AbcInstruction& instr);
-  void execute_funcexit(const AbcInstruction& instr);
+  void execute_funcexit();
 
   void execute_newtable(const AbcInstruction& instr);
   void execute_tablegetelem(const AbcInstruction& instr);
@@ -85,8 +103,8 @@ class Cpu {
   void execute_nop(const AbcInstruction& instr);
 
  private:
-  mem::Cell translate_arg_to_cell(const AbcArg& arg);
-  mem::Cell translate_arg_to_cell(const AbcArg& arg, mem::Cell& reg);
+  mem::Cell& translate_arg_to_cell(const AbcArg& arg);
+  mem::Cell& translate_arg_to_cell(const AbcArg& arg, mem::Cell& reg);
 
   void assign(mem::Cell& lval, const mem::Cell& rval);
 
@@ -107,6 +125,7 @@ class Cpu {
 
   void decrease_top();
   unsigned get_enviroment_value(const MemStack::Index& index);
+  void push_enviroment_value(unsigned value);
 
   unsigned get_total_actuals_from_stack();
 

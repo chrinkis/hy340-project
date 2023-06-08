@@ -1,5 +1,7 @@
 #include <alpha/vm/arch/mem/code/table.h>
 
+#include <utils/warnings.h>
+
 #include <cassert>
 
 namespace alpha::vm::arch::mem::code {
@@ -16,6 +18,10 @@ size_t Table::get_size() const {
 
 Table::Instruction::SrcLine Table::get_next_label() const {
   return this->get_size();
+}
+
+const Table::Instruction& Table::at(const Index& index) {
+  return this->table.at(index);
 }
 
 Table::ConstIterator Table::begin() const {
