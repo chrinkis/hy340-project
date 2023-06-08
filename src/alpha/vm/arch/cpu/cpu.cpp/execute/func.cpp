@@ -62,7 +62,14 @@ void Cpu::execute_call(const AbcInstruction& instr) {
 }
 
 void Cpu::execute_pushargs(const AbcInstruction& instr) {
-  WARN_EMPTY_FUNC_IMPL();
+  mem::Cell& arg =
+      this->translate_arg_to_cell(instr.get_arg_a(), this->registers.arg_a);
+
+  FIXME;  // add missing assertion
+
+  this->assign(this->memory_stack[this->registers.top], arg);
+  this->total_actuals++;
+  this->decrease_top();
 }
 
 void Cpu::execute_funcenter(const AbcInstruction& instr) {
