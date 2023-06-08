@@ -15,6 +15,10 @@ Quad::Opcode Quad::get_opcode() const {
   return this->opcode;
 }
 
+bool Quad::has_result() const {
+  return !!this->result;
+}
+
 Expr Quad::get_result() const {
   return this->result.value();
 }

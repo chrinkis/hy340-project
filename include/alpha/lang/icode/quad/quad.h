@@ -57,6 +57,7 @@ class Quad {
 
   Opcode get_opcode() const;
 
+  bool has_result() const;
   Expr get_result() const;
   void set_result(const Expr& result);
 
