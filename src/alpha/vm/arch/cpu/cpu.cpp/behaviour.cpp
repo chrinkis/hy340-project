@@ -7,6 +7,8 @@
 
 #include <cassert>
 
+#define NUM_ACTUALS_OFFSET +4
+
 namespace alpha::vm::arch::cpu {
 
 Cpu::Cpu(MemStack& memory_stack, ConstTable& const_table, CodeTable& code_table)
@@ -260,7 +262,7 @@ void Cpu::push_enviroment_value(unsigned value) {
 }
 
 unsigned Cpu::get_total_actuals_from_stack() {
-  WARN_EMPTY_FUNC_IMPL(0);
+  return this->get_enviroment_value(this->registers.topsp + NUM_ACTUALS_OFFSET);
 }
 
 mem::Cell& Cpu::get_actual_from_stack_at(unsigned i) {
