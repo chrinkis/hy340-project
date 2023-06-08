@@ -10,9 +10,9 @@
 
 #define CANNOT_OPEN_FILE std::runtime_error("Cannot open file to write");
 
-#define CHECK_WRITE_FAILURE                     \
-  if (!this->ofs.good()) {                      \
-    std::runtime_error("Failed to write file"); \
+#define CHECK_WRITE_FAILURE                           \
+  if (!this->ofs.good()) {                            \
+    throw std::runtime_error("Failed to write file"); \
   }
 
 #define MAGIC_NUMBER 340200501
