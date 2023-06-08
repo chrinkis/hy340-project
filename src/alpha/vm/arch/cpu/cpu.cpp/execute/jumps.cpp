@@ -10,7 +10,14 @@
 namespace alpha::vm::arch::cpu {
 
 void Cpu::execute_jump(const AbcInstruction& instr) {
-  WARN_EMPTY_FUNC_IMPL();
+  assert(instr.get_result().get_type() == abc::instruction::Arg::Type::LABEL);
+
+  mem::Cell& rv_a =
+      this->translate_arg_to_cell(instr.get_arg_a(), this->registers.arg_a);
+
+  FIXME;  // add asserts for new pc?
+
+  this->pc = instr.get_result().get_value();
 }
 
 static bool operator==(const mem::Cell& a, const mem::Cell& b) noexcept(false) {
@@ -116,27 +123,27 @@ void Cpu::execute_cmp_jump(
 }
 
 void Cpu::execute_jeq(const AbcInstruction& instr) {
-  WARN_EMPTY_FUNC_IMPL();
+  this->execute_cmp_jump(instr, [](auto a, auto b) { return a == b; });
 }
 
 void Cpu::execute_jne(const AbcInstruction& instr) {
-  WARN_EMPTY_FUNC_IMPL();
+  this->execute_cmp_jump(instr, [](auto a, auto b) { return !(a == b); });
 }
 
 void Cpu::execute_jle(const AbcInstruction& instr) {
-  WARN_EMPTY_FUNC_IMPL();
+  this->execute_cmp_jump(instr, [](auto a, auto b) { return !(a > b); });
 }
 
 void Cpu::execute_jge(const AbcInstruction& instr) {
-  WARN_EMPTY_FUNC_IMPL();
+  this->execute_cmp_jump(instr, [](auto a, auto b) { return a >= b; });
 }
 
 void Cpu::execute_jlt(const AbcInstruction& instr) {
-  WARN_EMPTY_FUNC_IMPL();
+  this->execute_cmp_jump(instr, [](auto a, auto b) { return !(a >= b); });
 }
 
 void Cpu::execute_jgt(const AbcInstruction& instr) {
-  WARN_EMPTY_FUNC_IMPL();
+  this->execute_cmp_jump(instr, [](auto a, auto b) { return a > b; });
 }
 
 }  // namespace alpha::vm::arch::cpu
