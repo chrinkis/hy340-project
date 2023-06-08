@@ -60,6 +60,10 @@ Cell Cell::for_nil() {
   WARN_EMPTY_FUNC_IMPL(Cell());
 }
 
+Cell Cell::for_undef() {
+  WARN_EMPTY_FUNC_IMPL(Cell());
+}
+
 Cell::Type Cell::get_type() const {
   return this->type;
 }

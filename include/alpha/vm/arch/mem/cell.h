@@ -10,6 +10,15 @@
 namespace alpha::vm::arch::mem {
 
 class Cell {
+ private:
+  using Variant =
+      std::variant<std::monostate,         // empty (nil/undef/uninitialized)
+                   double,                 // number
+                   std::string,            // string
+                   bool,                   // boolean
+                   runtime::table::Table,  // table
+                   consts::UserFunc,       // user_func
+                   std::string>;           // lib_func
  public:
   enum class Type {
     NUMBER = 0,
@@ -20,18 +29,13 @@ class Cell {
     LIB_FUNC = 5,
     NIL = 6,
     UNDEF = 7,
+    UNINITIALIZED = 8
   };
 
  private:
   Type type;
 
-  std::variant<double,                 // number
-               std::string,            // string
-               bool,                   // boolean
-               runtime::table::Table,  // table
-               consts::UserFunc,       // user_func
-               std::string>            // lib_func
-      data;
+  Variant data;
 
  private:
   Cell(const Type& type);
@@ -54,6 +58,7 @@ class Cell {
   static Cell for_user_func(const consts::UserFunc& user_func);
   static Cell for_lib_func(const std::string& func_name);
   static Cell for_nil();
+  static Cell for_undef();
 
   Type get_type() const;
   std::string get_type_as_string() const;
