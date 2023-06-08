@@ -8,6 +8,7 @@
 #include <cassert>
 
 #define NUM_ACTUALS_OFFSET +4
+#define STACK_ENV_SIZE +4
 
 namespace alpha::vm::arch::cpu {
 
@@ -266,7 +267,9 @@ unsigned Cpu::get_total_actuals_from_stack() {
 }
 
 mem::Cell& Cpu::get_actual_from_stack_at(unsigned i) {
-  WARN_EMPTY_FUNC_IMPL(*(new mem::Cell));
+  assert(i < this->get_total_actuals_from_stack());
+
+  return this->memory_stack[this->registers.topsp + STACK_ENV_SIZE + 1 + i];
 }
 
 }  // namespace alpha::vm::arch::cpu
