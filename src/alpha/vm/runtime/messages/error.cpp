@@ -1,15 +1,21 @@
 #include <alpha/vm/runtime/messages/error.h>
 
-#include <utils/warnings.h>
+#include <iostream>
+
+#define ERROR_COLOR "\033[31m"
+#define WARNING_COLOR "\033[33m"
+#define DEFAULT_COLOR "\033[0m"
 
 namespace alpha::vm::runtime::messages {
 
 void error(const std::string& message) {
-  WARN_EMPTY_FUNC_IMPL();
+  std::cerr << ERROR_COLOR << "[Runtime Error]  " << message << DEFAULT_COLOR
+            << std::endl;
 }
 
 void warning(const std::string& message) {
-  WARN_EMPTY_FUNC_IMPL();
+  std::cerr << WARNING_COLOR << "[Runtime Warning]  " << message
+            << DEFAULT_COLOR << std::endl;
 }
 
 }  // namespace alpha::vm::runtime::messages
