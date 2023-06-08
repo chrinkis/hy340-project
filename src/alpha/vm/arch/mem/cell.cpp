@@ -56,6 +56,7 @@ std::string Cell::to_string() const {
       return "nil";
 
     case Type::UNDEF:
+    default:
       assert(0);
   }
 }
@@ -80,12 +81,12 @@ bool Cell::to_bool() const {
     case Type::UNDEF:
       return false;
 
+    default:
       assert(0);
   }
 }
 
 void Cell::clear() {
-
   if (this->type == Type::TABLE) {
     this->get_table()->deccrease_counter();
   }
