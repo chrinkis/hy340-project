@@ -20,6 +20,7 @@ class Cell {
     LIB_FUNC = 5,
     NIL = 6,
     UNDEF = 7,
+    UNINITIALIZED = 8
   };
 
  private:
@@ -54,6 +55,7 @@ class Cell {
   static Cell for_user_func(const consts::UserFunc& user_func);
   static Cell for_lib_func(const std::string& func_name);
   static Cell for_nil();
+  static Cell for_undef();
 
   Type get_type() const;
   std::string get_type_as_string() const;
