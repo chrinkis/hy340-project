@@ -69,7 +69,9 @@ class Cpu {
 
   void execute_umninus(const AbcInstruction& instr);
 
-  void execute_boolean(const AbcInstruction& instr);
+  void execute_boolean(const AbcInstruction& instr,
+                       const std::function<bool(bool, bool)>& do_operation);
+
   void execute_and(const AbcInstruction& instr);
   void execute_or(const AbcInstruction& instr);
 
