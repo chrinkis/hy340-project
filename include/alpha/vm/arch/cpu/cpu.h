@@ -54,6 +54,7 @@ class Cpu {
       unsigned total_globals);
 
   void execute_cycle();
+  bool has_finished() const;
 
  private:
   void execute_instruction(const AbcInstruction& instr);

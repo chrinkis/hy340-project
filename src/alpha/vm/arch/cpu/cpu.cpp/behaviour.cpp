@@ -50,6 +50,10 @@ void Cpu::execute_cycle() {
   }
 }
 
+bool Cpu::has_finished() const {
+  WARN_EMPTY_FUNC_IMPL();
+}
+
 void Cpu::execute_instruction(const AbcInstruction& instr) {
   switch (instr.get_opcode()) {
     case abc::instruction::Opcode::ASSIGN:
