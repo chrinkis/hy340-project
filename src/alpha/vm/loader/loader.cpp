@@ -1,4 +1,4 @@
-#include <alpha/vm/parser/parser.h>
+#include <alpha/vm/loader/loader.h>
 
 #include <utils/warnings.h>
 
@@ -98,7 +98,7 @@
                                                   \
   ASSERT_FILE_FORMAT(null_char_str == NULL_CHAR);
 
-namespace alpha::vm::parser {
+namespace alpha::vm::loader {
 
 using byte = char;
 using Instruction = alpha::vm::abc::instruction::Instruction;
@@ -107,56 +107,56 @@ using Arg = alpha::vm::abc::instruction::Arg;
 using ArgType = alpha::vm::abc::instruction::Arg::Type;
 using UserFunc = alpha::vm::arch::mem::consts::UserFunc;
 
-Parser::Parser(ConstTable& const_table, InstructionTable& instruction_table)
+Loader::Loader(ConstTable& const_table, InstructionTable& instruction_table)
     : const_table(const_table),
       instruction_table(instruction_table),
       global_offset(0, false) {}
 
-Parser::FileType Parser::get_file_type() const {
+Loader::FileType Loader::get_file_type() const {
   return this->file_type;
 }
 
-double Parser::read_double_binary() {
+double Loader::read_double_binary() {
   READ_BINARY(double);
 }
 
-unsigned Parser::read_unsigned_binary() {
+unsigned Loader::read_unsigned_binary() {
   READ_BINARY(unsigned);
 }
 
-char Parser::read_char_binary() {
+char Loader::read_char_binary() {
   READ_BINARY(char);
 }
 
-byte Parser::read_byte_binary() {
+byte Loader::read_byte_binary() {
   READ_BINARY(byte);
 }
 
-double Parser::read_double_text() {
+double Loader::read_double_text() {
   double value;
   READ_TEXT(value);
   return value;
 }
 
-unsigned Parser::read_unsigned_text() {
+unsigned Loader::read_unsigned_text() {
   unsigned value;
   READ_TEXT(value);
   return value;
 }
 
-char Parser::read_char_text() {
+char Loader::read_char_text() {
   char value;
   READ_TEXT(value);
   return value;
 }
 
-byte Parser::read_byte_text() {
+byte Loader::read_byte_text() {
   byte value;
   READ_TEXT(value);
   return value;
 }
 
-void Parser::read_avm_file() {
+void Loader::read_avm_file() {
   this->read_magic_number();
   this->read_arrays();
   this->read_code();
@@ -164,18 +164,18 @@ void Parser::read_avm_file() {
   READ_END_OF_FILE;
 }
 
-void Parser::read_magic_number() {
+void Loader::read_magic_number() {
   ASSERT_FILE_FORMAT(READ_UNSIGNED == MAGIC_NUMBER);
 }
 
-void Parser::read_arrays() {
+void Loader::read_arrays() {
   this->read_string_array();
   this->read_number_array();
   this->read_user_func_array();
   this->read_lib_functions();
 }
 
-void Parser::read_string_array() {
+void Loader::read_string_array() {
   unsigned total = this->read_total();
 
   for (int i = 0; i < total; i++) {
@@ -184,11 +184,11 @@ void Parser::read_string_array() {
   }
 }
 
-unsigned Parser::read_total() {
+unsigned Loader::read_total() {
   return READ_UNSIGNED;
 }
 
-std::string Parser::read_string_binary() {
+std::string Loader::read_string_binary() {
   unsigned size = this->read_size();
 
   std::string str;
@@ -204,7 +204,7 @@ std::string Parser::read_string_binary() {
   return str;
 }
 
-std::string Parser::read_string_text() {
+std::string Loader::read_string_text() {
   unsigned size = this->read_size();
 
   std::string str;
@@ -218,15 +218,15 @@ std::string Parser::read_string_text() {
   return str;
 }
 
-std::string Parser::read_string() {
+std::string Loader::read_string() {
   return READ_STRING;
 }
 
-unsigned Parser::read_size() {
+unsigned Loader::read_size() {
   return READ_UNSIGNED;
 }
 
-void Parser::read_number_array() {
+void Loader::read_number_array() {
   unsigned total = this->read_total();
 
   for (int i = 0; i < total; i++) {
@@ -235,7 +235,7 @@ void Parser::read_number_array() {
   }
 }
 
-void Parser::read_user_func_array() {
+void Loader::read_user_func_array() {
   unsigned total = this->read_total();
 
   for (int i = 0; i < total; i++) {
@@ -244,7 +244,7 @@ void Parser::read_user_func_array() {
   }
 }
 
-UserFunc Parser::read_user_func() {
+UserFunc Loader::read_user_func() {
   auto address = this->read_address();
   auto local_size = this->read_local_size();
   auto id = this->read_id();
@@ -252,19 +252,19 @@ UserFunc Parser::read_user_func() {
   return UserFunc(address, id, local_size);
 }
 
-unsigned Parser::read_address() {
+unsigned Loader::read_address() {
   return READ_UNSIGNED;
 }
 
-unsigned Parser::read_local_size() {
+unsigned Loader::read_local_size() {
   return READ_UNSIGNED;
 }
 
-std::string Parser::read_id() {
+std::string Loader::read_id() {
   return this->read_string();
 }
 
-void Parser::read_lib_functions() {
+void Loader::read_lib_functions() {
   unsigned total = this->read_total();
 
   for (int i = 0; i < total; i++) {
@@ -273,11 +273,11 @@ void Parser::read_lib_functions() {
   }
 }
 
-std::string Parser::read_lib_function() {
+std::string Loader::read_lib_function() {
   return this->read_string();
 }
 
-void Parser::read_code() {
+void Loader::read_code() {
   unsigned total = this->read_total();
 
   for (int i = 0; i < total; i++) {
@@ -286,7 +286,7 @@ void Parser::read_code() {
   }
 }
 
-Instruction Parser::read_instruction(const SrcLine& instr_no) {
+Instruction Loader::read_instruction(const SrcLine& instr_no) {
   Opcode opcode = this->read_opcode();
   Arg result = this->read_arg();
   Arg arg_a = this->read_arg();
@@ -295,19 +295,19 @@ Instruction Parser::read_instruction(const SrcLine& instr_no) {
   return Instruction(instr_no, opcode, result, arg_a, arg_b);
 }
 
-Opcode Parser::read_opcode_binary() {
+Opcode Loader::read_opcode_binary() {
   return static_cast<Opcode>(READ_BYTE);
 }
 
-Opcode Parser::read_opcode_text() {
+Opcode Loader::read_opcode_text() {
   return static_cast<Opcode>(READ_UNSIGNED);
 }
 
-Opcode Parser::read_opcode() {
+Opcode Loader::read_opcode() {
   return READ_OPCODE;
 }
 
-Arg Parser::read_arg() {
+Arg Loader::read_arg() {
   Arg arg(this->read_type(), this->read_value());
 
   if (arg.get_type() == ArgType::GLOBAL) {
@@ -319,23 +319,23 @@ Arg Parser::read_arg() {
   return arg;
 }
 
-ArgType Parser::read_type_binary() {
+ArgType Loader::read_type_binary() {
   return static_cast<ArgType>(READ_BYTE);
 }
 
-ArgType Parser::read_type_text() {
+ArgType Loader::read_type_text() {
   return static_cast<ArgType>(READ_UNSIGNED);
 }
 
-ArgType Parser::read_type() {
+ArgType Loader::read_type() {
   return READ_TYPE;
 }
 
-byte Parser::read_value() {
+byte Loader::read_value() {
   return READ_UNSIGNED;
 }
 
-void Parser::parse(std::string file_name) {
+void Loader::load_from(std::string file_name) {
   std::filesystem::path file_path(file_name);
 
   if (file_path.extension() == ".abc") {
@@ -358,8 +358,8 @@ void Parser::parse(std::string file_name) {
   this->ifs.close();
 }
 
-unsigned Parser::get_total_globals() const {
+unsigned Loader::get_total_globals() const {
   return this->global_offset.exists ? this->global_offset.max + 1 : 0;
 }
 
-}  // namespace alpha::vm::parser
+}  // namespace alpha::vm::loader
