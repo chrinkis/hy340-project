@@ -36,6 +36,7 @@ class Cpu {
   AbcInstruction::SrcLine current_line;
 
   unsigned total_actuals;
+  unsigned total_globals;
 
   Memory& mem;
 
@@ -120,12 +121,13 @@ class Cpu {
                       const mem::Cell& content);
 
   void decrease_top();
-  unsigned get_enviroment_value(const Memory::Stack::Index& index) const;
   void push_enviroment_value(unsigned value);
 
  public:
+  unsigned get_enviroment_value(const Memory::Stack::Index& index) const;
   unsigned get_total_actuals_from_stack() const;
   mem::Cell& get_actual_from_stack_at(unsigned i) const;
+  const mem::stack::Stack::Index get_global_topsp() const;
 };
 
 }  // namespace alpha::vm::arch::cpu

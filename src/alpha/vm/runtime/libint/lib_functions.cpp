@@ -1,6 +1,7 @@
 #include <alpha/vm/runtime/libint/lib_functions.h>
 
 #include <alpha/vm/arch/cpu/cpu.h>
+#include <alpha/vm/runtime/messages/error.h>
 
 #include <utils/warnings.h>
 
@@ -8,8 +9,11 @@
 #include <iostream>
 #include <stdexcept>
 
-namespace alpha::vm::runtime::libint {
+#define NUM_ACTUALS_OFFSET +4
+#define SAVED_TOPSP_OFFSET +1
+// FIXME ^^^ defined in multiple files
 
+namespace alpha::vm::runtime::libint {
 static void lib_print(arch::cpu::Cpu& _cpu) noexcept(false) {
   const auto& cpu = _cpu;
 
@@ -46,10 +50,28 @@ static void lib_typeof(arch::cpu::Cpu& cpu) noexcept(false) {
   cpu.registers.retval = arch::mem::Cell::for_string(cell.get_type_as_string());
 }
 
+static void lib_totalarguments(arch::cpu::Cpu& cpu) noexcept(false) {
+  auto prev_topsp =
+      cpu.get_enviroment_value(cpu.registers.topsp + SAVED_TOPSP_OFFSET);
+
+  cpu.registers.retval.clear();
+
+  if (prev_topsp == cpu.get_global_topsp()) {
+    runtime::messages::warning("`totalarguments` called outside a function!");
+    cpu.registers.retval = arch::mem::Cell::for_nil();
+
+    return;
+  }
+
+  auto value = cpu.get_enviroment_value(prev_topsp + NUM_ACTUALS_OFFSET);
+  cpu.registers.retval = arch::mem::Cell::for_number(value);
+}
+
 LibFunctions::LibFunctions()
     : lib_funcs{
           {"print", lib_print},
           {"typeof", lib_typeof},
+          {"totalarguments", lib_totalarguments},
       } {}
 
 void LibFunctions::call(const std::string& func_name,

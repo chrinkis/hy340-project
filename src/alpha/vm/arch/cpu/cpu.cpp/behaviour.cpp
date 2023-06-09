@@ -18,9 +18,10 @@ Cpu::Cpu(Memory& mem, LibFunctions& lib_functions, unsigned total_globals)
       pc(0),
       current_line(0),
       total_actuals(0),
+      total_globals(total_globals),
       mem(mem),
       lib_functions(lib_functions) {
-  this->registers.top = this->mem.stack.get_size() - total_globals - 1;
+  this->registers.top = this->get_global_topsp();
   this->registers.topsp = this->registers.top;
 }
 
@@ -356,6 +357,10 @@ mem::Cell& Cpu::get_actual_from_stack_at(unsigned i) const {
   assert(i < this->get_total_actuals_from_stack());
 
   return this->mem.stack[this->registers.topsp + STACK_ENV_SIZE + 1 + i];
+}
+
+const mem::stack::Stack::Index Cpu::get_global_topsp() const {
+  return this->mem.stack.get_size() - this->total_globals - 1;
 }
 
 }  // namespace alpha::vm::arch::cpu
