@@ -12,13 +12,7 @@
 
 namespace alpha::vm::arch::cpu {
 
-Cpu::Cpu(MemStack& memory_stack,
-         ConstTable& const_table,
-         CodeTable& code_table,
-         unsigned total_globals)
-    : memory_stack(memory_stack),
-      const_table(const_table),
-      code_table(code_table) {
+Cpu::Cpu(Memory& mem, unsigned total_globals) : mem(mem) {
   WARN_EMPTY_FUNC_IMPL();
 }
 
@@ -27,14 +21,14 @@ void Cpu::execute_cycle() {
     return;
   }
 
-  if (this->pc == this->code_table.get_size()) {
+  if (this->pc == this->mem.code.get_size()) {
     this->execution_finished = true;
     return;
   }
 
-  assert(this->pc < this->code_table.get_size());
+  assert(this->pc < this->mem.code.get_size());
 
-  AbcInstruction instr = this->code_table.at(this->pc);
+  AbcInstruction instr = this->mem.code.at(this->pc);
 
   FIXME;  // assert opcode of instr is in range
 
@@ -137,18 +131,18 @@ void Cpu::execute_instruction(const AbcInstruction& instr) {
 }
 
 mem::Cell& Cpu::translate_arg_to_cell(const AbcArg& arg) {
-  auto stack_size = this->memory_stack.get_size();
+  auto stack_size = this->mem.stack.get_size();
   const auto& topsp = this->registers.topsp;
 
   switch (arg.get_type()) {
     case abc::instruction::Arg::Type::GLOBAL: {
-      return this->memory_stack[stack_size - 1 - arg.get_value()];
+      return this->mem.stack[stack_size - 1 - arg.get_value()];
     }
     case abc::instruction::Arg::Type::LOCAL: {
-      return this->memory_stack[topsp - arg.get_value()];
+      return this->mem.stack[topsp - arg.get_value()];
     }
     case abc::instruction::Arg::Type::FORMAL: {
-      return this->memory_stack[topsp + STACK_ENV_SIZE + 1 + arg.get_value()];
+      return this->mem.stack[topsp + STACK_ENV_SIZE + 1 + arg.get_value()];
     }
     case abc::instruction::Arg::Type::RET_VAL: {
       return this->registers.retval;
@@ -179,7 +173,7 @@ mem::Cell& Cpu::translate_arg_to_cell(const AbcArg& arg, mem::Cell& reg) {
     }
     case abc::instruction::Arg::Type::STRING: {
       RETURN_WITH(
-          mem::Cell::for_string(this->const_table.string_at(arg.get_value())));
+          mem::Cell::for_string(this->mem.consts.string_at(arg.get_value())));
     }
     case abc::instruction::Arg::Type::BOOL: {
       RETURN_WITH(mem::Cell::for_boolean(arg.get_value()));
@@ -189,11 +183,11 @@ mem::Cell& Cpu::translate_arg_to_cell(const AbcArg& arg, mem::Cell& reg) {
     }
     case abc::instruction::Arg::Type::USER_FUNC: {
       RETURN_WITH(mem::Cell::for_user_func(
-          this->const_table.user_func_at(arg.get_value())));
+          this->mem.consts.user_func_at(arg.get_value())));
     }
     case abc::instruction::Arg::Type::LIB_FUNC: {
       RETURN_WITH(mem::Cell::for_lib_func(
-          this->const_table.lib_func_name_at(arg.get_value())));
+          this->mem.consts.lib_func_name_at(arg.get_value())));
     }
     case abc::instruction::Arg::Type::GLOBAL:
     case abc::instruction::Arg::Type::LOCAL:
@@ -231,7 +225,7 @@ void Cpu::call_save_enviroment() {
 
   this->push_enviroment_value(this->total_actuals);
 
-  assert(this->code_table.at(this->pc).get_opcode() == Opcode::CALL);
+  assert(this->mem.code.at(this->pc).get_opcode() == Opcode::CALL);
 
   this->push_enviroment_value(this->pc + 1);
   this->push_enviroment_value(this->registers.top + this->total_actuals + 2);
@@ -263,8 +257,8 @@ void Cpu::call_lib_functor(const runtime::table::Table& table) {
 }
 
 void Cpu::push_table_arg(const runtime::table::Table& table) {
-  this->memory_stack[this->registers.top] = mem::Cell::for_table(table);
-  this->memory_stack[this->registers.top].get_table()->increase_counter();
+  this->mem.stack[this->registers.top] = mem::Cell::for_table(table);
+  this->mem.stack[this->registers.top].get_table()->increase_counter();
 
   this->total_actuals++;
 
@@ -288,8 +282,8 @@ void Cpu::call_functor(const runtime::table::Table& table) {
     this->call_save_enviroment();
     this->pc = f->get_user_func().get_address();
 
-    assert(this->pc < this->code_table.get_size());
-    assert(this->code_table.at(this->pc).get_opcode() ==
+    assert(this->pc < this->mem.code.get_size());
+    assert(this->mem.code.at(this->pc).get_opcode() ==
            abc::instruction::Opcode::FUNC_ENTER);
 
   } else {
@@ -320,21 +314,21 @@ void Cpu::decrease_top() {
   this->registers.top--;
 }
 
-unsigned Cpu::get_enviroment_value(const MemStack::Index& index) {
-  assert(this->memory_stack[index].get_type() == mem::Cell::Type::NUMBER);
+unsigned Cpu::get_enviroment_value(const Memory::Stack::Index& index) {
+  assert(this->mem.stack[index].get_type() == mem::Cell::Type::NUMBER);
   FIXME;  // ^^^ `=` or `==` (see page 23 in lecture for vm)
 
-  unsigned val = (unsigned)this->memory_stack[index].get_number();
+  unsigned val = (unsigned)this->mem.stack[index].get_number();
   FIXME;  // ^^^ use c-style cast?
 
-  assert(this->memory_stack[index].get_number() == (double)val);
+  assert(this->mem.stack[index].get_number() == (double)val);
   FIXME;  // ^^^ use c-style cast?
 
   return val;
 }
 
 void Cpu::push_enviroment_value(unsigned value) {
-  this->memory_stack[this->registers.top] = mem::Cell::for_number(value);
+  this->mem.stack[this->registers.top] = mem::Cell::for_number(value);
   this->decrease_top();
 }
 
@@ -345,7 +339,7 @@ unsigned Cpu::get_total_actuals_from_stack() {
 mem::Cell& Cpu::get_actual_from_stack_at(unsigned i) {
   assert(i < this->get_total_actuals_from_stack());
 
-  return this->memory_stack[this->registers.topsp + STACK_ENV_SIZE + 1 + i];
+  return this->mem.stack[this->registers.topsp + STACK_ENV_SIZE + 1 + i];
 }
 
 }  // namespace alpha::vm::arch::cpu

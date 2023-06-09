@@ -26,8 +26,8 @@ void Cpu::execute_call(const AbcInstruction& instr) {
       this->call_save_enviroment();
       this->pc = func.get_user_func().get_address();
 
-      assert(this->pc < this->code_table.get_size());
-      assert(this->code_table.at(this->pc).get_opcode() == Opcode::FUNC_ENTER);
+      assert(this->pc < this->mem.code.get_size());
+      assert(this->mem.code.at(this->pc).get_opcode() == Opcode::FUNC_ENTER);
 
       break;
     }
@@ -67,7 +67,7 @@ void Cpu::execute_pushargs(const AbcInstruction& instr) {
 
   FIXME;  // add missing assertion
 
-  this->assign(this->memory_stack[this->registers.top], arg);
+  this->assign(this->mem.stack[this->registers.top], arg);
   this->total_actuals++;
   this->decrease_top();
 }
@@ -101,7 +101,7 @@ void Cpu::execute_funcexit() {
       this->get_enviroment_value(this->registers.topsp + SAVED_TOPSP_OFFSET);
 
   while (++old_top <= this->registers.top) {  // MUST skip the firest
-    this->memory_stack[old_top].clear();
+    this->mem.stack[old_top].clear();
   }
 }
 
