@@ -12,12 +12,13 @@
 
 namespace alpha::vm::arch::cpu {
 
-Cpu::Cpu(Memory& mem, unsigned total_globals)
+Cpu::Cpu(Memory& mem, LibFunctions& lib_functions, unsigned total_globals)
     : execution_finished(false),
       pc(0),
       current_line(0),
       total_actuals(0),
-      mem(mem) {
+      mem(mem),
+      lib_functions(lib_functions) {
   this->registers.top = this->mem.stack.get_size() - total_globals - 1;
   this->registers.topsp = this->registers.top;
 }
@@ -254,7 +255,7 @@ void Cpu::call_lib_func(const std::string& lib_func_name) {
   this->registers.topsp = this->registers.top;
   this->total_actuals = 0;
 
-  this->lib_functions.call(lib_func_name);
+  this->lib_functions.call(lib_func_name, *this);
 
   if (!this->execution_finished) {
     this->execute_funcexit();
