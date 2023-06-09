@@ -18,15 +18,17 @@
 
 using Scanner = alpha::lex::Scanner;
 using Parser = alpha::syntax::Parser;
-using Table = alpha::symbol::Table;
 using Writer = alpha::tcode::abc::Writer;
 
 int main() {
-  Scanner scanner(std::cin);
-  Table symbol_table;
-  Parser parser(scanner, symbol_table);
+  std::ifstream s_source_code("main.a");
+  FIXME;  // ensure file oppened
+
+  Scanner scanner(s_source_code);
+  Parser parser(scanner);
 
   parser.parse();
+  s_source_code.close();
 
   std::ofstream s_sym_table_txt("symTable.txt");
   FIXME;  // ensure file oppened
