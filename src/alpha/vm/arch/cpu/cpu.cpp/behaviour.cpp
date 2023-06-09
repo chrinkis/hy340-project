@@ -198,7 +198,9 @@ mem::Cell& Cpu::translate_arg_to_cell(const AbcArg& arg, mem::Cell& reg) {
     case abc::instruction::Arg::Type::GLOBAL:
     case abc::instruction::Arg::Type::LOCAL:
     case abc::instruction::Arg::Type::FORMAL:
-    case abc::instruction::Arg::Type::RET_VAL:
+    case abc::instruction::Arg::Type::RET_VAL: {
+      return this->translate_arg_to_cell(arg);
+    }
     case abc::instruction::Arg::Type::LABEL:
     case abc::instruction::Arg::Type::EMPTY:
     default:
