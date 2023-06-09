@@ -1,23 +1,31 @@
-#include <alpha/vm/arch/mem/code/table.h>
-#include <alpha/vm/arch/mem/consts/consts.h>
-#include <alpha/vm/parser/parser.h>
+#include <alpha/vm/arch/cpu/cpu.h>
+#include <alpha/vm/arch/mem/memory.h>
+#include <alpha/vm/loader/loader.h>
 
 #include <iostream>
 
-using namespace vm;
+using namespace alpha::vm;
 
-using Parser = parser::Parser;
-using CodeTable = alpha::vm::arch::mem::code::Table;
+using Loader = loader::Loader;
+using Memory = arch::mem::Memory;
+using Cpu = arch::cpu::Cpu;
 
 int main() {
-  CodeTable code_table;
-  Parser parser(vmConsts, code_table);
+  Memory mem;
+  Loader loader(mem.consts, mem.code);
 
   try {
-    parser.parse("tcode.txt");
+    loader.load_from("tcode.txt");
   } catch (std::runtime_error e) {
     std::cerr << e.what() << std::endl;
-    exit(1);
+
+    return 1;
+  }
+
+  Cpu cpu(mem, loader.get_total_globals());
+
+  while (!cpu.has_finished()) {
+    cpu.execute_cycle();
   }
 
   return 0;

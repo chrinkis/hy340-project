@@ -1,7 +1,5 @@
 #pragma once
 
-#define vmConsts (alpha::vm::arch::mem::consts::Consts::get())
-
 #include <alpha/vm/arch/mem/consts/user_func.h>
 
 #include <string>
@@ -18,13 +16,6 @@ class Consts {
   using StrCollection = std::vector<std::string>;
   using LibFuncNameCollection = std::vector<std::string>;
   using UserFuncCollection = std::vector<UserFunc>;
-
- public:
-  static Consts& get() {
-    static Consts tcode_consts;
-
-    return tcode_consts;
-  }
 
  private:
   NumCollection num_collection;

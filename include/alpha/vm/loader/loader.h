@@ -10,9 +10,9 @@
 #include <fstream>
 #include <string>
 
-namespace vm::parser {
+namespace alpha::vm::loader {
 
-class Parser {
+class Loader {
  private:
   enum class FileType { TEXT, BINARY };
 
@@ -42,7 +42,7 @@ class Parser {
   } global_offset;
 
  public:
-  Parser(ConstTable& const_table, InstructionTable& instruction_table);
+  Loader(ConstTable& const_table, InstructionTable& instruction_table);
 
  private:
   FileType get_file_type() const;
@@ -108,8 +108,8 @@ class Parser {
   byte read_value();
 
  public:
-  void parse(std::string file_name);
+  void load_from(std::string file_name);
   unsigned get_total_globals() const;
 };
 
-}  // namespace vm::parser
+}  // namespace alpha::vm::loader

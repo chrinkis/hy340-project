@@ -23,7 +23,7 @@ add_executable(vm
 
     arch/mem/stack/stack.cpp
 
-    parser/parser.cpp
+    loader/loader.cpp
 
     runtime/libint/lib_functions.cpp
 

@@ -3,9 +3,7 @@
 #include <alpha/vm/abc/instruction/arg.h>
 #include <alpha/vm/abc/instruction/instruction.h>
 #include <alpha/vm/arch/mem/cell.h>
-#include <alpha/vm/arch/mem/code/table.h>
-#include <alpha/vm/arch/mem/consts/consts.h>
-#include <alpha/vm/arch/mem/stack/stack.h>
+#include <alpha/vm/arch/mem/memory.h>
 #include <alpha/vm/runtime/libint/lib_functions.h>
 #include <alpha/vm/runtime/table/table.h>
 
@@ -16,11 +14,9 @@ namespace alpha::vm::arch::cpu {
 
 class Cpu {
  private:
-  using MemStack = mem::stack::Stack;
+  using Memory = mem::Memory;
   using AbcInstruction = abc::instruction::Instruction;
   using AbcArg = abc::instruction::Arg;
-  using CodeTable = mem::code::Table;
-  using ConstTable = mem::consts::Consts;
   using LibFunctions = runtime::libint::LibFunctions;
 
  public:
@@ -30,26 +26,26 @@ class Cpu {
     mem::Cell arg_a;
     mem::Cell arg_b;
     mem::Cell retval;
-    MemStack::Index top;
-    MemStack::Index topsp;
+    Memory::Stack::Index top;
+    Memory::Stack::Index topsp;
   } registers;
 
  private:
   bool execution_finished;
-  CodeTable::Index pc;
+  Memory::Code::Index pc;
   AbcInstruction::SrcLine current_line;
 
   unsigned total_actuals;
 
-  MemStack& memory_stack;
-  ConstTable& const_table;
-  CodeTable& code_table;
+  Memory& mem;
 
   LibFunctions lib_functions;
 
  public:
-  Cpu(MemStack& memory_stack, ConstTable& const_table, CodeTable& code_table);
+  Cpu(Memory& mem, unsigned total_globals);
+
   void execute_cycle();
+  bool has_finished() const;
 
  private:
   void execute_instruction(const AbcInstruction& instr);
@@ -124,7 +120,7 @@ class Cpu {
                       const mem::Cell& content);
 
   void decrease_top();
-  unsigned get_enviroment_value(const MemStack::Index& index);
+  unsigned get_enviroment_value(const Memory::Stack::Index& index);
   void push_enviroment_value(unsigned value);
 
   unsigned get_total_actuals_from_stack();
