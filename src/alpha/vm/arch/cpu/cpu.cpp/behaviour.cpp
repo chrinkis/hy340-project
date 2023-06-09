@@ -19,7 +19,7 @@ Cpu::Cpu(Memory& mem, unsigned total_globals)
       total_actuals(0),
       mem(mem) {
   this->registers.top = this->mem.stack.get_size() - total_globals - 1;
-  this->registers.topsp = this->registers.topsp;
+  this->registers.topsp = this->registers.top;
 }
 
 void Cpu::execute_cycle() {
