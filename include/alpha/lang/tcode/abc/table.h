@@ -37,6 +37,7 @@ class Table {
       incomplete_jumps;
 
   std::stack<std::vector<Instruction::SrcLine>> most_recent_return_list;
+  std::stack<Instruction::SrcLine> jump_before_func_start;
 
  private:
   void emit(const Instruction& instruction);
