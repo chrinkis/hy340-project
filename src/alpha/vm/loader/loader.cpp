@@ -331,7 +331,7 @@ ArgType Loader::read_type() {
   return READ_TYPE;
 }
 
-byte Loader::read_value() {
+unsigned Loader::read_value() {
   return READ_UNSIGNED;
 }
 

@@ -105,7 +105,7 @@ class Loader {
   ArgType read_type_text();
   ArgType read_type();
 
-  byte read_value();
+  unsigned read_value();
 
  public:
   void load_from(std::string file_name);
