@@ -308,7 +308,9 @@ Opcode Loader::read_opcode() {
 }
 
 Arg Loader::read_arg() {
-  Arg arg(this->read_type(), this->read_value());
+  ArgType type = this->read_type();
+  unsigned value = this->read_value();
+  Arg arg(type, value);
 
   if (arg.get_type() == ArgType::GLOBAL) {
     this->global_offset.exists = true;
@@ -331,7 +333,7 @@ ArgType Loader::read_type() {
   return READ_TYPE;
 }
 
-byte Loader::read_value() {
+unsigned Loader::read_value() {
   return READ_UNSIGNED;
 }
 
