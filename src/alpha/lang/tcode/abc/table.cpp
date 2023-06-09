@@ -120,14 +120,14 @@ void Table::handle_quad_as_ret(const icode::quad::Quad& quad) {
 
   this->emit(instruction);
 
-  this->most_recent_return_list.top().push_back(this->get_next_label());
+  this->return_list.top().push_back(this->get_next_label());
   this->emit(Instruction(this->get_next_label(), instruction::Opcode::JUMP));
 }
 
 void Table::handle_quad_as_func_enter(const icode::quad::Quad& quad) {
   using Opcode = instruction::Opcode;
 
-  this->most_recent_return_list.emplace();
+  this->return_list.emplace();
 
   this->jump_before_func_start.push(this->get_next_label());
   this->emit(Instruction(this->get_next_label(), instruction::Opcode::JUMP));
@@ -138,11 +138,11 @@ void Table::handle_quad_as_func_enter(const icode::quad::Quad& quad) {
 void Table::handle_quad_as_func_exit(const icode::quad::Quad& quad) {
   using Arg = instruction::Arg;
 
-  for (auto& line : this->most_recent_return_list.top()) {
+  for (auto& line : this->return_list.top()) {
     this->table.at(line).set_result(Arg::for_label(this->get_next_label()));
   }
 
-  this->most_recent_return_list.pop();
+  this->return_list.pop();
 
   this->handle_quad_as_nullary(instruction::Opcode::FUNC_EXIT, quad);
 

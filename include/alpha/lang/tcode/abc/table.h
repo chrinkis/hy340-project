@@ -36,7 +36,7 @@ class Table {
   std::vector<std::pair<Instruction::SrcLine, icode::quad::Quad::Line>>
       incomplete_jumps;
 
-  std::stack<std::vector<Instruction::SrcLine>> most_recent_return_list;
+  std::stack<std::vector<Instruction::SrcLine>> return_list;
   std::stack<Instruction::SrcLine> jump_before_func_start;
 
  private:
