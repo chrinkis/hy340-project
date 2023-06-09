@@ -14,6 +14,7 @@
 // FIXME ^^^ defined in multiple files
 
 namespace alpha::vm::runtime::libint {
+
 static void lib_print(arch::cpu::Cpu& _cpu) noexcept(false) {
   const auto& cpu = _cpu;
 
