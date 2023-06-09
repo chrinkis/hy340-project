@@ -4,10 +4,10 @@
 
 #include <iostream>
 
-using namespace vm;
+using namespace alpha::vm;
 
 using Parser = parser::Parser;
-using CodeTable = alpha::vm::arch::mem::code::Table;
+using CodeTable = arch::mem::code::Table;
 
 int main() {
   CodeTable code_table;

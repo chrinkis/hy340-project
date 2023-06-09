@@ -98,7 +98,7 @@
                                                   \
   ASSERT_FILE_FORMAT(null_char_str == NULL_CHAR);
 
-namespace vm::parser {
+namespace alpha::vm::parser {
 
 using byte = char;
 using Instruction = alpha::vm::abc::instruction::Instruction;
@@ -362,4 +362,4 @@ unsigned Parser::get_total_globals() const {
   return this->global_offset.exists ? this->global_offset.max + 1 : 0;
 }
 
-}  // namespace vm::parser
+}  // namespace alpha::vm::parser

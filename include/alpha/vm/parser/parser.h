@@ -10,7 +10,7 @@
 #include <fstream>
 #include <string>
 
-namespace vm::parser {
+namespace alpha::vm::parser {
 
 class Parser {
  private:
@@ -112,4 +112,4 @@ class Parser {
   unsigned get_total_globals() const;
 };
 
-}  // namespace vm::parser
+}  // namespace alpha::vm::parser
