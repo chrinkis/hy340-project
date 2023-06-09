@@ -12,9 +12,6 @@ namespace alpha::vm::arch::cpu {
 void Cpu::execute_jump(const AbcInstruction& instr) {
   assert(instr.get_result().get_type() == abc::instruction::Arg::Type::LABEL);
 
-  mem::Cell& rv_a =
-      this->translate_arg_to_cell(instr.get_arg_a(), this->registers.arg_a);
-
   FIXME;  // add asserts for new pc?
 
   this->pc = instr.get_result().get_value();
