@@ -175,7 +175,8 @@ mem::Cell& Cpu::translate_arg_to_cell(const AbcArg& arg, mem::Cell& reg) {
 
   switch (arg.get_type()) {
     case abc::instruction::Arg::Type::NUMBER: {
-      RETURN_WITH(mem::Cell::for_number(arg.get_value()));
+      RETURN_WITH(
+          mem::Cell::for_number(this->mem.consts.number_at(arg.get_value())));
     }
     case abc::instruction::Arg::Type::STRING: {
       RETURN_WITH(
