@@ -8,10 +8,12 @@ using namespace alpha::vm;
 
 using Parser = parser::Parser;
 using CodeTable = arch::mem::code::Table;
+using Consts = arch::mem::consts::Consts;
 
 int main() {
   CodeTable code_table;
-  Parser parser(vmConsts, code_table);
+  Consts consts;
+  Parser parser(consts, code_table);
 
   try {
     parser.parse("tcode.txt");
