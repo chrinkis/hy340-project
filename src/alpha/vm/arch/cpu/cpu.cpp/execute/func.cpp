@@ -15,7 +15,7 @@ namespace alpha::vm::arch::cpu {
 
 void Cpu::execute_call(const AbcInstruction& instr) {
   mem::Cell& func =
-      this->translate_arg_to_cell(instr.get_result(), this->registers.arg_a);
+      this->translate_arg_to_cell(instr.get_arg_a(), this->registers.arg_a);
 
   FIXME;  // add missing assertion
 
