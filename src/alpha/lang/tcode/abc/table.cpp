@@ -119,6 +119,8 @@ void Table::handle_quad_as_ret(const icode::quad::Quad& quad) {
       ICODE_TO_TCODE_MAPPER, this->get_next_label(), quad);
 
   this->emit(instruction);
+
+  this->most_recent_return_list.top().push_back(this->get_next_label());
   this->emit(Instruction(this->get_next_label(), instruction::Opcode::JUMP));
 }
 
