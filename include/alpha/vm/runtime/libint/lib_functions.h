@@ -28,4 +28,7 @@ class LibFunctions {
   bool supports_lib_func(const std::string& func_name) const;
 };
 
+void lib_print(arch::cpu::Cpu& _cpu) noexcept(false);
+void lib_typeof(arch::cpu::Cpu& _cpu) noexcept(false);
+void lib_totalarguments(arch::cpu::Cpu& _cpu) noexcept(false);
 }  // namespace alpha::vm::runtime::libint

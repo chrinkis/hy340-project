@@ -13,6 +13,10 @@
 namespace alpha::vm::arch::cpu {
 
 class Cpu {
+  friend void runtime::libint::lib_print(arch::cpu::Cpu& _cpu) noexcept(false);
+  friend void runtime::libint::lib_typeof(arch::cpu::Cpu& _cpu) noexcept(false);
+  friend void runtime::libint::lib_totalarguments(
+      arch::cpu::Cpu& _cpu) noexcept(false);
  private:
   using Memory = mem::Memory;
   using AbcInstruction = abc::instruction::Instruction;
@@ -123,7 +127,6 @@ class Cpu {
   void decrease_top();
   void push_enviroment_value(unsigned value);
 
- public:
   unsigned get_enviroment_value(const Memory::Stack::Index& index) const;
   unsigned get_total_actuals_from_stack() const;
   mem::Cell& get_actual_from_stack_at(unsigned i) const;

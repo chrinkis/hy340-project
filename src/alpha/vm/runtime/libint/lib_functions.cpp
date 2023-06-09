@@ -15,7 +15,7 @@
 
 namespace alpha::vm::runtime::libint {
 
-static void lib_print(arch::cpu::Cpu& _cpu) noexcept(false) {
+void lib_print(arch::cpu::Cpu& _cpu) noexcept(false) {
   const auto& cpu = _cpu;
 
   auto n = cpu.get_total_actuals_from_stack();
@@ -32,7 +32,7 @@ static void lib_print(arch::cpu::Cpu& _cpu) noexcept(false) {
   }
 }
 
-static void lib_typeof(arch::cpu::Cpu& cpu) noexcept(false) {
+void lib_typeof(arch::cpu::Cpu& cpu) noexcept(false) {
   auto n = cpu.get_total_actuals_from_stack();
 
   if (n != 1) {
@@ -51,7 +51,7 @@ static void lib_typeof(arch::cpu::Cpu& cpu) noexcept(false) {
   cpu.registers.retval = arch::mem::Cell::for_string(cell.get_type_as_string());
 }
 
-static void lib_totalarguments(arch::cpu::Cpu& cpu) noexcept(false) {
+void lib_totalarguments(arch::cpu::Cpu& cpu) noexcept(false) {
   auto prev_topsp =
       cpu.get_enviroment_value(cpu.registers.topsp + SAVED_TOPSP_OFFSET);
 
