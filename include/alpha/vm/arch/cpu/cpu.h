@@ -48,7 +48,11 @@ class Cpu {
   LibFunctions lib_functions;
 
  public:
-  Cpu(MemStack& memory_stack, ConstTable& const_table, CodeTable& code_table);
+  Cpu(MemStack& memory_stack,
+      ConstTable& const_table,
+      CodeTable& code_table,
+      unsigned total_globals);
+
   void execute_cycle();
 
  private:

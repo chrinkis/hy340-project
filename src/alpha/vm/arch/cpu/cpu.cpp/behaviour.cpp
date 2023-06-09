@@ -12,7 +12,10 @@
 
 namespace alpha::vm::arch::cpu {
 
-Cpu::Cpu(MemStack& memory_stack, ConstTable& const_table, CodeTable& code_table)
+Cpu::Cpu(MemStack& memory_stack,
+         ConstTable& const_table,
+         CodeTable& code_table,
+         unsigned total_globals)
     : memory_stack(memory_stack),
       const_table(const_table),
       code_table(code_table) {
