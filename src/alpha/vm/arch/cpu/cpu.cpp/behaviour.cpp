@@ -12,8 +12,14 @@
 
 namespace alpha::vm::arch::cpu {
 
-Cpu::Cpu(Memory& mem, unsigned total_globals) : mem(mem) {
-  WARN_EMPTY_FUNC_IMPL();
+Cpu::Cpu(Memory& mem, unsigned total_globals)
+    : execution_finished(false),
+      pc(0),
+      current_line(0),
+      total_actuals(0),
+      mem(mem) {
+  this->registers.top = this->mem.stack.get_size() - total_globals - 1;
+  this->registers.topsp = this->registers.topsp;
 }
 
 void Cpu::execute_cycle() {
@@ -45,7 +51,7 @@ void Cpu::execute_cycle() {
 }
 
 bool Cpu::has_finished() const {
-  WARN_EMPTY_FUNC_IMPL();
+  return this->execution_finished;
 }
 
 void Cpu::execute_instruction(const AbcInstruction& instr) {

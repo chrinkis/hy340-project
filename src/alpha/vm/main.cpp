@@ -24,5 +24,9 @@ int main() {
 
   Cpu cpu(mem, loader.get_total_globals());
 
+  while (!cpu.has_finished()) {
+    cpu.execute_cycle();
+  }
+
   return 0;
 }
