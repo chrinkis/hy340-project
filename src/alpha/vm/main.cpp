@@ -27,7 +27,8 @@ int main() {
     parser.parse("tcode.txt");
   } catch (std::runtime_error e) {
     std::cerr << e.what() << std::endl;
-    exit(1);
+
+    return 1;
   }
 
   Cpu cpu(mem.stack, mem.consts, mem.code, parser.get_total_globals());
