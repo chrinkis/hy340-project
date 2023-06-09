@@ -18,13 +18,11 @@
 
 using Scanner = alpha::lex::Scanner;
 using Parser = alpha::syntax::Parser;
-using Table = alpha::symbol::Table;
 using Writer = alpha::tcode::abc::Writer;
 
 int main() {
   Scanner scanner(std::cin);
-  Table symbol_table;
-  Parser parser(scanner, symbol_table);
+  Parser parser(scanner);
 
   parser.parse();
 
