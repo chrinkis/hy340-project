@@ -6,6 +6,7 @@
 #include <utils/warnings.h>
 
 #include <cassert>
+#include <stdexcept>
 
 #define NUM_ACTUALS_OFFSET +4
 #define STACK_ENV_SIZE +4
@@ -255,11 +256,16 @@ void Cpu::call_lib_func(const std::string& lib_func_name) {
   this->registers.topsp = this->registers.top;
   this->total_actuals = 0;
 
-  this->lib_functions.call(lib_func_name, *this);
+  try {
+    this->lib_functions.call(lib_func_name, *this);
+  } catch (const std::invalid_argument& err) {
+    runtime::messages::error(err.what());
+    this->execution_finished = true;
 
-  if (!this->execution_finished) {
-    this->execute_funcexit();
+    return;
   }
+
+  this->execute_funcexit();
 }
 
 void Cpu::call_lib_functor(const runtime::table::Table& table) {
@@ -303,7 +309,7 @@ void Cpu::call_functor(const runtime::table::Table& table) {
 }
 
 std::optional<mem::Cell> Cpu::table_get_elem(const runtime::table::Table& table,
-                                             const mem::Cell& index) {
+                                             const mem::Cell& index) const {
   WARN_EMPTY_FUNC_IMPL(std::optional<mem::Cell>());
 }
 
@@ -324,7 +330,7 @@ void Cpu::decrease_top() {
   this->registers.top--;
 }
 
-unsigned Cpu::get_enviroment_value(const Memory::Stack::Index& index) {
+unsigned Cpu::get_enviroment_value(const Memory::Stack::Index& index) const {
   assert(this->mem.stack[index].get_type() == mem::Cell::Type::NUMBER);
   FIXME;  // ^^^ `=` or `==` (see page 23 in lecture for vm)
 
@@ -342,11 +348,11 @@ void Cpu::push_enviroment_value(unsigned value) {
   this->decrease_top();
 }
 
-unsigned Cpu::get_total_actuals_from_stack() {
+unsigned Cpu::get_total_actuals_from_stack() const {
   return this->get_enviroment_value(this->registers.topsp + NUM_ACTUALS_OFFSET);
 }
 
-mem::Cell& Cpu::get_actual_from_stack_at(unsigned i) {
+mem::Cell& Cpu::get_actual_from_stack_at(unsigned i) const {
   assert(i < this->get_total_actuals_from_stack());
 
   return this->mem.stack[this->registers.topsp + STACK_ENV_SIZE + 1 + i];

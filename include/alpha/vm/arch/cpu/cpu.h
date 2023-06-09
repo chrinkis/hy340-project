@@ -39,10 +39,10 @@ class Cpu {
 
   Memory& mem;
 
-  LibFunctions lib_functions;
+  LibFunctions& lib_functions;
 
  public:
-  Cpu(Memory& mem, unsigned total_globals);
+  Cpu(Memory& mem, LibFunctions& lib_functions, unsigned total_globals);
 
   void execute_cycle();
   bool has_finished() const;
@@ -113,19 +113,19 @@ class Cpu {
   void call_functor(const runtime::table::Table& table);
 
   std::optional<mem::Cell> table_get_elem(const runtime::table::Table& table,
-                                          const mem::Cell& index);
+                                          const mem::Cell& index) const;
 
   void table_set_elem(runtime::table::Table& table,
                       const mem::Cell& index,
                       const mem::Cell& content);
 
   void decrease_top();
-  unsigned get_enviroment_value(const Memory::Stack::Index& index);
+  unsigned get_enviroment_value(const Memory::Stack::Index& index) const;
   void push_enviroment_value(unsigned value);
 
-  unsigned get_total_actuals_from_stack();
-
-  mem::Cell& get_actual_from_stack_at(unsigned i);
+ public:
+  unsigned get_total_actuals_from_stack() const;
+  mem::Cell& get_actual_from_stack_at(unsigned i) const;
 };
 
 }  // namespace alpha::vm::arch::cpu

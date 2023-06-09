@@ -15,7 +15,7 @@ class LibFunctions {
  private:
   using Address = unsigned;
   using Cpu = arch::cpu::Cpu;
-  using LibFuncType = std::function<void(const Cpu& cpu)>;
+  using LibFuncType = std::function<void(const Cpu& cpu) noexcept(false)>;
 
  private:
   std::map<std::string, LibFuncType> lib_funcs;
@@ -24,7 +24,7 @@ class LibFunctions {
   LibFunctions();
 
  public:
-  void call(const std::string& func_name, const Cpu& cpu);
+  void call(const std::string& func_name, const Cpu& cpu) noexcept(false);
   bool supports_lib_func(const std::string& func_name) const;
 };
 
