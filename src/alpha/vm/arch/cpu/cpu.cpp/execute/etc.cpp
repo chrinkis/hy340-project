@@ -12,6 +12,13 @@ void Cpu::execute_assign(const AbcInstruction& instr) {
   FIXME;  // add missing assertions for vl
   FIXME;  // add missing assertions for rv
 
+  if (&rv == &this->registers.retval &&
+      rv.get_type() == mem::Cell::Type::UNDEF) {
+    lv.clear();
+
+    return;
+  }
+
   this->assign(lv, rv);
 }
 
