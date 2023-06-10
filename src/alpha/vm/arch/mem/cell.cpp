@@ -94,7 +94,7 @@ bool Cell::to_bool() const {
 
 void Cell::clear() {
   if (this->type == Type::TABLE) {
-    this->get_table()->deccrease_counter();
+    this->get_table().deccrease_counter();
   }
 
   *this = Cell();
@@ -170,6 +170,39 @@ Cell Cell::for_undef() {
   cell.data = Variant(std::in_place_index_t<INDEX_EMPTY>());
 
   return cell;
+}
+
+bool Cell::operator<(const arch::mem::Cell& other) const {
+  if (this->get_type() != other.get_type()) {
+    return this->data.index() < other.data.index();
+  }
+
+  assert(this->get_type() == other.get_type());
+
+  switch (this->get_type()) {
+    case Type::NUMBER: {
+      return this->get_number() < other.get_number();
+    }
+    case Type::STRING: {
+      return this->get_string() < other.get_string();
+    }
+    case Type::BOOLEAN: {
+      return !this->get_boolean() && other.get_boolean();
+    }
+    case Type::TABLE: {
+      return this->get_table() < other.get_table();
+    }
+    case Type::USER_FUNC: {
+      return this->get_user_func() < other.get_user_func();
+    }
+    case Type::LIB_FUNC: {
+      return this->get_lib_func() < other.get_lib_func();
+    }
+    case Type::NIL:
+    case Type::UNDEF:
+    default:
+      assert(0);
+  }
 }
 
 Cell::Type Cell::get_type() const {

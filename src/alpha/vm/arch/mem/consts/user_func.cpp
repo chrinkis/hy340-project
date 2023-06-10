@@ -26,4 +26,8 @@ bool UserFunc::operator==(const UserFunc& user_func) const {
          (this->local_size == user_func.local_size);
 }
 
+bool UserFunc::operator<(const UserFunc& user_func) const {
+  return this->address < user_func.address;
+}
+
 }  // namespace alpha::vm::arch::mem::consts

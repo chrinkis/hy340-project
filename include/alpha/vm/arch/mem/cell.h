@@ -56,6 +56,8 @@ class Cell {
   static Cell for_nil();
   static Cell for_undef();
 
+  bool operator<(const arch::mem::Cell& other) const;
+
   Type get_type() const;
   std::string get_type_as_string() const;
 

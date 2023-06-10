@@ -25,6 +25,7 @@ class UserFunc {
 
  public:
   bool operator==(const UserFunc& user_func) const;
+  bool operator<(const UserFunc& user_func) const;
 };
 
 }  // namespace alpha::vm::arch::mem::consts
