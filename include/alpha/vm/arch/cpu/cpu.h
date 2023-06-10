@@ -15,8 +15,11 @@ namespace alpha::vm::arch::cpu {
 class Cpu {
   friend void runtime::libint::lib_print(arch::cpu::Cpu& _cpu) noexcept(false);
   friend void runtime::libint::lib_typeof(arch::cpu::Cpu& _cpu) noexcept(false);
+  friend void runtime::libint::lib_argument(arch::cpu::Cpu& _cpu) noexcept(
+      false);
   friend void runtime::libint::lib_totalarguments(
       arch::cpu::Cpu& _cpu) noexcept(false);
+
  private:
   using Memory = mem::Memory;
   using AbcInstruction = abc::instruction::Instruction;

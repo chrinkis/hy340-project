@@ -10,6 +10,7 @@
 #include <stdexcept>
 
 #define NUM_ACTUALS_OFFSET +4
+#define STACK_ENV_SIZE +4
 #define SAVED_TOPSP_OFFSET +1
 // FIXME ^^^ defined in multiple files
 
@@ -68,11 +69,55 @@ void lib_totalarguments(arch::cpu::Cpu& cpu) noexcept(false) {
   cpu.registers.retval = arch::mem::Cell::for_number(value);
 }
 
+void lib_argument(arch::cpu::Cpu& cpu) noexcept(false) {
+  auto prev_topsp =
+      cpu.get_enviroment_value(cpu.registers.topsp + SAVED_TOPSP_OFFSET);
+
+  if (prev_topsp == cpu.get_global_topsp()) {
+    runtime::messages::warning("`argument` called outside a function!");
+    cpu.registers.retval = arch::mem::Cell::for_nil();
+
+    return;
+  }
+
+  auto n = cpu.get_total_actuals_from_stack();
+
+  if (n != 1) {
+    throw std::invalid_argument(
+        "`argument` function expected `1` argument, but recieved `" +
+        std::to_string(n) + "`");
+  }
+
+  const auto& arg_cell = cpu.get_actual_from_stack_at(0);
+
+  if (arg_cell.get_type() != arch::mem::Cell::Type::NUMBER) {
+    throw std::invalid_argument("`argument`'s argument should be number");
+  }
+
+  assert(arg_cell.get_type() == arch::mem::Cell::Type::NUMBER);
+  unsigned index = arg_cell.get_number();
+  FIXME;  // ^^^ Before cast to `unsigned`, check it's an Integer
+
+  auto prev_num_of_args = cpu.get_enviroment_value(prev_topsp + STACK_ENV_SIZE);
+
+  if (index >= prev_num_of_args) {
+    throw std::invalid_argument(
+        "Requested arg with index `" + std::to_string(index) +
+        "` in a function with `" + std::to_string(prev_num_of_args) +
+        "` arguments");
+  }
+
+  auto requested_arg = cpu.mem.stack[prev_topsp + STACK_ENV_SIZE + index + 1];
+
+  cpu.registers.retval = requested_arg;
+}
+
 LibFunctions::LibFunctions()
     : lib_funcs{
           {"print", lib_print},
           {"typeof", lib_typeof},
           {"totalarguments", lib_totalarguments},
+          {"argument", lib_argument},
       } {}
 
 void LibFunctions::call(const std::string& func_name,
