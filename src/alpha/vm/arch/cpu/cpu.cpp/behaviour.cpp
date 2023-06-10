@@ -357,11 +357,9 @@ void Cpu::decrease_top() {
 unsigned Cpu::get_enviroment_value(const Memory::Stack::Index& index) const {
   assert(this->mem.stack[index].get_type() == mem::Cell::Type::NUMBER);
 
-  unsigned val = (unsigned)this->mem.stack[index].get_number();
-  FIXME;  // ^^^ use c-style cast?
+  unsigned val = static_cast<unsigned>(this->mem.stack[index].get_number());
 
-  assert(this->mem.stack[index].get_number() == (double)val);
-  FIXME;  // ^^^ use c-style cast?
+  assert(this->mem.stack[index].get_number() == static_cast<double>(val));
 
   return val;
 }
