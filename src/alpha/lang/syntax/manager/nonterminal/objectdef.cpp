@@ -6,10 +6,14 @@
 #include <alpha/lang/syntax/manager/nonterminal/elist.h>
 #include <alpha/lang/syntax/manager/nonterminal/indexed.h>
 
+#include <ranges>
+
 using namespace alpha::syntax::manager::nonterminal;
 using Opcode = alpha::icode::quad::Quad::Opcode;
 
 Objectdef Objectdef::from_lSqrBrackTkn_elist_rSqrBrackTkn(const Elist& elist) {
+  namespace views = std::ranges::views;
+
   Objectdef objectdef;
 
   auto temp_var = symTable.new_temp_variable();
@@ -17,7 +21,7 @@ Objectdef Objectdef::from_lSqrBrackTkn_elist_rSqrBrackTkn(const Elist& elist) {
   quadTable.emit(Opcode::TABLECREATE, table);
 
   int i = 0;
-  for (auto current_expr : elist.get_icode_elist()) {
+  for (auto current_expr : views::reverse(elist.get_icode_elist())) {
     quadTable.emit(Opcode::TABLESETELEM, current_expr, table,
                    icode::Expr::for_const_num(i++));
   }
