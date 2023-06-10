@@ -41,7 +41,6 @@ void Cpu::execute_cycle() {
 
   if (instr.get_src_line()) {
     this->current_line = instr.get_src_line();
-    FIXME;  // at dev time, src line doesn't store line of quad
   }
 
   auto old_pc = this->pc;
