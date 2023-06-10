@@ -29,8 +29,13 @@ class LibFunctions {
 };
 
 void lib_print(arch::cpu::Cpu& _cpu) noexcept(false);
+void lib_input(arch::cpu::Cpu& _cpu) noexcept(false);
 void lib_typeof(arch::cpu::Cpu& _cpu) noexcept(false);
 void lib_argument(arch::cpu::Cpu& _cpu) noexcept(false);
 void lib_totalarguments(arch::cpu::Cpu& _cpu) noexcept(false);
+void lib_strtonum(arch::cpu::Cpu& _cpu) noexcept(false);
+void lib_sqrt(arch::cpu::Cpu& _cpu) noexcept(false);
+void lib_cos(arch::cpu::Cpu& _cpu) noexcept(false);
+void lib_sin(arch::cpu::Cpu& _cpu) noexcept(false);
 
 }  // namespace alpha::vm::runtime::libint

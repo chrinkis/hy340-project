@@ -6,6 +6,7 @@
 #include <utils/warnings.h>
 
 #include <cassert>
+#include <cmath>
 #include <iostream>
 #include <stdexcept>
 
@@ -13,6 +14,7 @@
 #define STACK_ENV_SIZE +4
 #define SAVED_TOPSP_OFFSET +1
 // FIXME ^^^ defined in multiple files
+#define RADIAN_UNITS(angle) (((angle) / 180.0) * (double)M_PI)
 
 namespace alpha::vm::runtime::libint {
 
@@ -30,6 +32,54 @@ void lib_print(arch::cpu::Cpu& _cpu) noexcept(false) {
 
     std::cout << cell.to_string();
     std::cout << std::endl;
+  }
+}
+
+void lib_input(arch::cpu::Cpu& cpu) noexcept(false) {
+  auto n = cpu.get_total_actuals_from_stack();
+
+  if (n != 0) {
+    throw std::invalid_argument(
+        "`input` expected `0` arguments, but recieved `" + std::to_string(n) +
+        "`");
+  }
+
+  char c = std::cin.get();
+
+  cpu.registers.retval.clear();
+  std::string char_sequence;
+
+  if (c == '"') {
+    c = std::cin.get();
+    while (c != '"') {
+      char_sequence += c;
+      c = std::cin.get();
+    }
+
+    cpu.registers.retval = arch::mem::Cell::for_string(char_sequence);
+
+  } else {
+    std::cin.putback(c);
+
+    std::getline(std::cin, char_sequence);
+
+    try {
+      double number = std::stod(char_sequence);
+      cpu.registers.retval = arch::mem::Cell::for_number(number);
+      return;
+    } catch (std::invalid_argument e) {
+      // Try next type
+    }
+
+    if (char_sequence == "true") {
+      cpu.registers.retval = arch::mem::Cell::for_boolean(true);
+    } else if (char_sequence == "false") {
+      cpu.registers.retval = arch::mem::Cell::for_boolean(false);
+    } else if (char_sequence == "nil") {
+      cpu.registers.retval = arch::mem::Cell::for_nil();
+    } else {
+      cpu.registers.retval = arch::mem::Cell::for_string(char_sequence);
+    }
   }
 }
 
@@ -112,13 +162,106 @@ void lib_argument(arch::cpu::Cpu& cpu) noexcept(false) {
   cpu.registers.retval = requested_arg;
 }
 
+void lib_strtonum(arch::cpu::Cpu& cpu) noexcept(false) {
+  auto n = cpu.get_total_actuals_from_stack();
+
+  if (n != 1) {
+    throw std::invalid_argument(
+        "`strtonum` expected `1` arguments, but recieved `" +
+        std::to_string(n) + "`");
+  }
+
+  const auto& cell = cpu.get_actual_from_stack_at(0);
+
+  if (cell.get_type() != arch::mem::Cell::Type::STRING) {
+    throw std::invalid_argument("`strtonum`'s argument should be string");
+  }
+
+  cpu.registers.retval.clear();
+
+  try {
+    double number = std::stod(cell.get_string());
+    cpu.registers.retval = arch::mem::Cell::for_number(number);
+  } catch (std::invalid_argument e) {
+    cpu.registers.retval = arch::mem::Cell::for_nil();
+  }
+}
+
+void lib_sqrt(arch::cpu::Cpu& cpu) noexcept(false) {
+  auto n = cpu.get_total_actuals_from_stack();
+
+  if (n != 1) {
+    throw std::invalid_argument(
+        "`sqrt` expected `1` arguments, but recieved `" + std::to_string(n) +
+        "`");
+  }
+
+  const auto& cell = cpu.get_actual_from_stack_at(0);
+
+  if (cell.get_type() != arch::mem::Cell::Type::NUMBER) {
+    throw std::invalid_argument("`sqrt`'s argument should be number");
+  }
+
+  cpu.registers.retval.clear();
+
+  auto number = cell.get_number();
+  if (number >= 0) {
+    cpu.registers.retval = arch::mem::Cell::for_number(std::sqrt(number));
+  } else {
+    cpu.registers.retval = arch::mem::Cell::for_nil();
+  }
+}
+
+void lib_cos(arch::cpu::Cpu& cpu) noexcept(false) {
+  auto n = cpu.get_total_actuals_from_stack();
+
+  if (n != 1) {
+    throw std::invalid_argument("`cos` expected `1` arguments, but recieved `" +
+                                std::to_string(n) + "`");
+  }
+
+  const auto& cell = cpu.get_actual_from_stack_at(0);
+
+  if (cell.get_type() != arch::mem::Cell::Type::NUMBER) {
+    throw std::invalid_argument("`cos`'s argument should be number");
+  }
+
+  auto angle = cell.get_number();
+  cpu.registers.retval.clear();
+  cpu.registers.retval =
+      arch::mem::Cell::for_number(std::cos(RADIAN_UNITS(angle)));
+}
+
+void lib_sin(arch::cpu::Cpu& cpu) noexcept(false) {
+  auto n = cpu.get_total_actuals_from_stack();
+
+  if (n != 1) {
+    throw std::invalid_argument("`sin` expected `1` arguments, but recieved `" +
+                                std::to_string(n) + "`");
+  }
+
+  const auto& cell = cpu.get_actual_from_stack_at(0);
+
+  if (cell.get_type() != arch::mem::Cell::Type::NUMBER) {
+    throw std::invalid_argument("`sin`'s argument should be number");
+  }
+
+  auto angle = cell.get_number();
+  cpu.registers.retval.clear();
+  cpu.registers.retval =
+      arch::mem::Cell::for_number(std::sin(RADIAN_UNITS(angle)));
+}
+
 LibFunctions::LibFunctions()
-    : lib_funcs{
-          {"print", lib_print},
-          {"typeof", lib_typeof},
-          {"totalarguments", lib_totalarguments},
-          {"argument", lib_argument},
-      } {}
+    : lib_funcs{{"print", lib_print},
+                {"input", lib_input},
+                {"typeof", lib_typeof},
+                {"totalarguments", lib_totalarguments},
+                {"argument", lib_argument},
+                {"strtonum", lib_strtonum},
+                {"sqrt", lib_sqrt},
+                {"cos", lib_cos},
+                {"sin", lib_sin}} {}
 
 void LibFunctions::call(const std::string& func_name,
                         Cpu& cpu) noexcept(false) {
