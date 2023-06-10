@@ -20,8 +20,15 @@ using Scanner = alpha::lex::Scanner;
 using Parser = alpha::syntax::Parser;
 using Writer = alpha::tcode::abc::Writer;
 
-int main() {
-  std::ifstream s_source_code("main.a");
+int main(int argc, char* argv[]) {
+  if (argc != 2) {
+    std::cerr << "Alpha compiler needs one (and only) input file" << std::endl;
+    return 5;
+  } else if (!argv[1]) {
+    std::cerr << "Compiler's `main` function argument failure" << std::endl;
+    return 6;
+  }
+  std::ifstream s_source_code(argv[1]);
   FIXME;  // ensure file oppened
 
   Scanner scanner(s_source_code);
