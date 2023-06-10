@@ -27,7 +27,7 @@ void Cpu::execute_assign(const AbcInstruction& instr) {
 }
 
 void Cpu::execute_nop(const AbcInstruction& instr) {
-  WARN_EMPTY_FUNC_IMPL();
+  return;
 }
 
 }  // namespace alpha::vm::arch::cpu
