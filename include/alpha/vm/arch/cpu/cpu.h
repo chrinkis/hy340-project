@@ -20,6 +20,8 @@ class Cpu {
       false);
   friend void runtime::libint::lib_totalarguments(
       arch::cpu::Cpu& _cpu) noexcept(false);
+  friend void runtime::libint::lib_strtonum(arch::cpu::Cpu& _cpu) noexcept(
+      false);
 
  private:
   using Memory = mem::Memory;

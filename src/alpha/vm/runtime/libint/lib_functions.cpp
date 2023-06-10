@@ -145,12 +145,36 @@ void lib_argument(arch::cpu::Cpu& cpu) noexcept(false) {
   cpu.registers.retval = requested_arg;
 }
 
+void lib_strtonum(arch::cpu::Cpu& cpu) noexcept(false) {
+  auto n = cpu.get_total_actuals_from_stack();
+
+  if (n != 1) {
+    throw std::invalid_argument(
+        "`strtonum` expected `1` arguments, but recieved `" +
+        std::to_string(n) + "`");
+  }
+
+  const auto& cell = cpu.get_actual_from_stack_at(0);
+
+  if (cell.get_type() != arch::mem::Cell::Type::STRING) {
+    throw std::invalid_argument("`strtonum`'s argument should be string");
+  }
+
+  cpu.registers.retval.clear();
+
+  try {
+    double number = std::stod(cell.get_string());
+    cpu.registers.retval = arch::mem::Cell::for_number(number);
+  } catch (std::invalid_argument e) {
+    cpu.registers.retval = arch::mem::Cell::for_nil();
+  }
+}
+
 LibFunctions::LibFunctions()
     : lib_funcs{
           {"print", lib_print},       {"input", lib_input},
           {"typeof", lib_typeof},     {"totalarguments", lib_totalarguments},
-          {"argument", lib_argument},
-      } {}
+          {"argument", lib_argument}, {"strtonum", lib_strtonum}} {}
 
 void LibFunctions::call(const std::string& func_name,
                         Cpu& cpu) noexcept(false) {
