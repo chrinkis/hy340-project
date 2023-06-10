@@ -13,6 +13,10 @@ void Cpu::execute_assign(const AbcInstruction& instr) {
   FIXME;  // add missing assertions for rv
 
   this->assign(lv, rv);
+
+  if (&rv == &this->registers.retval) {
+    this->registers.retval.clear();
+  }
 }
 
 void Cpu::execute_nop(const AbcInstruction& instr) {
