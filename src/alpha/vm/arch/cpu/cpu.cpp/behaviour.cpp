@@ -292,7 +292,8 @@ void Cpu::call_functor(const runtime::table::Table& table) {
 
   if (!f) {
     runtime::messages::error("in calling table: no `()` element found!");
-    FIXME;  // should `this->execution_finished = true;` here?
+
+    this->execution_finished = true;
 
   } else if (f->get_type() == mem::Cell::Type::TABLE) {
     this->call_functor(f->get_table());
@@ -308,7 +309,7 @@ void Cpu::call_functor(const runtime::table::Table& table) {
 
   } else {
     runtime::messages::error("in calling table: illegal `()` element value!");
-    FIXME;  // should `this->execution_finished = true;` here?
+    this->execution_finished = true;
   }
 }
 
