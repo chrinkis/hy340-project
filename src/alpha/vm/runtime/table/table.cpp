@@ -41,6 +41,12 @@ const Table::MemCell& Table::get_element(const MemCell& index) const
 }
 
 void Table::set_element(const MemCell& index, const MemCell& value) {
+  if (value.get_type() == MemCell::Type::NIL) {
+    this->table->data.erase(index);
+
+    return;
+  }
+
   this->table->data.insert({index, value});
 }
 
