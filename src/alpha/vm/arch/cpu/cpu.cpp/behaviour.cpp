@@ -216,7 +216,11 @@ void Cpu::assign(mem::Cell& lval, const mem::Cell& rval) {
     return;  // Dangerous! See `lval.clear` few lines bellow
   }
 
-  FIXME;  // check if they are the same tables
+  if (lval.get_type() == mem::Cell::Type::TABLE &&
+      rval.get_type() == mem::Cell::Type::TABLE &&
+      lval.get_table() == rval.get_table()) {
+    return;  // no need to assign
+  }
 
   if (rval.get_type() == mem::Cell::Type::UNDEF) {
     runtime::messages::warning("assign from `undef` content!");
