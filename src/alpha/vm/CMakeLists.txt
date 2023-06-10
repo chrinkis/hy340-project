@@ -1,5 +1,5 @@
 # For target vm
-add_executable(vm
+add_executable(avm
     main.cpp
 
     abc/instruction/arg.cpp
@@ -32,7 +32,7 @@ add_executable(vm
     runtime/table/table.cpp
 )
 
-target_include_directories(vm
+target_include_directories(avm
     PUBLIC
 
     ${CMAKE_SOURCE_DIR}/include

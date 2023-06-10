@@ -30,31 +30,51 @@
 - Things that were not implemented:
   1. Short circuit evaluation
 
+### Phase VI
+
+- The project was implemented according to the project guidelines
+- Everything should work correctly.
+
+### Phase V
+
+- The project was implemented according to the project guidelines
+- Everything should work correctly.
+- Extra implementations:
+  - library functions:
+    - [X] `input`
+    - [X] `objectmemberkeys`
+    - [X] `objecttotalmembers`
+    - [X] `objectcopy`
+    - [X] `strtonum`
+    - [X] `sqrt`
+    - [X] `cos`
+    - [X] `sin`
+  - types for table-indexes:
+    - [X] `bool`
+    - [X] `table`
+    - [X] `user_func`
+    - [X] `lib_func`
+- In case of `table[index] = nil;`, the element (if exists) will be deleted from
+the table, but there is a warning due to an extra `getelement` instruction for
+a temporary variable.
+
 ## Build
 
-Requirements:
+### Requirements
+- `Bison` (tested on version 3.8.2)
 - `CMake` (minimum version 3.18.4)
 - `Flex` (tested on version 2.6.4)
-- `Bison` (tested on version 3.8.2)
 - `g++`
 
-### al
+### Steps
+1. `mkdir build`
+2. `cd build`
+3. `cmake ..`
+4. `make`
 
-Target `scanner` of cmake
-
-### parser
-
-Target `parser` of cmake
-
-> *Note that this demo uses `stdin` for input.*
-> If you want to use a file, you could use bash redirections.
-
-### icode
-
-Target `icode` of cmake
-
-> *Note that this demo uses `stdin` for input.*
-> If you want to use a file, you could use bash redirections.
+This will built:
+- the compiler: `build/src/alpha/lang/al`
+- the virtual machine: `build/src/alpha/vm/avm`
 
 ### Tests
 

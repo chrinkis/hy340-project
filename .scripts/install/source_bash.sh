@@ -16,9 +16,9 @@
 ALPHA_LANG_PATH=$(pwd)
 
 function al {
-    ${ALPHA_LANG_PATH}/build/src/alpha/lang/lang
+    ${ALPHA_LANG_PATH}/build/src/alpha/lang/al $1
 }
 
 function avm {
-    ${ALPHA_LANG_PATH}/build/src/alpha/vm/vm
+    ${ALPHA_LANG_PATH}/build/src/alpha/vm/avm $1
 }
