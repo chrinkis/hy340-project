@@ -4,18 +4,22 @@
 
 #include <utils/warnings.h>
 
+#include <exception>
+
 namespace alpha::vm::runtime::table {
 
-Table::Table() {
-  WARN_EMPTY_FUNC_IMPL();
-}
+Table::Table() : table(new InternalTable()) {}
 
 Table Table::create() {
-  WARN_EMPTY_FUNC_IMPL(Table());
+  return Table();
 }
 
 bool Table::operator==(const Table& other) const {
-  WARN_EMPTY_FUNC_IMPL(false);
+  return this->table.get() == other.table.get();
+}
+
+bool Table::operator<(const Table& other) const {
+  return this->table.get() < other.table.get();
 }
 
 void Table::increase_counter() {
@@ -28,11 +32,24 @@ void Table::deccrease_counter() {
 
 const Table::MemCell& Table::get_element(const MemCell& index) const
     noexcept(false) {
-  WARN_EMPTY_FUNC_IMPL(*(new MemCell));
+  try {
+    return this->table->data.at(index);
+  } catch (const std::out_of_range& err) {
+    throw std::invalid_argument("Could'n find element with index `" +
+                                index.to_string() + "`!");
+  }
 }
 
 void Table::set_element(const MemCell& index, const MemCell& value) {
-  WARN_EMPTY_FUNC_IMPL();
+  this->table->data.insert({index, value});
+}
+
+Table::ConstIterator Table::begin() const {
+  return this->table->data.begin();
+}
+
+Table::ConstIterator Table::end() const {
+  return this->table->data.end();
 }
 
 }  // namespace alpha::vm::runtime::table

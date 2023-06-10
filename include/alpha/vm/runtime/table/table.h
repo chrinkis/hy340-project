@@ -30,12 +30,19 @@ class Table {
   static Table create();
 
   bool operator==(const Table& other) const;
+  bool operator<(const Table& other) const;
 
   void increase_counter();
   void deccrease_counter();
 
   const MemCell& get_element(const MemCell& index) const noexcept(false);
   void set_element(const MemCell& index, const MemCell& value);
+
+ public: /* Iterators */
+  using ConstIterator = std::map<MemCell, MemCell>::const_iterator;
+
+  ConstIterator begin() const;
+  ConstIterator end() const;
 };
 
 }  // namespace alpha::vm::runtime::table
