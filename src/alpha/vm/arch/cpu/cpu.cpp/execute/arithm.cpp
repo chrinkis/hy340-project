@@ -18,8 +18,6 @@ void Cpu::execute_arithmetic(
 
   FIXME;  // add missing assert
   FIXME;  // add missing assert
-  FIXME;  // add missing assert
-  FIXME;  // add missing assert
 
   if (rv_a.get_type() != mem::Cell::Type::NUMBER ||
       rv_b.get_type() != mem::Cell::Type::NUMBER) {
@@ -53,15 +51,11 @@ void Cpu::execute_mul(const AbcInstruction& instr) {
 }
 
 void Cpu::execute_div(const AbcInstruction& instr) {
-  FIXME;  // error checks? What should I add?
-
   execute_arithmetic(
       instr, [](auto a, auto b) { return a / b; }, true);
 }
 
 void Cpu::execute_mod(const AbcInstruction& instr) {
-  FIXME;  // error checks? What should I add?
-
   execute_arithmetic(
       instr,
       [](auto a, auto b) {
@@ -74,8 +68,6 @@ void Cpu::execute_umninus(const AbcInstruction& instr) {
   mem::Cell& lv = this->translate_arg_to_cell(instr.get_result());
   mem::Cell& rv =
       this->translate_arg_to_cell(instr.get_arg_a(), this->registers.arg_a);
-
-  FIXME;  // should I assert sth?
 
   if (rv.get_type() != mem::Cell::Type::NUMBER) {
     runtime::messages::error("not a number in unary `-` operator!");

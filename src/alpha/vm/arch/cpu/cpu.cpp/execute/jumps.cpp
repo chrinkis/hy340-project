@@ -12,9 +12,9 @@ namespace alpha::vm::arch::cpu {
 void Cpu::execute_jump(const AbcInstruction& instr) {
   assert(instr.get_result().get_type() == abc::instruction::Arg::Type::LABEL);
 
-  FIXME;  // add asserts for new pc?
-
   this->pc = instr.get_result().get_value();
+
+  assert(this->pc < this->mem.code.get_size());
 }
 
 static bool operator==(const mem::Cell& a, const mem::Cell& b) noexcept(false) {
@@ -104,11 +104,10 @@ void Cpu::execute_cmp_jump(
   mem::Cell& rv_b =
       this->translate_arg_to_cell(instr.get_arg_b(), this->registers.arg_b);
 
-  FIXME;  // add asserts for new pc?
-
   try {
     if (compare(rv_a, rv_b)) {
       this->pc = instr.get_result().get_value();
+      assert(this->pc < this->mem.code.get_size());
     }
   } catch (const std::invalid_argument& err) {
     runtime::messages::error("Invalid comparation with `" + rv_a.to_string() +

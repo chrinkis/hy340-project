@@ -39,11 +39,8 @@ void Cpu::execute_cycle() {
 
   AbcInstruction instr = this->mem.code.at(this->pc);
 
-  FIXME;  // assert opcode of instr is in range
-
   if (instr.get_src_line()) {
     this->current_line = instr.get_src_line();
-    FIXME;  // at dev time, src line doesn't store line of quad
   }
 
   auto old_pc = this->pc;
@@ -215,19 +212,25 @@ mem::Cell& Cpu::translate_arg_to_cell(const AbcArg& arg, mem::Cell& reg) {
 }
 
 void Cpu::assign(mem::Cell& lval, const mem::Cell& rval) {
-  FIXME;  // check if they are the same cells
+  if (&lval == &rval) {
+    return;  // Dangerous! See `lval.clear` few lines bellow
+  }
 
-  FIXME;  // check if they are the same tables
+  if (lval.get_type() == mem::Cell::Type::TABLE &&
+      rval.get_type() == mem::Cell::Type::TABLE &&
+      lval.get_table() == rval.get_table()) {
+    return;  // no need to assign
+  }
 
   if (rval.get_type() == mem::Cell::Type::UNDEF) {
     runtime::messages::warning("assign from `undef` content!");
   }
 
+  lval.clear();
+
   lval = rval;
 
-  if (lval.get_type() == mem::Cell::Type::STRING) {
-    FIXME;  // Nothing to do, right?
-  } else if (lval.get_type() == mem::Cell::Type::TABLE) {
+  if (lval.get_type() == mem::Cell::Type::TABLE) {
     lval.get_table()->increase_counter();
   }
 }
@@ -289,23 +292,43 @@ void Cpu::call_functor(const runtime::table::Table& table) {
 
   if (!f) {
     runtime::messages::error("in calling table: no `()` element found!");
-    FIXME;  // should `this->execution_finished = true;` here?
+    this->execution_finished = true;
 
-  } else if (f->get_type() == mem::Cell::Type::TABLE) {
-    this->call_functor(f->get_table());
+    return;
+  }
 
-  } else if (f->get_type() == mem::Cell::Type::USER_FUNC) {
-    this->push_table_arg(table);
-    this->call_save_enviroment();
-    this->pc = f->get_user_func().get_address();
+  assert(f.has_value());
 
-    assert(this->pc < this->mem.code.get_size());
-    assert(this->mem.code.at(this->pc).get_opcode() ==
-           abc::instruction::Opcode::FUNC_ENTER);
+  switch (f->get_type()) {
+    case mem::Cell::Type::TABLE: {
+      this->call_functor(f->get_table());
 
-  } else {
-    runtime::messages::error("in calling table: illegal `()` element value!");
-    FIXME;  // should `this->execution_finished = true;` here?
+      break;
+    }
+    case mem::Cell::Type::USER_FUNC: {
+      this->push_table_arg(table);
+      this->call_save_enviroment();
+      this->pc = f->get_user_func().get_address();
+
+      assert(this->pc < this->mem.code.get_size());
+      assert(this->mem.code.at(this->pc).get_opcode() ==
+             abc::instruction::Opcode::FUNC_ENTER);
+
+      break;
+    }
+    case mem::Cell::Type::NUMBER:
+    case mem::Cell::Type::STRING:
+    case mem::Cell::Type::BOOLEAN:
+    case mem::Cell::Type::LIB_FUNC:
+    case mem::Cell::Type::NIL:
+    case mem::Cell::Type::UNDEF: {
+      runtime::messages::error("in calling table: illegal `()` element value!");
+      this->execution_finished = true;
+
+      break;
+    }
+    default:
+      assert(0);
   }
 }
 
@@ -333,13 +356,10 @@ void Cpu::decrease_top() {
 
 unsigned Cpu::get_enviroment_value(const Memory::Stack::Index& index) const {
   assert(this->mem.stack[index].get_type() == mem::Cell::Type::NUMBER);
-  FIXME;  // ^^^ `=` or `==` (see page 23 in lecture for vm)
 
-  unsigned val = (unsigned)this->mem.stack[index].get_number();
-  FIXME;  // ^^^ use c-style cast?
+  unsigned val = static_cast<unsigned>(this->mem.stack[index].get_number());
 
-  assert(this->mem.stack[index].get_number() == (double)val);
-  FIXME;  // ^^^ use c-style cast?
+  assert(this->mem.stack[index].get_number() == static_cast<double>(val));
 
   return val;
 }
