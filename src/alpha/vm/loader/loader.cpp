@@ -17,7 +17,7 @@
   }
 
 #define BAD_FILE_EXTENSION(extension) \
-  std::runtime_error("Can't read \"." + extension + "\" files")
+  std::runtime_error("Can't read \"" + extension + "\" files")
 
 #define MAGIC_NUMBER 340200501
 
