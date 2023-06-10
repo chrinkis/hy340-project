@@ -356,7 +356,6 @@ void Cpu::decrease_top() {
 
 unsigned Cpu::get_enviroment_value(const Memory::Stack::Index& index) const {
   assert(this->mem.stack[index].get_type() == mem::Cell::Type::NUMBER);
-  FIXME;  // ^^^ `=` or `==` (see page 23 in lecture for vm)
 
   unsigned val = (unsigned)this->mem.stack[index].get_number();
   FIXME;  // ^^^ use c-style cast?
