@@ -272,10 +272,6 @@ void Cpu::call_lib_func(const std::string& lib_func_name) {
   this->execute_funcexit();
 }
 
-void Cpu::call_lib_functor(const runtime::table::Table& table) {
-  WARN_EMPTY_FUNC_IMPL();
-}
-
 void Cpu::push_table_arg(const runtime::table::Table& table) {
   this->mem.stack[this->registers.top] = mem::Cell::for_table(table);
   this->mem.stack[this->registers.top].get_table().increase_counter();
