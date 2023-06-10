@@ -50,8 +50,8 @@ void Cpu::execute_call(const AbcInstruction& instr) {
     case mem::Cell::Type::BOOLEAN:
     case mem::Cell::Type::NIL:
     case mem::Cell::Type::UNDEF: {
-      runtime::messages::warning("call: cannot bind `" + func.to_string() +
-                                 "` to function!");
+      runtime::messages::error("call: cannot bind `" + func.to_string() +
+                               "` to function!");
       this->execution_finished = true;
 
       break;
