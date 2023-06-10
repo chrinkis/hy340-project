@@ -17,8 +17,6 @@ void Cpu::execute_call(const AbcInstruction& instr) {
   mem::Cell& func =
       this->translate_arg_to_cell(instr.get_arg_a(), this->registers.arg_a);
 
-  FIXME;  // add missing assertion
-
   switch (func.get_type()) {
     case mem::Cell::Type::USER_FUNC: {
       using Opcode = abc::instruction::Opcode;
@@ -65,8 +63,6 @@ void Cpu::execute_pushargs(const AbcInstruction& instr) {
   mem::Cell& arg =
       this->translate_arg_to_cell(instr.get_arg_a(), this->registers.arg_a);
 
-  FIXME;  // add missing assertion
-
   this->assign(this->mem.stack[this->registers.top], arg);
   this->total_actuals++;
   this->decrease_top();
@@ -75,8 +71,6 @@ void Cpu::execute_pushargs(const AbcInstruction& instr) {
 void Cpu::execute_funcenter(const AbcInstruction& instr) {
   mem::Cell& cell_as_func =
       this->translate_arg_to_cell(instr.get_result(), this->registers.arg_a);
-
-  FIXME;  // add missing assert
 
   mem::consts::UserFunc func = cell_as_func.get_user_func();
 
