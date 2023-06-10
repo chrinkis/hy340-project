@@ -39,8 +39,6 @@ void Cpu::execute_cycle() {
 
   AbcInstruction instr = this->mem.code.at(this->pc);
 
-  FIXME;  // assert opcode of instr is in range
-
   if (instr.get_src_line()) {
     this->current_line = instr.get_src_line();
     FIXME;  // at dev time, src line doesn't store line of quad
