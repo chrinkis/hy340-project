@@ -230,9 +230,7 @@ void Cpu::assign(mem::Cell& lval, const mem::Cell& rval) {
 
   lval = rval;
 
-  if (lval.get_type() == mem::Cell::Type::STRING) {
-    FIXME;  // Nothing to do, right?
-  } else if (lval.get_type() == mem::Cell::Type::TABLE) {
+  if (lval.get_type() == mem::Cell::Type::TABLE) {
     lval.get_table()->increase_counter();
   }
 }
