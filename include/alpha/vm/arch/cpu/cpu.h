@@ -13,6 +13,13 @@
 namespace alpha::vm::arch::cpu {
 
 class Cpu {
+  friend void runtime::libint::lib_print(arch::cpu::Cpu& _cpu) noexcept(false);
+  friend void runtime::libint::lib_typeof(arch::cpu::Cpu& _cpu) noexcept(false);
+  friend void runtime::libint::lib_argument(arch::cpu::Cpu& _cpu) noexcept(
+      false);
+  friend void runtime::libint::lib_totalarguments(
+      arch::cpu::Cpu& _cpu) noexcept(false);
+
  private:
   using Memory = mem::Memory;
   using AbcInstruction = abc::instruction::Instruction;
@@ -36,13 +43,14 @@ class Cpu {
   AbcInstruction::SrcLine current_line;
 
   unsigned total_actuals;
+  unsigned total_globals;
 
   Memory& mem;
 
-  LibFunctions lib_functions;
+  LibFunctions& lib_functions;
 
  public:
-  Cpu(Memory& mem, unsigned total_globals);
+  Cpu(Memory& mem, LibFunctions& lib_functions, unsigned total_globals);
 
   void execute_cycle();
   bool has_finished() const;
@@ -113,19 +121,19 @@ class Cpu {
   void call_functor(const runtime::table::Table& table);
 
   std::optional<mem::Cell> table_get_elem(const runtime::table::Table& table,
-                                          const mem::Cell& index);
+                                          const mem::Cell& index) const;
 
   void table_set_elem(runtime::table::Table& table,
                       const mem::Cell& index,
                       const mem::Cell& content);
 
   void decrease_top();
-  unsigned get_enviroment_value(const Memory::Stack::Index& index);
   void push_enviroment_value(unsigned value);
 
-  unsigned get_total_actuals_from_stack();
-
-  mem::Cell& get_actual_from_stack_at(unsigned i);
+  unsigned get_enviroment_value(const Memory::Stack::Index& index) const;
+  unsigned get_total_actuals_from_stack() const;
+  mem::Cell& get_actual_from_stack_at(unsigned i) const;
+  const mem::stack::Stack::Index get_global_topsp() const;
 };
 
 }  // namespace alpha::vm::arch::cpu
