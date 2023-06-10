@@ -4,6 +4,7 @@
 #include <utils/warnings.h>
 
 #include <cassert>
+#include <iomanip>
 #include <sstream>
 #include <utility>
 
@@ -31,7 +32,7 @@ std::string Cell::to_string() const {
   switch (this->type) {
     case Type::NUMBER: {
       std::stringstream ss;
-      ss << this->get_number();
+      ss << std::fixed << std::setprecision(3) << this->get_number();
       return ss.str();
     }
 
