@@ -212,13 +212,17 @@ mem::Cell& Cpu::translate_arg_to_cell(const AbcArg& arg, mem::Cell& reg) {
 }
 
 void Cpu::assign(mem::Cell& lval, const mem::Cell& rval) {
-  FIXME;  // check if they are the same cells
+  if (&lval == &rval) {
+    return;  // Dangerous! See `lval.clear` few lines bellow
+  }
 
   FIXME;  // check if they are the same tables
 
   if (rval.get_type() == mem::Cell::Type::UNDEF) {
     runtime::messages::warning("assign from `undef` content!");
   }
+
+  lval.clear();
 
   lval = rval;
 
