@@ -8,8 +8,6 @@
 #include <alpha/lang/tcode/abc/table.h>
 #include <alpha/lang/tcode/abc/writer.h>
 
-#include <utils/warnings.h>
-
 #include <fstream>
 #include <iostream>
 
@@ -20,9 +18,30 @@ using Scanner = alpha::lex::Scanner;
 using Parser = alpha::syntax::Parser;
 using Writer = alpha::tcode::abc::Writer;
 
-int main() {
-  std::ifstream s_source_code("main.a");
-  FIXME;  // ensure file oppened
+void check_file_is_open(const std::string& name, const std::ifstream& stream) {
+  if (!stream.is_open()) {
+    std::cerr << "Can't open file \"" + name + "\" to read!" << std::endl;
+    exit(3);
+  };
+}
+
+void check_file_is_open(const std::string& name, const std::ofstream& stream) {
+  if (!stream.is_open()) {
+    std::cerr << "Can't open file \"" + name + "\" to write!" << std::endl;
+    exit(4);
+  };
+}
+
+int main(int argc, char* argv[]) {
+  if (argc != 2) {
+    std::cerr << "Alpha compiler needs one (and only) input file" << std::endl;
+    return 5;
+  } else if (!argv[1]) {
+    std::cerr << "Compiler's `main` function argument failure" << std::endl;
+    return 6;
+  }
+  std::ifstream s_source_code(argv[1]);
+  check_file_is_open(argv[1], s_source_code);
 
   Scanner scanner(s_source_code);
   Parser parser(scanner);
@@ -30,8 +49,10 @@ int main() {
   parser.parse();
   s_source_code.close();
 
-  std::ofstream s_sym_table_txt("symTable.txt");
-  FIXME;  // ensure file oppened
+  std::string sym_table_file_name("symTable.txt");
+  std::ofstream s_sym_table_txt(sym_table_file_name);
+  check_file_is_open(sym_table_file_name, s_sym_table_txt);
+
   s_sym_table_txt << symTable << std::endl;
   s_sym_table_txt.close();
 
@@ -39,8 +60,10 @@ int main() {
     return 1;
   }
 
-  std::ofstream s_quads_txt("quads.txt");
-  FIXME;  // ensure file oppened
+  std::string quads_file_name = "quads.txt";
+  std::ofstream s_quads_txt(quads_file_name);
+  check_file_is_open(quads_file_name, s_quads_txt);
+
   s_quads_txt << quadTable << std::endl;
   s_quads_txt.close();
 
