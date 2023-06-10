@@ -19,6 +19,36 @@
 
 namespace alpha::vm::runtime::libint {
 
+void print_table(const arch::mem::Cell& cell) {
+  using MemCell = arch::mem::Cell;
+
+  assert(cell.get_type() == MemCell::Type::TABLE);
+
+  std::cout << "[";
+
+  for (const auto& pair : cell.get_table()) {
+    std::cout << "{";
+
+    if (pair.first.get_type() == MemCell::Type::TABLE) {
+      print_table(pair.first);
+    } else {
+      std::cout << pair.first.to_string();
+    }
+
+    std::cout << ": ";
+
+    if (pair.second.get_type() == MemCell::Type::TABLE) {
+      print_table(pair.second);
+    } else {
+      std::cout << pair.second.to_string();
+    }
+
+    std::cout << "}, ";
+  }
+
+  std::cout << "]";
+}
+
 void lib_print(arch::cpu::Cpu& _cpu) noexcept(false) {
   const auto& cpu = _cpu;
 
@@ -29,9 +59,12 @@ void lib_print(arch::cpu::Cpu& _cpu) noexcept(false) {
 
     if (cell.get_type() == arch::mem::Cell::Type::UNDEF) {
       throw std::invalid_argument("Can't print an undefined value");
+    } else if (cell.get_type() == arch::mem::Cell::Type::TABLE) {
+      print_table(cell);
+    } else {
+      std::cout << cell.to_string();
     }
 
-    std::cout << cell.to_string();
     std::cout << std::endl;
   }
 }

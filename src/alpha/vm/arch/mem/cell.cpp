@@ -43,9 +43,7 @@ std::string Cell::to_string() const {
       return this->get_boolean() ? "true" : "false";
 
     case Type::TABLE:
-      // With index or key?
-      FIXME;
-      return "[]";
+      return "table( " + std::to_string(this->get_table().get_size()) + " )";
 
     case Type::USER_FUNC:
       return std::string("User Function->") + this->get_user_func().get_id();
