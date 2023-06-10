@@ -33,6 +33,39 @@ void lib_print(arch::cpu::Cpu& _cpu) noexcept(false) {
   }
 }
 
+void lib_input(arch::cpu::Cpu& cpu) noexcept(false) {
+  auto n = cpu.get_total_actuals_from_stack();
+
+  if (n != 0) {
+    throw std::invalid_argument(
+        "`input` expected `0` arguments, but recieved `" + std::to_string(n) +
+        "`");
+  }
+
+  std::string char_sequence;
+  std::cin >> char_sequence;
+
+  cpu.registers.retval.clear();
+
+  try {
+    double number = std::stod(char_sequence);
+    cpu.registers.retval = arch::mem::Cell::for_number(number);
+    return;
+  } catch (std::invalid_argument e) {
+    // Try next type
+  }
+
+  if (char_sequence == "true") {
+    cpu.registers.retval = arch::mem::Cell::for_boolean(true);
+  } else if (char_sequence == "false") {
+    cpu.registers.retval = arch::mem::Cell::for_boolean(false);
+  } else if (char_sequence == "nil") {
+    cpu.registers.retval = arch::mem::Cell::for_nil();
+  } else {
+    cpu.registers.retval = arch::mem::Cell::for_string(char_sequence);
+  }
+}
+
 void lib_typeof(arch::cpu::Cpu& cpu) noexcept(false) {
   auto n = cpu.get_total_actuals_from_stack();
 
@@ -114,9 +147,8 @@ void lib_argument(arch::cpu::Cpu& cpu) noexcept(false) {
 
 LibFunctions::LibFunctions()
     : lib_funcs{
-          {"print", lib_print},
-          {"typeof", lib_typeof},
-          {"totalarguments", lib_totalarguments},
+          {"print", lib_print},       {"input", lib_input},
+          {"typeof", lib_typeof},     {"totalarguments", lib_totalarguments},
           {"argument", lib_argument},
       } {}
 
