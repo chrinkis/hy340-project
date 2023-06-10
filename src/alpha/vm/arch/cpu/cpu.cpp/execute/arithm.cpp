@@ -18,8 +18,6 @@ void Cpu::execute_arithmetic(
 
   FIXME;  // add missing assert
   FIXME;  // add missing assert
-  FIXME;  // add missing assert
-  FIXME;  // add missing assert
 
   if (rv_a.get_type() != mem::Cell::Type::NUMBER ||
       rv_b.get_type() != mem::Cell::Type::NUMBER) {
