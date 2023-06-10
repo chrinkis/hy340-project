@@ -47,7 +47,7 @@ ADD_FLEX_BISON_DEPENDENCY(FlexScanner BisonParser)
 file(GLOB_RECURSE SYNTAX_MANAGERS  "syntax/manager/*.cpp")
 
 # For target lang
-add_executable(lang
+add_executable(al
     main.cpp
 
     ${FLEX_FlexScanner_OUTPUTS}
@@ -86,7 +86,7 @@ add_executable(lang
 )
 
 # Add `include` directories
-target_include_directories(lang
+target_include_directories(al
     # Kind
     PRIVATE
 
