@@ -17,8 +17,8 @@ class Stmt {
   using Quad = alpha::icode::quad::Quad;
 
  private:
-  Quad::Label breaklist;
-  Quad::Label contlist;
+  Quad::Label breaklist = 0;
+  Quad::Label contlist = 0;
 
  public:
   Stmt();

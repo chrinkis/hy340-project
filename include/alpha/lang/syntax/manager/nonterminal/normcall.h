@@ -17,7 +17,7 @@ class Normcall {
 
  private:
   ExprCollection elist;
-  bool method;
+  bool method = false;
 
  public:
   static Normcall from_lParTkn_elist_rParTkn(const Elist& elist);

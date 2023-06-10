@@ -14,7 +14,7 @@ class IfstmtIf {
   using Quad = icode::quad::Quad;
 
  private:
-  Quad::Label label;
+  Quad::Label label = 0;
 
  public:
   static IfstmtIf from_ifTkn_lParTkn_expr_rParTkn(const Expr& expr);

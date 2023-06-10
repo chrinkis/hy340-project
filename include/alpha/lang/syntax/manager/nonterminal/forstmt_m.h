@@ -12,7 +12,7 @@ class ForstmtM {
   using Quad = alpha::icode::quad::Quad;
 
  private:
-  Quad::Label quad_address;
+  Quad::Label quad_address = 0;
 
  public:
   static ForstmtM from_empty();

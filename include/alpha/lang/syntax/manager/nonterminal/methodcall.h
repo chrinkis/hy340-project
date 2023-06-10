@@ -18,7 +18,7 @@ class Methodcall {
 
  private:
   ExprCollection elist;
-  bool method;
+  bool method = false;
   terminal::Identifier id;
 
  public:
