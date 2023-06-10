@@ -2,6 +2,7 @@
 
 #include <alpha/vm/arch/cpu/cpu.h>
 #include <alpha/vm/runtime/messages/error.h>
+#include <alpha/vm/runtime/table/table.h>
 
 #include <utils/warnings.h>
 
@@ -252,6 +253,83 @@ void lib_sin(arch::cpu::Cpu& cpu) noexcept(false) {
       arch::mem::Cell::for_number(std::sin(RADIAN_UNITS(angle)));
 }
 
+void lib_objectmemberkeys(arch::cpu::Cpu& cpu) noexcept(false) {
+  auto n = cpu.get_total_actuals_from_stack();
+
+  if (n != 1) {
+    throw std::invalid_argument(
+        "`objectmemberkeys` expected `1` arguments, but recieved `" +
+        std::to_string(n) + "`");
+  }
+
+  const auto& cell = cpu.get_actual_from_stack_at(0);
+
+  if (cell.get_type() != arch::mem::Cell::Type::TABLE) {
+    throw std::invalid_argument(
+        "`objectmemberkeys`'s argument should be table");
+  }
+
+  auto table = cell.get_table();
+  table::Table key_table = table::Table::create();
+
+  int current_key = 0;
+  for (auto pair : table) {
+    auto index = arch::mem::Cell ::for_number(current_key++);
+    key_table.set_element(index, pair.first);
+  }
+
+  cpu.registers.retval.clear();
+  cpu.registers.retval = arch::mem::Cell::for_table(key_table);
+}
+
+void lib_objecttotalmembers(arch::cpu::Cpu& cpu) noexcept(false) {
+  auto n = cpu.get_total_actuals_from_stack();
+
+  if (n != 1) {
+    throw std::invalid_argument(
+        "`objecttotalmembers` expected `1` arguments, but recieved `" +
+        std::to_string(n) + "`");
+  }
+
+  const auto& cell = cpu.get_actual_from_stack_at(0);
+
+  if (cell.get_type() != arch::mem::Cell::Type::TABLE) {
+    throw std::invalid_argument(
+        "`objecttotalmembers`'s argument should be table");
+  }
+
+  auto table = cell.get_table();
+
+  cpu.registers.retval.clear();
+  cpu.registers.retval = arch::mem::Cell::for_number(table.get_size());
+}
+
+void lib_objectcopy(arch::cpu::Cpu& cpu) noexcept(false) {
+  auto n = cpu.get_total_actuals_from_stack();
+
+  if (n != 1) {
+    throw std::invalid_argument(
+        "`objectcopy` expected `1` arguments, but recieved `" +
+        std::to_string(n) + "`");
+  }
+
+  const auto& cell = cpu.get_actual_from_stack_at(0);
+
+  if (cell.get_type() != arch::mem::Cell::Type::TABLE) {
+    throw std::invalid_argument("`objectcopy`'s argument should be table");
+  }
+
+  auto table = cell.get_table();
+  table::Table table_copy = table::Table::create();
+
+  for (auto pair : table) {
+    table_copy.set_element(pair.first, pair.second);
+  }
+
+  cpu.registers.retval.clear();
+  cpu.registers.retval = arch::mem::Cell::for_table(table_copy);
+}
+
 LibFunctions::LibFunctions()
     : lib_funcs{{"print", lib_print},
                 {"input", lib_input},
@@ -261,7 +339,10 @@ LibFunctions::LibFunctions()
                 {"strtonum", lib_strtonum},
                 {"sqrt", lib_sqrt},
                 {"cos", lib_cos},
-                {"sin", lib_sin}} {}
+                {"sin", lib_sin},
+                {"objectmemberkeys", lib_objectmemberkeys},
+                {"objecttotalmembers", lib_objecttotalmembers},
+                {"objectcopy", lib_objectcopy}} {}
 
 void LibFunctions::call(const std::string& func_name,
                         Cpu& cpu) noexcept(false) {
