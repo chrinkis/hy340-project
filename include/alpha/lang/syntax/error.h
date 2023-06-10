@@ -73,4 +73,6 @@ bool is_arithmetic(const icode::Expr& expr);
 
 void illegal_arithm_expr(Operator op, const icode::Expr& expr);
 
+void illegal_arithm_expr_right_operand(Operator op, const icode::Expr& expr);
+
 }  // namespace alpha::syntax::error
