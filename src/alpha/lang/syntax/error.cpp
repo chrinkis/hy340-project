@@ -181,4 +181,12 @@ void illegal_arithm_expr(Operator op, const icode::Expr& expr) {
                  expr_sstream.str() + "` as operand");
 }
 
+void illegal_arithm_expr_right_operand(Operator op, const icode::Expr& expr) {
+  std::stringstream expr_sstream;
+  expr_sstream << expr;
+
+  print_semantic("cannot use `" + to_string(op) + "` with `" +
+                 expr_sstream.str() + "` as right operand");
+}
+
 }  // namespace alpha::syntax::error

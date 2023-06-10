@@ -119,6 +119,12 @@ Expr Expr::from_expr_divTkn_expr(const Expr& left, const Expr& right) {
     quadTable.emit(Opcode::DIV, expr.get_expr(), left.get_expr(),
                    right.get_expr());
 
+  } else if (right.get_expr().get_number_const() == 0) {
+    error::illegal_arithm_expr_right_operand(error::Operator::DIV,
+                                             right.get_expr());
+
+    expr.set_expr(icode::Expr::for_const_num(1));
+
   } else {
     double result = left.get_expr().get_number_const() /
                     right.get_expr().get_number_const();
@@ -144,6 +150,12 @@ Expr Expr::from_expr_modTkn_expr(const Expr& left, const Expr& right) {
     expr.set_expr(icode::Expr::for_arithm_expr(symTable.new_temp_variable()));
     quadTable.emit(Opcode::MOD, expr.get_expr(), left.get_expr(),
                    right.get_expr());
+
+  } else if (right.get_expr().get_number_const() == 0) {
+    error::illegal_arithm_expr_right_operand(error::Operator::MOD,
+                                             right.get_expr());
+
+    expr.set_expr(icode::Expr::for_const_num(1));
 
   } else {
     double result = ((int)left.get_expr().get_number_const()) %
