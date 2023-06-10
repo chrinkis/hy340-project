@@ -6,6 +6,7 @@
 #include <utils/warnings.h>
 
 #include <cassert>
+#include <cmath>
 #include <iostream>
 #include <stdexcept>
 
@@ -13,6 +14,7 @@
 #define STACK_ENV_SIZE +4
 #define SAVED_TOPSP_OFFSET +1
 // FIXME ^^^ defined in multiple files
+#define RADIAN_UNITS(angle) (((angle) / 180.0) * (double)M_PI)
 
 namespace alpha::vm::runtime::libint {
 
@@ -195,12 +197,32 @@ void lib_sqrt(arch::cpu::Cpu& cpu) noexcept(false) {
   }
 }
 
+void lib_cos(arch::cpu::Cpu& cpu) noexcept(false) {
+  auto n = cpu.get_total_actuals_from_stack();
+
+  if (n != 1) {
+    throw std::invalid_argument("`cos` expected `1` arguments, but recieved `" +
+                                std::to_string(n) + "`");
+  }
+
+  const auto& cell = cpu.get_actual_from_stack_at(0);
+
+  if (cell.get_type() != arch::mem::Cell::Type::NUMBER) {
+    throw std::invalid_argument("`cos`'s argument should be number");
+  }
+
+  auto angle = cell.get_number();
+  cpu.registers.retval.clear();
+  cpu.registers.retval =
+      arch::mem::Cell::for_number(std::cos(RADIAN_UNITS(angle)));
+}
+
 LibFunctions::LibFunctions()
     : lib_funcs{
           {"print", lib_print},       {"input", lib_input},
           {"typeof", lib_typeof},     {"totalarguments", lib_totalarguments},
           {"argument", lib_argument}, {"strtonum", lib_strtonum},
-          {"sqrt", lib_sqrt}} {}
+          {"sqrt", lib_sqrt},         {"cos", lib_cos}} {}
 
 void LibFunctions::call(const std::string& func_name,
                         Cpu& cpu) noexcept(false) {

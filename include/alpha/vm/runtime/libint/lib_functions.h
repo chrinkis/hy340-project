@@ -35,5 +35,6 @@ void lib_argument(arch::cpu::Cpu& _cpu) noexcept(false);
 void lib_totalarguments(arch::cpu::Cpu& _cpu) noexcept(false);
 void lib_strtonum(arch::cpu::Cpu& _cpu) noexcept(false);
 void lib_sqrt(arch::cpu::Cpu& _cpu) noexcept(false);
+void lib_cos(arch::cpu::Cpu& _cpu) noexcept(false);
 
 }  // namespace alpha::vm::runtime::libint
