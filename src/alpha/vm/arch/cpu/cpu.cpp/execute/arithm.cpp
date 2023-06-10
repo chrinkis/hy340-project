@@ -69,8 +69,6 @@ void Cpu::execute_umninus(const AbcInstruction& instr) {
   mem::Cell& rv =
       this->translate_arg_to_cell(instr.get_arg_a(), this->registers.arg_a);
 
-  FIXME;  // should I assert sth?
-
   if (rv.get_type() != mem::Cell::Type::NUMBER) {
     runtime::messages::error("not a number in unary `-` operator!");
     this->execution_finished = true;
