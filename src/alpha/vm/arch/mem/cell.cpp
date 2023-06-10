@@ -93,7 +93,7 @@ bool Cell::to_bool() const {
 
 void Cell::clear() {
   if (this->type == Type::TABLE) {
-    this->get_table()->deccrease_counter();
+    this->get_table().deccrease_counter();
   }
 
   *this = Cell();
