@@ -16,9 +16,13 @@ class Table {
  private:
   struct InternalTable {
     using SharedPtr = std::shared_ptr<InternalTable>;
+    using Size = std::map<MemCell, MemCell>::size_type;
 
     std::map<MemCell, MemCell> data;
   };
+
+ public:
+  using Size = InternalTable::Size;
 
  private:
   InternalTable::SharedPtr table;
@@ -34,6 +38,8 @@ class Table {
 
   void increase_counter();
   void deccrease_counter();
+
+  Size get_size() const;
 
   const MemCell& get_element(const MemCell& index) const noexcept(false);
   void set_element(const MemCell& index, const MemCell& value);
