@@ -51,7 +51,11 @@ void Table::set_element(const MemCell& index, const MemCell& value) {
     return;
   }
 
-  this->table->data.insert({index, value});
+  try {
+    this->table->data.at(index) = value;
+  } catch (const std::out_of_range& err) {
+    this->table->data.insert({index, value});
+  }
 }
 
 Table::ConstIterator Table::begin() const {
