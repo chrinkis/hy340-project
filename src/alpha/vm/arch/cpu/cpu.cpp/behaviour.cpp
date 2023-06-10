@@ -292,24 +292,43 @@ void Cpu::call_functor(const runtime::table::Table& table) {
 
   if (!f) {
     runtime::messages::error("in calling table: no `()` element found!");
-
     this->execution_finished = true;
 
-  } else if (f->get_type() == mem::Cell::Type::TABLE) {
-    this->call_functor(f->get_table());
+    return;
+  }
 
-  } else if (f->get_type() == mem::Cell::Type::USER_FUNC) {
-    this->push_table_arg(table);
-    this->call_save_enviroment();
-    this->pc = f->get_user_func().get_address();
+  assert(f.has_value());
 
-    assert(this->pc < this->mem.code.get_size());
-    assert(this->mem.code.at(this->pc).get_opcode() ==
-           abc::instruction::Opcode::FUNC_ENTER);
+  switch (f->get_type()) {
+    case mem::Cell::Type::TABLE: {
+      this->call_functor(f->get_table());
 
-  } else {
-    runtime::messages::error("in calling table: illegal `()` element value!");
-    this->execution_finished = true;
+      break;
+    }
+    case mem::Cell::Type::USER_FUNC: {
+      this->push_table_arg(table);
+      this->call_save_enviroment();
+      this->pc = f->get_user_func().get_address();
+
+      assert(this->pc < this->mem.code.get_size());
+      assert(this->mem.code.at(this->pc).get_opcode() ==
+             abc::instruction::Opcode::FUNC_ENTER);
+
+      break;
+    }
+    case mem::Cell::Type::NUMBER:
+    case mem::Cell::Type::STRING:
+    case mem::Cell::Type::BOOLEAN:
+    case mem::Cell::Type::LIB_FUNC:
+    case mem::Cell::Type::NIL:
+    case mem::Cell::Type::UNDEF: {
+      runtime::messages::error("in calling table: illegal `()` element value!");
+      this->execution_finished = true;
+
+      break;
+    }
+    default:
+      assert(0);
   }
 }
 
