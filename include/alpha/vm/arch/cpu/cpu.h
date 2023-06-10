@@ -120,13 +120,6 @@ class Cpu {
 
   void call_functor(const runtime::table::Table& table);
 
-  std::optional<mem::Cell> table_get_elem(const runtime::table::Table& table,
-                                          const mem::Cell& index) const;
-
-  void table_set_elem(runtime::table::Table& table,
-                      const mem::Cell& index,
-                      const mem::Cell& content);
-
   void decrease_top();
   void push_enviroment_value(unsigned value);
 

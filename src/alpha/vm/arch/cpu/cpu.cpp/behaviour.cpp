@@ -231,7 +231,7 @@ void Cpu::assign(mem::Cell& lval, const mem::Cell& rval) {
   lval = rval;
 
   if (lval.get_type() == mem::Cell::Type::TABLE) {
-    lval.get_table()->increase_counter();
+    lval.get_table().increase_counter();
   }
 }
 
@@ -278,7 +278,7 @@ void Cpu::call_lib_functor(const runtime::table::Table& table) {
 
 void Cpu::push_table_arg(const runtime::table::Table& table) {
   this->mem.stack[this->registers.top] = mem::Cell::for_table(table);
-  this->mem.stack[this->registers.top].get_table()->increase_counter();
+  this->mem.stack[this->registers.top].get_table().increase_counter();
 
   this->total_actuals++;
 
@@ -288,59 +288,45 @@ void Cpu::push_table_arg(const runtime::table::Table& table) {
 void Cpu::call_functor(const runtime::table::Table& table) {
   this->registers.result = mem::Cell::for_string("()");
 
-  auto f = this->table_get_elem(table, this->registers.result);
+  try {
+    auto f = table.get_element(this->registers.result);
 
-  if (!f) {
+    switch (f.get_type()) {
+      case mem::Cell::Type::TABLE: {
+        this->call_functor(f.get_table());
+
+        break;
+      }
+      case mem::Cell::Type::USER_FUNC: {
+        this->push_table_arg(table);
+        this->call_save_enviroment();
+        this->pc = f.get_user_func().get_address();
+
+        assert(this->pc < this->mem.code.get_size());
+        assert(this->mem.code.at(this->pc).get_opcode() ==
+               abc::instruction::Opcode::FUNC_ENTER);
+
+        break;
+      }
+      case mem::Cell::Type::NUMBER:
+      case mem::Cell::Type::STRING:
+      case mem::Cell::Type::BOOLEAN:
+      case mem::Cell::Type::LIB_FUNC:
+      case mem::Cell::Type::NIL:
+      case mem::Cell::Type::UNDEF: {
+        runtime::messages::error(
+            "in calling table: illegal `()` element value!");
+        this->execution_finished = true;
+
+        break;
+      }
+      default:
+        assert(0);
+    }
+  } catch (const std::invalid_argument& err) {
     runtime::messages::error("in calling table: no `()` element found!");
     this->execution_finished = true;
-
-    return;
   }
-
-  assert(f.has_value());
-
-  switch (f->get_type()) {
-    case mem::Cell::Type::TABLE: {
-      this->call_functor(f->get_table());
-
-      break;
-    }
-    case mem::Cell::Type::USER_FUNC: {
-      this->push_table_arg(table);
-      this->call_save_enviroment();
-      this->pc = f->get_user_func().get_address();
-
-      assert(this->pc < this->mem.code.get_size());
-      assert(this->mem.code.at(this->pc).get_opcode() ==
-             abc::instruction::Opcode::FUNC_ENTER);
-
-      break;
-    }
-    case mem::Cell::Type::NUMBER:
-    case mem::Cell::Type::STRING:
-    case mem::Cell::Type::BOOLEAN:
-    case mem::Cell::Type::LIB_FUNC:
-    case mem::Cell::Type::NIL:
-    case mem::Cell::Type::UNDEF: {
-      runtime::messages::error("in calling table: illegal `()` element value!");
-      this->execution_finished = true;
-
-      break;
-    }
-    default:
-      assert(0);
-  }
-}
-
-std::optional<mem::Cell> Cpu::table_get_elem(const runtime::table::Table& table,
-                                             const mem::Cell& index) const {
-  WARN_EMPTY_FUNC_IMPL(std::optional<mem::Cell>());
-}
-
-void Cpu::table_set_elem(runtime::table::Table& table,
-                         const mem::Cell& index,
-                         const mem::Cell& content) {
-  WARN_EMPTY_FUNC_IMPL();
 }
 
 void Cpu::decrease_top() {
