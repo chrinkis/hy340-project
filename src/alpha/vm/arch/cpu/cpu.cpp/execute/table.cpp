@@ -61,13 +61,13 @@ void Cpu::execute_tablegetelem(const AbcInstruction& instr) {
 }
 
 void Cpu::execute_tablesetelem(const AbcInstruction& instr) {
-  mem::Cell& table = this->translate_arg_to_cell(instr.get_result());
+  mem::Cell& table = this->translate_arg_to_cell(instr.get_arg_a());
 
   const mem::Cell& index =
-      this->translate_arg_to_cell(instr.get_arg_a(), this->registers.arg_a);
+      this->translate_arg_to_cell(instr.get_arg_b(), this->registers.arg_a);
 
   const mem::Cell& value =
-      this->translate_arg_to_cell(instr.get_arg_b(), this->registers.arg_b);
+      this->translate_arg_to_cell(instr.get_result(), this->registers.arg_b);
 
   FIXME;  // add missing assertS
 
