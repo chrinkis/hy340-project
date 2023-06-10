@@ -22,6 +22,7 @@ class Cpu {
       arch::cpu::Cpu& _cpu) noexcept(false);
   friend void runtime::libint::lib_strtonum(arch::cpu::Cpu& _cpu) noexcept(
       false);
+  friend void runtime::libint::lib_sqrt(arch::cpu::Cpu& _cpu) noexcept(false);
 
  private:
   using Memory = mem::Memory;

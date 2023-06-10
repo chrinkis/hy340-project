@@ -170,11 +170,37 @@ void lib_strtonum(arch::cpu::Cpu& cpu) noexcept(false) {
   }
 }
 
+void lib_sqrt(arch::cpu::Cpu& cpu) noexcept(false) {
+  auto n = cpu.get_total_actuals_from_stack();
+
+  if (n != 1) {
+    throw std::invalid_argument(
+        "`sqrt` expected `1` arguments, but recieved `" + std::to_string(n) +
+        "`");
+  }
+
+  const auto& cell = cpu.get_actual_from_stack_at(0);
+
+  if (cell.get_type() != arch::mem::Cell::Type::NUMBER) {
+    throw std::invalid_argument("`sqrt`'s argument should be number");
+  }
+
+  cpu.registers.retval.clear();
+
+  auto number = cell.get_number();
+  if (number >= 0) {
+    cpu.registers.retval = arch::mem::Cell::for_number(std::sqrt(number));
+  } else {
+    cpu.registers.retval = arch::mem::Cell::for_nil();
+  }
+}
+
 LibFunctions::LibFunctions()
     : lib_funcs{
           {"print", lib_print},       {"input", lib_input},
           {"typeof", lib_typeof},     {"totalarguments", lib_totalarguments},
-          {"argument", lib_argument}, {"strtonum", lib_strtonum}} {}
+          {"argument", lib_argument}, {"strtonum", lib_strtonum},
+          {"sqrt", lib_sqrt}} {}
 
 void LibFunctions::call(const std::string& func_name,
                         Cpu& cpu) noexcept(false) {
