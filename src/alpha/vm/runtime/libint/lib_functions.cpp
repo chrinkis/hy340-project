@@ -281,6 +281,29 @@ void lib_objectmemberkeys(arch::cpu::Cpu& cpu) noexcept(false) {
   cpu.registers.retval.clear();
   cpu.registers.retval = arch::mem::Cell::for_table(key_table);
 }
+
+void lib_objecttotalmembers(arch::cpu::Cpu& cpu) noexcept(false) {
+  auto n = cpu.get_total_actuals_from_stack();
+
+  if (n != 1) {
+    throw std::invalid_argument(
+        "`objecttotalmembers` expected `1` arguments, but recieved `" +
+        std::to_string(n) + "`");
+  }
+
+  const auto& cell = cpu.get_actual_from_stack_at(0);
+
+  if (cell.get_type() != arch::mem::Cell::Type::TABLE) {
+    throw std::invalid_argument(
+        "`objecttotalmembers`'s argument should be table");
+  }
+
+  auto table = cell.get_table();
+
+  cpu.registers.retval.clear();
+  cpu.registers.retval = arch::mem::Cell::for_number(table.get_size());
+}
+
 LibFunctions::LibFunctions()
     : lib_funcs{{"print", lib_print},
                 {"input", lib_input},
@@ -290,7 +313,9 @@ LibFunctions::LibFunctions()
                 {"strtonum", lib_strtonum},
                 {"sqrt", lib_sqrt},
                 {"cos", lib_cos},
-                {"sin", lib_sin}} {}
+                {"sin", lib_sin},
+                {"objectmemberkeys", lib_objectmemberkeys},
+                {"objecttotalmembers", lib_objecttotalmembers}} {}
 
 void LibFunctions::call(const std::string& func_name,
                         Cpu& cpu) noexcept(false) {

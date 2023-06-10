@@ -27,6 +27,8 @@ class Cpu {
   friend void runtime::libint::lib_sin(arch::cpu::Cpu& _cpu) noexcept(false);
   friend void runtime::libint::lib_objectmemberkeys(
       arch::cpu::Cpu& _cpu) noexcept(false);
+  friend void runtime::libint::lib_objecttotalmembers(
+      arch::cpu::Cpu& _cpu) noexcept(false);
 
  private:
   using Memory = mem::Memory;
