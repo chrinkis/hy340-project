@@ -56,6 +56,8 @@ std::string Cell::to_string() const {
       return "nil";
 
     case Type::UNDEF:
+      return "undef";
+
     default:
       assert(0);
   }
