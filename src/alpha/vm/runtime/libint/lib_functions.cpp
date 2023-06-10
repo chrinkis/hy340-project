@@ -304,6 +304,32 @@ void lib_objecttotalmembers(arch::cpu::Cpu& cpu) noexcept(false) {
   cpu.registers.retval = arch::mem::Cell::for_number(table.get_size());
 }
 
+void lib_objectcopy(arch::cpu::Cpu& cpu) noexcept(false) {
+  auto n = cpu.get_total_actuals_from_stack();
+
+  if (n != 1) {
+    throw std::invalid_argument(
+        "`objectcopy` expected `1` arguments, but recieved `" +
+        std::to_string(n) + "`");
+  }
+
+  const auto& cell = cpu.get_actual_from_stack_at(0);
+
+  if (cell.get_type() != arch::mem::Cell::Type::TABLE) {
+    throw std::invalid_argument("`objectcopy`'s argument should be table");
+  }
+
+  auto table = cell.get_table();
+  table::Table table_copy = table::Table::create();
+
+  for (auto pair : table) {
+    table_copy.set_element(pair.first, pair.second);
+  }
+
+  cpu.registers.retval.clear();
+  cpu.registers.retval = arch::mem::Cell::for_table(table_copy);
+}
+
 LibFunctions::LibFunctions()
     : lib_funcs{{"print", lib_print},
                 {"input", lib_input},
@@ -315,7 +341,8 @@ LibFunctions::LibFunctions()
                 {"cos", lib_cos},
                 {"sin", lib_sin},
                 {"objectmemberkeys", lib_objectmemberkeys},
-                {"objecttotalmembers", lib_objecttotalmembers}} {}
+                {"objecttotalmembers", lib_objecttotalmembers},
+                {"objectcopy", lib_objectcopy}} {}
 
 void LibFunctions::call(const std::string& func_name,
                         Cpu& cpu) noexcept(false) {

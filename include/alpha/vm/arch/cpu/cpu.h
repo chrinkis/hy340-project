@@ -29,6 +29,8 @@ class Cpu {
       arch::cpu::Cpu& _cpu) noexcept(false);
   friend void runtime::libint::lib_objecttotalmembers(
       arch::cpu::Cpu& _cpu) noexcept(false);
+  friend void runtime::libint::lib_objectcopy(arch::cpu::Cpu& _cpu) noexcept(
+      false);
 
  private:
   using Memory = mem::Memory;
