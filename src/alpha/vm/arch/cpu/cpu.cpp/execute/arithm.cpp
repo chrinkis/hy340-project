@@ -51,15 +51,11 @@ void Cpu::execute_mul(const AbcInstruction& instr) {
 }
 
 void Cpu::execute_div(const AbcInstruction& instr) {
-  FIXME;  // error checks? What should I add?
-
   execute_arithmetic(
       instr, [](auto a, auto b) { return a / b; }, true);
 }
 
 void Cpu::execute_mod(const AbcInstruction& instr) {
-  FIXME;  // error checks? What should I add?
-
   execute_arithmetic(
       instr,
       [](auto a, auto b) {
