@@ -44,27 +44,42 @@ void lib_input(arch::cpu::Cpu& cpu) noexcept(false) {
         "`");
   }
 
-  std::string char_sequence;
-  std::cin >> char_sequence;
+  char c = std::cin.get();
 
   cpu.registers.retval.clear();
+  std::string char_sequence;
 
-  try {
-    double number = std::stod(char_sequence);
-    cpu.registers.retval = arch::mem::Cell::for_number(number);
-    return;
-  } catch (std::invalid_argument e) {
-    // Try next type
-  }
+  if (c == '"') {
+    c = std::cin.get();
+    while (c != '"') {
+      char_sequence += c;
+      c = std::cin.get();
+    }
 
-  if (char_sequence == "true") {
-    cpu.registers.retval = arch::mem::Cell::for_boolean(true);
-  } else if (char_sequence == "false") {
-    cpu.registers.retval = arch::mem::Cell::for_boolean(false);
-  } else if (char_sequence == "nil") {
-    cpu.registers.retval = arch::mem::Cell::for_nil();
-  } else {
     cpu.registers.retval = arch::mem::Cell::for_string(char_sequence);
+
+  } else {
+    std::cin.putback(c);
+
+    std::getline(std::cin, char_sequence);
+
+    try {
+      double number = std::stod(char_sequence);
+      cpu.registers.retval = arch::mem::Cell::for_number(number);
+      return;
+    } catch (std::invalid_argument e) {
+      // Try next type
+    }
+
+    if (char_sequence == "true") {
+      cpu.registers.retval = arch::mem::Cell::for_boolean(true);
+    } else if (char_sequence == "false") {
+      cpu.registers.retval = arch::mem::Cell::for_boolean(false);
+    } else if (char_sequence == "nil") {
+      cpu.registers.retval = arch::mem::Cell::for_nil();
+    } else {
+      cpu.registers.retval = arch::mem::Cell::for_string(char_sequence);
+    }
   }
 }
 
