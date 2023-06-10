@@ -30,6 +30,10 @@ void Table::deccrease_counter() {
   WARN_EMPTY_FUNC_IMPL();
 }
 
+Table::Size Table::get_size() const {
+  return this->table->data.size();
+}
+
 const Table::MemCell& Table::get_element(const MemCell& index) const
     noexcept(false) {
   try {
