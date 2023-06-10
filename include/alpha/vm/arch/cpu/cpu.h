@@ -114,7 +114,6 @@ class Cpu {
 
   void call_save_enviroment();
   void call_lib_func(const std::string& lib_func_name);
-  void call_lib_functor(const runtime::table::Table& table);
 
   void push_table_arg(const runtime::table::Table& table);
 
