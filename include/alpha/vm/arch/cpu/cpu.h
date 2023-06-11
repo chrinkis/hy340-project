@@ -137,7 +137,7 @@ class Cpu {
 
   void call_functor(const runtime::table::Table& table);
 
-  void decrease_top();
+  void decrease_top() noexcept(false);
   void push_enviroment_value(unsigned value);
 
   unsigned get_enviroment_value(const Memory::Stack::Index& index) const;
