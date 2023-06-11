@@ -70,8 +70,6 @@ void lib_print(arch::cpu::Cpu& _cpu) noexcept(false) {
       std::cout << cell.to_string();
     }
   }
-
-  std::cout << std::endl;
 }
 
 void lib_input(arch::cpu::Cpu& cpu) noexcept(false) {
