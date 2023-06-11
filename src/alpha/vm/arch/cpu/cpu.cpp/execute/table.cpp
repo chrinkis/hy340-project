@@ -72,7 +72,7 @@ void Cpu::execute_tablesetelem(const AbcInstruction& instr) {
   FIXME;  // add missing assertS
 
   if (table.get_type() != mem::Cell::Type::TABLE) {
-    runtime::messages::error("illdegal use of type `" +
+    runtime::messages::error("illegal use of type `" +
                              table.get_type_as_string() + "` as table!");
     this->execution_finished = true;
 
