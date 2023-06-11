@@ -14,6 +14,8 @@
 #define HAS_SYNTAX_ERROR (alpha::syntax::error::found)
 #define HAS_LEX_ERROR (alpha::lex::error::found)
 
+#define OUTPUT_FILE_NAME "out"
+
 using Scanner = alpha::lex::Scanner;
 using Parser = alpha::syntax::Parser;
 using Writer = alpha::tcode::abc::Writer;
@@ -49,31 +51,35 @@ int main(int argc, char* argv[]) {
   parser.parse();
   s_source_code.close();
 
+#ifndef NDEBUG
   std::string sym_table_file_name("symTable.txt");
   std::ofstream s_sym_table_txt(sym_table_file_name);
   check_file_is_open(sym_table_file_name, s_sym_table_txt);
 
   s_sym_table_txt << symTable << std::endl;
   s_sym_table_txt.close();
+#endif
 
   if (HAS_LEX_ERROR || HAS_SYNTAX_ERROR) {
     return 1;
   }
 
+#ifndef NDEBUG
   std::string quads_file_name = "quads.txt";
   std::ofstream s_quads_txt(quads_file_name);
   check_file_is_open(quads_file_name, s_quads_txt);
 
   s_quads_txt << quadTable << std::endl;
   s_quads_txt.close();
+#endif
 
   tcodeTable.parse_quad_table(quadTable);
 
   Writer writer;
 
   try {
-    writer.write_text("tcode.txt");
-    writer.write_binary("tcode.abc");
+    writer.write_text(OUTPUT_FILE_NAME ".txt");
+    writer.write_binary(OUTPUT_FILE_NAME ".abc");
   } catch (std::runtime_error e) {
     std::cerr << e.what() << std::endl;
     return 2;
