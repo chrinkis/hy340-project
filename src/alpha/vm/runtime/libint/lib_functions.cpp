@@ -17,6 +17,11 @@
 
 #define RADIAN_UNITS(angle) (((angle) / 180.0) * (double)M_PI)
 
+#define INCREASE_REF_IF_TABLE(cell)                        \
+  if ((cell).get_type() == arch::mem::Cell::Type::TABLE) { \
+    (cell).get_table().increase_counter();                 \
+  }
+
 namespace alpha::vm::runtime::libint {
 
 void print_table(const arch::mem::Cell& cell) {
@@ -309,6 +314,7 @@ void lib_objectmemberkeys(arch::cpu::Cpu& cpu) noexcept(false) {
   for (auto pair : table) {
     auto index = arch::mem::Cell ::for_number(current_key++);
     key_table.set_element(index, pair.first);
+    INCREASE_REF_IF_TABLE(pair.first);
   }
 
   cpu.registers.retval.clear();
@@ -357,6 +363,8 @@ void lib_objectcopy(arch::cpu::Cpu& cpu) noexcept(false) {
 
   for (auto pair : table) {
     table_copy.set_element(pair.first, pair.second);
+    INCREASE_REF_IF_TABLE(pair.first);
+    INCREASE_REF_IF_TABLE(pair.second);
   }
 
   cpu.registers.retval.clear();
