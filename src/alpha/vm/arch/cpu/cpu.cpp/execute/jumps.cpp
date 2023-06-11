@@ -50,7 +50,6 @@ static bool operator==(const mem::Cell& a, const mem::Cell& b) noexcept(false) {
     }
     case mem::Cell::Type::TABLE: {
       return a.get_table() == b.get_table();
-      FIXME;  // ^^^^ensure its correct
     }
     case mem::Cell::Type::USER_FUNC: {
       return a.get_user_func() == b.get_user_func();
