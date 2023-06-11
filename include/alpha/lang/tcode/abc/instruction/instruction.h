@@ -8,7 +8,7 @@ namespace alpha::tcode::abc::instruction {
 
 class Instruction {
  public:
-  using SrcLine = unsigned;
+  using SrcLine = Arg::InstrSrcLine;
 
  private:
   Opcode opcode;
