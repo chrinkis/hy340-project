@@ -81,7 +81,7 @@ void Cpu::execute_tablesetelem(const AbcInstruction& instr) {
 
   if (index.get_type() == mem::Cell::Type::UNDEF ||
       index.get_type() == mem::Cell::Type::NIL) {
-    runtime::messages::error("illegal type `" + table.get_type_as_string() +
+    runtime::messages::error("illegal type `" + index.get_type_as_string() +
                              "` for table-index!");
     this->execution_finished = true;
 
