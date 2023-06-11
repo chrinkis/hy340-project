@@ -10,7 +10,6 @@ namespace alpha::tcode::abc::instruction {
 
 class Arg {
  public:
-  // FIXME
   using InstrSrcLine = unsigned;
 
  public:

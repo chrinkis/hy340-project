@@ -93,8 +93,6 @@ std::ostream& operator<<(std::ostream& os, const Quad& quad) {
     os << EMPTY_QUAD_FIELD;
   }
 
-  // FIXME what to do with `quad.line`. Huh?
-
   return os;
 }
 

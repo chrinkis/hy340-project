@@ -7,10 +7,6 @@
 
 #include <cassert>
 
-#define SAVED_TOPSP_OFFSET +1
-#define SAVED_TOP_OFFSET +2
-#define SAVED_PC_OFFSET +3
-
 namespace alpha::vm::arch::cpu {
 
 void Cpu::execute_call(const AbcInstruction& instr) {

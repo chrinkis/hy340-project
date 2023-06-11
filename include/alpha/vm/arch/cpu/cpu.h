@@ -32,14 +32,20 @@ class Cpu {
   friend void runtime::libint::lib_objectcopy(arch::cpu::Cpu& _cpu) noexcept(
       false);
 
+ public:
+  static const int SAVED_TOPSP_OFFSET = +1;
+  static const int SAVED_TOP_OFFSET = +2;
+  static const int SAVED_PC_OFFSET = +3;
+  static const int NUM_ACTUALS_OFFSET = +4;
+  static const int STACK_ENV_SIZE = +4;
+
  private:
   using Memory = mem::Memory;
   using AbcInstruction = abc::instruction::Instruction;
   using AbcArg = abc::instruction::Arg;
   using LibFunctions = runtime::libint::LibFunctions;
 
- public:
-  // FIXME: should this be private?
+ private:
   struct {
     mem::Cell result;
     mem::Cell arg_a;

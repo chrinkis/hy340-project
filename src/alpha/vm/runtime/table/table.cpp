@@ -23,11 +23,11 @@ bool Table::operator<(const Table& other) const {
 }
 
 void Table::increase_counter() {
-  WARN_EMPTY_FUNC_IMPL();
+  ;  // Nothing to do.
 }
 
 void Table::deccrease_counter() {
-  WARN_EMPTY_FUNC_IMPL();
+  ;  // Nothing to do.
 }
 
 Table::Size Table::get_size() const {
