@@ -14,6 +14,9 @@ Ifstmt Ifstmt::from_ifstmtIf_stmt(const IfstmtIf& ifstmt_if, const Stmt& stmt) {
 
   quadTable.patch_label(ifstmt_if.get_label(), quadTable.get_next_label());
 
+  ifstmt.set_contlist(stmt.get_contlist());
+  ifstmt.set_breaklist(stmt.get_breaklist());
+
   return ifstmt;
 }
 
