@@ -76,6 +76,18 @@ This will built:
 - the compiler: `build/src/alpha/lang/al`
 - the virtual machine: `build/src/alpha/vm/avm`
 
+### Run
+
+You can compile an alpha source code file with:
+- `al <alpha_source_code>`
+
+This will produce two files:
+1. `out.abc`
+2. `out.txt`
+
+Then, you can run either of the above files with:
+- `avm <out.abc>` or `avm <out.txt>`
+
 ### Tests
 
 *Don not run the unit test. They are out of date.*
