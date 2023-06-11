@@ -11,10 +11,10 @@
 #include <iostream>
 #include <stdexcept>
 
-#define NUM_ACTUALS_OFFSET +4
-#define STACK_ENV_SIZE +4
-#define SAVED_TOPSP_OFFSET +1
-// FIXME ^^^ defined in multiple files
+#define NUM_ACTUALS_OFFSET arch::cpu::Cpu::NUM_ACTUALS_OFFSET
+#define STACK_ENV_SIZE arch::cpu::Cpu::STACK_ENV_SIZE
+#define SAVED_TOPSP_OFFSET arch::cpu::Cpu::SAVED_TOPSP_OFFSET
+
 #define RADIAN_UNITS(angle) (((angle) / 180.0) * (double)M_PI)
 
 namespace alpha::vm::runtime::libint {

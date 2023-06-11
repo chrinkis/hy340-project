@@ -8,9 +8,6 @@
 #include <cassert>
 #include <stdexcept>
 
-#define NUM_ACTUALS_OFFSET +4
-#define STACK_ENV_SIZE +4
-
 namespace alpha::vm::arch::cpu {
 
 Cpu::Cpu(Memory& mem, LibFunctions& lib_functions, unsigned total_globals)
