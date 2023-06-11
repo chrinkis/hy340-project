@@ -129,10 +129,13 @@ void Table::handle_quad_as_func_enter(const icode::quad::Quad& quad) {
 
   this->return_list.emplace();
 
+  MAP_IADDR_WITH_NEXT_TADDR(quad.get_line());
+
   this->jump_before_func_start.push(this->get_next_label());
   this->emit(Instruction(this->get_next_label(), instruction::Opcode::JUMP));
 
-  this->handle_quad_as_nullary(Opcode::FUNC_ENTER, quad);
+  Instruction instruction = NullaryInstruction(Opcode::FUNC_ENTER, quad);
+  this->emit(instruction);
 }
 
 void Table::handle_quad_as_func_exit(const icode::quad::Quad& quad) {

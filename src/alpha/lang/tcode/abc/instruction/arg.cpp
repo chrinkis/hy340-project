@@ -120,7 +120,8 @@ unsigned Arg::value_of_program_func(const symbol::Symbol& symbol,
       dynamic_cast<const symbol::Function*>(&symbol);
   assert(function);
 
-  auto taddr = icode_to_tcode(function->get_iaddress());
+  auto taddr = icode_to_tcode(function->get_iaddress()) +
+               1;  // target code address maps to the jump before funcenter
 
   consts::UserFunc user_func(taddr, function->get_name(),
                              function->get_total_locals());
