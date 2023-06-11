@@ -38,8 +38,7 @@ class Cpu {
   using AbcArg = abc::instruction::Arg;
   using LibFunctions = runtime::libint::LibFunctions;
 
- public:
-  // FIXME: should this be private?
+ private:
   struct {
     mem::Cell result;
     mem::Cell arg_a;
