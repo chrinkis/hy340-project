@@ -20,6 +20,7 @@ Cpu::Cpu(Memory& mem, LibFunctions& lib_functions, unsigned total_globals)
       lib_functions(lib_functions) {
   this->registers.top = this->get_global_topsp();
   this->registers.topsp = this->registers.top;
+  this->registers.retval = mem::Cell::for_nil();
 }
 
 void Cpu::execute_cycle() {

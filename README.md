@@ -57,6 +57,9 @@
 - In case of `table[index] = nil;`, the element (if exists) will be deleted from
 the table, but there is a warning due to an extra `getelement` instruction for
 a temporary variable.
+- By default, the return value register of the virtual machine has `nil` value.
+In other words, functions that do not return a value explicitly, will return `nil`
+implicitly.
 
 ## Build
 

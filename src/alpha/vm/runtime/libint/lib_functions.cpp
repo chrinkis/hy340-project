@@ -70,6 +70,9 @@ void lib_print(arch::cpu::Cpu& _cpu) noexcept(false) {
       std::cout << cell.to_string();
     }
   }
+
+  _cpu.registers.retval.clear();
+  _cpu.registers.retval = arch::mem::Cell::for_nil();
 }
 
 void lib_input(arch::cpu::Cpu& cpu) noexcept(false) {
