@@ -110,6 +110,7 @@ Arg::Type Arg::type_of_var(const symbol::Symbol& symbol) {
     case symbol::Symbol::Type::LIBRARY_FUNCTION:
     default:
       assert(0);
+      return static_cast<Arg::Type>(-1);
   }
 }
 

@@ -79,6 +79,7 @@ bool Symbol::has_function_type() const {
       return true;
     default:
       assert(0);
+      return false;
   }
 
   assert(0);

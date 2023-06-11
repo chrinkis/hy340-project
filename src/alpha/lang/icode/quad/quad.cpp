@@ -154,6 +154,7 @@ std::string to_string(Quad::Opcode opcode) {
       return "tablesetelem";
     default:
       assert(0);
+      return "";
   }
 
   assert(0);

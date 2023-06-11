@@ -133,6 +133,7 @@ static std::string to_string(Operator op) {
       return "-- (post)";
     default:
       assert(0);
+      return "";
   }
 }
 
@@ -170,6 +171,7 @@ bool is_arithmetic(const icode::Expr& expr) {
       return false;
     default:
       assert(0);
+      return false;
   }
 }
 

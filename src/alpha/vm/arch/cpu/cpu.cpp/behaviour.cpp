@@ -163,6 +163,7 @@ mem::Cell& Cpu::translate_arg_to_cell(const AbcArg& arg) {
     case abc::instruction::Arg::Type::EMPTY:
     default:
       assert(0);
+      return this->registers.arg_b;  // return the least used register
   }
 }
 
@@ -206,6 +207,7 @@ mem::Cell& Cpu::translate_arg_to_cell(const AbcArg& arg, mem::Cell& reg) {
     case abc::instruction::Arg::Type::EMPTY:
     default:
       assert(0);
+      return this->registers.arg_b;  // return the least used register
   }
 
 #undef RETURN_WITH

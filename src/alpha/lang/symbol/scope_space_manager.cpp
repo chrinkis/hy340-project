@@ -42,6 +42,7 @@ Symbol::Offset ScopeSpaceManager::get_current_scope_offset() {
       return this->ofsset.function_local.top();
     default:
       assert(0);
+      return -1;
   }
 
   assert(0);
