@@ -40,7 +40,7 @@ class TableManager {
   Symbol::Scope current_scope;
   std::stack<Symbol::Scope> max_scope;
 
-  Counter temp_var_counter;
+  std::stack<Counter> temp_var_counter;
 
   ScopeSpaceManager scope_space_manager;
 
