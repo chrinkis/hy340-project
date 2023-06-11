@@ -38,7 +38,6 @@
 ### Phase V
 
 - The project was implemented according to the project guidelines
-- Everything should work correctly.
 - Extra implementations:
   - library functions:
     - [X] `input`
@@ -57,6 +56,14 @@
 - In case of `table[index] = nil;`, the element (if exists) will be deleted from
 the table, but there is a warning due to an extra `getelement` instruction for
 a temporary variable.
+- By default, the return value register of the virtual machine has `nil` value.
+In other words, functions that do not return a value explicitly, will return `nil`
+implicitly.
+- When there are variables in the `program variable scopespace` that are not global,
+the stack of the virtual machine does not reserve place for them. In order to avoid
+problems, you could use a `main` function for your program. This could be fixed by 
+providing the virtual machine (through the input file)  with the number of the 
+varibles mentioned above (unfortunately, there was no time to implement it).
 
 ## Build
 

@@ -23,6 +23,7 @@ void Cpu::execute_assign(const AbcInstruction& instr) {
 
   if (&rv == &this->registers.retval) {
     this->registers.retval.clear();
+    this->registers.retval = mem::Cell::for_nil();
   }
 }
 

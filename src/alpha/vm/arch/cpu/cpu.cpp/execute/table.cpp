@@ -72,7 +72,7 @@ void Cpu::execute_tablesetelem(const AbcInstruction& instr) {
   FIXME;  // add missing assertS
 
   if (table.get_type() != mem::Cell::Type::TABLE) {
-    runtime::messages::error("illdegal use of type `" +
+    runtime::messages::error("illegal use of type `" +
                              table.get_type_as_string() + "` as table!");
     this->execution_finished = true;
 
@@ -81,8 +81,16 @@ void Cpu::execute_tablesetelem(const AbcInstruction& instr) {
 
   if (index.get_type() == mem::Cell::Type::UNDEF ||
       index.get_type() == mem::Cell::Type::NIL) {
-    runtime::messages::error("illegal type `" + table.get_type_as_string() +
+    runtime::messages::error("illegal type `" + index.get_type_as_string() +
                              "` for table-index!");
+    this->execution_finished = true;
+
+    return;
+  }
+
+  if (value.get_type() == mem::Cell::Type::UNDEF) {
+    runtime::messages::error("illegal type `" + value.get_type_as_string() +
+                             "` for table-element!");
     this->execution_finished = true;
 
     return;

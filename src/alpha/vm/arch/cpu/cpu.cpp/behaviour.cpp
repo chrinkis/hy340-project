@@ -8,6 +8,8 @@
 #include <cassert>
 #include <stdexcept>
 
+class StackOverflowException {};
+
 namespace alpha::vm::arch::cpu {
 
 Cpu::Cpu(Memory& mem, LibFunctions& lib_functions, unsigned total_globals)
@@ -20,6 +22,7 @@ Cpu::Cpu(Memory& mem, LibFunctions& lib_functions, unsigned total_globals)
       lib_functions(lib_functions) {
   this->registers.top = this->get_global_topsp();
   this->registers.topsp = this->registers.top;
+  this->registers.retval = mem::Cell::for_nil();
 }
 
 void Cpu::execute_cycle() {
@@ -41,7 +44,16 @@ void Cpu::execute_cycle() {
   }
 
   auto old_pc = this->pc;
-  this->execute_instruction(instr);
+
+  try {
+    this->execute_instruction(instr);
+  } catch (const StackOverflowException& err) {
+    runtime::messages::error("stack overflow");
+    this->execution_finished = true;
+
+    return;
+  }
+
   if (this->pc == old_pc) {
     this->pc++;
   }
@@ -324,12 +336,9 @@ void Cpu::call_functor(const runtime::table::Table& table) {
   }
 }
 
-void Cpu::decrease_top() {
+void Cpu::decrease_top() noexcept(false) {
   if (!this->registers.top) {
-    runtime::messages::error("stack overflow");
-    this->execution_finished = true;
-
-    return;
+    throw StackOverflowException();
   }
 
   this->registers.top--;

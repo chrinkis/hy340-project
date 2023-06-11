@@ -42,8 +42,10 @@ const std::unordered_set<std::string>& GET_LIBRARY_FUNCTIONS() {
 
 using namespace alpha::symbol;
 
-TableManager::TableManager() : current_scope(0), temp_var_counter(0) {
+TableManager::TableManager() : current_scope(0) {
   this->max_scope.push(this->current_scope);
+
+  this->temp_var_counter.push(0);
 
   for (auto lib_func_name : LIBRARY_FUNCTIONS) {
     this->table.insert(FUNCTION(lib_func_name, 0, Symbol::Location(),
@@ -205,7 +207,7 @@ Symbol::SharedPtr TableManager::new_temp_variable() {
 }
 
 void TableManager::reset_temp_variables() {
-  this->temp_var_counter = 0;
+  this->temp_var_counter.top() = 0;
 }
 
 bool TableManager::can_add_function(const std::string& name) const {
@@ -245,6 +247,8 @@ Symbol::SharedPtr TableManager::start_function(
 
   this->scope_space_manager.enter_scope_space();
 
+  this->temp_var_counter.push(0);
+
   return symbol;
 }
 
@@ -261,6 +265,8 @@ void TableManager::end_function() {
 
   this->scope_space_manager.exit_scope_space();
   this->scope_space_manager.exit_scope_space();
+
+  this->temp_var_counter.pop();
 
   assert(this->max_scope.size() > 1 && this->max_scope.top() != 0 ||
          this->max_scope.size() == 1 && this->max_scope.top() == 0);
@@ -304,7 +310,7 @@ bool TableManager::is_in_func_def() const {
 }
 
 std::string TableManager::new_temp_variable_name() {
-  return "$tmp_" + std::to_string(this->temp_var_counter++);
+  return "$tmp_" + std::to_string(this->temp_var_counter.top()++);
 }
 
 namespace alpha {
