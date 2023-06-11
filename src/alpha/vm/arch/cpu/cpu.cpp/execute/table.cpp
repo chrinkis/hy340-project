@@ -88,6 +88,14 @@ void Cpu::execute_tablesetelem(const AbcInstruction& instr) {
     return;
   }
 
+  if (value.get_type() == mem::Cell::Type::UNDEF) {
+    runtime::messages::error("illegal type `" + value.get_type_as_string() +
+                             "` for table-element!");
+    this->execution_finished = true;
+
+    return;
+  }
+
   assert(table.get_type() == mem::Cell::Type::TABLE);
 
   table.get_table().set_element(index, value);
