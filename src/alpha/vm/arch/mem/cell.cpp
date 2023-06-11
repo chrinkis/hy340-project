@@ -59,6 +59,7 @@ std::string Cell::to_string() const {
 
     default:
       assert(0);
+      return "";
   }
 }
 
@@ -87,6 +88,7 @@ bool Cell::to_bool() const {
 
     default:
       assert(0);
+      return false;
   }
 }
 
@@ -200,6 +202,7 @@ bool Cell::operator<(const arch::mem::Cell& other) const {
     case Type::UNDEF:
     default:
       assert(0);
+      return false;
   }
 }
 
@@ -235,6 +238,7 @@ std::string Cell::get_type_as_string() const {
 
     default:
       assert(0);
+      return "";
   }
 }
 

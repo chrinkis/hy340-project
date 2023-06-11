@@ -62,6 +62,7 @@ static bool operator==(const mem::Cell& a, const mem::Cell& b) noexcept(false) {
     case mem::Cell::Type::UNDEF:
     default:
       assert(0);
+      return false;
   }
 
   assert(0);
