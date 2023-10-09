@@ -1,3 +1,8 @@
+## Repository status
+
+This repository is an unmaintained mirror of the repository
+[niex/hy340-project](https://gitlab-csd.datacenter.uoc.gr/niex/hy340-project).
+
 ## Table of contents
 
 - [Developers](#developers)
